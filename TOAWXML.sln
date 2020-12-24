@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOAWXML", "TOAWXML.csproj", "{0E6F950A-C807-477E-BD6C-B14B464FAAC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{66F3401E-20C1-458D-9A72-42D4AA93042D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOAWTac", "TOAWTac\TOAWTac.csproj", "{B4324920-CADE-4554-BAA3-5665B76BBC1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOAWEditSave", "TOAWEditSave\TOAWEditSave.csproj", "{17A8B5AA-8902-401D-89DF-EB7B1ADB4364}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOAWMenu", "toawMenu\TOAWMenu.csproj", "{EA6E5396-7523-42D8-A74D-06F87F5AEDC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOAWEquipViewer", "TOAWEquipViewer\TOAWEquipViewer.csproj", "{600F26AD-C2EF-4E17-8A9E-5DB088851022}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E6F950A-C807-477E-BD6C-B14B464FAAC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E6F950A-C807-477E-BD6C-B14B464FAAC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E6F950A-C807-477E-BD6C-B14B464FAAC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E6F950A-C807-477E-BD6C-B14B464FAAC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4324920-CADE-4554-BAA3-5665B76BBC1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4324920-CADE-4554-BAA3-5665B76BBC1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4324920-CADE-4554-BAA3-5665B76BBC1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4324920-CADE-4554-BAA3-5665B76BBC1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17A8B5AA-8902-401D-89DF-EB7B1ADB4364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17A8B5AA-8902-401D-89DF-EB7B1ADB4364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17A8B5AA-8902-401D-89DF-EB7B1ADB4364}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17A8B5AA-8902-401D-89DF-EB7B1ADB4364}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA6E5396-7523-42D8-A74D-06F87F5AEDC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA6E5396-7523-42D8-A74D-06F87F5AEDC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA6E5396-7523-42D8-A74D-06F87F5AEDC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA6E5396-7523-42D8-A74D-06F87F5AEDC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{600F26AD-C2EF-4E17-8A9E-5DB088851022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{600F26AD-C2EF-4E17-8A9E-5DB088851022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{600F26AD-C2EF-4E17-8A9E-5DB088851022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{600F26AD-C2EF-4E17-8A9E-5DB088851022}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64D901AA-F120-4A7B-A20F-BDA1874CDAC8}
+	EndGlobalSection
+EndGlobal

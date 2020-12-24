@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0E6F950A-C807-477E-BD6C-B14B464FAAC5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>TOAWXML</RootNamespace>
+    <AssemblyName>TOAWXML</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>D:\Projects\VS\PUBLISH\TOAWxml\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <TargetCulture>en</TargetCulture>
+    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>6C30338328E17EDE0A7FDA916C4E656A4DD08CFB</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>TOAWXML_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoItX3.Assembly, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a646454c8d475470, processorArchitecture=MSIL">
+      <HintPath>packages\AutoItX.Dotnet.3.3.14.5\lib\AutoItX3.Assembly.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="frmEquip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEquip.Designer.cs">
+      <DependentUpon>frmEquip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEvents.Designer.cs">
+      <DependentUpon>frmEvents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLoadEqpFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLoadEqpFile.Designer.cs">
+      <DependentUpon>frmLoadEqpFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMissingEqpFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMissingEqpFile.Designer.cs">
+      <DependentUpon>frmMissingEqpFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSelectFormation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSelectFormation.Designer.cs">
+      <DependentUpon>frmSelectFormation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSelectUnit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSelectUnit.Designer.cs">
+      <DependentUpon>frmSelectUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTacFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTacFile.Designer.cs">
+      <DependentUpon>frmTacFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmUnitDivide.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUnitDivide.Designer.cs">
+      <DependentUpon>frmUnitDivide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameTime.cs" />
+    <Compile Include="Renumbering.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="frmDepots.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDepots.Designer.cs">
+      <DependentUpon>frmDepots.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEnviron.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEnviron.Designer.cs">
+      <DependentUpon>frmEnviron.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLoadFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLoadFile.Designer.cs">
+      <DependentUpon>frmLoadFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMissingFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMissingFile.Designer.cs">
+      <DependentUpon>frmMissingFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPropagateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPropagateForm.Designer.cs">
+      <DependentUpon>frmPropagateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPropagateUnit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPropagateUnit.Designer.cs">
+      <DependentUpon>frmPropagateUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmScenSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmScenSettings.Designer.cs">
+      <DependentUpon>frmScenSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmXML.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmXML.Designer.cs">
+      <DependentUpon>frmXML.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Globals.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmDepots.resx">
+      <DependentUpon>frmDepots.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEnviron.dje.resx">
+      <DependentUpon>frmEnviron.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEnviron.en-US.resx">
+      <DependentUpon>frmEnviron.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEnviron.en.resx">
+      <DependentUpon>frmEnviron.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEnviron.resx">
+      <DependentUpon>frmEnviron.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEquip.resx">
+      <DependentUpon>frmEquip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEvents.resx">
+      <DependentUpon>frmEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLoadEqpFile.resx">
+      <DependentUpon>frmLoadEqpFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLoadFile.resx">
+      <DependentUpon>frmLoadFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMissingEqpFile.resx">
+      <DependentUpon>frmMissingEqpFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMissingFile.resx">
+      <DependentUpon>frmMissingFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPropagateForm.resx">
+      <DependentUpon>frmPropagateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPropagateUnit.resx">
+      <DependentUpon>frmPropagateUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmScenSettings.en-US.resx">
+      <DependentUpon>frmScenSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmScenSettings.en.resx">
+      <DependentUpon>frmScenSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmScenSettings.resx">
+      <DependentUpon>frmScenSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSelectFormation.resx">
+      <DependentUpon>frmSelectFormation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSelectUnit.resx">
+      <DependentUpon>frmSelectUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTacFile.resx">
+      <DependentUpon>frmTacFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUnitDivide.resx">
+      <DependentUpon>frmUnitDivide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmXML.resx">
+      <DependentUpon>frmXML.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include=".editorconfig" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="TOAWXML_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="dje\TOAWXML.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="en-US\TOAWXML.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="TOAWEquipViewer\TOAWEquipViewer.csproj">
+      <Project>{600f26ad-c2ef-4e17-8a9e-5db088851022}</Project>
+      <Name>TOAWEquipViewer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\AutoItX.Dotnet.3.3.14.5\build\AutoItX.Dotnet.targets" Condition="Exists('packages\AutoItX.Dotnet.3.3.14.5\build\AutoItX.Dotnet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\AutoItX.Dotnet.3.3.14.5\build\AutoItX.Dotnet.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\AutoItX.Dotnet.3.3.14.5\build\AutoItX.Dotnet.targets'))" />
+  </Target>
+</Project>

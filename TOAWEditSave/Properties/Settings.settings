@@ -1,0 +1,90 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TOAWEditSave.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="FilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LogFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RPCity" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RPTown" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RPVill" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RPBM1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RPBM2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RPBM3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RPBM4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RPBM5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RPBM6" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RPBM7" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RPBM8" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="RPBM9" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="F1InitRP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="F2InitRP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="City" Type="System.String" Scope="User">
+      <Value Profile="(Default)">City</Value>
+    </Setting>
+    <Setting Name="Town" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Town</Value>
+    </Setting>
+    <Setting Name="Village" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Village</Value>
+    </Setting>
+    <Setting Name="BM1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bitmap 1</Value>
+    </Setting>
+    <Setting Name="BM2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bitmap 2</Value>
+    </Setting>
+    <Setting Name="BM3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bitmap 3</Value>
+    </Setting>
+    <Setting Name="BM4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bitmap 4</Value>
+    </Setting>
+    <Setting Name="BM5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bitmap 5</Value>
+    </Setting>
+    <Setting Name="BM6" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bitmap 6</Value>
+    </Setting>
+    <Setting Name="BM7" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bitmap 7</Value>
+    </Setting>
+    <Setting Name="BM8" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bitmap 8</Value>
+    </Setting>
+    <Setting Name="BM9" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bitmap 9</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
