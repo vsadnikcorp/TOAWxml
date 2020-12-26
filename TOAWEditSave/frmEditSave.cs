@@ -858,12 +858,11 @@ namespace TOAWEditSave
         {
             string FilePath = txtSelectedGamFile.Text;
             string xpathEvents = "";
-            //string id = "";
             bool match = false;
+            int currentturn = Int32.Parse(txtTurn.Text);
 
             XElement xelem = XElement.Load(FilePath);
             xpathEvents = "EVENTS/EVENT";
-
             var eventz = xelem.XPathSelectElements(xpathEvents);
             var checkEvents = eventz.ToList();
 
@@ -874,35 +873,56 @@ namespace TOAWEditSave
                 {
                     dgvEvents.Rows.RemoveAt(i);
                 }
+
+                //int eventturn = Int32.Parse(dgvEvents.Rows[i].Cells[3].Value);
+                if (dgvEvents.Rows[i].Cells[2].Value.ToString() == "Turn")
+                {
+                    int eventturn = Int32.Parse(dgvEvents.Rows[i].Cells[3].Value.ToString());
+                    if (eventturn > currentturn)
+                    {
+                        dgvEvents.Rows[i].Cells[3].Value = (eventturn - currentturn).ToString();
+                    }
+                }
             }
-
             dgvEvents.Refresh();
-
             DataTable dt = (DataTable)dgvEvents.DataSource;
 
-            for (int i = checkEvents.Count - 1; i > -1; i--)
+            //LOOP THROUGH XML EVENTS, DELETING ACTIVATED EVENTS, ADJUST TURN TRIGGERS FOR UPCOMING EVENTS
+            for (int i = checkEvents.Count - 1; i > -1; i--)  
             {
                 string id = "";
                 match = false;
                 eventz.First();
+                string adjustedturn = "";
 
+                //MATCH ALL EVENTS IN XML VS CHECKED EVENTS IN DGV
                 foreach (DataRow row in dt.Rows)
                 {
                     id = row["ID"].ToString();
+                    adjustedturn = row["Turn"].ToString();
+
+                    //IF EVENT ROW IS UNCHECKED
                     if (id == checkEvents[i].Attribute("ID").Value.ToString())
                     {
                         match = true;
+
+                        //IF TRIGGER IS TURN, ADJUST TURN FOR REMAINING EVENTS
+                        if (checkEvents[i].Attribute("TRIGGER").Value.ToString() == "Turn")
+                            {
+                            checkEvents[i].Attribute("TURN").Value = (Int32.Parse(adjustedturn) - 1).ToString();
+                            }
                         continue;
                     }
                 }
-                
+
+                //IF EVENT ROW IS CHECKED
                 if (match == false)
                 {
                     checkEvents[i].Remove();
                 }
             }
 
-            //xelem.Save(FilePath);
+            xelem.Save(FilePath);
         }
     }
 }
