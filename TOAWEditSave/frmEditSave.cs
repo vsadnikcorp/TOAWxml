@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using AutoIt;
@@ -856,9 +857,15 @@ namespace TOAWEditSave
         private void btnDeleteEvents_Click(object sender, EventArgs e)
         {
             string FilePath = txtSelectedGamFile.Text;
-            XElement xelem = XElement.Load(FilePath);
+            string xpathEvents = "";
+            //string id = "";
+            bool match = false;
 
-            var events = (from v in xelem.Descendants("EVENTS").Descendants("EVENT") select v);
+            XElement xelem = XElement.Load(FilePath);
+            xpathEvents = "EVENTS/EVENT";
+
+            var eventz = xelem.XPathSelectElements(xpathEvents);
+            var checkEvents = eventz.ToList();
 
             //DELETE ALL CHECKED ROWS FROM DGV
             for (int i = dgvEvents.Rows.Count - 1; i >= 0; i--)
@@ -873,26 +880,29 @@ namespace TOAWEditSave
 
             DataTable dt = (DataTable)dgvEvents.DataSource;
 
-            //foreach (XElement evt in events)
-           // {
-                //string id = "";
-                //bool match = false;
+            for (int i = checkEvents.Count - 1; i > -1; i--)
+            {
+                string id = "";
+                match = false;
+                eventz.First();
 
-                //foreach (DataRow row in dt.Rows)
-                //{
-                //    id = row["ID"].ToString();
-                //    if(id == evt.Attribute("ID").Value.ToString())
-                //    {
-                //        match = true;
-                //        Console.WriteLine("Dafuq");
-                //        continue;
-                //    }
-                //}
-                //Console.WriteLine(match);
-                //if (match == false) evt.Descendants("EVENT").Remove();
-                //evt.Remove();
-           // }
-           // Console.WriteLine(events.Count());
+                foreach (DataRow row in dt.Rows)
+                {
+                    id = row["ID"].ToString();
+                    if (id == checkEvents[i].Attribute("ID").Value.ToString())
+                    {
+                        match = true;
+                        continue;
+                    }
+                }
+                
+                if (match == false)
+                {
+                    checkEvents[i].Remove();
+                }
+            }
+
+            //xelem.Save(FilePath);
         }
     }
 }
