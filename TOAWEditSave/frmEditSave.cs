@@ -129,10 +129,12 @@ namespace TOAWEditSave
                 if (z.Attribute("TRIGGER").Value == "Turn" && z.Attribute("TURN") == null)
                 {
                     z.Add(new XAttribute("TURN", "1"));
+                    if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Value = "--";
                 }
                 else if (z.Attribute("TRIGGER").Value == "Turn" && z.Attribute("TURN").Value != null)
                 {
                     z.Attribute("TURN").Value = (Int32.Parse(z.Attribute("TURN").Value) + 1).ToString();
+                    if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Value = "--";
                 }
                 else if (z.Attribute("TRIGGER").Value == "Event activated")
                 {
@@ -150,6 +152,11 @@ namespace TOAWEditSave
                     z.Attribute("EFFECT").Value == "Theater Option 1" || z.Attribute("EFFECT").Value == "Theater Option 2")
                 {
                     z.Attribute("VALUE").Value = (Int32.Parse(z.Attribute("VALUE").Value) + 1).ToString();
+                }
+
+                if(z.Attribute("EFFECT").Value == "News only")
+                {
+                    if (z.Attribute("VALUE") != null) z.Attribute("VALUE").Value = "--";
                 }
 
                 if (z.Attribute("VARIABLE") != null)
@@ -833,10 +840,11 @@ namespace TOAWEditSave
         {
             //CHANGE ROW COLOR IF CHECKED/UNCHECKED
             if (e.ColumnIndex == 0 && e.RowIndex >= 0)
+            {
                 dgvEvents.CommitEdit(DataGridViewDataErrorContexts.Commit);
 
-            //Check the value of cell
-            if (dgvEvents.CurrentCell.GetType() == typeof(DataGridViewCheckBoxCell))
+                //Check the value of cell
+                if (dgvEvents.CurrentCell.GetType() == typeof(DataGridViewCheckBoxCell))
                 {
                     if ((bool)dgvEvents.CurrentCell.Value == true)
                     {
@@ -846,6 +854,7 @@ namespace TOAWEditSave
                     {
                         dgvEvents.CurrentRow.DefaultCellStyle.BackColor = Color.White;
                     }
+                }
             }
         }
 
@@ -858,23 +867,103 @@ namespace TOAWEditSave
         {
             string FilePath = txtSelectedGamFile.Text;
             string xpathEvents = "";
+            string xpathEvent = "";
             bool match = false;
             int currentturn = Int32.Parse(txtTurn.Text);
+            string aircap1 = "0";
+            string aircap2 = "0";
+            string railcap1 = "0"; ;
+            string railcap2 = "0";
+            string seacap1 = "0";
+            string seacap2 = "0";
 
             XElement xelem = XElement.Load(FilePath);
             xpathEvents = "EVENTS/EVENT";
+            xpathEvent = "EVENTS";
             var eventz = xelem.XPathSelectElements(xpathEvents);
+            var eventy = xelem.XPathSelectElement(xpathEvent);
             var checkEvents = eventz.ToList();
-
-            //DELETE ALL CHECKED ROWS FROM DGV
+            
+            //DELETE ALL CHECKED ROWS FROM DGV AND ADJUST TRIGGER TURNS FOR UPCOMING EVENTS
             for (int i = dgvEvents.Rows.Count - 1; i >= 0; i--)
             {
+                //REMOVE CHECKED EVENTS AND GET AIR, RAIL, SEA CAPS
                 if ((bool)dgvEvents.Rows[i].Cells[0].FormattedValue)
                 {
+                    //GET AIR, RAIL, SEA CAP VALUES FROM ACTIVATED EVENTS
+                    if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Air transport 1")
+                    {
+                        if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                        {
+                            aircap1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                        }
+                        else
+                        {
+                            aircap1 = "0";
+                        }
+                    }
+
+                    if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Air transport 2")
+                    {
+                        if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                        {
+                            aircap2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                        }
+                        else
+                        {
+                            aircap2 = "0";
+                        }
+                    }
+                    if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Rail transport 1")
+                    {
+                        if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                        {
+                            railcap1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                        }
+                        else
+                        {
+                            railcap1 = "0";
+                        }
+                    }
+                    if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Rail transport 2")
+                    {
+                        if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                        {
+                            railcap2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                        }
+                        else
+                        {
+                            railcap2 = "0";
+                        }
+                    }
+                    if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Sea transport 1")
+                    {
+                        if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                        {
+                            seacap1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                        }
+                        else
+                        {
+                            seacap1 = "0";
+                        }
+                    }
+                    if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Sea transport 2")
+                    {
+                        if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                        {
+                            seacap2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                        }
+                        else
+                        {
+                            seacap2 = "0";
+                        }
+                    }
+
+                    //DELETE CHECKED EVENTS
                     dgvEvents.Rows.RemoveAt(i);
                 }
 
-                //int eventturn = Int32.Parse(dgvEvents.Rows[i].Cells[3].Value);
+                //RENUMBER TURNS
                 if (dgvEvents.Rows[i].Cells[2].Value.ToString() == "Turn")
                 {
                     int eventturn = Int32.Parse(dgvEvents.Rows[i].Cells[3].Value.ToString());
@@ -884,10 +973,13 @@ namespace TOAWEditSave
                     }
                 }
             }
+           
             dgvEvents.Refresh();
             DataTable dt = (DataTable)dgvEvents.DataSource;
 
-            //LOOP THROUGH XML EVENTS, DELETING ACTIVATED EVENTS, ADJUST TURN TRIGGERS FOR UPCOMING EVENTS
+            //Console.WriteLine(dt.Rows.Count);
+
+            //NOW LOOP THROUGH XML EVENTS, DELETING ACTIVATED EVENTS, ADJUST TURN TRIGGERS FOR UPCOMING EVENTS, ADD EVENTS FOR AIR/RAIL/SEA CAP
             for (int i = checkEvents.Count - 1; i > -1; i--)  
             {
                 string id = "";
@@ -918,9 +1010,252 @@ namespace TOAWEditSave
                 //IF EVENT ROW IS CHECKED
                 if (match == false)
                 {
-                    checkEvents[i].Remove();
+                    checkEvents[i].Remove();  
                 }
             }
+
+            xelem.Descendants("EVENT");
+
+            //ADD AIR,RAIL,SEA CAP EVENTS TO DATATABLE
+            int firstrow = 0;
+
+            DataRow dtr = dt.NewRow();
+            dtr[0] = "6";
+            dtr[1] = "Turn";
+            dtr[2] = "1";
+            dtr[3] = "--";
+            dtr[4] = "Air transport 2";
+            dtr[5] = aircap2;
+            dtr[6] = 100;
+            dtr[7] = "--";
+            dtr[8] = "--";
+            dt.Rows.InsertAt(dtr, firstrow);
+
+            dtr = dt.NewRow();
+            dtr[0] = "5";
+            dtr[1] = "Turn";
+            dtr[2] = "1";
+            dtr[3] = "--";
+            dtr[4] = "Air transport 1";
+            dtr[5] = aircap1;
+            dtr[6] = "100";
+            dtr[7] = "--";
+            dtr[8] = "--";
+            dt.Rows.InsertAt(dtr, firstrow);
+
+            dtr = dt.NewRow();
+            dtr[0] = "4";
+            dtr[1] = "Turn";
+            dtr[2] = "1";
+            dtr[3] = "--";
+            dtr[4] = "Sea transport 2";
+            dtr[5] = seacap2;
+            dtr[6] = "100";
+            dtr[7] = "--";
+            dtr[8] = "--";
+            dt.Rows.InsertAt(dtr, firstrow);
+
+            dtr = dt.NewRow();
+            dtr[0] = "3";
+            dtr[1] = "Turn";
+            dtr[2] = "1";
+            dtr[3] = "--";
+            dtr[4] = "Sea transport 1";
+            dtr[5] = seacap1;
+            dtr[6] = "100";
+            dtr[7] = "--";
+            dtr[8] = "--";
+            dt.Rows.InsertAt(dtr, firstrow);
+
+            dtr = dt.NewRow();
+            dtr[0] = "2";
+            dtr[1] = "Turn";
+            dtr[2] = "1";
+            dtr[3] = "--";
+            dtr[4] = "Rail transport 2";
+            dtr[5] = railcap2;
+            dtr[6] = "100";
+            dtr[7] = "--";
+            dtr[8] = "--";
+            dt.Rows.InsertAt(dtr, firstrow);
+
+            dtr = dt.NewRow();
+            dtr[0] = "1";
+            dtr[1] = "Turn";
+            dtr[2] = "1";
+            dtr[3] = "--";
+            dtr[4] = "Rail transport 1";
+            dtr[5] = railcap1;
+            dtr[6] = "100";
+            dtr[7] = "--";
+            dtr[8] = "--";
+            dt.Rows.InsertAt(dtr, firstrow);
+
+            dgvEvents.DataSource = dt;
+            dgvEvents.Refresh();
+
+            //ADD TRANSPORT EVENTS TO XML
+            eventy.AddFirst(new XElement("EVENT",
+                             new XAttribute("ID", "6"),
+                             new XAttribute("TRIGGER", "Turn"),
+                             new XAttribute("EFFECT", "Air transport 2"),
+                             new XAttribute("VALUE", aircap2),
+                             new XAttribute("TURN", "0"))
+               );
+
+            eventy.AddFirst(new XElement("EVENT",
+                             new XAttribute("ID", "5"),
+                             new XAttribute("TRIGGER", "Turn"),
+                             new XAttribute("EFFECT", "Air transport 1"),
+                             new XAttribute("VALUE", aircap1),
+                             new XAttribute("TURN", "0"))
+                );
+
+            eventy.AddFirst(new XElement("EVENT",
+                             new XAttribute("ID", "4"),
+                             new XAttribute("TRIGGER", "Turn"),
+                             new XAttribute("EFFECT", "Sea transport 2"),
+                             new XAttribute("VALUE", seacap2),
+                             new XAttribute("TURN", "0"))
+                );
+
+            eventy.AddFirst(new XElement("EVENT",
+                             new XAttribute("ID", "3"),
+                             new XAttribute("TRIGGER", "Turn"),
+                             new XAttribute("EFFECT", "Sea transport 1"),
+                             new XAttribute("VALUE", seacap1),
+                             new XAttribute("TURN", "0"))
+                );
+
+            eventy.AddFirst(new XElement("EVENT",
+                             new XAttribute("ID", "2"),
+                             new XAttribute("TRIGGER", "Turn"),
+                             new XAttribute("EFFECT", "Rail transport 2"),
+                             new XAttribute("VALUE", railcap2),
+                             new XAttribute("TURN", "0"))
+                );
+
+            eventy.AddFirst(new XElement("EVENT",
+                             new XAttribute("ID", "1"),
+                             new XAttribute("TRIGGER", "Turn"),
+                             new XAttribute("EFFECT", "Rail transport 1"),
+                             new XAttribute("VALUE", railcap1),
+                             new XAttribute("TURN", "0"))
+                );
+
+            //ADJUST EVENT IDs IN DATATABLE TO SEQUENTIAL IDs, ADJUST EVENT NUMBERS
+            int j = 1;
+            //string origevent = "";
+            string origevent2 = "";
+            string origevent3 = "";
+
+            ////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            //foreach (DataGridViewRow r3 in dgvEvents.Rows)
+            //    {
+            //    origevent = r3.Cells[1].Value.ToString();
+
+            //    foreach (DataGridViewRow r4 in dgvEvents.Rows)
+            //    {
+            //        //ADJUST EVENT NUMBERS FOR TRIGGERS
+            //        if ((r4.Cells[2].Value.ToString() == "Event activated" || r4.Cells[2].Value.ToString() == "Event cancelled") 
+            //                && r4.Cells[4].Value.ToString() == origevent)
+            //        {
+            //            r4.Cells[4].Value = j;
+            //        }
+
+            //        //ADJUST EVENT NUMBERS FOR EFFECTS
+            //        if ((r4.Cells[5].Value.ToString() == "Activate event" || 
+            //            r4.Cells[5].Value.ToString() == "Enable event" || 
+            //            r4.Cells[5].Value.ToString() == "Cancel event" || 
+            //            r4.Cells[5].Value.ToString() == "Theater Option 1" ||
+            //            r4.Cells[5].Value.ToString() == "Theater Option 2") &&
+            //            r4.Cells[6].Value.ToString() == origevent)
+            //        {
+            //            r4.Cells[6].Value = j;
+            //        }
+            //    }
+
+            //    r3.Cells[1].Value = j;
+            //    j++;
+            //}
+            ////^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+            foreach (DataRow dtr2 in dt.Rows)
+            {
+                origevent2 = dtr2["ID"].ToString();
+
+                //Console.WriteLine(origevent2);
+
+                //xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION[@ID =" + formid + "]";
+                //var unit = xelem.XPathSelectElement(xpath);
+                //string xpathevent = "EVENTS/EVENT[@ID= " + origevent2+ "]";
+                string xpathevent = "EVENTS/EVENT[@ID= " + origevent2 + "]";
+                var reviseevent = xelem.XPathSelectElement(xpathevent);
+
+                foreach (DataRow dtr3 in dt.Rows)
+                {
+                    origevent3 = dtr3["ID"].ToString();
+                    string xpathevent2 = "EVENTS/EVENT[@ID= " + origevent3 + "]";
+                    var reviseevent2 = xelem.XPathSelectElement(xpathevent2);
+
+                    //ADJUST EVENT NUMBERS FOR TRIGGERS
+                    if (((dtr3["TRIGGER"].ToString() == "Event activated" || dtr3["TRIGGER"].ToString() == "Event cancelled"))
+                            && dtr3["EVT"].ToString() == origevent2)
+                    {
+                        dtr3["EVT"] = j;
+
+                        //ADJUST EVENT IN XML
+                        if ((reviseevent2.Attribute("TRIGGER").Value == "Event activated" ||
+                            reviseevent2.Attribute("TRIGGER").Value == "Event cancelled") && 
+                            reviseevent2.Attribute("CONTINGENCY").Value == origevent2)
+                        {
+                            reviseevent2.Attribute("CONTINGENCY").Value = j.ToString();
+                        }
+                    }
+
+                    //ADJUST EVENT NUMBERS FOR EFFECTS
+                    if ((dtr3["EFFECT"].ToString() == "Activate event" ||
+                        dtr3["EFFECT"].ToString() == "Enable event" ||
+                        dtr3["EFFECT"].ToString() == "Cancel event" ||
+                        dtr3["EFFECT"].ToString() == "Theater Option 1" ||
+                        dtr3["EFFECT"].ToString() == "Theater Option 2") &&
+                        dtr3["VAL"].ToString() == origevent2)
+                    {
+                        dtr3["VAL"] = j;
+                        //Console.WriteLine("DT: " + dtr3["ID"].ToString() + "   " + dtr3["EFFECT"].ToString() + "   " + dtr3["VAL"]);
+                        //Console.WriteLine("XML: " + reviseevent2.Attribute("ID").Value + "    " + reviseevent2.Attribute("EFFECT").Value + "  " + origevent2 + "   " + reviseevent.Attribute("VALUE").Value);
+
+                        //ADJUST EVENT IN XML
+                        //if (reviseevent != null) reviseevent.Attribute("VALUE").Value = j.ToString();
+                        if ((reviseevent2.Attribute("EFFECT").Value == "Activate event" ||
+                           reviseevent2.Attribute("EFFECT").Value == "Enable event" ||
+                           reviseevent2.Attribute("EFFECT").Value == "Cancel event" ||
+                           reviseevent2.Attribute("EFFECT").Value == "Theater Option 1" ||
+                           reviseevent2.Attribute("EFFECT").Value == "Theater Option 2") &&
+                           reviseevent2.Attribute("VALUE").Value == (Int32.Parse(origevent2)-1).ToString())
+                        {
+                            Console.WriteLine("dafuq: " + reviseevent2.Attribute("ID").Value + "    "+ reviseevent2.Attribute("EFFECT").Value);
+                            reviseevent2.Attribute("VALUE").Value = j.ToString();
+                        }
+                    }
+                }
+
+                //ADJUST EVENTID IN XML
+                //Console.WriteLine(origevent2);
+                //Console.WriteLine(reviseevent.Attribute("ID").Value.ToString() + "   " + j);
+
+                dtr2["ID"] = j;
+                if (reviseevent != null)
+                {
+                    reviseevent.Attribute("ID").Value = j.ToString();
+                }
+                j++;
+            }
+            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+            dgvEvents.DataSource = dt;
+            dgvEvents.Refresh();
+
+            //reviseevent.Save(FilePath);
 
             xelem.Save(FilePath);
         }
