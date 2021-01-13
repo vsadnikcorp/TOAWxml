@@ -31,6 +31,7 @@ namespace TOAWEditSave
             txtSelectedLogFile.Enabled = false;
             btnCurrentTurn.Enabled = false;
             btnCalcRP.Enabled = false;
+            btnEvents.Enabled = false;
             btnDeleteEvents.Enabled = false;
 
             //SET RP CATEGORY NAMES
@@ -126,43 +127,133 @@ namespace TOAWEditSave
             IEnumerable<XElement> zing = xelem.XPathSelectElements("EVENTS/EVENT");
             foreach (XElement z in zing)
             {
-                if (z.Attribute("TRIGGER").Value == "Turn" && z.Attribute("TURN") == null)
+                //TRIGGER GROUP 5 = NULL 
+                if (z.Attribute("TRIGGER").Value == "Turn" && z.Attribute("TURN") == null)  
                 {
-                    z.Add(new XAttribute("TURN", "1"));
-                    if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Value = "--";
+                    //DON'T NEED TO ADD ATTRIBUTE IF TURN VALUE = 1
+                    //SHOULD NOT BE ANY CONTINGENCY VALUES FOR TURN TRIGGERS
+                    if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
+
+                    //REMOVE X, Y ATTRIBUTES FOR ANYTHING BUT EFFECT GROUPS 3-6
+                    if (z.Attribute("EFFECT").Value != "Nuclear Attack" || z.Attribute("EFFECT").Value != "Form'n orders" ||
+                        z.Attribute("EFFECT").Value != "Suppply Point 1" || z.Attribute("EFFECT").Value != "Supply Point 2" ||
+                        z.Attribute("EFFECT").Value != "Set ownership 1" || z.Attribute("EFFECT").Value != "Set ownership 2" ||
+                        z.Attribute("EFFECT").Value != "Refugee 1" || z.Attribute("EFFECT").Value != "Refugee 2")
+                    {
+                        if (z.Attribute("X") != null) z.Attribute("X").Remove();
+                        if (z.Attribute("Y") != null) z.Attribute("Y").Remove();
+                    }
+
+                    //REMOVE VALUE ATTRIBUTE FOR EFFECTS GROUPS 2 & 4
+                    if (z.Attribute("EFFECT").Value == "Set ownership 1" || z.Attribute("EFFECT").Value == "Set ownership 2" ||
+                        z.Attribute("EFFECT").Value == "Cease Fire" || z.Attribute("EFFECT").Value == "Cool front" ||
+                        z.Attribute("EFFECT").Value == "End normal" || z.Attribute("EFFECT").Value == "News only" ||
+                        z.Attribute("EFFECT").Value == "Open fire" || z.Attribute("EFFECT").Value == "Storms" || z.Attribute("EFFECT").Value == "Warm front" ||
+                        z.Attribute("EFFECT").Value == "End victory 1" || z.Attribute("EFFECT").Value == "End victory 2" ||
+                        z.Attribute("EFFECT").Value == "Remove zone 1" || z.Attribute("EFFECT").Value == "Remove zone 2" ||
+                        z.Attribute("EFFECT").Value == "Use chemicals 1" || z.Attribute("EFFECT").Value == "Use chemicals 2")
+                    {
+                        if (z.Attribute("VALUE") != null) z.Attribute("VALUE").Remove();
+                    }
                 }
-                else if (z.Attribute("TRIGGER").Value == "Turn" && z.Attribute("TURN").Value != null)
+                //TRIGGER GROUP 5 != NULL
+                else if (z.Attribute("TRIGGER").Value == "Turn" && z.Attribute("TURN").Value != null) //T5
                 {
-                    z.Attribute("TURN").Value = (Int32.Parse(z.Attribute("TURN").Value) + 1).ToString();
-                    if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Value = "--";
-                }
-                else if (z.Attribute("TRIGGER").Value == "Event activated")
-                {
-                    if (z.Attribute("TURN") != null) z.Attribute("TURN").Value = "--";
-                    if (z.Attribute("VARIABLE") != null) z.Attribute("VARIABLE").Remove();
-                }
-                else if (z.Attribute("TRIGGER").Value == "1 occupies" || z.Attribute("TRIGGER").Value == "2 occupies")
-                {
-                    if (z.Attribute("VALUE") != null) z.Attribute("VALUE").Value = "--";
-                    if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Value = "--";
-                    if (z.Attribute("TURN") != null) z.Attribute("TURN").Value = "--";
+                    if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
+
+                    //REMOVE X, Y ATTRIBUTES FOR ANYTHING BUT EFFECT GROUPS 3-6
+                    if (z.Attribute("EFFECT").Value != "Nuclear Attack" || z.Attribute("EFFECT").Value != "Form'n orders" ||
+                        z.Attribute("EFFECT").Value != "Suppply Point 1" || z.Attribute("EFFECT").Value != "Supply Point 2" ||
+                        z.Attribute("EFFECT").Value != "Set ownership 1" || z.Attribute("EFFECT").Value != "Set ownership 2" ||
+                        z.Attribute("EFFECT").Value != "Refugee 1" || z.Attribute("EFFECT").Value != "Refugee 2")
+                    {
+                        if (z.Attribute("X") != null) z.Attribute("X").Remove();
+                        if (z.Attribute("Y") != null) z.Attribute("Y").Remove();
+                    }
+
+                    //REMOVE VALUE ATTRIBUTE FOR EFFECTS GROUPS 2 & 4
+                    if (z.Attribute("EFFECT").Value == "Set ownership 1" || z.Attribute("EFFECT").Value == "Set ownership 2" ||
+                        z.Attribute("EFFECT").Value == "Cease Fire" || z.Attribute("EFFECT").Value == "Cool front" ||
+                        z.Attribute("EFFECT").Value == "End normal" || z.Attribute("EFFECT").Value == "News only" ||
+                        z.Attribute("EFFECT").Value == "Open fire" || z.Attribute("EFFECT").Value == "Storms" || z.Attribute("EFFECT").Value == "Warm front" ||
+                        z.Attribute("EFFECT").Value == "End victory 1" || z.Attribute("EFFECT").Value == "End victory 2" ||
+                        z.Attribute("EFFECT").Value == "Remove zone 1" || z.Attribute("EFFECT").Value == "Remove zone 2" ||
+                        z.Attribute("EFFECT").Value == "Use chemicals 1" || z.Attribute("EFFECT").Value == "Use chemicals 2")
+                    {
+                        if (z.Attribute("VALUE") != null) z.Attribute("VALUE").Remove();
+                    }
                 }
 
-                if (z.Attribute("EFFECT").Value == "Activate event" || z.Attribute("EFFECT").Value == "Enable event" ||
-                    z.Attribute("EFFECT").Value == "Theater Option 1" || z.Attribute("EFFECT").Value == "Theater Option 2")
+                //TRIGGER GROUP 4
+                else if (z.Attribute("TRIGGER").Value == "1 uses chemical" || z.Attribute("TRIGGER").Value == "2 uses chemical" ||
+                        z.Attribute("TRIGGER").Value == "1 uses nuclear" || z.Attribute("TRIGGER").Value == "2 uses nuclear") 
                 {
-                    z.Attribute("VALUE").Value = (Int32.Parse(z.Attribute("VALUE").Value) + 1).ToString();
+                    if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
+
+                    //REMOVE X, Y ATTRIBUTES FOR ANYTHING BUT EFFECT GROUPS 3-6
+                    if (z.Attribute("EFFECT").Value != "Nuclear Attack" && z.Attribute("EFFECT").Value != "Form'n orders" &&
+                        z.Attribute("EFFECT").Value != "Suppply Point 1" && z.Attribute("EFFECT").Value != "Supply Point 2" &&
+                        z.Attribute("EFFECT").Value != "Set ownership 1" && z.Attribute("EFFECT").Value != "Set ownership 2" &&
+                        z.Attribute("EFFECT").Value != "Refugee 1" && z.Attribute("EFFECT").Value != "Refugee 2")
+                    {
+                        if (z.Attribute("X") != null) z.Attribute("X").Remove();
+                        if (z.Attribute("Y") != null) z.Attribute("Y").Remove();
+                    }
+
+                    //REMOVE VALUE ATTRIBUTE FOR EFFECTS GROUPS 2 & 4
+                    if (z.Attribute("EFFECT").Value == "Set ownership 1" || z.Attribute("EFFECT").Value == "Set ownership 2" ||
+                        z.Attribute("EFFECT").Value == "Cease Fire" || z.Attribute("EFFECT").Value == "Cool front" ||
+                        z.Attribute("EFFECT").Value == "End normal" || z.Attribute("EFFECT").Value == "News only" ||
+                        z.Attribute("EFFECT").Value == "Open fire" || z.Attribute("EFFECT").Value == "Storms" || z.Attribute("EFFECT").Value == "Warm front" ||
+                        z.Attribute("EFFECT").Value == "End victory 1" || z.Attribute("EFFECT").Value == "End victory 2" ||
+                        z.Attribute("EFFECT").Value == "Remove zone 1" || z.Attribute("EFFECT").Value == "Remove zone 2" ||
+                        z.Attribute("EFFECT").Value == "Use chemicals 1" || z.Attribute("EFFECT").Value == "Use chemicals 2")
+                    {
+                        if (z.Attribute("VALUE") != null) z.Attribute("VALUE").Remove();
+                    }
+                }
+                //TRIGGER GROUP 3
+                else if (z.Attribute("TRIGGER").Value == "Event activated" || z.Attribute("TRIGGER").Value == "Event cancelled") 
+                {
+                    //REMOVE X, Y ATTRIBUTES FOR ANYTHING BUT EFFECT GROUPS 3-6
+                    if (z.Attribute("EFFECT").Value != "Nuclear Attack" && z.Attribute("EFFECT").Value != "Form'n orders" &&
+                        z.Attribute("EFFECT").Value != "Suppply Point 1" && z.Attribute("EFFECT").Value != "Supply Point 2" &&
+                        z.Attribute("EFFECT").Value != "Set ownership 1" && z.Attribute("EFFECT").Value != "Set ownership 2" &&
+                        z.Attribute("EFFECT").Value != "Refugee 1" && z.Attribute("EFFECT").Value != "Refugee 2")
+                    {
+                        if (z.Attribute("X") != null) z.Attribute("X").Remove();
+                        if (z.Attribute("Y") != null) z.Attribute("Y").Remove();
+                    }
+
+                    //REMOVE VALUE ATTRIBUTE FOR EFFECTS GROUPS 2 & 4
+                    if (z.Attribute("EFFECT").Value == "Set ownership 1" || z.Attribute("EFFECT").Value == "Set ownership 2" ||
+                        z.Attribute("EFFECT").Value == "Cease Fire" || z.Attribute("EFFECT").Value == "Cool front" ||
+                        z.Attribute("EFFECT").Value == "End normal" || z.Attribute("EFFECT").Value == "News only" ||
+                        z.Attribute("EFFECT").Value == "Open fire" || z.Attribute("EFFECT").Value == "Storms" || z.Attribute("EFFECT").Value == "Warm front" ||
+                        z.Attribute("EFFECT").Value == "End victory 1" || z.Attribute("EFFECT").Value == "End victory 2" ||
+                        z.Attribute("EFFECT").Value == "Remove zone 1" || z.Attribute("EFFECT").Value == "Remove zone 2" ||
+                        z.Attribute("EFFECT").Value == "Use chemicals 1" || z.Attribute("EFFECT").Value == "Use chemicals 2")
+                    {
+                        if (z.Attribute("VALUE") != null) z.Attribute("VALUE").Remove();
+                    }
+                }
+                //TRIGGER GROUP 2
+                else if (z.Attribute("TRIGGER").Value == "Force 1 winning" || z.Attribute("TRIGGER").Value == "Force 2 winning" ||
+                        z.Attribute("TRIGGER").Value == "Variable value" || z.Attribute("TRIGGER").Value == "Unit destroyed") 
+                {
+                    if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
+                    if (z.Attribute("X") != null) z.Attribute("X").Remove();
+                    if (z.Attribute("Y") != null) z.Attribute("Y").Remove();
                 }
 
-                if(z.Attribute("EFFECT").Value == "News only")
+                //TRIGGER GROUP 1
+                else if (z.Attribute("TRIGGER").Value == "1 occupies" || z.Attribute("TRIGGER").Value == "2 occupies" ||
+                            z.Attribute("TRIGGER").Value == "1 attacks" || z.Attribute("TRIGGER").Value == "2 attacks") 
                 {
-                    if (z.Attribute("VALUE") != null) z.Attribute("VALUE").Value = "--";
+                    if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
                 }
 
-                if (z.Attribute("VARIABLE") != null)
-                {
-                    z.Attribute("VARIABLE").Value = (Int32.Parse(z.Attribute("VARIABLE").Value) + 1).ToString();
-                }
+                xelem.Save(FilePath);
             }
 
             //CREATE EVENTS DATATABLE, LOAD DATAGRIDVIEW
@@ -185,16 +276,25 @@ namespace TOAWEditSave
                               ID = v.Attribute("ID").Value,
                               TRIGGER = v.Attribute("TRIGGER").Value,
                               EFFECT = v.Attribute("EFFECT").Value,
-                              NEWS = (string)v.Attribute("NEWS") ?? "--",
-                              VAL = (string)v.Attribute("VALUE") ?? "--",
-                              TURN = (string)v.Attribute("TURN") ?? "--",
-                              PROB = (string)v.Attribute("CHANCE") ?? "100",
                               EVT = (string)v.Attribute("CONTINGENCY") ?? "--",
-                              RNG = (string)v.Attribute("VARIABLE") ?? "--"
+                              PROB = (string)v.Attribute("CHANCE") ?? "100",
+                              NEWS = (string)v.Attribute("NEWS") ?? "--",
+                              RNG = (string)(Int32.Parse(v.Attribute("VARIABLE").Value) + 1).ToString() ?? "--",
+                              VAL = (string)v.Attribute("VALUE") ?? "--",
+                              TURN = (string)v.Attribute("TURN") ?? "--"
                           });
-           
+
             //LOAD EVENT DATAGRIDVIEW
-            events.ToList().ForEach(i => dt.Rows.Add(i.ID, i.TRIGGER, i.TURN, i.EVT, i.EFFECT, i.VAL, i.PROB, i.RNG, i.NEWS));
+            //events.ToList().ForEach(i => dt.Rows.Add(i.ID, i.TRIGGER, i.TURN, i.EVT, i.EFFECT, i.VAL, i.PROB, i.RNG, i.NEWS));
+            foreach(var q in events.ToList())
+            {
+                if (q.TRIGGER == "Turn")
+                {
+                    dt.Rows.Add(q.ID, q.TRIGGER, q.TURN, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
+                }
+               
+            }
+
             dgvEvents.DataSource = dt;
 
             dgvEvents.Columns[1].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -253,6 +353,7 @@ namespace TOAWEditSave
                 Int32.TryParse(number, out t);
                 txtTurn.Text = t.ToString();
                 btnCurrentTurn.Enabled = true;
+                btnEvents.Enabled = true;
             }
             else
             {
@@ -790,12 +891,24 @@ namespace TOAWEditSave
                             triggeredEvents.Add(precEvent);
                         }
                     }
-
+                    int eventturn; 
                     //CHECK FOR EVENTS TRIGGERED BY PAST TURNS
                     if (r.Cells[2].Value.ToString() == "Turn")
                     {
                         int currentturn = Int32.Parse(turn);
-                        int eventturn = Int32.Parse(r.Cells[3].Value.ToString());
+                        //int eventturn = Int32.Parse(r.Cells[3].Value.ToString());
+                        if (r.Cells[3].Value.ToString() != "--")
+                        {
+                            eventturn = Int32.Parse(r.Cells[3].Value.ToString());
+                        }
+                        else
+                        {
+                            eventturn = 1;
+                        }
+
+                        //GET XML VALUE FOR WHETHER "VARIABLE" ATTRIBUTE EXISTS
+                        //DO XPATH TO GET RELEVANT XML EVENT, DETERMINE WHETHER VARIABLE = NULL
+                        //IF (VARIABLE = NULL) 
 
                         if (currentturn >= eventturn)
                         {
@@ -814,22 +927,27 @@ namespace TOAWEditSave
 
                         foreach (string s in triggeredEvents) //triggeredEVENTS IS LIST OF TRIGGERED EVENTS FROM NEWS FROM LOG FILE
                         {
-                            //CHECK FOR ALTERNATE EVENTS (IE, CANCELLED VS ACTIVATED)  TRIGGER = 
-                            if((r2.Cells[2].Value.ToString() == "Event activated" || r2.Cells[2].Value.ToString() == "Event cancelled") &&
-                                (r2.Cells[4].Value.ToString() == s || r2.Cells[6].Value.ToString() == s))
-                            {
-                                r2.Cells[0].Value = "true";
-                                r2.DefaultCellStyle.BackColor = Color.Red;
-                                eventID = r2.Cells[1].Value.ToString();
-                            }
+                            //START DELAY/TURN RANGE BLOCK
 
-                            //CHECK FOR PRECEDENT EVENTS (IE, EVENT WHICH TRIGGERED THIS EVENT)
-                            if(r2.Cells[1].Value.ToString() == s)
-                            {
-                                r2.Cells[0].Value = "true";
-                                r2.DefaultCellStyle.BackColor = Color.Red;
-                            }
+                                //CHECK FOR ALTERNATE EVENTS (IE, CANCELLED VS ACTIVATED)  TRIGGER = 
+                                if((r2.Cells[2].Value.ToString() == "Event activated" || r2.Cells[2].Value.ToString() == "Event cancelled") &&
+                                    (r2.Cells[4].Value.ToString() == s || r2.Cells[6].Value.ToString() == s))
+                                {
+                                    r2.Cells[0].Value = "true";
+                                    r2.DefaultCellStyle.BackColor = Color.Red;
+                                    eventID = r2.Cells[1].Value.ToString();
+                                }
+
+                                //CHECK FOR PRECEDENT EVENTS (IE, EVENT WHICH TRIGGERED THIS EVENT)
+                                if(r2.Cells[1].Value.ToString() == s)
+                                {
+                                    r2.Cells[0].Value = "true";
+                                    r2.DefaultCellStyle.BackColor = Color.Red;
+                                }
+
+                            ////////END DELAY/TURN RANGE BLOCK
                         }
+
                     }
                 }
             }
@@ -883,7 +1001,7 @@ namespace TOAWEditSave
             var eventz = xelem.XPathSelectElements(xpathEvents);
             var eventy = xelem.XPathSelectElement(xpathEvent);
             var checkEvents = eventz.ToList();
-            
+
             //DELETE ALL CHECKED ROWS FROM DGV AND ADJUST TRIGGER TURNS FOR UPCOMING EVENTS
             for (int i = dgvEvents.Rows.Count - 1; i >= 0; i--)
             {
@@ -961,6 +1079,13 @@ namespace TOAWEditSave
 
                     //DELETE CHECKED EVENTS
                     dgvEvents.Rows.RemoveAt(i);
+
+                    //THIS BLOCK IS NEEDED TO DELETE EVENT IF IT IS IN LAST ROW!  NO IDEA 
+                    //WHY IT WORKS, BUT IT DOES
+                    if (i == dgvEvents.Rows.Count)
+                    {
+                        continue;
+                    }
                 }
 
                 //RENUMBER TURNS
@@ -973,11 +1098,8 @@ namespace TOAWEditSave
                     }
                 }
             }
-           
             dgvEvents.Refresh();
             DataTable dt = (DataTable)dgvEvents.DataSource;
-
-            //Console.WriteLine(dt.Rows.Count);
 
             //NOW LOOP THROUGH XML EVENTS, DELETING ACTIVATED EVENTS, ADJUST TURN TRIGGERS FOR UPCOMING EVENTS, ADD EVENTS FOR AIR/RAIL/SEA CAP
             for (int i = checkEvents.Count - 1; i > -1; i--)  
@@ -1001,7 +1123,10 @@ namespace TOAWEditSave
                         //IF TRIGGER IS TURN, ADJUST TURN FOR REMAINING EVENTS
                         if (checkEvents[i].Attribute("TRIGGER").Value.ToString() == "Turn")
                             {
-                            checkEvents[i].Attribute("TURN").Value = (Int32.Parse(adjustedturn) - 1).ToString();
+                            if (checkEvents[i].Attribute("TURN") != null)
+                                {
+                                 checkEvents[i].Attribute("TURN").Value = (Int32.Parse(adjustedturn) - 1).ToString();
+                                }
                             }
                         continue;
                     }
@@ -1145,50 +1270,12 @@ namespace TOAWEditSave
 
             //ADJUST EVENT IDs IN DATATABLE TO SEQUENTIAL IDs, ADJUST EVENT NUMBERS
             int j = 1;
-            //string origevent = "";
             string origevent2 = "";
             string origevent3 = "";
 
-            ////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            //foreach (DataGridViewRow r3 in dgvEvents.Rows)
-            //    {
-            //    origevent = r3.Cells[1].Value.ToString();
-
-            //    foreach (DataGridViewRow r4 in dgvEvents.Rows)
-            //    {
-            //        //ADJUST EVENT NUMBERS FOR TRIGGERS
-            //        if ((r4.Cells[2].Value.ToString() == "Event activated" || r4.Cells[2].Value.ToString() == "Event cancelled") 
-            //                && r4.Cells[4].Value.ToString() == origevent)
-            //        {
-            //            r4.Cells[4].Value = j;
-            //        }
-
-            //        //ADJUST EVENT NUMBERS FOR EFFECTS
-            //        if ((r4.Cells[5].Value.ToString() == "Activate event" || 
-            //            r4.Cells[5].Value.ToString() == "Enable event" || 
-            //            r4.Cells[5].Value.ToString() == "Cancel event" || 
-            //            r4.Cells[5].Value.ToString() == "Theater Option 1" ||
-            //            r4.Cells[5].Value.ToString() == "Theater Option 2") &&
-            //            r4.Cells[6].Value.ToString() == origevent)
-            //        {
-            //            r4.Cells[6].Value = j;
-            //        }
-            //    }
-
-            //    r3.Cells[1].Value = j;
-            //    j++;
-            //}
-            ////^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
             foreach (DataRow dtr2 in dt.Rows)
             {
                 origevent2 = dtr2["ID"].ToString();
-
-                //Console.WriteLine(origevent2);
-
-                //xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION[@ID =" + formid + "]";
-                //var unit = xelem.XPathSelectElement(xpath);
-                //string xpathevent = "EVENTS/EVENT[@ID= " + origevent2+ "]";
                 string xpathevent = "EVENTS/EVENT[@ID= " + origevent2 + "]";
                 var reviseevent = xelem.XPathSelectElement(xpathevent);
 
@@ -1222,11 +1309,8 @@ namespace TOAWEditSave
                         dtr3["VAL"].ToString() == origevent2)
                     {
                         dtr3["VAL"] = j;
-                        //Console.WriteLine("DT: " + dtr3["ID"].ToString() + "   " + dtr3["EFFECT"].ToString() + "   " + dtr3["VAL"]);
-                        //Console.WriteLine("XML: " + reviseevent2.Attribute("ID").Value + "    " + reviseevent2.Attribute("EFFECT").Value + "  " + origevent2 + "   " + reviseevent.Attribute("VALUE").Value);
 
                         //ADJUST EVENT IN XML
-                        //if (reviseevent != null) reviseevent.Attribute("VALUE").Value = j.ToString();
                         if ((reviseevent2.Attribute("EFFECT").Value == "Activate event" ||
                            reviseevent2.Attribute("EFFECT").Value == "Enable event" ||
                            reviseevent2.Attribute("EFFECT").Value == "Cancel event" ||
@@ -1234,15 +1318,10 @@ namespace TOAWEditSave
                            reviseevent2.Attribute("EFFECT").Value == "Theater Option 2") &&
                            reviseevent2.Attribute("VALUE").Value == (Int32.Parse(origevent2)-1).ToString())
                         {
-                            Console.WriteLine("dafuq: " + reviseevent2.Attribute("ID").Value + "    "+ reviseevent2.Attribute("EFFECT").Value);
                             reviseevent2.Attribute("VALUE").Value = j.ToString();
                         }
                     }
                 }
-
-                //ADJUST EVENTID IN XML
-                //Console.WriteLine(origevent2);
-                //Console.WriteLine(reviseevent.Attribute("ID").Value.ToString() + "   " + j);
 
                 dtr2["ID"] = j;
                 if (reviseevent != null)
@@ -1251,13 +1330,17 @@ namespace TOAWEditSave
                 }
                 j++;
             }
-            //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
             dgvEvents.DataSource = dt;
             dgvEvents.Refresh();
 
-            //reviseevent.Save(FilePath);
+            //xelem.Save(FilePath);
+        }
 
-            xelem.Save(FilePath);
+        private void dgvEvents_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.Cancel = true;
+
         }
     }
 }

@@ -1629,7 +1629,6 @@ namespace TOAWXML
             string strForceID = "";
             string strUnitID = "";
             strForceID = txtValue.Tag.ToString();
-            //strUnitID = (Convert.ToInt32(btnUnitEffect.Tag) - 1).ToString();
                        
             if (strForceID == "1")
                 {
@@ -1640,30 +1639,6 @@ namespace TOAWXML
                     strUnitID = (2000 + (Convert.ToInt32(btnUnitEffect.Tag) - 1)).ToString();
                 }
                 eventz.Attribute("VALUE").Value = strUnitID;
-
-            //if (strForceID == "1")
-            //    {
-            //        eventz.Attribute("VALUE").Value = strUnitID;
-            //    }
-            //else
-            //    {
-            //        int intUnitChars = strUnitID.Length;
-            //        int intZeros = 3 - intUnitChars;
-            //        string strZeros = "";
-            //        switch (intZeros)
-            //        {
-            //            case 0:
-            //                strZeros = "";
-            //                break;
-            //            case 1:
-            //                strZeros = "0";
-            //                break;
-            //            case 2:
-            //                strZeros = "00";
-            //                break;
-            //        }
-            //        eventz.Attribute("VALUE").Value = "2" + strZeros + strUnitID;
-            //    }
         }
 
         public void SetFullAttributes(XElement eventz)

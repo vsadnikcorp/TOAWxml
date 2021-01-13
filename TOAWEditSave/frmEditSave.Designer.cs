@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEditSave));
             this.lblSelectSavedGame = new System.Windows.Forms.Label();
             this.btnSelectSavedGame = new System.Windows.Forms.Button();
@@ -147,6 +147,7 @@
             this.txtRPTown = new System.Windows.Forms.TextBox();
             this.txtRPCity = new System.Windows.Forms.TextBox();
             this.tpEvents = new System.Windows.Forms.TabPage();
+            this.btnDeleteEvents = new System.Windows.Forms.Button();
             this.btnEvents = new System.Windows.Forms.Button();
             this.dgvEvents = new System.Windows.Forms.DataGridView();
             this.clmSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -181,7 +182,6 @@
             this.tpMap = new System.Windows.Forms.TabPage();
             this.tpUnits = new System.Windows.Forms.TabPage();
             this.tpReplace = new System.Windows.Forms.TabPage();
-            this.btnDeleteEvents = new System.Windows.Forms.Button();
             this.gbForceTurn.SuspendLayout();
             this.tabSaveGame.SuspendLayout();
             this.tpRP.SuspendLayout();
@@ -1395,6 +1395,17 @@
             this.tpEvents.TabIndex = 5;
             this.tpEvents.Text = "Events";
             // 
+            // btnDeleteEvents
+            // 
+            this.btnDeleteEvents.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteEvents.Location = new System.Drawing.Point(462, 380);
+            this.btnDeleteEvents.Name = "btnDeleteEvents";
+            this.btnDeleteEvents.Size = new System.Drawing.Size(167, 35);
+            this.btnDeleteEvents.TabIndex = 2;
+            this.btnDeleteEvents.Text = "Create New Event List";
+            this.btnDeleteEvents.UseVisualStyleBackColor = true;
+            this.btnDeleteEvents.Click += new System.EventHandler(this.btnDeleteEvents_Click);
+            // 
             // btnEvents
             // 
             this.btnEvents.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1411,8 +1422,8 @@
             this.dgvEvents.AllowUserToAddRows = false;
             this.dgvEvents.AllowUserToDeleteRows = false;
             this.dgvEvents.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            this.dgvEvents.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            this.dgvEvents.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvEvents.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEvents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1423,6 +1434,7 @@
             this.dgvEvents.Size = new System.Drawing.Size(621, 367);
             this.dgvEvents.TabIndex = 0;
             this.dgvEvents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEvents_CellContentClick);
+            this.dgvEvents.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvEvents_DataError);
             this.dgvEvents.SelectionChanged += new System.EventHandler(this.dgvEvents_SelectionChanged);
             // 
             // clmSelect
@@ -1745,17 +1757,6 @@
             this.tpReplace.Size = new System.Drawing.Size(635, 421);
             this.tpReplace.TabIndex = 4;
             this.tpReplace.Text = "Replacements";
-            // 
-            // btnDeleteEvents
-            // 
-            this.btnDeleteEvents.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteEvents.Location = new System.Drawing.Point(462, 380);
-            this.btnDeleteEvents.Name = "btnDeleteEvents";
-            this.btnDeleteEvents.Size = new System.Drawing.Size(167, 35);
-            this.btnDeleteEvents.TabIndex = 2;
-            this.btnDeleteEvents.Text = "Create New Event List";
-            this.btnDeleteEvents.UseVisualStyleBackColor = true;
-            this.btnDeleteEvents.Click += new System.EventHandler(this.btnDeleteEvents_Click);
             // 
             // frmEditSave
             // 
