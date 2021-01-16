@@ -285,14 +285,28 @@ namespace TOAWEditSave
                           });
 
             //LOAD EVENT DATAGRIDVIEW
-            //events.ToList().ForEach(i => dt.Rows.Add(i.ID, i.TRIGGER, i.TURN, i.EVT, i.EFFECT, i.VAL, i.PROB, i.RNG, i.NEWS));
+            //MUST ADJUST DGV NUMBERS FROM XML NUMBERS, BASED ON CERTAIN TRIGGERS AND EFFECTS
             foreach(var q in events.ToList())
             {
-                if (q.TRIGGER == "Turn")
+                if (q.TRIGGER == "Turn" || q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event")
+                {
+                    if(q.TRIGGER == "Turn" && (q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event"))
+                    {
+                        dt.Rows.Add(q.ID, q.TRIGGER, Int32.Parse(q.TURN) + 1, q.EVT, q.EFFECT, Int32.Parse(q.VAL) + 1, q.PROB, q.RNG, q.NEWS);
+                    }
+                    else if(q.TRIGGER == "Turn" && (q.EFFECT != "Activate event" || q.EFFECT != "Enable event" || q.EFFECT != "Cancel event"))
+                    {
+                        dt.Rows.Add(q.ID, q.TRIGGER, Int32.Parse(q.TURN) + 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
+                    }
+                    else if(q.TRIGGER != "Turn" && (q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event"))
+                    {
+                        dt.Rows.Add(q.ID, q.TRIGGER, q.TURN + 1, q.EVT, q.EFFECT, Int32.Parse(q.VAL) + 1, q.PROB, q.RNG, q.NEWS);
+                    }
+                }
+               else
                 {
                     dt.Rows.Add(q.ID, q.TRIGGER, q.TURN, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
                 }
-               
             }
 
             dgvEvents.DataSource = dt;
@@ -891,12 +905,13 @@ namespace TOAWEditSave
                             triggeredEvents.Add(precEvent);
                         }
                     }
+
                     int eventturn; 
                     //CHECK FOR EVENTS TRIGGERED BY PAST TURNS
                     if (r.Cells[2].Value.ToString() == "Turn")
                     {
                         int currentturn = Int32.Parse(turn);
-                        //int eventturn = Int32.Parse(r.Cells[3].Value.ToString());
+
                         if (r.Cells[3].Value.ToString() != "--")
                         {
                             eventturn = Int32.Parse(r.Cells[3].Value.ToString());
@@ -919,6 +934,8 @@ namespace TOAWEditSave
                 }
 
                 //LOOP BACK THROUGH DGV TO CHECK FOR PRECEDENT & ALTERNATE EVENTS
+                List<string> triggeredEventsSecond = new List<string>();
+
                 foreach (DataGridViewRow r2 in dgvEvents.Rows)
                 {
                     if (r2.Cells[0].Value == null)
@@ -936,18 +953,36 @@ namespace TOAWEditSave
                                     r2.Cells[0].Value = "true";
                                     r2.DefaultCellStyle.BackColor = Color.Red;
                                     eventID = r2.Cells[1].Value.ToString();
-                                }
+                                    triggeredEventsSecond.Add(eventID);
+                            }
 
                                 //CHECK FOR PRECEDENT EVENTS (IE, EVENT WHICH TRIGGERED THIS EVENT)
                                 if(r2.Cells[1].Value.ToString() == s)
                                 {
                                     r2.Cells[0].Value = "true";
                                     r2.DefaultCellStyle.BackColor = Color.Red;
-                                }
+                                    eventID = r2.Cells[1].Value.ToString();
+                                    triggeredEventsSecond.Add(eventID);
+                            }
 
-                            ////////END DELAY/TURN RANGE BLOCK
+                            //END DELAY/turn range block?
                         }
-
+                    }
+                }
+                //GET "SECONDARY" ACTIVATED EVENTS (IE, EVENTS ACTIVATED BY EVENTS ACTIVATED BY R2)
+                foreach (DataGridViewRow r3 in dgvEvents.Rows)
+                {
+                    if (r3.Cells[0].Value == null)
+                    {
+                        foreach (string s2 in triggeredEventsSecond)
+                        {
+                            if ((r3.Cells[2].Value.ToString() == "Event activated" || r3.Cells[2].Value.ToString() == "Event cancelled") &&
+                                (r3.Cells[4].Value.ToString() == s2))
+                            {
+                                r3.Cells[0].Value = "true";
+                                r3.DefaultCellStyle.BackColor = Color.Red;
+                            }
+                        }
                     }
                 }
             }
