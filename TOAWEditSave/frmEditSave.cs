@@ -19,6 +19,9 @@ namespace TOAWEditSave
 
     public partial class frmEditSave : Form
     {
+
+        public static Color rowcolor = Color.Empty;
+
         public frmEditSave()
         {
             InitializeComponent();
@@ -128,7 +131,7 @@ namespace TOAWEditSave
             foreach (XElement z in zing)
             {
                 //TRIGGER GROUP 5 = NULL 
-                if (z.Attribute("TRIGGER").Value == "Turn" && z.Attribute("TURN") == null)  
+                if (z.Attribute("TRIGGER").Value == "Turn" && z.Attribute("TURN") == null)
                 {
                     //DON'T NEED TO ADD ATTRIBUTE IF TURN VALUE = 1
                     //SHOULD NOT BE ANY CONTINGENCY VALUES FOR TURN TRIGGERS
@@ -186,7 +189,7 @@ namespace TOAWEditSave
 
                 //TRIGGER GROUP 4
                 else if (z.Attribute("TRIGGER").Value == "1 uses chemical" || z.Attribute("TRIGGER").Value == "2 uses chemical" ||
-                        z.Attribute("TRIGGER").Value == "1 uses nuclear" || z.Attribute("TRIGGER").Value == "2 uses nuclear") 
+                        z.Attribute("TRIGGER").Value == "1 uses nuclear" || z.Attribute("TRIGGER").Value == "2 uses nuclear")
                 {
                     if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
 
@@ -213,7 +216,7 @@ namespace TOAWEditSave
                     }
                 }
                 //TRIGGER GROUP 3
-                else if (z.Attribute("TRIGGER").Value == "Event activated" || z.Attribute("TRIGGER").Value == "Event cancelled") 
+                else if (z.Attribute("TRIGGER").Value == "Event activated" || z.Attribute("TRIGGER").Value == "Event cancelled")
                 {
                     //REMOVE X, Y ATTRIBUTES FOR ANYTHING BUT EFFECT GROUPS 3-6
                     if (z.Attribute("EFFECT").Value != "Nuclear Attack" && z.Attribute("EFFECT").Value != "Form'n orders" &&
@@ -239,7 +242,7 @@ namespace TOAWEditSave
                 }
                 //TRIGGER GROUP 2
                 else if (z.Attribute("TRIGGER").Value == "Force 1 winning" || z.Attribute("TRIGGER").Value == "Force 2 winning" ||
-                        z.Attribute("TRIGGER").Value == "Variable value" || z.Attribute("TRIGGER").Value == "Unit destroyed") 
+                        z.Attribute("TRIGGER").Value == "Variable value" || z.Attribute("TRIGGER").Value == "Unit destroyed")
                 {
                     if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
                     if (z.Attribute("X") != null) z.Attribute("X").Remove();
@@ -248,18 +251,17 @@ namespace TOAWEditSave
 
                 //TRIGGER GROUP 1
                 else if (z.Attribute("TRIGGER").Value == "1 occupies" || z.Attribute("TRIGGER").Value == "2 occupies" ||
-                            z.Attribute("TRIGGER").Value == "1 attacks" || z.Attribute("TRIGGER").Value == "2 attacks") 
+                            z.Attribute("TRIGGER").Value == "1 attacks" || z.Attribute("TRIGGER").Value == "2 attacks")
                 {
                     if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
                 }
-
+            }  //NEW FOREACH END
                 xelem.Save(FilePath);
-            }
+            //}  OLD FOR EACH END
 
             //CREATE EVENTS DATATABLE, LOAD DATAGRIDVIEW
             DataTable dt = new DataTable();
 
-            //dt.Columns.Add("ID", typeof(string));
             dt.Columns.Add("ID", typeof(int));
             dt.Columns.Add("TRIGGER", typeof(string));
             dt.Columns.Add("TURN", typeof(string));
@@ -279,7 +281,7 @@ namespace TOAWEditSave
                               EVT = (string)v.Attribute("CONTINGENCY") ?? "--",
                               PROB = (string)v.Attribute("CHANCE") ?? "100",
                               NEWS = (string)v.Attribute("NEWS") ?? "--",
-                              RNG = (string)(Int32.Parse(v.Attribute("VARIABLE").Value) + 1).ToString() ?? "--",
+                              RNG = (string)(v.Attribute("VARIABLE") != null ? (Int32.Parse(v.Attribute("VARIABLE").Value) + 1).ToString() : "--") ?? "--",
                               VAL = (string)v.Attribute("VALUE") ?? "--",
                               TURN = (string)v.Attribute("TURN") ?? "--"
                           });
@@ -288,22 +290,39 @@ namespace TOAWEditSave
             //MUST ADJUST DGV NUMBERS FROM XML NUMBERS, BASED ON CERTAIN TRIGGERS AND EFFECTS
             foreach(var q in events.ToList())
             {
+                Console.WriteLine(q.ID);
+                //FIX DGV VALUES FROM XML VALUES
                 if (q.TRIGGER == "Turn" || q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event")
                 {
                     if(q.TRIGGER == "Turn" && (q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event"))
                     {
-                        dt.Rows.Add(q.ID, q.TRIGGER, Int32.Parse(q.TURN) + 1, q.EVT, q.EFFECT, Int32.Parse(q.VAL) + 1, q.PROB, q.RNG, q.NEWS);
+                        //dt.Rows.Add(q.ID, q.TRIGGER, Int32.Parse(q.TURN) + 1, q.EVT, q.EFFECT, Int32.Parse(q.VAL) + 1, q.PROB, q.RNG, q.NEWS);
+                        if (q.TURN == "--")
+                        {
+                            dt.Rows.Add(q.ID, q.TRIGGER, 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
+                        }
+                        else
+                        {
+                            dt.Rows.Add(q.ID, q.TRIGGER, Int32.Parse(q.TURN) + 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
+                        }
                     }
                     else if(q.TRIGGER == "Turn" && (q.EFFECT != "Activate event" || q.EFFECT != "Enable event" || q.EFFECT != "Cancel event"))
                     {
-                        dt.Rows.Add(q.ID, q.TRIGGER, Int32.Parse(q.TURN) + 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
+                        if (q.TURN == "--")
+                        {
+                            dt.Rows.Add(q.ID, q.TRIGGER, 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
+                        }
+                        else
+                        {
+                            dt.Rows.Add(q.ID, q.TRIGGER, Int32.Parse(q.TURN) + 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
+                        }
                     }
                     else if(q.TRIGGER != "Turn" && (q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event"))
                     {
-                        dt.Rows.Add(q.ID, q.TRIGGER, q.TURN + 1, q.EVT, q.EFFECT, Int32.Parse(q.VAL) + 1, q.PROB, q.RNG, q.NEWS);
+                        dt.Rows.Add(q.ID, q.TRIGGER, q.TURN, q.EVT, q.EFFECT, Int32.Parse(q.VAL) + 1, q.PROB, q.RNG, q.NEWS);
                     }
                 }
-               else
+                else
                 {
                     dt.Rows.Add(q.ID, q.TRIGGER, q.TURN, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
                 }
@@ -355,7 +374,7 @@ namespace TOAWEditSave
             string LogFilePath;
             OpenFileDialog file = new OpenFileDialog();
             file.Multiselect = false;
-            file.Filter = "toawlog.txt files *.txt|*.txt";
+            file.Filter = "sitrepLog.txt files *.txt|*.txt";
 
             if (file.ShowDialog() == DialogResult.OK)
             {
@@ -879,7 +898,7 @@ namespace TOAWEditSave
 
             List<string> eventList = new List<string>(File.ReadLines(logFile).ToList());
             List<string> triggeredEvents = new List<string>();
-           
+
             foreach (var line in eventList)   //LOOP THROUGH ALL LINES IN LOG FILE TO DETECT EVENT NEWS AND ELAPSED TURNS
             {
                 foreach (DataGridViewRow r in dgvEvents.Rows)
@@ -898,16 +917,17 @@ namespace TOAWEditSave
                         triggeredEvents.Add(trigEvent);
 
                         //GET EVENT IDs FOR EVENTS WHICH TRIGGERED THIS EVENT, TO DETECT PRECEDENT AND ALTERNATE EVENTS (IE, EVENTS WHICH TRIGGERED 
-                            //THIS EVENT OR ARE ALTERNATE EVENTS BASED ON % PROBABILITY
+                        //THIS EVENT OR ARE ALTERNATE EVENTS BASED ON % PROBABILITY
                         if (r.Cells[2].Value.ToString() == "Event activated" || r.Cells[2].Value.ToString() == "Event cancelled")
                         {
                             precEvent = r.Cells[4].Value.ToString();
                             triggeredEvents.Add(precEvent);
                         }
                     }
-
-                    int eventturn; 
+                    //}
+                    int eventturn;
                     //CHECK FOR EVENTS TRIGGERED BY PAST TURNS
+                    //If EVENT WAS TRIGGERED ON TURN 1
                     if (r.Cells[2].Value.ToString() == "Turn")
                     {
                         int currentturn = Int32.Parse(turn);
@@ -921,71 +941,101 @@ namespace TOAWEditSave
                             eventturn = 1;
                         }
 
-                        //GET XML VALUE FOR WHETHER "VARIABLE" ATTRIBUTE EXISTS
-                        //DO XPATH TO GET RELEVANT XML EVENT, DETERMINE WHETHER VARIABLE = NULL
-                        //IF (VARIABLE = NULL) 
-
+                        //IF EVENT WAS TRIGGERED AFTER TURN 1
                         if (currentturn >= eventturn)
                         {
-                            r.Cells[0].Value = "true";
-                            r.DefaultCellStyle.BackColor = Color.Red;
+                            //IF THERE IS TURN RANGE, MAY NEED TO EVALUATE MANUALLY
+                            if (r.Cells[8].Value.ToString() == "--" || currentturn >= eventturn + Int32.Parse(r.Cells[8].Value.ToString()) || 
+                                Convert.ToBoolean(((DataGridViewCheckBoxCell)r.Cells[0]).Value) == true)
+                            {
+                                r.Cells[0].Value = "true";
+                                r.DefaultCellStyle.BackColor = Color.Red;
+                            }
+                            else
+                            {
+                                r.Cells[0].Value = "false";
+                                r.DefaultCellStyle.BackColor = Color.Yellow;
+                            }
                         }
                     }
                 }
+            }  //NEW BRACKET FOR LOG FOREACH LOOP
 
-                //LOOP BACK THROUGH DGV TO CHECK FOR PRECEDENT & ALTERNATE EVENTS
-                List<string> triggeredEventsSecond = new List<string>();
+               //LOOP BACK THROUGH DGV TO CHECK FOR PRECEDENT & ALTERNATE EVENTS
+            List<string> triggeredEventsSecond = new List<string>();
 
-                foreach (DataGridViewRow r2 in dgvEvents.Rows)
+            foreach (DataGridViewRow r2 in dgvEvents.Rows)
+            {
+                if (r2.Cells[0].Value == null)
                 {
-                    if (r2.Cells[0].Value == null)
+                    string eventID = "";
+
+                    foreach (string s in triggeredEvents) //triggeredEVENTS IS LIST OF TRIGGERED EVENTS FROM NEWS FROM LOG FILE
                     {
-                        string eventID = "";
-
-                        foreach (string s in triggeredEvents) //triggeredEVENTS IS LIST OF TRIGGERED EVENTS FROM NEWS FROM LOG FILE
-                        {
-                            //START DELAY/TURN RANGE BLOCK
-
-                                //CHECK FOR ALTERNATE EVENTS (IE, CANCELLED VS ACTIVATED)  TRIGGER = 
-                                if((r2.Cells[2].Value.ToString() == "Event activated" || r2.Cells[2].Value.ToString() == "Event cancelled") &&
-                                    (r2.Cells[4].Value.ToString() == s || r2.Cells[6].Value.ToString() == s))
+                            //CHECK FOR ALTERNATE EVENTS (IE, CANCELLED VS ACTIVATED)  TRIGGER = 
+                            if((r2.Cells[2].Value.ToString() == "Event activated" || r2.Cells[2].Value.ToString() == "Event cancelled") &&
+                                //(r2.Cells[4].Value.ToString() == s || r2.Cells[6].Value.ToString() == s))
+                                (r2.Cells[4].Value.ToString() == s))
+                            {
+                                if (r2.Cells[3].Value.ToString() == "--" && r2.Cells[8].Value.ToString() == "--")
                                 {
                                     r2.Cells[0].Value = "true";
                                     r2.DefaultCellStyle.BackColor = Color.Red;
                                     eventID = r2.Cells[1].Value.ToString();
                                     triggeredEventsSecond.Add(eventID);
+                                }
+                                else
+                                {
+                                    r2.Cells[0].Value = "false";
+                                    r2.DefaultCellStyle.BackColor = Color.Yellow;
+                                }
                             }
 
-                                //CHECK FOR PRECEDENT EVENTS (IE, EVENT WHICH TRIGGERED THIS EVENT)
-                                if(r2.Cells[1].Value.ToString() == s)
-                                {
+                            //CHECK FOR PRECEDENT EVENTS (IE, EVENT WHICH TRIGGERED THIS EVENT)
+                            if(r2.Cells[1].Value.ToString() == s)
+                            {
+                                //CODE FOR DELAYS AND TURN RANGE UNNECESSARY BECAUSE THESE EVENTS ALREADY HAPPENED (IE, TRIGGERED ANOTHER EVENT)
+                                //if (r2.Cells[3].Value.ToString() == "--" && r2.Cells[8].Value.ToString() == "--")
+                                //{
                                     r2.Cells[0].Value = "true";
                                     r2.DefaultCellStyle.BackColor = Color.Red;
                                     eventID = r2.Cells[1].Value.ToString();
                                     triggeredEventsSecond.Add(eventID);
+                                //}
+                                //else
+                                //{
+                                //    r2.Cells[0].Value = "false";
+                                //    r2.DefaultCellStyle.BackColor = Color.Yellow;
+                                //}
                             }
-
-                            //END DELAY/turn range block?
-                        }
                     }
                 }
-                //GET "SECONDARY" ACTIVATED EVENTS (IE, EVENTS ACTIVATED BY EVENTS ACTIVATED BY R2)
-                foreach (DataGridViewRow r3 in dgvEvents.Rows)
+            }
+            //GET "SECONDARY" ACTIVATED EVENTS (IE, EVENTS ACTIVATED BY EVENTS ACTIVATED BY R2)
+            foreach (DataGridViewRow r3 in dgvEvents.Rows)
+            {
+                if (r3.Cells[0].Value == null)
                 {
-                    if (r3.Cells[0].Value == null)
+                    foreach (string s2 in triggeredEventsSecond)
                     {
-                        foreach (string s2 in triggeredEventsSecond)
+                        if ((r3.Cells[2].Value.ToString() == "Event activated" || r3.Cells[2].Value.ToString() == "Event cancelled") &&
+                            (r3.Cells[4].Value.ToString() == s2))
                         {
-                            if ((r3.Cells[2].Value.ToString() == "Event activated" || r3.Cells[2].Value.ToString() == "Event cancelled") &&
-                                (r3.Cells[4].Value.ToString() == s2))
+                            if (r3.Cells[3].Value.ToString() == "--" && r3.Cells[8].Value.ToString() == "--")
                             {
                                 r3.Cells[0].Value = "true";
                                 r3.DefaultCellStyle.BackColor = Color.Red;
+                            }
+                            else
+                            {
+                                r3.Cells[0].Value = "false";
+                                r3.DefaultCellStyle.BackColor = Color.Yellow;
                             }
                         }
                     }
                 }
             }
+            //}  //ORIGINAL BRACKET FOR LOG FOREACH LOOP
             btnDeleteEvents.Enabled = true;
         }
 
@@ -995,17 +1045,34 @@ namespace TOAWEditSave
             if (e.ColumnIndex == 0 && e.RowIndex >= 0)
             {
                 dgvEvents.CommitEdit(DataGridViewDataErrorContexts.Commit);
-
+                Color color = new Color();
+                Console.WriteLine("rowcolor: " + rowcolor);
+                Console.WriteLine("color: " + color);
+                color = dgvEvents.CurrentRow.DefaultCellStyle.BackColor;
                 //Check the value of cell
                 if (dgvEvents.CurrentCell.GetType() == typeof(DataGridViewCheckBoxCell))
                 {
                     if ((bool)dgvEvents.CurrentCell.Value == true)
                     {
+                        //color = dgvEvents.CurrentRow.DefaultCellStyle.BackColor;
+                        rowcolor = color;
+                        Console.WriteLine("color a: " + color);
+                        Console.WriteLine("rowcolor a: " + rowcolor);
                         dgvEvents.CurrentRow.DefaultCellStyle.BackColor = Color.Red;
                     }
                     else
                     {
-                        dgvEvents.CurrentRow.DefaultCellStyle.BackColor = Color.White;
+                        //color = dgvEvents.CurrentRow.DefaultCellStyle.BackColor;
+                        Console.WriteLine("color b: " + color);
+                        Console.WriteLine("rowcolor b: " + rowcolor);
+                        //if (rowcolor != null)
+                        //{
+                            dgvEvents.CurrentRow.DefaultCellStyle.BackColor = rowcolor;
+                        //}
+                        //else
+                        //{
+                        //    dgvEvents.CurrentRow.DefaultCellStyle.BackColor = Color.Empty;
+                        //}
                     }
                 }
             }

@@ -243,7 +243,7 @@
             this.btnSelectLogFile.Name = "btnSelectLogFile";
             this.btnSelectLogFile.Size = new System.Drawing.Size(123, 23);
             this.btnSelectLogFile.TabIndex = 8;
-            this.btnSelectLogFile.Text = "Select toawlog.txt File";
+            this.btnSelectLogFile.Text = "Select sitrepLog.txt File";
             this.btnSelectLogFile.UseVisualStyleBackColor = true;
             this.btnSelectLogFile.Click += new System.EventHandler(this.btnSelectLogFile_Click);
             // 
