@@ -439,7 +439,9 @@ namespace TOAWEditSave
                         deltaperiods = periodsperturn * deltaturns;
                         currentdatetime = logdatetime.AddHours(deltaperiods);
                         currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = currentdatetime.Date.ToShortTimeString();
+                        currenttime = currentdatetime.ToShortTimeString();
+                        
+                        Console.WriteLine(currenttime);
                         break;
                     case "10":  //3 hours
                         periodsperturn = 3;
@@ -447,7 +449,7 @@ namespace TOAWEditSave
                         deltaperiods = periodsperturn * deltaturns;
                         currentdatetime = logdatetime.AddHours(deltaperiods);
                         currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = currentdatetime.Date.ToShortTimeString();
+                        currenttime = currentdatetime.ToShortTimeString();
                         break;
                     case "0":  //6 hours
                         periodsperturn = 6;
@@ -473,7 +475,7 @@ namespace TOAWEditSave
                         deltaperiods = periodsperturn * deltaturns;
                         currentdatetime = logdatetime.AddHours(deltaperiods);
                         currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = currentdatetime.Date.ToShortTimeString();
+                        currenttime = currentdatetime.ToShortTimeString();
                         switch (currenttime)
                         {
                             case "00:00":
@@ -578,9 +580,6 @@ namespace TOAWEditSave
                         currenttime = "";
                         break;
                 }
-
-                //string currentdate = currentdatetime.Date.ToShortDateString();
-                //string currenttime = currentdatetime.ToShortTimeString();
 
                //UPDATE UI
                 btnCurrentTurn.Enabled = true;
