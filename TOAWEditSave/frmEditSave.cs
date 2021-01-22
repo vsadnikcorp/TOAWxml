@@ -13,6 +13,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using AutoIt;
+using TOAWXML;
 
 namespace TOAWEditSave
 {
@@ -290,7 +291,6 @@ namespace TOAWEditSave
             //MUST ADJUST DGV NUMBERS FROM XML NUMBERS, BASED ON CERTAIN TRIGGERS AND EFFECTS
             foreach(var q in events.ToList())
             {
-                Console.WriteLine(q.ID);
                 //FIX DGV VALUES FROM XML VALUES
                 if (q.TRIGGER == "Turn" || q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event")
                 {
@@ -372,6 +372,24 @@ namespace TOAWEditSave
         private void btnSelectLogFile_Click(object sender, EventArgs e)
         {
             string LogFilePath;
+            string FilePath;
+            string xpathCalendar;
+            string turnlength;
+            string finalturn;
+            string logdate;
+            string simplelogdate;
+            string prefixlogdate;
+            string hourslogdate = "";
+            string restatelogdate;
+            string daylogdate;
+            string currentdate = "";
+            string currenttime = "";
+            DateTime logdatetime;
+            DateTime currentdatetime = new DateTime();
+            double periodsperturn = 0;
+            double deltaturns;
+            double deltaperiods;
+
             OpenFileDialog file = new OpenFileDialog();
             file.Multiselect = false;
             file.Filter = "sitrepLog.txt files *.txt|*.txt";
@@ -380,13 +398,195 @@ namespace TOAWEditSave
             {
                 LogFilePath = file.FileName;
                 txtSelectedLogFile.Text = LogFilePath;
+                FilePath = txtSelectedGamFile.Text;
+
+                //GET TURN NUMBER FROM LOG FILE NAME
                 string rightside = LogFilePath.Substring(LogFilePath.Length - 7, 7);
                 string number = rightside.Substring(0, 3);
-                int t = 0;
-                Int32.TryParse(number, out t);
-                txtTurn.Text = t.ToString();
+                int currentturn = 0;
+                Int32.TryParse(number, out currentturn);
+                txtTurn.Text = currentturn.ToString();
+
+                //GET CALENDAR DATA FROM GAM FILE
+                XElement xelem = XElement.Load(FilePath);
+                xpathCalendar = "CALENDAR";
+                XElement calendardata = xelem.XPathSelectElement(xpathCalendar);
+                turnlength = calendardata.Attribute("turnLength").Value;
+                finalturn = calendardata.Attribute("finalTurn").Value;
+                deltaturns = currentturn - 1;
+
+                //GET LOG DATE
+                using (var reader = new StreamReader(LogFilePath))
+                {
+                    reader.ReadLine(); // skip
+                    logdate = reader.ReadLine();
+                }
+
+                ////TEST LINES
+                //turnlength = "1";
+                //logdate = "AM, July 1st, 1940";
+                ////logdate = " AM, July 1st, 1940";
+                ////END TEST LINES
+
+                //REMOVE ORDINALS FROM LOG DATE
+                simplelogdate = TOAWXML.Utils.RemoveOrdinals(logdate);
+
+                switch (turnlength)
+                {
+                    case "9":   //1 hour
+                        periodsperturn = 1;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        currentdate = currentdatetime.Date.ToShortDateString();
+                        currenttime = currentdatetime.Date.ToShortTimeString();
+                        break;
+                    case "10":  //3 hours
+                        periodsperturn = 3;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        currentdate = currentdatetime.Date.ToShortDateString();
+                        currenttime = currentdatetime.Date.ToShortTimeString();
+                        break;
+                    case "0":  //6 hours
+                        periodsperturn = 6;
+                        prefixlogdate = simplelogdate.Split(',')[0];
+                        daylogdate = simplelogdate.Split(new char[] { ',' }, 2)[1]; ;
+                        switch (prefixlogdate)
+                        {
+                            case "Pre-dawn":
+                                hourslogdate = "00:00,";
+                                break;
+                            case "Morning":
+                                hourslogdate = "06:00,";
+                                break;
+                            case "Afternoon":
+                                hourslogdate = "12:00,";
+                                break;
+                            case "Night":
+                                hourslogdate = "18:00,";
+                                break;
+                        }
+                        restatelogdate = hourslogdate + daylogdate;
+                        logdatetime = DateTime.Parse(restatelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        currentdate = currentdatetime.Date.ToShortDateString();
+                        currenttime = currentdatetime.Date.ToShortTimeString();
+                        switch (currenttime)
+                        {
+                            case "00:00":
+                                currenttime = "Pre-dawn";
+                                break;
+                            case "06:00":
+                                currenttime = "Morning";
+                                break;
+                            case "12:00":
+                                currenttime = "Afternoon";
+                                break;
+                            case "18:00":
+                                currenttime = "Night";
+                                break;
+                        }
+                        //currenttime = currentdatetime.Date.ToShortTimeString();
+                        break;
+                    case "1":  //12 hours
+                        periodsperturn = 12;
+                        prefixlogdate = simplelogdate.Split(',')[0];
+                        daylogdate = simplelogdate.Split(new char[] { ',' }, 2)[1]; ;
+                        switch (prefixlogdate)
+                        {
+                            case "AM":
+                                hourslogdate = "12:00,";
+                                break;
+                            case "PM":
+                                hourslogdate = "00:00,";
+                                break;
+                        }
+                        restatelogdate = hourslogdate + daylogdate;
+                        logdatetime = DateTime.Parse(restatelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        currentdate = currentdatetime.Date.ToShortDateString();
+                        currenttime = currentdatetime.Date.ToShortTimeString();
+                        switch (currenttime)
+                        {
+                            case "12:00":
+                                currenttime = "AM";
+                                break;
+                            case "00:00":
+                                currenttime = "PM";
+                                break;
+                        }
+                        break;
+                    case "2": //24 hours
+                        periodsperturn = 24;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        currentdate = currentdatetime.Date.ToShortDateString();
+                        currenttime = "";
+                        break;
+                    case "3": //Half week
+                        periodsperturn = 84;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        currentdate = currentdatetime.Date.ToShortDateString();
+                        currenttime = "";
+                        break;
+                    case "4": //One week
+                        periodsperturn = 168;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        currentdate = currentdatetime.Date.ToShortDateString();
+                        currenttime = "";
+                        break;
+                    case "5": //Two weeks
+                        periodsperturn = 336;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        currentdate = currentdatetime.Date.ToShortDateString();
+                        currenttime = "";
+                        break;
+                    case "6": //Month
+                        periodsperturn = 1;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddMonths((int)deltaperiods);
+                        currentdate = currentdatetime.Date.ToShortDateString();
+                        currenttime = "";
+                        break;
+                    case "7": //SEASON
+                        //SEASONAL TURNS DON'T SEEM TO WORK--YOU CANNOT SET THE SEASON, ONLY THE MONTH, WHICH DOES NOT CHANGE.
+                        //periodsperturn = 3;
+                        //logdatetime = DateTime.Parse(simplelogdate);
+                        //deltaperiods = periodsperturn * deltaturns;
+                        //currentdatetime = logdatetime.AddMonths((int)deltaperiods);
+                        //currentdate = currentdatetime.Date.ToShortDateString();
+                        //currenttime = "";
+                        break;
+                    case "8": //Year
+                        periodsperturn = 1;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddYears((int)deltaperiods);
+                        currentdate = currentdatetime.Date.ToShortDateString();
+                        currenttime = "";
+                        break;
+                }
+
+                //string currentdate = currentdatetime.Date.ToShortDateString();
+                //string currenttime = currentdatetime.ToShortTimeString();
+
+               //UPDATE UI
                 btnCurrentTurn.Enabled = true;
                 btnEvents.Enabled = true;
+                txtDate.Text = currentdate;
+                txtTime.Text = currenttime;
             }
             else
             {
@@ -1442,6 +1642,11 @@ namespace TOAWEditSave
         private void dgvEvents_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             e.Cancel = true;
+
+        }
+
+        private void tpRP_Click(object sender, EventArgs e)
+        {
 
         }
     }

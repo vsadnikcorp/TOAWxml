@@ -6,10 +6,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
+//using TOAWXML;
 
 namespace TOAWXML
 {
-    class Utils
+    public class Utils
     {
         public string ReadFileToString(string filePath)
         {
@@ -23,7 +24,24 @@ namespace TOAWXML
         {
             //change regular expression as per your need
             return Regex.Replace(str, "[^a-zA-Z0-9_.]", "", RegexOptions.Compiled);
-                      
+        }
+
+        public static string RemoveOrdinals(string input)
+        {
+            // Ugly but oh so simple.
+            return input.Replace("0th", "0")
+                        .Replace("1st", "1")
+                        .Replace("2nd", "2")
+                        .Replace("3rd", "3")
+                        .Replace("11th", "11") // Need to handle these separately...
+                        .Replace("12th", "12")
+                        .Replace("13th", "13")
+                        .Replace("4th", "4")
+                        .Replace("5th", "5")
+                        .Replace("6th", "6")
+                        .Replace("7th", "7")
+                        .Replace("8th", "8")
+                        .Replace("9th", "9");
         }
     }
 }

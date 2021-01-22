@@ -57,7 +57,7 @@ namespace TOAWXML
             turnlength.Add(new KeyValuePair<string, string>("5", "Two Weeks"));
             turnlength.Add(new KeyValuePair<string, string>("6", "Month"));
             turnlength.Add(new KeyValuePair<string, string>("7", "Season"));
-            turnlength.Add(new KeyValuePair<string, string>("6", "Year"));
+            turnlength.Add(new KeyValuePair<string, string>("8", "Year"));
 
             cboTurnLength.DataSource = turnlength;
             cboTurnLength.ValueMember = "Key";

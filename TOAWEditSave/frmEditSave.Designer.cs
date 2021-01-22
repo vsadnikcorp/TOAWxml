@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEditSave));
             this.lblSelectSavedGame = new System.Windows.Forms.Label();
             this.btnSelectSavedGame = new System.Windows.Forms.Button();
@@ -182,6 +182,8 @@
             this.tpMap = new System.Windows.Forms.TabPage();
             this.tpUnits = new System.Windows.Forms.TabPage();
             this.tpReplace = new System.Windows.Forms.TabPage();
+            this.txtTime = new System.Windows.Forms.TextBox();
+            this.lblTime = new System.Windows.Forms.Label();
             this.gbForceTurn.SuspendLayout();
             this.tabSaveGame.SuspendLayout();
             this.tpRP.SuspendLayout();
@@ -217,8 +219,10 @@
             // 
             this.txtSelectedGamFile.Location = new System.Drawing.Point(144, 23);
             this.txtSelectedGamFile.Name = "txtSelectedGamFile";
+            this.txtSelectedGamFile.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtSelectedGamFile.Size = new System.Drawing.Size(436, 20);
             this.txtSelectedGamFile.TabIndex = 2;
+            this.txtSelectedGamFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnClose
             // 
@@ -234,8 +238,10 @@
             // 
             this.txtSelectedLogFile.Location = new System.Drawing.Point(144, 55);
             this.txtSelectedLogFile.Name = "txtSelectedLogFile";
+            this.txtSelectedLogFile.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtSelectedLogFile.Size = new System.Drawing.Size(436, 20);
             this.txtSelectedLogFile.TabIndex = 6;
+            this.txtSelectedLogFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnSelectLogFile
             // 
@@ -252,16 +258,16 @@
             this.lblTurn.AutoSize = true;
             this.lblTurn.Location = new System.Drawing.Point(15, 87);
             this.lblTurn.Name = "lblTurn";
-            this.lblTurn.Size = new System.Drawing.Size(72, 13);
+            this.lblTurn.Size = new System.Drawing.Size(32, 13);
             this.lblTurn.TabIndex = 9;
-            this.lblTurn.Text = "Turn Number:";
+            this.lblTurn.Text = "Turn:";
             // 
             // txtTurn
             // 
             this.txtTurn.Location = new System.Drawing.Point(18, 103);
             this.txtTurn.Name = "txtTurn";
             this.txtTurn.ReadOnly = true;
-            this.txtTurn.Size = new System.Drawing.Size(69, 20);
+            this.txtTurn.Size = new System.Drawing.Size(37, 20);
             this.txtTurn.TabIndex = 10;
             this.txtTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -279,7 +285,7 @@
             // rbForce2
             // 
             this.rbForce2.AutoSize = true;
-            this.rbForce2.Location = new System.Drawing.Point(153, 17);
+            this.rbForce2.Location = new System.Drawing.Point(150, 17);
             this.rbForce2.Name = "rbForce2";
             this.rbForce2.Size = new System.Drawing.Size(61, 17);
             this.rbForce2.TabIndex = 12;
@@ -291,9 +297,9 @@
             // 
             this.gbForceTurn.Controls.Add(this.rbForce2);
             this.gbForceTurn.Controls.Add(this.rbForce1);
-            this.gbForceTurn.Location = new System.Drawing.Point(190, 85);
+            this.gbForceTurn.Location = new System.Drawing.Point(205, 85);
             this.gbForceTurn.Name = "gbForceTurn";
-            this.gbForceTurn.Size = new System.Drawing.Size(287, 44);
+            this.gbForceTurn.Size = new System.Drawing.Size(277, 44);
             this.gbForceTurn.TabIndex = 13;
             this.gbForceTurn.TabStop = false;
             this.gbForceTurn.Text = "Player Turn";
@@ -312,7 +318,7 @@
             // lblDate
             // 
             this.lblDate.AutoSize = true;
-            this.lblDate.Location = new System.Drawing.Point(104, 86);
+            this.lblDate.Location = new System.Drawing.Point(58, 86);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(33, 13);
             this.lblDate.TabIndex = 15;
@@ -320,10 +326,10 @@
             // 
             // txtDate
             // 
-            this.txtDate.Location = new System.Drawing.Point(107, 103);
+            this.txtDate.Location = new System.Drawing.Point(61, 103);
             this.txtDate.Name = "txtDate";
             this.txtDate.ReadOnly = true;
-            this.txtDate.Size = new System.Drawing.Size(69, 20);
+            this.txtDate.Size = new System.Drawing.Size(71, 20);
             this.txtDate.TabIndex = 16;
             this.txtDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -381,6 +387,7 @@
             this.tpRP.Size = new System.Drawing.Size(635, 421);
             this.tpRP.TabIndex = 0;
             this.tpRP.Text = "Resource Points";
+            this.tpRP.Click += new System.EventHandler(this.tpRP_Click);
             // 
             // txtF2AdjustRP
             // 
@@ -1422,8 +1429,8 @@
             this.dgvEvents.AllowUserToAddRows = false;
             this.dgvEvents.AllowUserToDeleteRows = false;
             this.dgvEvents.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            this.dgvEvents.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            this.dgvEvents.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvEvents.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEvents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1758,12 +1765,33 @@
             this.tpReplace.TabIndex = 4;
             this.tpReplace.Text = "Replacements";
             // 
+            // txtTime
+            // 
+            this.txtTime.Location = new System.Drawing.Point(138, 103);
+            this.txtTime.Name = "txtTime";
+            this.txtTime.ReadOnly = true;
+            this.txtTime.Size = new System.Drawing.Size(57, 20);
+            this.txtTime.TabIndex = 90;
+            this.txtTime.TabStop = false;
+            this.txtTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.Location = new System.Drawing.Point(138, 87);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(33, 13);
+            this.lblTime.TabIndex = 90;
+            this.lblTime.Text = "Time:";
+            // 
             // frmEditSave
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(666, 657);
             this.ControlBox = false;
+            this.Controls.Add(this.lblTime);
+            this.Controls.Add(this.txtTime);
             this.Controls.Add(this.tabSaveGame);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtDate);
@@ -1958,6 +1986,8 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btnEvents;
         private System.Windows.Forms.Button btnDeleteEvents;
+        private System.Windows.Forms.TextBox txtTime;
+        private System.Windows.Forms.Label lblTime;
     }
 }
 
