@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtUnitName = new System.Windows.Forms.TextBox();
             this.txtProficiency = new System.Windows.Forms.TextBox();
             this.txtSupply = new System.Windows.Forms.TextBox();
@@ -38,7 +39,7 @@
             this.lblProficiency = new System.Windows.Forms.Label();
             this.lblSupply = new System.Windows.Forms.Label();
             this.trvUnitTree = new System.Windows.Forms.TreeView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -129,7 +130,7 @@
             this.gbObjectives = new System.Windows.Forms.GroupBox();
             this.btnSaveObj = new System.Windows.Forms.Button();
             this.dgvObjectives = new System.Windows.Forms.DataGridView();
-            this.contextMenuStripObj = new System.Windows.Forms.ContextMenuStrip();
+            this.contextMenuStripObj = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuObjDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuObjAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.cboTrack = new System.Windows.Forms.ComboBox();
@@ -191,17 +192,17 @@
             this.txtLossToler = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.txtCommunications = new System.Windows.Forms.TextBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnScenSettings = new System.Windows.Forms.Button();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnCloseMain = new System.Windows.Forms.Button();
             this.btnEnviron = new System.Windows.Forms.Button();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
             this.lblVersion = new System.Windows.Forms.Label();
-            this.cmsForce = new System.Windows.Forms.ContextMenuStrip();
+            this.cmsForce = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addFormationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsUnit = new System.Windows.Forms.ContextMenuStrip();
+            this.cmsUnit = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.moveUpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.moveDownToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -210,7 +211,7 @@
             this.divideUnitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.reuniteUnitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addeqpNewEquipUnitStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsEquip = new System.Windows.Forms.ContextMenuStrip();
+            this.cmsEquip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.moveUpToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.moveDownToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -1300,20 +1301,20 @@
             this.dgvObjectives.AllowUserToAddRows = false;
             this.dgvObjectives.AllowUserToDeleteRows = false;
             this.dgvObjectives.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this.dgvObjectives.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.dgvObjectives.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvObjectives.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvObjectives.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvObjectives.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvObjectives.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvObjectives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvObjectives.ContextMenuStrip = this.contextMenuStripObj;
             this.dgvObjectives.Location = new System.Drawing.Point(8, 48);
@@ -2015,8 +2016,10 @@
             this.txtPath.Location = new System.Drawing.Point(92, 549);
             this.txtPath.Name = "txtPath";
             this.txtPath.ReadOnly = true;
+            this.txtPath.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtPath.Size = new System.Drawing.Size(504, 20);
             this.txtPath.TabIndex = 57;
+            this.txtPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label45
             // 
@@ -2377,14 +2380,14 @@
             // ssMainLabel
             // 
             this.ssMainLabel.Name = "ssMainLabel";
-            this.ssMainLabel.Size = new System.Drawing.Size(510, 17);
+            this.ssMainLabel.Size = new System.Drawing.Size(35, 17);
             this.ssMainLabel.Spring = true;
             // 
             // ssMainProgress
             // 
             this.ssMainProgress.MarqueeAnimationSpeed = 30;
             this.ssMainProgress.Name = "ssMainProgress";
-            this.ssMainProgress.Size = new System.Drawing.Size(100, 16);
+            this.ssMainProgress.Size = new System.Drawing.Size(575, 16);
             this.ssMainProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
             // tssLabel1

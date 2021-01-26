@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEditSave));
             this.lblSelectSavedGame = new System.Windows.Forms.Label();
             this.btnSelectSavedGame = new System.Windows.Forms.Button();
@@ -184,6 +184,9 @@
             this.tpReplace = new System.Windows.Forms.TabPage();
             this.txtTime = new System.Windows.Forms.TextBox();
             this.lblTime = new System.Windows.Forms.Label();
+            this.ssSaveGame = new System.Windows.Forms.StatusStrip();
+            this.ssLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.progressSavedGame = new System.Windows.Forms.ToolStripProgressBar();
             this.gbForceTurn.SuspendLayout();
             this.tabSaveGame.SuspendLayout();
             this.tpRP.SuspendLayout();
@@ -194,6 +197,7 @@
             this.tpEvents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEvents)).BeginInit();
             this.tpStrategic.SuspendLayout();
+            this.ssSaveGame.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblSelectSavedGame
@@ -201,9 +205,10 @@
             this.lblSelectSavedGame.AutoSize = true;
             this.lblSelectSavedGame.Location = new System.Drawing.Point(11, 6);
             this.lblSelectSavedGame.Name = "lblSelectSavedGame";
-            this.lblSelectSavedGame.Size = new System.Drawing.Size(277, 13);
+            this.lblSelectSavedGame.Size = new System.Drawing.Size(546, 13);
             this.lblSelectSavedGame.TabIndex = 0;
-            this.lblSelectSavedGame.Text = "Select .gam file (created from .sal file renamed to .sce file)";
+            this.lblSelectSavedGame.Text = "Select .gam file (created from .sal file renamed to .sce file); should end in \"-1" +
+    "\" or \"-2\" for force turn to work properly.";
             // 
             // btnSelectSavedGame
             // 
@@ -1429,8 +1434,8 @@
             this.dgvEvents.AllowUserToAddRows = false;
             this.dgvEvents.AllowUserToDeleteRows = false;
             this.dgvEvents.AllowUserToResizeRows = false;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            this.dgvEvents.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            this.dgvEvents.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvEvents.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEvents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1784,12 +1789,37 @@
             this.lblTime.TabIndex = 90;
             this.lblTime.Text = "Time:";
             // 
+            // ssSaveGame
+            // 
+            this.ssSaveGame.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ssLabel1,
+            this.progressSavedGame});
+            this.ssSaveGame.Location = new System.Drawing.Point(0, 648);
+            this.ssSaveGame.Name = "ssSaveGame";
+            this.ssSaveGame.Size = new System.Drawing.Size(666, 22);
+            this.ssSaveGame.TabIndex = 91;
+            this.ssSaveGame.Text = "statusStrip1";
+            // 
+            // ssLabel1
+            // 
+            this.ssLabel1.Name = "ssLabel1";
+            this.ssLabel1.Size = new System.Drawing.Size(39, 17);
+            this.ssLabel1.Spring = true;
+            // 
+            // progressSavedGame
+            // 
+            this.progressSavedGame.MarqueeAnimationSpeed = 30;
+            this.progressSavedGame.Name = "progressSavedGame";
+            this.progressSavedGame.Size = new System.Drawing.Size(610, 16);
+            this.progressSavedGame.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            // 
             // frmEditSave
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(666, 657);
+            this.ClientSize = new System.Drawing.Size(666, 670);
             this.ControlBox = false;
+            this.Controls.Add(this.ssSaveGame);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.txtTime);
             this.Controls.Add(this.tabSaveGame);
@@ -1828,6 +1858,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvEvents)).EndInit();
             this.tpStrategic.ResumeLayout(false);
             this.tpStrategic.PerformLayout();
+            this.ssSaveGame.ResumeLayout(false);
+            this.ssSaveGame.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1988,6 +2020,9 @@
         private System.Windows.Forms.Button btnDeleteEvents;
         private System.Windows.Forms.TextBox txtTime;
         private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.StatusStrip ssSaveGame;
+        private System.Windows.Forms.ToolStripStatusLabel ssLabel1;
+        private System.Windows.Forms.ToolStripProgressBar progressSavedGame;
     }
 }
 

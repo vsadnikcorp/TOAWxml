@@ -37,6 +37,7 @@ namespace TOAWEditSave
             btnCalcRP.Enabled = false;
             btnEvents.Enabled = false;
             btnDeleteEvents.Enabled = false;
+            progressSavedGame.Visible = false;
 
             //SET RP CATEGORY NAMES
             txtCity.Text = TOAWEditSave.Properties.Settings.Default.City;
@@ -77,7 +78,7 @@ namespace TOAWEditSave
             //Application.Exit();
         }
 
-        private void btnSelectSavedGame_Click(object sender, EventArgs e)
+        private async void btnSelectSavedGame_Click(object sender, EventArgs e)
         {
             string FilePath;
             OpenFileDialog file = new OpenFileDialog();
@@ -93,6 +94,7 @@ namespace TOAWEditSave
                 btnSelectLogFile.Enabled = true;
                 txtSelectedLogFile.Enabled = true;
                 btnCalcRP.Enabled = true;
+                progressSavedGame.Visible = true;
             }
             else
             {
@@ -106,12 +108,12 @@ namespace TOAWEditSave
 
             //GET NAMES OF FORCES AND ASSIGN TO CONTROLS
             var forcenames = xelem.Descendants("HEADER").First();
-            string fn1 = "";
-            string fn2 = "";
+            string fn1 = forcenames.Attribute("forceName1").Value.ToString(); ;
+            string fn2 = forcenames.Attribute("forceName2").Value.ToString();
             
-            //ADD FORCE NAMES TO CONTROLS
-            fn1 = forcenames.Attribute("forceName1").Value.ToString();
-            fn2 = forcenames.Attribute("forceName2").Value.ToString();
+            ////ADD FORCE NAMES TO CONTROLS
+            //fn1 = forcenames.Attribute("forceName1").Value.ToString();
+            //fn2 = forcenames.Attribute("forceName2").Value.ToString();
 
             rbForce1.Text = fn1;
             gbForce1.Text = fn1;
@@ -126,6 +128,31 @@ namespace TOAWEditSave
             lblF2CurrentRP.Text = fn2 + "\nCurrent RP";
             lblF2AdjustRP.Text = fn2 + "\nAdjust RP";
             lblF2TotalRP.Text = fn2 + "\nTotal RP";
+
+
+            //DETERMINE IF FILE NAME ENDS IN -1 or -2, ASSIGN TO FORCE RADIO BUTTON
+            //string forceturn = "";
+            string truncfilepath = FilePath.Substring(0, FilePath.IndexOf("."));
+            string forceturn = truncfilepath.Substring(truncfilepath.Length - 2, 2);
+
+            if(forceturn == "-1")
+            {
+                rbForce1.Select();
+            }
+            else if (forceturn == "-2")
+            {
+                rbForce2.Select();
+            }
+            else
+            {
+                MessageBox.Show("gam filename does not end in '-1' or '-2' to indicate which force has turn." 
+                    + Environment.NewLine + Environment.NewLine +
+                    "Please select the correct force manually.",
+                    "No Force Turn Indicator",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation,
+                    MessageBoxDefaultButton.Button1);
+            }
 
             //FIX VARIOUS DATA GLITCHES IN THE EVENT XML (IE, EVENTS HAVING DATA IN FIELDS THAT DON'T MATTER FOR THAT EVENT, ETC.)
             IEnumerable<XElement> zing = xelem.XPathSelectElements("EVENTS/EVENT");
@@ -367,6 +394,9 @@ namespace TOAWEditSave
             dgvEvents.Columns[7].ReadOnly = true;
             dgvEvents.Columns[8].ReadOnly = true;
             dgvEvents.Columns[9].ReadOnly = true;
+
+            await Task.Delay(500);
+            progressSavedGame.Visible = false;
         }
 
         private void btnSelectLogFile_Click(object sender, EventArgs e)
@@ -597,65 +627,65 @@ namespace TOAWEditSave
 
         private void btnCurrentTurn_Click(object sender, EventArgs e)
         {
-            string toawlogFile = txtSelectedLogFile.Text;
-            string gamFile = txtSelectedGamFile.Text;
+            //string toawlogFile = txtSelectedLogFile.Text;
+            //string gamFile = txtSelectedGamFile.Text;
 
-            List<string> turnList = new List<string>(File.ReadLines(toawlogFile).ToList());
-            List<string> toawSaveLog = new List<string>();
-            string turn="";
-            string currentturn = "";
+            //List<string> turnList = new List<string>(File.ReadLines(toawlogFile).ToList());
+            //List<string> toawSaveLog = new List<string>();
+            //string turn="";
+            //string currentturn = "";
 
-            //COPY RELEVANT LINES FROM TOAWLOG.TXT TO TOAWSAVELOG.TXT
-            foreach (var line in turnList.Where(l => l.Contains("SetState") || l.Contains("event")))
-            {
-                if (line.Contains("SetState"))
-                {
-                    turn = line.Split('|', '|')[1];//BETTER TO USE SIDESTART?  TURNSTART ONLY USEFUL FOR FINDING EVENTS
-                    currentturn = line.Substring(19);
-                }
-                else
-                {
-                    currentturn = line.Substring(10);
-                }
-                toawSaveLog.Add(currentturn);
-            }
+            ////COPY RELEVANT LINES FROM TOAWLOG.TXT TO TOAWSAVELOG.TXT
+            //foreach (var line in turnList.Where(l => l.Contains("SetState") || l.Contains("event")))
+            //{
+            //    if (line.Contains("SetState"))
+            //    {
+            //        turn = line.Split('|', '|')[1];//BETTER TO USE SIDESTART?  TURNSTART ONLY USEFUL FOR FINDING EVENTS
+            //        currentturn = line.Substring(19);
+            //    }
+            //    else
+            //    {
+            //        currentturn = line.Substring(10);
+            //    }
+            //    toawSaveLog.Add(currentturn);
+            //}
 
-            string path = (txtSelectedLogFile.Text).Remove(txtSelectedLogFile.Text.Length - 11);
-            string logpath = path + "TOAWSaveLog.txt";
-            System.IO.File.WriteAllLines(logpath, toawSaveLog);
+            //string path = (txtSelectedLogFile.Text).Remove(txtSelectedLogFile.Text.Length - 11);
+            //string logpath = path + "TOAWSaveLog.txt";
+            //System.IO.File.WriteAllLines(logpath, toawSaveLog);
 
-            //ADJUST TURN, DATE, SIDE SETTINGS 
-            string turnnumber = Regex.Match(turn, @"\d+").Value;
-            string force = "";
-            int index = 0;
-            txtTurn.Text = turnnumber;
+            ////ADJUST TURN, DATE, SIDE SETTINGS 
+            //string turnnumber = Regex.Match(turn, @"\d+").Value;
+            //string force = "";
+            //int index = 0;
+            //txtTurn.Text = turnnumber;
 
-            //STRIP FORCE NAME OUT OF CURRENTTURN
-            index = currentturn.IndexOf("|");
-            if (currentturn.Contains("TurnStart") || currentturn.Contains("SideStart"))
-            {
-                force = currentturn.Substring(10, index-10);
+            ////STRIP FORCE NAME OUT OF CURRENTTURN
+            //index = currentturn.IndexOf("|");
+            //if (currentturn.Contains("TurnStart") || currentturn.Contains("SideStart"))
+            //{
+            //    force = currentturn.Substring(10, index-10);
 
-            }
-            if (currentturn.Contains("TurnEnd") ||currentturn.Contains("SideEnd"))
-            {
-                force = currentturn.Substring(8, index-8);
-            }
+            //}
+            //if (currentturn.Contains("TurnEnd") ||currentturn.Contains("SideEnd"))
+            //{
+            //    force = currentturn.Substring(8, index-8);
+            //}
 
-            //SET FORCE RADIOBUTTON
-            if (force == rbForce1.Text)
-            {
-                rbForce1.Checked = true;
-            }
-            else
-            {
-                rbForce2.Checked = true;
-            }
+            ////SET FORCE RADIOBUTTON
+            //if (force == rbForce1.Text)
+            //{
+            //    rbForce1.Checked = true;
+            //}
+            //else
+            //{
+            //    rbForce2.Checked = true;
+            //}
 
-            //SET CURRENT DATE
-            var date = currentturn.Substring(currentturn.LastIndexOf('|') + 1);
-            string dateonly = new string(date.Where(c => (Char.IsDigit(c) || c == '/')).ToArray());
-            txtDate.Text = dateonly.ToString();
+            ////SET CURRENT DATE
+            //var date = currentturn.Substring(currentturn.LastIndexOf('|') + 1);
+            //string dateonly = new string(date.Where(c => (Char.IsDigit(c) || c == '/')).ToArray());
+            //txtDate.Text = dateonly.ToString();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -690,8 +720,11 @@ namespace TOAWEditSave
             TOAWEditSave.Properties.Settings.Default.Save();
         }
        
-        private void btnCalcRP_Click(object sender, EventArgs e)
+        private async void btnCalcRP_Click(object sender, EventArgs e)
         {
+            progressSavedGame.Visible = true;
+            await Task.Delay(25);
+
             string FilePath = txtSelectedGamFile.Text;
             XElement xelem = XElement.Load(FilePath);
 
@@ -727,6 +760,7 @@ namespace TOAWEditSave
 
             foreach (XElement place in places)
             {
+                await Task.Delay(5);
                 //FIND CELL FOR PLACE
                 placeLoc = place.Attribute("loc").Value;
                 string xpathPlaceLoc = "MAP/CELL[@loc ='" + placeLoc + "']";
@@ -992,6 +1026,9 @@ namespace TOAWEditSave
 
             txtF2CurrentRP.Text = f2currentrp;
             txtF2TotalRP.Text = f2totalrp;
+
+            await Task.Delay(100);
+            progressSavedGame.Visible = false;
         }
 
         private int GetNthIndex(string s, char t, int n)
@@ -1090,8 +1127,9 @@ namespace TOAWEditSave
             txtBM9.ReadOnly = true;
         }
 
-        private void btnEvents_Click(object sender, EventArgs e)
+        private async void btnEvents_Click(object sender, EventArgs e)
         {
+            progressSavedGame.Visible = true;
             string logFile = txtSelectedLogFile.Text;
             string turn = txtTurn.Text;
 
@@ -1236,6 +1274,8 @@ namespace TOAWEditSave
             }
             //}  //ORIGINAL BRACKET FOR LOG FOREACH LOOP
             btnDeleteEvents.Enabled = true;
+            await Task.Delay(500);
+            progressSavedGame.Visible = false;
         }
 
         private void dgvEvents_CellContentClick(object sender, DataGridViewCellEventArgs e)

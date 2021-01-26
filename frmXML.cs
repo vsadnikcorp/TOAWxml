@@ -1779,7 +1779,11 @@ namespace TOAWXML
                 //        MessageBoxDefaultButton.Button1);
                 //}
 
-                Application.Restart();
+                //Application.Restart();
+
+                xmlform_Load(null, EventArgs.Empty);
+                trvUnitTree.Nodes.Clear();
+                LoadTree();
             }
         }
 
