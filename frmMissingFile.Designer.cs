@@ -37,7 +37,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(9, 55);
+            this.label1.Location = new System.Drawing.Point(9, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(285, 39);
             this.label1.TabIndex = 0;
@@ -49,7 +49,7 @@
             // 
             this.btnFile3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFile3.AutoSize = true;
-            this.btnFile3.Location = new System.Drawing.Point(320, 165);
+            this.btnFile3.Location = new System.Drawing.Point(194, 73);
             this.btnFile3.Name = "btnFile3";
             this.btnFile3.Size = new System.Drawing.Size(100, 33);
             this.btnFile3.TabIndex = 1;
@@ -59,7 +59,7 @@
             // 
             // btnCancel2
             // 
-            this.btnCancel2.Location = new System.Drawing.Point(12, 165);
+            this.btnCancel2.Location = new System.Drawing.Point(12, 73);
             this.btnCancel2.Name = "btnCancel2";
             this.btnCancel2.Size = new System.Drawing.Size(100, 33);
             this.btnCancel2.TabIndex = 2;
@@ -73,7 +73,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(455, 222);
+            this.ClientSize = new System.Drawing.Size(307, 123);
             this.ControlBox = false;
             this.Controls.Add(this.btnCancel2);
             this.Controls.Add(this.btnFile3);

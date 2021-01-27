@@ -77,7 +77,7 @@ namespace TOAWXML
             string strDeploy = Globals.GlobalVariables.DEPLOY;
             string strReplace = Globals.GlobalVariables.REPLACE;
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             if (rbFormPropSubunits.Checked == true)
             {
@@ -136,7 +136,7 @@ namespace TOAWXML
                         }
                     }
                 }
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                 this.Close();
         }
     }

@@ -42,23 +42,46 @@ namespace TOAWXML
             txtMax.Text = "1";
             dgvEquipment.ClearSelection();
 
-            //Checks that EqpFilePath.txt exists
-            if (System.IO.File.Exists("EqpFilePath.txt"))
-            {
-                string fileEqpPath = File.ReadAllText("EqpFilePath.txt");
-                Globals.GlobalVariables.EQPPATH = System.IO.Path.Combine(fileEqpPath);
-                txtEqpFile.Text = fileEqpPath;
+            //Checks that EQPFILE setting !- ""
+            ///if (System.IO.File.Exists("EqpFilePath.txt"))
+            ///{
+            //string fileEqpPath = File.ReadAllText("EqpFilePath.txt");
+            //Globals.GlobalVariables.EQPPATH = System.IO.Path.Combine(fileEqpPath);
+            //txtEqpFile.Text = fileEqpPath;
 
-                if (!System.IO.File.Exists(Globals.GlobalVariables.EQPPATH))
+            //if (!System.IO.File.Exists(Globals.GlobalVariables.EQPPATH))
+            //{
+            //    frmMissingEqpFile loadfileform = new frmMissingEqpFile();
+            //    loadfileform.ShowDialog();
+            //    return;
+            //}
+            //>>>>>>>>>>>>>>>>>>
+            //TOAWXML.Properties.Settings.Default.EqpFilePath = "";
+            //TOAWXML.Properties.Settings.Default.Save();
+
+            if (TOAWXML.Properties.Settings.Default.EqpFilePath != "")
+            {
+                string fileEqpPath = TOAWXML.Properties.Settings.Default.EqpFilePath;
+                txtEqpFile.Text = fileEqpPath;
+                //txtPath.Text = filePath;
+                if (!System.IO.File.Exists(fileEqpPath))
                 {
-                    frmMissingEqpFile loadfileform = new frmMissingEqpFile();
+                    //frmMissingEqpFile loadfileform = new frmMissingEqpFile();
+                    //loadfileform.ShowDialog();
+                    //return;
+
+                    frmLoadEqpFile loadfileform = new frmLoadEqpFile();
                     loadfileform.ShowDialog();
+                    this.Close();
                     return;
                 }
-
+                ///}
+                    //<<<<<<<<<<<<<<<<<<
                 //SET UP XML
-                XDocument xdoc = XDocument.Load(Globals.GlobalVariables.EQPPATH);
-                XElement xelem = XElement.Load(Globals.GlobalVariables.EQPPATH);
+                //XDocument xdoc = XDocument.Load(Globals.GlobalVariables.EQPPATH);
+                XDocument xdoc = XDocument.Load(TOAWXML.Properties.Settings.Default.EqpFilePath);
+                //XElement xelem = XElement.Load(Globals.GlobalVariables.EQPPATH);
+                XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.EqpFilePath);
 
                 var dequip = xdoc.Descendants("UNITS_DATABASE");
                 var xequip = xelem.Descendants("UNITS_DATABASE");
@@ -94,6 +117,7 @@ namespace TOAWXML
             {
                 frmLoadEqpFile loadfileform = new frmLoadEqpFile();
                 loadfileform.ShowDialog();
+                this.Close();
                 return;
             }
 
@@ -1644,13 +1668,16 @@ namespace TOAWXML
             file.Filter = "TOAW .eqp files *.eqp|*.eqp";
             if (file.ShowDialog() == DialogResult.OK)
             {
-                Globals.GlobalVariables.EQPPATH = file.FileName;
+                //Globals.GlobalVariables.EQPPATH = file.FileName;
+                TOAWXML.Properties.Settings.Default.EqpFilePath = file.FileName;
+                TOAWXML.Properties.Settings.Default.Save();
                 txtEqpFile.Text = file.FileName;
-                System.IO.File.WriteAllText("EqpFilePath.txt", Globals.GlobalVariables.EQPPATH);
+                ///System.IO.File.WriteAllText("EqpFilePath.txt", Globals.GlobalVariables.EQPPATH);
 
                 //**********************FIX INVALID XML
                 
-                StreamReader streamReader = new StreamReader(Globals.GlobalVariables.EQPPATH);
+                ///StreamReader streamReader = new StreamReader(Globals.GlobalVariables.EQPPATH);
+                StreamReader streamReader = new StreamReader(TOAWXML.Properties.Settings.Default.EqpFilePath);
                 string xmlText = streamReader.ReadToEnd();
                 streamReader.Close();
 
@@ -1664,7 +1691,8 @@ namespace TOAWXML
                     string goodXML = Regex.Replace(xmlText, hex, "$", RegexOptions.Compiled);
                     XmlDocument goodXMLdoc = new XmlDocument();
                     goodXMLdoc.LoadXml(goodXML);
-                    goodXMLdoc.Save(Globals.GlobalVariables.EQPPATH);
+                    ///goodXMLdoc.Save(Globals.GlobalVariables.EQPPATH);
+                    goodXMLdoc.Save(TOAWXML.Properties.Settings.Default.EqpFilePath);
 
                     MessageBox.Show("TOAWxml has detected invalid XML characters.  The invalid characters have been replaced with '$'.",
                         "Invalid XML Characters",
@@ -1908,7 +1936,8 @@ namespace TOAWXML
             Globals.GlobalVariables.TREEVIEWCHANGED = true;
 
             //ADD XML ELEMENT
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            ///XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathUnit = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitID + "]";
             var targetunit = xelem.XPathSelectElement(xpathUnit);
             int intChildren = targetunit.Elements("EQUIPMENT").Count();
@@ -1946,7 +1975,8 @@ namespace TOAWXML
             newTNode.Name = "EQUIPMENT";
             targetTNode.Nodes.Insert(targetTNode.Index + 1, newTNode);
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            ///xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
 
             //RESET CONTROLS
             Globals.GlobalVariables.TREEVIEWCHANGED = false;

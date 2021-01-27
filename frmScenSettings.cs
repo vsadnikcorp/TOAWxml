@@ -27,7 +27,7 @@ namespace TOAWXML
         private void frmScenSettings_Load(object sender, EventArgs e)
         {
             //XPATH FOR SCENARIO VARIABLES PORTION OF XML
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathvariables = "VARIABLES";
             var variables = xelem.XPathSelectElement(xpathvariables);
 
@@ -68,7 +68,7 @@ namespace TOAWXML
 
         private void btnSaveScenSettings_Click(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathvariables = "VARIABLES";
             var variables = xelem.XPathSelectElement(xpathvariables);
 
@@ -89,7 +89,7 @@ namespace TOAWXML
             variables.Attribute("newMudRulesScalar").Value = txtNewMudRules.Text;
             variables.Attribute("riversAlongEdges").Value = txtRiversHexside.Text;
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
 
             btnCloseScenSettings.Select();
         }

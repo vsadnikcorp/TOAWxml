@@ -55,7 +55,7 @@ namespace TOAWXML
             string strReplace = Globals.GlobalVariables.REPLACE;
             string strExperience = Globals.GlobalVariables.EXPERIENCE;
             string strIconColor = Globals.GlobalVariables.ICONCOLOR;
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             if (rbUnitPropForm.Checked == true)
             {
@@ -151,7 +151,7 @@ namespace TOAWXML
                         }
                 }
                 }
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                 this.Close();
         }
     }

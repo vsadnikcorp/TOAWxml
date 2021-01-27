@@ -23,7 +23,7 @@ namespace TOAWXML
 
         public static DateTime getCurrentGameDate()
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string dateXPath = "CALENDAR";
             var currentDate = xelem.XPathSelectElement(dateXPath);
 
@@ -187,7 +187,7 @@ namespace TOAWXML
 
         public static int getTurnLength()
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string dateXPath = "CALENDAR";
             var currentTime = xelem.XPathSelectElement(dateXPath);
             String turnLengthIndex = currentTime.Attribute("turnLength").Value.ToString();

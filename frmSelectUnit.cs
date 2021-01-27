@@ -24,20 +24,48 @@ namespace TOAWXML
             btnSelect.Enabled = false;
 
             //Checks that FilePath.txt exists
-            if (System.IO.File.Exists("FilePath.txt"))
+            //if (System.IO.File.Exists("FilePath.txt"))
+            //{
+            //    string filePath = File.ReadAllText("FilePath.txt");
+
+            //    Globals.GlobalVariables.PATH = System.IO.Path.Combine(filePath);
+
+            //    if (!System.IO.File.Exists(Globals.GlobalVariables.PATH))
+            //    {
+            //        frmMissingFile loadfileform = new frmMissingFile();
+            //        loadfileform.ShowDialog();
+            //        return;
+            //    }
+
+            //    XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+
+            //    //GET NAME OF FORCE 1 AND ASSIGN TO radio button text
+            //    var forcenames = xelem.Descendants("HEADER");
+            //    foreach (var f in forcenames)
+            //    {
+            //        string fn1 = f.Attribute("forceName1").Value.ToString();
+            //        this.rbSUForce1.Text = fn1;
+
+            //        string fn2 = f.Attribute("forceName2").Value.ToString();
+            //        this.rbSUForce2.Text = fn2;
+            //    }
+            //}
+
+            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            //CHECK THAT FILEPATH HAS BEEN ASSIGNED
+            if (TOAWXML.Properties.Settings.Default.FilePath != "")
             {
-                string filePath = File.ReadAllText("FilePath.txt");
+                string filePath = TOAWXML.Properties.Settings.Default.FilePath;
 
-                Globals.GlobalVariables.PATH = System.IO.Path.Combine(filePath);
-
-                if (!System.IO.File.Exists(Globals.GlobalVariables.PATH))
+                if (!System.IO.File.Exists(filePath))
                 {
                     frmMissingFile loadfileform = new frmMissingFile();
                     loadfileform.ShowDialog();
                     return;
                 }
 
-                XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                //XDocument xdoc = XDocument.Load(TOAWXML.Properties.Settings.Default.FilePath);
+                XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
                 //GET NAME OF FORCE 1 AND ASSIGN TO radio button text
                 var forcenames = xelem.Descendants("HEADER");
@@ -50,11 +78,13 @@ namespace TOAWXML
                     this.rbSUForce2.Text = fn2;
                 }
             }
+
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         }
 
         private void SULoadTree()
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             TreeNode forceNode;
             TreeNode formationNode;
             TreeNode unitNode;

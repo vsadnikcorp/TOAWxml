@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtUnitName = new System.Windows.Forms.TextBox();
             this.txtProficiency = new System.Windows.Forms.TextBox();
             this.txtSupply = new System.Windows.Forms.TextBox();
@@ -226,7 +226,6 @@
             this.ssMainLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.ssMainProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.tssLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnStar = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.gbForce.SuspendLayout();
             this.tabUnits.SuspendLayout();
@@ -1301,20 +1300,20 @@
             this.dgvObjectives.AllowUserToAddRows = false;
             this.dgvObjectives.AllowUserToDeleteRows = false;
             this.dgvObjectives.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this.dgvObjectives.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.dgvObjectives.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvObjectives.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvObjectives.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvObjectives.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvObjectives.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvObjectives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvObjectives.ContextMenuStrip = this.contextMenuStripObj;
             this.dgvObjectives.Location = new System.Drawing.Point(8, 48);
@@ -2395,23 +2394,12 @@
             this.tssLabel1.Name = "tssLabel1";
             this.tssLabel1.Size = new System.Drawing.Size(0, 17);
             // 
-            // btnStar
-            // 
-            this.btnStar.Location = new System.Drawing.Point(594, 577);
-            this.btnStar.Name = "btnStar";
-            this.btnStar.Size = new System.Drawing.Size(20, 27);
-            this.btnStar.TabIndex = 68;
-            this.btnStar.Text = "*";
-            this.btnStar.UseVisualStyleBackColor = true;
-            this.btnStar.Click += new System.EventHandler(this.btnStar_Click);
-            // 
             // xmlform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 658);
             this.ControlBox = false;
-            this.Controls.Add(this.btnStar);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnEvents);
             this.Controls.Add(this.cboSize);
@@ -2682,7 +2670,6 @@
         private System.Windows.Forms.Label lblEntryTurn;
         private System.Windows.Forms.TextBox txtEntryTurn;
         private System.Windows.Forms.ToolStripStatusLabel tssLabel1;
-        private System.Windows.Forms.Button btnStar;
         private System.Windows.Forms.Button btnEquipView;
     }
 }

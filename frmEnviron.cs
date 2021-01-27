@@ -26,7 +26,7 @@ namespace TOAWXML
         {
             //RETRIEVE CALENDAR DATA FROM XML
             string xpath = "CALENDAR";
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             var calendar = xelem.XPathSelectElement(xpath);
 
             //RETRIEVE ENVIRONMENT DATA FROM XML
@@ -791,7 +791,7 @@ namespace TOAWXML
         private void cboTurnLength_SelectionChangeCommitted(object sender, EventArgs e)
         {
             string xpath = "CALENDAR";
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             var calendar = xelem.XPathSelectElement(xpath);
 
             //POPULATES START HOUR COMBOBOX
@@ -865,22 +865,22 @@ namespace TOAWXML
 
             calendar.Attribute("turnLength").Value = cboTurnLength.SelectedValue.ToString();
             calendar.Attribute("startHour").Value = cboStartHour.SelectedValue.ToString();
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboStartHour_SelectionChangeCommitted(object sender, EventArgs e)
         {
             string xpath = "CALENDAR";
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             var calendar = xelem.XPathSelectElement(xpath);
             calendar.Attribute("startHour").Value = cboStartHour.SelectedValue.ToString();
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboStartMonth_SelectionChangeCommitted(object sender, EventArgs e)
         {
             string xpath = "CALENDAR";
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             var calendar = xelem.XPathSelectElement(xpath);
 
             string strStartmonth = cboStartMonth.SelectedValue.ToString();
@@ -1282,12 +1282,12 @@ namespace TOAWXML
             cboStartDay.DisplayMember = "Value";
 
             calendar.Attribute("startMonth").Value = cboStartMonth.SelectedValue.ToString();
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboMapScale_SelectionChangeCommitted(object sender, EventArgs e)
         {//*1
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             string xpathenviron = "ENVIRONMENT";
             var environ = xelem.XPathSelectElement(xpathenviron);
@@ -1524,13 +1524,13 @@ namespace TOAWXML
                 }//**17
                 
             }//**2climatearea************
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
            
         }//**1sub
     
         private void cboClimateArea_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             string xpathenviron = "ENVIRONMENT";
             var environ = xelem.XPathSelectElement(xpathenviron);
@@ -1782,12 +1782,12 @@ namespace TOAWXML
             }//****
 
             environ.Attribute("zone").Value = cboClimateArea.SelectedValue.ToString();
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboTemperature_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathenviron = "ENVIRONMENT";
             var environ = xelem.XPathSelectElement(xpathenviron);
             //int iTemp = Int32.Parse(cboTemperature.SelectedValue.ToString());
@@ -1876,12 +1876,12 @@ namespace TOAWXML
                     weatherzone3.Attribute("temperature").Value = cboWZ3Temp.SelectedValue.ToString();
                 }//**14
             }
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboPrecipitation_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathenviron = "ENVIRONMENT";
             var environ = xelem.XPathSelectElement(xpathenviron);
 
@@ -1907,12 +1907,12 @@ namespace TOAWXML
             weatherzone2.Attribute("precipitation").Value = cboPrecipitation.SelectedValue.ToString();
             weatherzone3.Attribute("precipitation").Value = cboPrecipitation.SelectedValue.ToString();
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboWZ1Vis_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathenviron = "ENVIRONMENT";
             var environ = xelem.XPathSelectElement(xpathenviron);
 
@@ -1936,12 +1936,12 @@ namespace TOAWXML
             weatherzone2.Attribute("visibility").Value = cboWZ1Vis.SelectedValue.ToString();
             weatherzone3.Attribute("visibility").Value = cboWZ1Vis.SelectedValue.ToString();
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboWZ2Precip_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathenviron = "ENVIRONMENT";
             var environ = xelem.XPathSelectElement(xpathenviron);
 
@@ -1951,12 +1951,12 @@ namespace TOAWXML
 
             weatherzone2.Attribute("precipitation").Value = cboWZ2Precip.SelectedValue.ToString();
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboWZ3Precip_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathenviron = "ENVIRONMENT";
             var environ = xelem.XPathSelectElement(xpathenviron);
 
@@ -1966,12 +1966,12 @@ namespace TOAWXML
 
             weatherzone3.Attribute("precipitation").Value = cboWZ3Precip.SelectedValue.ToString();
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboWZ2Temp_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathenviron = "ENVIRONMENT";
             var environ = xelem.XPathSelectElement(xpathenviron);
 
@@ -1981,12 +1981,12 @@ namespace TOAWXML
 
             weatherzone2.Attribute("temperature").Value = cboWZ2Temp.SelectedValue.ToString();
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboWZ3Temp_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathenviron = "ENVIRONMENT";
             var environ = xelem.XPathSelectElement(xpathenviron);
 
@@ -1996,12 +1996,12 @@ namespace TOAWXML
 
             weatherzone3.Attribute("temperature").Value = cboWZ3Temp.SelectedValue.ToString();
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboWZ2Vis_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathenviron = "ENVIRONMENT";
             var environ = xelem.XPathSelectElement(xpathenviron);
 
@@ -2011,12 +2011,12 @@ namespace TOAWXML
 
             weatherzone2.Attribute("visibility").Value = cboWZ2Vis.SelectedValue.ToString();
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboWZ3Vis_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathenviron = "ENVIRONMENT";
             var environ = xelem.XPathSelectElement(xpathenviron);
 
@@ -2026,7 +2026,7 @@ namespace TOAWXML
 
             weatherzone3.Attribute("visibility").Value = cboWZ3Vis.SelectedValue.ToString();
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void btnCloseEnviron_Click(object sender, EventArgs e)
@@ -2038,7 +2038,7 @@ namespace TOAWXML
         {
             //RETRIEVE CALENDAR DATA FROM XML
             string xpath = "CALENDAR";
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             var calendar = xelem.XPathSelectElement(xpath);
 
             //RETRIEVE ENVIRONMENT DATA FROM XML
@@ -2058,16 +2058,16 @@ namespace TOAWXML
             environment.Attribute("precipitation").Value = cboPrecipitation.SelectedValue.ToString();
             environment.Attribute("temperature").Value = cboTemperature.SelectedValue.ToString();
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboStartDay_SelectionChangeCommitted(object sender, EventArgs e)
         {
             string xpath = "CALENDAR";
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             var calendar = xelem.XPathSelectElement(xpath);
             calendar.Attribute("startDay").Value = cboStartDay.SelectedValue.ToString();
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void txtStartYear_TextChanged(object sender, EventArgs e)

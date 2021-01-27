@@ -52,7 +52,7 @@ namespace TOAWXML
             dt.Columns.Add("X", typeof(Int32));
             dt.Columns.Add("Y", typeof(Int32));
             dt.Columns.Add("Supply", typeof(Int32));
-            XDocument xdoc = XDocument.Load(Globals.GlobalVariables.PATH);
+            XDocument xdoc = XDocument.Load(TOAWXML.Properties.Settings.Default.FilePath);
             
             var depots = (from d in xdoc.Descendants("SUPPLIES").Descendants("FORCE").Descendants("NODE")
                      where (string)d.Parent.Attribute("ID") == Globals.GlobalVariables.FORCE
@@ -82,7 +82,7 @@ namespace TOAWXML
 
         private void btnSaveDepot_Click(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathdepot;
             XElement xdepot;
 
@@ -98,7 +98,7 @@ namespace TOAWXML
                 xdepot.Attribute("x").Value = strX;
                 xdepot.Attribute("y").Value = strY;
                 xdepot.Attribute("supply").Value = strSupply;
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             }
         }
 
@@ -115,13 +115,13 @@ namespace TOAWXML
                 DataGridViewRow selectedRow = dgvDepots.Rows[rowindex];
                 strID = selectedRow.Cells["ID"].Value.ToString();
 
-                XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
                 xpathdepot = "SUPPLIES/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/NODE[@ID=" + strID + "]";
                 xdepot = xelem.XPathSelectElement(xpathdepot);
 
                 dgvDepots.Rows.RemoveAt(item.Index);
                 xdepot.Remove();
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             }
         }
 
@@ -134,7 +134,7 @@ namespace TOAWXML
             int newMax;
             int depRows = dgvDepots.Rows.Count;
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             if (depRows > 0)
             {
@@ -208,7 +208,7 @@ namespace TOAWXML
                 xelem.XPathSelectElement("SUPPLIES/FORCE[@ID = " + Globals.GlobalVariables.FORCE + "]").Add(depotNode);
             }
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
 
             dt.Rows[dgvDepots.Rows.Count-1][0] = newMax.ToString();
             dgvDepots.DataSource = dt;

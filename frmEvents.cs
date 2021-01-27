@@ -267,7 +267,7 @@ namespace TOAWXML
                 {
                     txtID.Text = strEventID;
 
-                    XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                    XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
                     string xpath = "EVENTS/EVENT[@ID=" + Globals.GlobalVariables.EVENTID + "]";
                     var eventz = xelem.XPathSelectElement(xpath);
                     SetFullAttributes(eventz);
@@ -322,7 +322,7 @@ namespace TOAWXML
 
         public async void LoadEventTree()
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             TreeNode eventsTNode;
             TreeNode eventTNode;
             TreeNode attribTNode;
@@ -632,7 +632,7 @@ namespace TOAWXML
                     }
                 }
 
-                XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
                 string xpath = "OOB/FORCE[@ID=" + strForceID + "]/FORMATION/UNIT[@ID =" + strUnitID + "]";
                 var unit = xelem.XPathSelectElement(xpath);
                 if (unit != null)
@@ -887,7 +887,7 @@ namespace TOAWXML
                             }
                         }
 
-                        XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                        XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
                         string xpath = "OOB/FORCE[@ID=" + strForceID + "]/FORMATION/UNIT[@ID =" + strUnitID + "]";
                         var unit = xelem.XPathSelectElement(xpath);
                         if (unit != null)
@@ -1055,7 +1055,7 @@ namespace TOAWXML
                         }
                     }
 
-                    XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                    XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
                     string xpath = "OOB/FORCE[@ID=" + strForceID + "]/FORMATION[@ID =" + strFormID + "]";
                     var unit = xelem.XPathSelectElement(xpath);
                     btnUnitEffect.Text = unit.Attribute("NAME").Value.ToString();
@@ -1073,7 +1073,7 @@ namespace TOAWXML
                 string strEventID = trvEvents.SelectedNode.Tag.ToString();
                 txtID.Text = strEventID;
 
-                XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
                 string xpath = "EVENTS/EVENT[@ID=" + Globals.GlobalVariables.EVENTID + "]";
                 var eventz = xelem.XPathSelectElement(xpath);
 
@@ -1120,7 +1120,7 @@ namespace TOAWXML
         private void cboEffect_SelectionChangeCommitted(object sender, EventArgs e)
         {
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpath = "EVENTS/EVENT[@ID=" + Globals.GlobalVariables.EVENTID + "]";
             var eventz = xelem.XPathSelectElement(xpath);
 
@@ -1174,14 +1174,14 @@ namespace TOAWXML
             bool noUnitSelected = (btnUnitTrigger.Visible == true && btnUnitTrigger.Text == "Select unit") 
                    || (btnUnitEffect.Visible == true && (btnUnitEffect.Text == "Select unit" || btnUnitEffect.Text == "Select Formation"));
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpath = "EVENTS/EVENT[@ID=" + Globals.GlobalVariables.EVENTID + "]";
 
             var eventz = xelem.XPathSelectElement(xpath);
             if (hasTriggerAndEffect == true)
             {
                 ssEventsProgress.Visible = true;
-                //XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                //XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
                 //string xpath = "EVENTS/EVENT[@ID=" + Globals.GlobalVariables.EVENTID + "]";
                 //var eventz = xelem.XPathSelectElement(xpath);
                 int lastturn = Convert.ToInt32(eventz.Parent.Parent.Element("CALENDAR").Attribute("finalTurn").Value) + 1;
@@ -1208,7 +1208,7 @@ namespace TOAWXML
 
                 SaveTriggerGroup(eventz);
 
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                 await Task.Delay(500);
                 ssEventsProgress.Visible = false;
             }
@@ -1226,7 +1226,7 @@ namespace TOAWXML
                     eventz.Attribute("EFFECT").Value = cboEffect.Text;
                     eventz.Attribute("NEWS").Value = txtNews.Text;
                     //SaveTriggerGroup(eventz);
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     await Task.Delay(500);
                     ssEventsProgress.Visible = false;
                 }
@@ -1670,7 +1670,7 @@ namespace TOAWXML
         private void cboFiltTrigger_SelectionChangeCommitted(object sender, EventArgs e)
         {
             string strTrigger = cboFiltTrigger.Text;
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             TreeNode eventsTNode;
             TreeNode eventTNode;
             TreeNode attribTNode;
@@ -1725,7 +1725,7 @@ namespace TOAWXML
         private void cboFiltEffect_SelectionChangeCommitted(object sender, EventArgs e)
         {
             string strEffect = cboFiltEffect.Text;
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             TreeNode eventsTNode;
             TreeNode eventTNode;
             TreeNode attribTNode;
@@ -1783,7 +1783,7 @@ namespace TOAWXML
             TreeNode tnode;
             tnode = trvEvents.SelectedNode;
             string eventid = tnode.Tag.ToString();
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpath = "EVENTS/EVENT[@ID=" + eventid + "]";
             var eventz = xelem.XPathSelectElement(xpath);
 
@@ -1805,7 +1805,7 @@ namespace TOAWXML
                     cboEffect.Text = "No effect";
                     eventz.Attribute("TRIGGER").Value = "No trigger";
                     eventz.Attribute("EFFECT").Value = "No effect";
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     trvEvents.EndUpdate();
                     trvEvents.Refresh();
                 }
@@ -1829,7 +1829,7 @@ namespace TOAWXML
                     cboEffect.Text = "No effect";
                     eventz.Attribute("TRIGGER").Value = "No trigger";
                     eventz.Attribute("EFFECT").Value = "No effect";
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     trvEvents.EndUpdate();
                     trvEvents.Refresh();
                 }
@@ -1853,7 +1853,7 @@ namespace TOAWXML
                     cboEffect.Text = "No effect";
                     eventz.Attribute("TRIGGER").Value = "No trigger";
                     eventz.Attribute("EFFECT").Value = "No effect";
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     trvEvents.EndUpdate();
                     trvEvents.Refresh();
                 }
@@ -1877,7 +1877,7 @@ namespace TOAWXML
                     cboEffect.Text = "No effect";
                     eventz.Attribute("TRIGGER").Value = "No trigger";
                     eventz.Attribute("EFFECT").Value = "No effect";
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     trvEvents.EndUpdate();
                     trvEvents.Refresh();
                 }
@@ -1901,7 +1901,7 @@ namespace TOAWXML
                     cboEffect.Text = "No effect";
                     eventz.Attribute("TRIGGER").Value = "No trigger";
                     eventz.Attribute("EFFECT").Value = "No effect";
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     trvEvents.EndUpdate();
                     trvEvents.Refresh();
                 }
@@ -1916,7 +1916,7 @@ namespace TOAWXML
                 cboEffect.Text = "No effect";
                 eventz.Attribute("TRIGGER").Value = "No trigger";
                 eventz.Attribute("EFFECT").Value = "No effect";
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                 trvEvents.EndUpdate();
                 trvEvents.Refresh();
             }
@@ -1931,7 +1931,7 @@ namespace TOAWXML
             cboEffect.DataSource = listEmpty;
 
             //INSERT NEW EVENT IN XML
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpath = "EVENTS";
             var eventz = xelem.XPathSelectElement(xpath);
             oldMax = eventz.Descendants("EVENT").Max(m => (int)m.Attribute("ID"));
@@ -1970,7 +1970,7 @@ namespace TOAWXML
             }
 
             Globals.GlobalVariables.TREEVIEWCHANGED = true;
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
 
             trvEvents.SelectedNode = newTnode;
             trvEvents.SelectedNode.EnsureVisible();

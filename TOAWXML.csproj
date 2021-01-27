@@ -119,12 +119,6 @@
     <Compile Include="frmSelectUnit.Designer.cs">
       <DependentUpon>frmSelectUnit.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmTacFile.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmTacFile.Designer.cs">
-      <DependentUpon>frmTacFile.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmUnitDivide.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,9 +232,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSelectUnit.resx">
       <DependentUpon>frmSelectUnit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmTacFile.resx">
-      <DependentUpon>frmTacFile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmUnitDivide.resx">
       <DependentUpon>frmUnitDivide.cs</DependentUpon>

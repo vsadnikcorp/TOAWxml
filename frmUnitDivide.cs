@@ -24,7 +24,7 @@ namespace TOAWXML
             xmlf = f;
 
             //^^^^^^^^^^^^^^^^^^^
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string unitid = xmlf.getUnitID();
             
             string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
@@ -64,7 +64,7 @@ namespace TOAWXML
 
         private void btn2Subs_Click(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string unitid = xmlf.getUnitID();
             string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
             var unit = xelem.XPathSelectElement(xpath);
@@ -188,7 +188,7 @@ namespace TOAWXML
             xmlf.DivideUnitGUI();
 
             parentNode.Expand();
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             xmlf.ReloadTree(copiedNode);
             this.Close();
             return;
@@ -196,7 +196,7 @@ namespace TOAWXML
 
         private void btn3Subs_Click(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string unitid = xmlf.getUnitID();
             string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
             var unit = xelem.XPathSelectElement(xpath);
@@ -376,7 +376,7 @@ namespace TOAWXML
             xmlf.DivideUnitGUI();
 
             parentNode.Expand();
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             xmlf.ReloadTree(copiedNode);
             this.Close();
             return;

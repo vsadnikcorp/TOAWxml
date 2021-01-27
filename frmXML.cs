@@ -30,48 +30,97 @@ namespace TOAWXML
         private void xmlform_Load(object sender, EventArgs e)
         {
             //Checks that FilePath.txt exists
-            if (System.IO.File.Exists("FilePath.txt"))
+            //if (System.IO.File.Exists("FilePath.txt"))
+            // {
+            //string filePath = File.ReadAllText("FilePath.txt");
+
+            //    Globals.GlobalVariables.PATH = System.IO.Path.Combine(filePath);
+            //    txtPath.Text = filePath;
+
+            //    if (!System.IO.File.Exists(Globals.GlobalVariables.PATH))
+            //    {
+            //        frmMissingFile loadfileform = new frmMissingFile();
+            //        loadfileform.ShowDialog();
+            //        return;
+            //    }
+            //    FixInvalidXML();
+            //    FixForce2SubunitBug();
+
+            //    XDocument xdoc = XDocument.Load(Globals.GlobalVariables.PATH);
+
+            //    //GET NAME OF FORCE 1 AND ASSIGN TO radio button text
+            //    var forcenames = xdoc.Descendants("HEADER");
+            //    foreach (var f in forcenames)
+            //    {
+            //        string fn1 = f.Attribute("forceName1").Value.ToString();
+            //        this.rbForce1.Text = fn1;
+
+            //        string fn2 = f.Attribute("forceName2").Value.ToString();
+            //        this.rbForce2.Text = fn2;
+            //    }
+
+            //    //HIDE TAB HEADERS ON TAB CONTROL
+            //    tabUnits.Appearance = TabAppearance.FlatButtons;
+            //    tabUnits.ItemSize = new Size(0, 1);
+            //    tabUnits.SizeMode = TabSizeMode.Fixed;
+
+            //    tabUnits.SelectedIndex = 4;
+            //}
+            //else
+            //{
+            //    frmLoadFile loadfileform = new frmLoadFile();
+            //    loadfileform.ShowDialog();
+            //    return;
+            //}
+
+            //TOAWXML.Properties.Settings.Default.FilePath = "";
+            //TOAWXML.Properties.Settings.Default.Save();
+
+            ///>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            if (TOAWXML.Properties.Settings.Default.FilePath != "")
             {
-                string filePath = File.ReadAllText("FilePath.txt");
+                    string filePath = TOAWXML.Properties.Settings.Default.FilePath;
+                    txtPath.Text = filePath;
+                    if (!System.IO.File.Exists(filePath))
+                    {
+                        //frmMissingFile loadfileform = new frmMissingFile();
+                        //loadfileform.ShowDialog();
+                        //return;
+                        frmLoadFile loadfileform = new frmLoadFile();
+                        loadfileform.ShowDialog();
+                        return;
+                    }
+                    FixInvalidXML();
+                    FixForce2SubunitBug();
 
-                Globals.GlobalVariables.PATH = System.IO.Path.Combine(filePath);
-                txtPath.Text = filePath;
+                    ///XDocument xdoc = XDocument.Load(Globals.GlobalVariables.PATH);
+                    XDocument xdoc = XDocument.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
-                if (!System.IO.File.Exists(Globals.GlobalVariables.PATH))
-                {
-                    frmMissingFile loadfileform = new frmMissingFile();
-                    loadfileform.ShowDialog();
-                    return;
-                }
-                FixInvalidXML();
-                FixForce2SubunitBug();
-                
-                XDocument xdoc = XDocument.Load(Globals.GlobalVariables.PATH);
+                    //GET NAME OF FORCE 1 AND ASSIGN TO radio button text
+                    var forcenames = xdoc.Descendants("HEADER");
+                    foreach (var f in forcenames)
+                    {
+                        string fn1 = f.Attribute("forceName1").Value.ToString();
+                        this.rbForce1.Text = fn1;
 
-                //GET NAME OF FORCE 1 AND ASSIGN TO radio button text
-                var forcenames = xdoc.Descendants("HEADER");
-                foreach (var f in forcenames)
-                {
-                    string fn1 = f.Attribute("forceName1").Value.ToString();
-                    this.rbForce1.Text = fn1;
+                        string fn2 = f.Attribute("forceName2").Value.ToString();
+                        this.rbForce2.Text = fn2;
+                    }
 
-                    string fn2 = f.Attribute("forceName2").Value.ToString();
-                    this.rbForce2.Text = fn2;
-                }
+                    //HIDE TAB HEADERS ON TAB CONTROL
+                    tabUnits.Appearance = TabAppearance.FlatButtons;
+                    tabUnits.ItemSize = new Size(0, 1);
+                    tabUnits.SizeMode = TabSizeMode.Fixed;
 
-                //HIDE TAB HEADERS ON TAB CONTROL
-                tabUnits.Appearance = TabAppearance.FlatButtons;
-                tabUnits.ItemSize = new Size(0, 1);
-                tabUnits.SizeMode = TabSizeMode.Fixed;
-
-                tabUnits.SelectedIndex = 4;
+                    tabUnits.SelectedIndex = 4;
             }
             else
             {
                 frmLoadFile loadfileform = new frmLoadFile();
                 loadfileform.ShowDialog();
+                return;
             }
-
+            //<<<<<<<<<<<<<<<<<<<<<<<<
             //POPULATES DEPLOYMENT COMBO BOX
             var deployment = new BindingList<KeyValuePair<string, string>>();
             deployment.Add(new KeyValuePair<string, string>("1", "Reinforce (Turn)"));
@@ -344,7 +393,6 @@ namespace TOAWXML
             //CultureInfo.DefaultThreadCurrentUICulture = culture;
             //END CHINESE
         }
-
         private void AddNode(XmlNode inXmlNode, TreeNode inTreeNode)
         {
             XmlNode xNode;
@@ -388,7 +436,7 @@ namespace TOAWXML
             string formid = trvUnitTree.SelectedNode.Tag.ToString();
             string equipid = trvUnitTree.SelectedNode.Tag.ToString();
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             trvUnitTree.Update();
              
@@ -589,7 +637,7 @@ namespace TOAWXML
                     dt.Columns.Add("DESCRIPTION", typeof(string));
                     dt.Columns.Add("X", typeof(Int32));
                     dt.Columns.Add("Y", typeof(Int32));
-                    XDocument xdoc = XDocument.Load(Globals.GlobalVariables.PATH);
+                    XDocument xdoc = XDocument.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
                     var objectives = (from d in xdoc.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION").Descendants("OBJECTIVES").Descendants("OBJECTIVE")
                                       where (string)d.Parent.Parent.Parent.Attribute("ID") == Globals.GlobalVariables.FORCE && (string)d.Parent.Parent.Attribute("ID") == formid && (string)d.Parent.Attribute("TRACK") == strTrack
@@ -1097,7 +1145,6 @@ namespace TOAWXML
 
             btnSave.Enabled = true;
         }
-
         private async void rbForce1_CheckedChanged(object sender, EventArgs e)
         {
             ssMainProgress.Visible = true;
@@ -1120,7 +1167,8 @@ namespace TOAWXML
 
         private void LoadTree()
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            ///XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            ////XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             TreeNode forceNode;
             TreeNode formationNode;
             TreeNode unitNode;
@@ -1164,7 +1212,11 @@ namespace TOAWXML
             tssLabel1.Text = "";
             //lblEntryDate.Visible = false;
 
-            XElement xdoc = XElement.Load(Globals.GlobalVariables.PATH);
+            ///XElement xdoc = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xdoc = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
+
+            //Console.WriteLine(TOAWXML.Properties.Settings.Default.FilePath);
+            //Console.WriteLine(xdoc.ToString());
 
             strForce = "0";
 
@@ -1199,15 +1251,13 @@ namespace TOAWXML
                         formationNode.Tag = formation.Attribute("ID").Value;
                         formationNode.Name = "FORMATION";
 
-                        //###CHANGE TREENODE COLOR IF FORMATION IS STATIC
+                        //CHANGE TREENODE COLOR IF FORMATION IS STATIC
                         if (formation.Attribute("ORDERS").Value == "Static" || formation.Attribute("ORDERS").Value == "Wait" || formation.Attribute("ORDERS").Value == "Delay" || formation.Attribute("ORDERS").Value == "Hold" || formation.Attribute("ORDERS").Value == "Manual" || formation.Attribute("ORDERS").Value == "Garrison")
                         {
                             formationNode.ForeColor = System.Drawing.Color.IndianRed;
                             Font f = new Font(trvUnitTree.Font, FontStyle.Bold);
                             formationNode.NodeFont = f;
                         }
-                        //###
-
                     }
                     else
                     {
@@ -1224,7 +1274,7 @@ namespace TOAWXML
                         {
                             unitNode.ForeColor = System.Drawing.Color.Gray;
                         }
-                        //++++
+
                         //***CHANGE TREENODE FONT COLOR IF UNIT IS SUBUNIT
                         if (unit.Attribute("PARENT") != null)
                         {
@@ -1232,7 +1282,7 @@ namespace TOAWXML
                             Font f = new Font(trvUnitTree.Font, FontStyle.Bold);
                             unitNode.NodeFont = f;
                         }
-                        //***
+
                         //^^^CHANGE TREENODE FONT COLOR IF UNIT IS REINFORCEMENT
                         if (unit.Attribute("X") == null && unit.Attribute("STATUS").Value != "24")
                         {
@@ -1252,8 +1302,12 @@ namespace TOAWXML
                     }
                 }
             }
-
-            trvUnitTree.Nodes[0].Expand();
+            ////trvUnitTree.Nodes[0].Expand();
+            if (trvUnitTree.TopNode != null)
+            {
+                trvUnitTree.TopNode.Expand();
+            }
+            //trvUnitTree.Refresh();
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
@@ -1266,7 +1320,7 @@ namespace TOAWXML
             string formid = trvUnitTree.SelectedNode.Tag.ToString();
             string equipid = trvUnitTree.SelectedNode.Tag.ToString();
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             switch (type)
             {
@@ -1365,7 +1419,7 @@ namespace TOAWXML
                         forcevariables.Attribute("microUnitIcon").Value = cboMicroIcon.SelectedValue.ToString();
                     }
 
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
 
                     trvUnitTree.Update();
                     trvUnitTree.Focus();
@@ -1405,7 +1459,7 @@ namespace TOAWXML
 
                     trvUnitTree.SelectedNode.Text = this.txtUnitName.Text;
 
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     trvUnitTree.Focus();
                     break;
 
@@ -1708,7 +1762,7 @@ namespace TOAWXML
 
                     trvUnitTree.SelectedNode.Text = this.txtUnitName.Text;
 
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     trvUnitTree.Focus();
                     break;
 
@@ -1723,7 +1777,7 @@ namespace TOAWXML
 
                     trvUnitTree.Refresh();
                     trvUnitTree.SelectedNode.Text = this.txtUnitName.Text + " x" + txtNumber.Text + " [" + txtMax.Text + "]";
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     trvUnitTree.Focus();
                     break;
             }
@@ -1739,7 +1793,7 @@ namespace TOAWXML
 
                 transferred.Remove();
                 target.Add(transferred);
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                 btnSave.Enabled = false;
             }
             await Task.Delay(500);
@@ -1753,34 +1807,12 @@ namespace TOAWXML
             file.Filter = "TOAW .gam files *.gam|*.gam";
             if (file.ShowDialog() == DialogResult.OK)
             {
-                Globals.GlobalVariables.PATH = file.FileName;
-                System.IO.File.WriteAllText("FilePath.txt", Globals.GlobalVariables.PATH);
-                //**********************FIX INVALID XML
+                //TOAWXML.Properties.Settings.Default.FilePath = file.FileName;
+                //System.IO.File.WriteAllText("FilePath.txt", Globals.GlobalVariables.PATH);
+                TOAWXML.Properties.Settings.Default.FilePath = file.FileName;
+                TOAWXML.Properties.Settings.Default.Save();
                 FixInvalidXML();
-                //StreamReader streamReader = new StreamReader(Globals.GlobalVariables.PATH);
-                //string xmlText = streamReader.ReadToEnd();
-                //streamReader.Close();
-                //string hex = @"[^\x09\x0A\x0D\x20 -\xD7FF\xE000 -\xFFFD\x10000 - x10FFFF]";
-
-                ////+++++++++++CHECK FOR INVALID XML CHARACTERS
-                //Match match = Regex.Match(xmlText, hex);
-                //// CHECK MATCH RESULTS
-                //if (match.Success == true)
-                //{
-                //    string goodXML = Regex.Replace(xmlText, hex, "Z", RegexOptions.Compiled);
-                //    XmlDocument goodXMLdoc = new XmlDocument();
-                //    goodXMLdoc.LoadXml(goodXML);
-                //    goodXMLdoc.Save(Globals.GlobalVariables.PATH);
-
-                //    MessageBox.Show("TOAWxml has detected invalid XML characters.  The invalid characters have been replaced with 'Z'.",
-                //        "Invalid XML Characters",
-                //        MessageBoxButtons.OK,
-                //        MessageBoxIcon.Exclamation,
-                //        MessageBoxDefaultButton.Button1);
-                //}
-
-                //Application.Restart();
-
+                
                 xmlform_Load(null, EventArgs.Empty);
                 trvUnitTree.Nodes.Clear();
                 LoadTree();
@@ -1901,7 +1933,7 @@ namespace TOAWXML
                             xpathFormation = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + Globals.GlobalVariables.TARGETTAG + "]";
                             xpathUnit = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + strdraggedParentID + "]/EQUIPMENT[@ID =" + Globals.GlobalVariables.DRAGGEDTAG + "]";
                         }
-                        XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                        XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
                         var target = xelem.XPathSelectElement(xpathFormation);
                         var transferred = xelem.XPathSelectElement(xpathUnit);
 
@@ -1918,7 +1950,7 @@ namespace TOAWXML
                         }
                         transferred.Remove();
                         target.Add(transferred);
-                        xelem.Save(Globals.GlobalVariables.PATH);
+                        xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                         Globals.GlobalVariables.TREEVIEWCHANGED = false;
                         trvUnitTree.Refresh();
                     }
@@ -1939,7 +1971,7 @@ namespace TOAWXML
             int unitLevel = node.Level;
             string xpath = "";
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             switch (unitLevel)
             {
@@ -1971,7 +2003,7 @@ namespace TOAWXML
                     previousNode.AddBeforeSelf(unit);
                     unit.Remove();  // see note below
                 }
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             }
         }
 
@@ -1986,7 +2018,7 @@ namespace TOAWXML
             string parentid = trvUnitTree.SelectedNode.Parent.Tag.ToString();
             string xpath = "";
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             switch (unitLevel)
             {
                 case 1:
@@ -2016,7 +2048,7 @@ namespace TOAWXML
                     nextNode.AddAfterSelf(unit);
                     unit.Remove();
                 }
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             }
         }
 
@@ -2033,7 +2065,7 @@ namespace TOAWXML
                     int unitLevel = tnode.Level;
                     string formationid = tnode.Tag.ToString();
                     string parentid = tnode.Parent.Tag.ToString();
-                    XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                    XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
                     string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION[@ID =" + formationid + "]";  
                     string xpath2 = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION";
@@ -2090,7 +2122,7 @@ namespace TOAWXML
                     Renumbering.RenumberAll(units);  //RENUMBER ALL FORMATIONS
                     Renumbering.RenumberAll(allunits);  //RENUMBER ALL UNITS AFTER FORMATION DELETED
 
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     trvUnitTree.EndUpdate();
                     LoadTree();
                     trvUnitTree.Refresh();
@@ -2118,7 +2150,7 @@ namespace TOAWXML
             string strcopiedText = copiedNode.Text;
             Globals.GlobalVariables.COPIEDID = copiedNode.Tag.ToString();
             Globals.GlobalVariables.COPIEDPARENTID = strParentID;
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             switch (copiedLevel)
             {
@@ -2251,7 +2283,7 @@ namespace TOAWXML
             parentNode.Expand();
             Globals.GlobalVariables.TREEVIEWCHANGED = true;
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             Globals.GlobalVariables.TREEVIEWCHANGED = false;
             trvUnitTree.Refresh();
 
@@ -2286,7 +2318,7 @@ namespace TOAWXML
             string unitid = trvUnitTree.SelectedNode.Tag.ToString();
             string deploy = cboDeployment.SelectedValue.ToString();
             TreeNode selectedTNode = trvUnitTree.SelectedNode;
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
             var unit = xelem.XPathSelectElement(xpath);
 
@@ -2444,7 +2476,7 @@ namespace TOAWXML
             dt.Columns.Add("DESCRIPTION", typeof(string));
             dt.Columns.Add("X", typeof(Int32));
             dt.Columns.Add("Y", typeof(Int32));
-            XDocument xdoc = XDocument.Load(Globals.GlobalVariables.PATH);
+            XDocument xdoc = XDocument.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             var objectives = (from d in xdoc.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION").Descendants("OBJECTIVES").Descendants("OBJECTIVE")
                               where (string)d.Parent.Parent.Parent.Attribute("ID") == Globals.GlobalVariables.FORCE && (string)d.Parent.Parent.Attribute("ID") == formid && (string)d.Parent.Attribute("TRACK") == strTrack
@@ -2462,7 +2494,7 @@ namespace TOAWXML
 
         private void btnSaveObj_Click(object sender, EventArgs e)
         {
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathObjectives;
             string strFormID = "1";
             string strTrack = "1";
@@ -2483,7 +2515,7 @@ namespace TOAWXML
                 xObjectives.Attribute("DESCRIPTION").Value = strDesc;
                 xObjectives.Attribute("X").Value = strX;
                 xObjectives.Attribute("Y").Value = strY;
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             }
         }
 
@@ -2513,13 +2545,13 @@ namespace TOAWXML
                 DataGridViewRow selectedRow = dgvObjectives.Rows[rowindex];
                 strObjID = selectedRow.Cells["ID"].Value.ToString();
 
-                XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
                 xpathObj = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION[@ID=" + strFormID + "]/OBJECTIVES[@TRACK=" + strTrack + "]/OBJECTIVE[@ID=" + strObjID + "]";
                 xObjective = xelem.XPathSelectElement(xpathObj);
 
                 dgvObjectives.Rows.RemoveAt(item.Index);
                 xObjective.Remove();
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             }
         }
 
@@ -2538,7 +2570,7 @@ namespace TOAWXML
             int objRows = dgvObjectives.Rows.Count;
             int newMax;
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             if (objRows > 0)
             {
@@ -2608,7 +2640,7 @@ namespace TOAWXML
             {
                 xelem.XPathSelectElement("OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION[@ID=" + strFormID + "]/OBJECTIVES[@TRACK=" + strTrack + "]").Add(objectiveNode);
             }
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
 
             dt.Rows[dgvObjectives.Rows.Count - 1][0] = newMax.ToString();
             dgvObjectives.DataSource = dt;
@@ -2780,7 +2812,9 @@ namespace TOAWXML
         public void FixInvalidXML()
         {
             //FIX INVALID XML**********************
-            StreamReader streamReader = new StreamReader(Globals.GlobalVariables.PATH);
+            ///StreamReader streamReader = new StreamReader(Globals.GlobalVariables.PATH);
+            StreamReader streamReader = new StreamReader(TOAWXML.Properties.Settings.Default.FilePath);
+
             string xmlText = streamReader.ReadToEnd();
             streamReader.Close();
             string hex = @"[^\x09\x0A\x0D\x20 -\xD7FF\xE000 -\xFFFD\x10000 - x10FFFF]";
@@ -2793,7 +2827,7 @@ namespace TOAWXML
                 string goodXML = Regex.Replace(xmlText, hex, "$", RegexOptions.Compiled);
                 XmlDocument goodXMLdoc = new XmlDocument();
                 goodXMLdoc.LoadXml(goodXML);
-                goodXMLdoc.Save(Globals.GlobalVariables.PATH);
+                goodXMLdoc.Save(TOAWXML.Properties.Settings.Default.FilePath);
 
                 MessageBox.Show("TOAWxml has detected invalid XML characters.  The invalid characters have been replaced with '$'.",
                     "Invalid XML Characters",
@@ -2808,7 +2842,8 @@ namespace TOAWXML
             //WHEN XML EXPORTED FROM TOAW, IT ASSIGNS A PARENT ATTRIBUTE TO *ALL* UNITS (OTHER THAN EXISTING, "REAL" SUBUNITS) WITH A VALUE EQUAL TO UNIT ID.
             //THIS METHOD REMOVES THE ERRONEOUS PARENT ATTRIBUTES
         {
-            XElement xdoc = XElement.Load(Globals.GlobalVariables.PATH);
+            ///XElement xdoc = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xdoc = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             foreach (XElement force in xdoc.Descendants("FORCE").Where(f => f.Attribute("ID").Value.ToString() == "2"))
             {
@@ -2825,7 +2860,8 @@ namespace TOAWXML
                 }
                    
             }
-            xdoc.Save(Globals.GlobalVariables.PATH);
+            ///xdoc.Save(Globals.GlobalVariables.PATH);
+            xdoc.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void trvUnitTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -2870,7 +2906,7 @@ namespace TOAWXML
                 tnode.ForeColor = System.Drawing.Color.Black;
                 string unitid = tnode.Tag.ToString();
                 string parentid = tnode.Parent.Tag.ToString();
-                XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
                 string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
                 var unit = xelem.XPathSelectElement(xpath);
                 var subunits = xelem.XPathSelectElements("OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@PARENT =" + unitid + "]").ToArray();
@@ -2980,7 +3016,7 @@ namespace TOAWXML
                 }
                 //////END SUBUNITS
 
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                 trvUnitTree.EndUpdate();
                 trvUnitTree.Refresh();
                 ReloadTree(tnode);
@@ -3015,7 +3051,7 @@ namespace TOAWXML
             int unitLevel = node.Level;
             string xpath = "";
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
                     
@@ -3036,7 +3072,7 @@ namespace TOAWXML
                     previousNode.AddBeforeSelf(unit);
                     unit.Remove();  // see note below
                 }
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             }
         }
 
@@ -3051,7 +3087,7 @@ namespace TOAWXML
             string parentid = trvUnitTree.SelectedNode.Parent.Tag.ToString();
             string xpath = "";
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
                    
             var unit = xelem.XPathSelectElement(xpath);
@@ -3071,7 +3107,7 @@ namespace TOAWXML
                     nextNode.AddAfterSelf(unit);
                     unit.Remove();
                 }
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             }
         }
 
@@ -3090,7 +3126,7 @@ namespace TOAWXML
                     int unitLevel = tnode.Level;
                     string unitid = tnode.Tag.ToString();
                     string parentid = tnode.Parent.Tag.ToString();
-                    XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                    XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
                     string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
                     string xpath2 = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT";
@@ -3138,7 +3174,7 @@ namespace TOAWXML
                     //RENUMBER ALL UNITS
                     Renumbering.RenumberAll(units);
 
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     trvUnitTree.EndUpdate();
                     LoadTree();
                     trvUnitTree.Refresh();
@@ -3157,7 +3193,7 @@ namespace TOAWXML
                     int unitLevel = tnode.Level;
                     string unitid = tnode.Tag.ToString();
                     string parentid = tnode.Parent.Tag.ToString();
-                    XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+                    XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
                     string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
 
                     IEnumerable<XElement> subunits = xelem.XPathSelectElements("OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@PARENT =" + unitid + "]").ToArray();
@@ -3181,7 +3217,7 @@ namespace TOAWXML
                     tnode.Remove();
                     unit.Remove();
 
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     trvUnitTree.EndUpdate();
                     trvUnitTree.Refresh();
                 }
@@ -3205,7 +3241,7 @@ namespace TOAWXML
             string strcopiedText = copiedNode.Text;
             Globals.GlobalVariables.COPIEDID = copiedNode.Tag.ToString();
             Globals.GlobalVariables.COPIEDPARENTID = strParentID;
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             xpathParent = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION";
             xpathCopied = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + Globals.GlobalVariables.COPIEDID + "]";
             var parent = xelem.XPathSelectElement(xpathParent);
@@ -3242,7 +3278,7 @@ namespace TOAWXML
             parentNode.Expand();
             Globals.GlobalVariables.TREEVIEWCHANGED = true;
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             Globals.GlobalVariables.TREEVIEWCHANGED = false;
             trvUnitTree.Refresh();
 
@@ -3261,7 +3297,7 @@ namespace TOAWXML
             int unitLevel = node.Level;
             string xpath = "";
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + parentid + "]/EQUIPMENT[@ID =" + unitid + "]";
 
@@ -3282,7 +3318,7 @@ namespace TOAWXML
                     previousNode.AddBeforeSelf(unit);
                     unit.Remove();  // see note below
                 }
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             }
         }
 
@@ -3297,7 +3333,7 @@ namespace TOAWXML
             string parentid = trvUnitTree.SelectedNode.Parent.Tag.ToString();
             string xpath = "";
 
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + parentid + "]/EQUIPMENT[@ID =" + unitid + "]";
             var unit = xelem.XPathSelectElement(xpath);
 
@@ -3316,7 +3352,7 @@ namespace TOAWXML
                     nextNode.AddAfterSelf(unit);
                     unit.Remove();
                 }
-                xelem.Save(Globals.GlobalVariables.PATH);
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             }
         }
 
@@ -3326,7 +3362,7 @@ namespace TOAWXML
             int unitLevel = tnode.Level;
             string unitid = tnode.Tag.ToString();
             string parentid = tnode.Parent.Tag.ToString();
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + parentid + "]/EQUIPMENT[@ID =" + unitid + "]";
             var equip = xelem.XPathSelectElement(xpath);
             //if ((equip.Parent.Attribute("STATUS").Value.ToString() != "24") && equip.Parent.Attribute("PARENT") == null) //IF UNIT IS NOT DIVIDED
@@ -3340,7 +3376,7 @@ namespace TOAWXML
                     trvUnitTree.BeginUpdate();
                     tnode.Remove();
                     equip.Remove();
-                    xelem.Save(Globals.GlobalVariables.PATH);
+                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
                     trvUnitTree.EndUpdate();
                     trvUnitTree.Refresh();
                 }
@@ -3371,7 +3407,7 @@ namespace TOAWXML
             string strcopiedText = copiedNode.Text;
             Globals.GlobalVariables.COPIEDID = copiedNode.Tag.ToString();
             Globals.GlobalVariables.COPIEDPARENTID = strParentID;
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             xpathParent = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + Globals.GlobalVariables.COPIEDPARENTID + "]";
             xpathCopied = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID= " + Globals.GlobalVariables.COPIEDPARENTID + "]/EQUIPMENT[@ID =" + Globals.GlobalVariables.COPIEDID + "]";
@@ -3396,7 +3432,7 @@ namespace TOAWXML
             parentNode.Expand();
             Globals.GlobalVariables.TREEVIEWCHANGED = true;
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             Globals.GlobalVariables.TREEVIEWCHANGED = false;
             trvUnitTree.Refresh();
 
@@ -3409,7 +3445,7 @@ namespace TOAWXML
             int oldMax = 1;
             int newMax = 1;
             string xpathForce = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]";
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             var force = xelem.XPathSelectElement(xpathForce);
             oldMax = force.Descendants("FORMATION").Max(m => (int)m.Attribute("ID"));
             newMax = oldMax + 1;
@@ -3439,7 +3475,7 @@ namespace TOAWXML
             //rootTnode.Nodes.Insert(trvUnitTree.TopNode.LastNode.Index+1, newTnode);
             rootTnode.Nodes.Insert(trvUnitTree.Nodes[0].LastNode.Index+1, newTnode);
             Globals.GlobalVariables.TREEVIEWCHANGED = true;
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
             
             trvUnitTree.SelectedNode = newTnode;
             trvUnitTree.SelectedNode.EnsureVisible();
@@ -3452,7 +3488,7 @@ namespace TOAWXML
         {
             int oldMax = 1;
             int newMax = 1;
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpathTarget = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION[@ID =" + trvUnitTree.SelectedNode.Tag.ToString() + "]";
             string xpathParent = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]";
             var target = xelem.XPathSelectElement(xpathTarget);
@@ -3492,7 +3528,7 @@ namespace TOAWXML
             //targetTnode.Nodes.Insert(trvUnitTree.SelectedNode.Index + 1, newTnode);
             targetTnode.Nodes.Insert(trvUnitTree.SelectedNode.LastNode.Index + 1, newTnode);
             Globals.GlobalVariables.TREEVIEWCHANGED = true;
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
 
             trvUnitTree.SelectedNode = newTnode;
             trvUnitTree.SelectedNode.EnsureVisible();
@@ -3503,7 +3539,7 @@ namespace TOAWXML
         private void cboIcon_SelectionChangeCommitted(object sender, EventArgs e)
         {
             string unitid = trvUnitTree.SelectedNode.Tag.ToString();
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
             var unit = xelem.XPathSelectElement(xpath);
 
@@ -3615,19 +3651,19 @@ namespace TOAWXML
             }
 
             unit.Attribute("ICON").Value = strNewIconValue;
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void cboColor_SelectionChangeCommitted(object sender, EventArgs e)
         {
             string unitid = trvUnitTree.SelectedNode.Tag.ToString();
-            XElement xelem = XElement.Load(Globals.GlobalVariables.PATH);
+            XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
             var unit = xelem.XPathSelectElement(xpath);
 
             unit.Attribute("COLOR").Value = cboColor.Text;
 
-            xelem.Save(Globals.GlobalVariables.PATH);
+            xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
         }
 
         private void addNewUnitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -4688,17 +4724,22 @@ namespace TOAWXML
             }
         }
 
-        private void btnStar_Click(object sender, EventArgs e)
-        {
-            frmTacFile tacfileform = new frmTacFile();
-            tacfileform.ShowDialog();
-        }
+        //private void btnStar_Click(object sender, EventArgs e)
+        //{
+        //    frmTacFile tacfileform = new frmTacFile();
+        //    tacfileform.ShowDialog();
+        //}
 
         private void btnEquipView_Click(object sender, EventArgs e)
         {
             frmEquipView equipviewform = new frmEquipView();
             equipviewform.ShowDialog();
             
+        }
+
+        private void btnStar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

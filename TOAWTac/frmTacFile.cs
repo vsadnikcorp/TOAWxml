@@ -64,31 +64,6 @@ namespace TOAWXML
             if (System.IO.File.Exists("FilePath.txt"))
             {
                 string filePath = File.ReadAllText("FilePath.txt");
-
-                //Globals.GlobalVariables.PATH = System.IO.Path.Combine(filePath);
-                //txtPath.Text = filePath;
-
-                //if (!System.IO.File.Exists(Globals.GlobalVariables.PATH))
-                //{
-                //    frmMissingFile loadfileform = new frmMissingFile();
-                //    loadfileform.ShowDialog();
-                //    return;
-                //}
-                //FixInvalidXML();
-                //FixForce2SubunitBug();
-
-                //XDocument xdoc = XDocument.Load(Globals.GlobalVariables.PATH);
-
-                //GET NAME OF FORCE 1 AND ASSIGN TO radio button text
-                //var forcenames = xdoc.Descendants("HEADER");
-                //foreach (var f in forcenames)
-                //{
-                //    string fn1 = f.Attribute("forceName1").Value.ToString();
-                //    this.rbForce1.Text = fn1;
-
-                //    string fn2 = f.Attribute("forceName2").Value.ToString();
-                //    this.rbForce2.Text = fn2;
-                //}
             }
         }
 

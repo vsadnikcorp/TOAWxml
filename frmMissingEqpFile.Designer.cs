@@ -28,20 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnLoadFile = new System.Windows.Forms.Button();
+            this.lblMissingEqp = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(305, 39);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "The selected *.eqp file (&GlobalVariables.EQPPATH) is missing.  \r\n\r\nPlease select" +
-    " new *.eqp file.\r\n";
             // 
             // btnCancel
             // 
@@ -64,6 +54,15 @@
             this.btnLoadFile.UseVisualStyleBackColor = true;
             this.btnLoadFile.Click += new System.EventHandler(this.btnLoadFile_Click);
             // 
+            // lblMissingEqp
+            // 
+            this.lblMissingEqp.AutoSize = true;
+            this.lblMissingEqp.Location = new System.Drawing.Point(15, 35);
+            this.lblMissingEqp.Name = "lblMissingEqp";
+            this.lblMissingEqp.Size = new System.Drawing.Size(13, 13);
+            this.lblMissingEqp.TabIndex = 3;
+            this.lblMissingEqp.Text = "a";
+            // 
             // frmMissingEqpFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -72,21 +71,22 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(323, 146);
             this.ControlBox = false;
+            this.Controls.Add(this.lblMissingEqp);
             this.Controls.Add(this.btnLoadFile);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.label1);
             this.Name = "frmMissingEqpFile";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Missing *.eqp File";
+            this.Load += new System.EventHandler(this.frmMissingEqpFile_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnLoadFile;
+        private System.Windows.Forms.Label lblMissingEqp;
     }
 }

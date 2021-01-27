@@ -15,7 +15,7 @@ namespace TOAWXML
         public frmMissingFile()
         {
             InitializeComponent();
-            string pathstring = "The indicated *.gam file (" + Globals.GlobalVariables.PATH;
+            string pathstring = "The indicated *.gam file (" + TOAWXML.Properties.Settings.Default.FilePath;
             pathstring = pathstring + ") is missing." + Environment.NewLine + Environment.NewLine;
             pathstring = pathstring + " Please select new *.gam file.";
 
@@ -36,9 +36,18 @@ namespace TOAWXML
             file.Filter = "TOAW .gam files *.gam|*.gam";
             if (file.ShowDialog() == DialogResult.OK)
             {
-                Globals.GlobalVariables.PATH = file.FileName;
-                System.IO.File.WriteAllText("FilePath.txt", Globals.GlobalVariables.PATH);
-                Application.Restart();
+                //Globals.GlobalVariables.PATH = file.FileName;
+                //System.IO.File.WriteAllText("FilePath.txt", Globals.GlobalVariables.PATH);
+                TOAWXML.Properties.Settings.Default.FilePath = file.FileName;
+                TOAWXML.Properties.Settings.Default.Save();
+
+                //Application.Restart();
+
+                //>>>>>>>>>>>>>>>>
+                //
+                Application.OpenForms["xmlform"].Close();
+                //xmlform_Load(null, EventArgs.Empty);
+                //<<<<<<<<<<<<<<<<
             }
         }
     }

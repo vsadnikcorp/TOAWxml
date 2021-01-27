@@ -17,6 +17,13 @@ namespace TOAWXML
         {
             InitializeComponent();
         }
+        private void frmLoadEqpFile_Load(object sender, EventArgs e)
+        {
+            string selectstring = "Either no *.eqp file has been specified or the \r\n " +
+                "specified file is missing. \r\n  \r\n " +
+                "Please select new *.eqp file.";
+            this.lblLoadEqpFile.Text = selectstring;
+        }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -28,24 +35,35 @@ namespace TOAWXML
             OpenFileDialog file = new OpenFileDialog();
             file.Multiselect = false;
             file.Filter = "TOAW .eqp files *.eqp|*.eqp";
-            if (file.ShowDialog() == DialogResult.OK)
+
+            
+            ////if (TOAWXML.Properties.Settings.Default.EqpFilePath != "")
+            ////{
+                if (file.ShowDialog() == DialogResult.OK)
+                {
+                    TOAWXML.Properties.Settings.Default.EqpFilePath = file.FileName;
+                    TOAWXML.Properties.Settings.Default.Save();
+
+                    var f = new frmEquip();
+                    f.Show();
+
+                    this.Close();
+
+                    frmEquip obj = (frmEquip)Application.OpenForms["frmEquip"];
+                    obj.Close();
+
+                    f.Activate();
+                    f.Focus();
+                    f.TopMost = true;
+                }
+            else
             {
-                Globals.GlobalVariables.PATH = file.FileName;
-                System.IO.File.WriteAllText("EqpFilePath.txt", Globals.GlobalVariables.EQPPATH = file.FileName);
-
-                var f = new frmEquip();
-                f.Show();
-
                 this.Close();
-
-                frmEquip obj = (frmEquip)Application.OpenForms["frmEquip"];
-                obj.Close();
-
-                f.Activate();
-                f.Focus();
-                f.TopMost = true;
-
+                return;
             }
         }
+
+       
     }
 }
+//}

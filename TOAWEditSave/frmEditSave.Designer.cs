@@ -1803,7 +1803,7 @@
             // ssLabel1
             // 
             this.ssLabel1.Name = "ssLabel1";
-            this.ssLabel1.Size = new System.Drawing.Size(39, 17);
+            this.ssLabel1.Size = new System.Drawing.Size(8, 17);
             this.ssLabel1.Spring = true;
             // 
             // progressSavedGame

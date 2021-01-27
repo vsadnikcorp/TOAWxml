@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.btnCancel = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnLoad = new System.Windows.Forms.Button();
+            this.lblLoadEqpFile = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -43,17 +43,6 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(30, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(242, 39);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "The configuration file (EqpFilePath.txt) is missing.  \r\n\r\nPlease select an *.eqp " +
-    "file to load.";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // btnLoad
             // 
             this.btnLoad.Location = new System.Drawing.Point(193, 81);
@@ -64,17 +53,28 @@
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
+            // lblLoadEqpFile
+            // 
+            this.lblLoadEqpFile.AutoSize = true;
+            this.lblLoadEqpFile.Location = new System.Drawing.Point(35, 11);
+            this.lblLoadEqpFile.Name = "lblLoadEqpFile";
+            this.lblLoadEqpFile.Size = new System.Drawing.Size(72, 13);
+            this.lblLoadEqpFile.TabIndex = 4;
+            this.lblLoadEqpFile.Text = "Load Eqp File";
+            // 
             // frmLoadEqpFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(302, 137);
             this.ControlBox = false;
+            this.Controls.Add(this.lblLoadEqpFile);
             this.Controls.Add(this.btnLoad);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Name = "frmLoadEqpFile";
-            this.Text = "*.eqp Configuration File Missing";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Select *.eqp File";
+            this.Load += new System.EventHandler(this.frmLoadEqpFile_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -83,7 +83,8 @@
         #endregion
 
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Label label1;
+        //private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnLoad;
+        private System.Windows.Forms.Label lblLoadEqpFile;
     }
 }
