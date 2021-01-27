@@ -59,7 +59,10 @@ namespace TOAWXML
 
                 if (!System.IO.File.Exists(filePath))
                 {
-                    frmMissingFile loadfileform = new frmMissingFile();
+                    //frmMissingFile loadfileform = new frmMissingFile();
+                    //loadfileform.ShowDialog();
+                    //return;
+                    frmLoadFile loadfileform = new frmLoadFile();
                     loadfileform.ShowDialog();
                     return;
                 }

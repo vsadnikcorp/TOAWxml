@@ -101,12 +101,6 @@
     <Compile Include="frmLoadEqpFile.Designer.cs">
       <DependentUpon>frmLoadEqpFile.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmMissingEqpFile.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmMissingEqpFile.Designer.cs">
-      <DependentUpon>frmMissingEqpFile.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmSelectFormation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,12 +139,6 @@
     </Compile>
     <Compile Include="frmLoadFile.Designer.cs">
       <DependentUpon>frmLoadFile.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmMissingFile.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmMissingFile.Designer.cs">
-      <DependentUpon>frmMissingFile.cs</DependentUpon>
     </Compile>
     <Compile Include="frmPropagateForm.cs">
       <SubType>Form</SubType>
@@ -205,12 +193,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmLoadFile.resx">
       <DependentUpon>frmLoadFile.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmMissingEqpFile.resx">
-      <DependentUpon>frmMissingEqpFile.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmMissingFile.resx">
-      <DependentUpon>frmMissingFile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPropagateForm.resx">
       <DependentUpon>frmPropagateForm.cs</DependentUpon>
