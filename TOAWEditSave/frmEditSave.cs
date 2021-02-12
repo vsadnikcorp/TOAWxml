@@ -323,7 +323,6 @@ namespace TOAWEditSave
                 {
                     if(q.TRIGGER == "Turn" && (q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event"))
                     {
-                        //dt.Rows.Add(q.ID, q.TRIGGER, Int32.Parse(q.TURN) + 1, q.EVT, q.EFFECT, Int32.Parse(q.VAL) + 1, q.PROB, q.RNG, q.NEWS);
                         if (q.TURN == "--")
                         {
                             dt.Rows.Add(q.ID, q.TRIGGER, 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);

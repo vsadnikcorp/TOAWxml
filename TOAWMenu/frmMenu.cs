@@ -24,11 +24,12 @@ namespace toawMenu
         private void frmMenu_Load(object sender, EventArgs e)
         {
             btnOpen.Enabled = false;
-            rbTacLayer.Enabled = false;
+            //rbTacLayer.Enabled = false;
 
             rbTOAWxml.CheckedChanged += new EventHandler(radioButtons_CheckedChanged);
             rbEquipView.CheckedChanged += new EventHandler(radioButtons_CheckedChanged);
             rbSavedGame.CheckedChanged += new EventHandler(radioButtons_CheckedChanged);
+            rbTacLayer.CheckedChanged += new EventHandler(radioButtons_CheckedChanged);
         }
 
         private void radioButtons_CheckedChanged(object sender, EventArgs e)
@@ -56,6 +57,12 @@ namespace toawMenu
             {
                 frmEditSave editsaved = new frmEditSave();
                 editsaved.Show();
+                //this.Close();
+            }
+            if (rbTacLayer.Checked == true)
+            {
+                frmTacFile taclayer = new frmTacFile();
+                taclayer.Show();
                 //this.Close();
             }
         }

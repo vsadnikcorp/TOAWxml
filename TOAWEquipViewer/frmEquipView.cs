@@ -76,7 +76,7 @@ namespace TOAWXML
                 dt.Columns.Add("flag6", typeof(Int16));
                 dt.Columns.Add("flag7", typeof(Int16));
 
-                ///SETUP DGVEQUiPVIEW CHARACTERISTICS
+                ///SETUP DGVEQUIPVIEW CHARACTERISTICS
                 dgvEquipView.AutoGenerateColumns = false;
                 dgvEquipView.ColumnCount = 20;
                 dgvEquipView.ReadOnly = false;

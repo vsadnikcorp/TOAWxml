@@ -213,9 +213,9 @@ namespace TOAWXML
             icon.Add(new KeyValuePair<string, string>("Anti Aircraft", "AA"));
             icon.Add(new KeyValuePair<string, string>("Airmobile Anti Air", "AA (Airmob)"));
             icon.Add(new KeyValuePair<string, string>("Motor Anti Air", "AA (Mot)"));
+            icon.Add(new KeyValuePair<string, string>("Parachute Anti Air", "AA (Para)"));
             icon.Add(new KeyValuePair<string, string>("Airmobile", "Airmobile"));
             icon.Add(new KeyValuePair<string, string>("Amphibious", "Amphibious"));
-            icon.Add(new KeyValuePair<string, string>("Parachute Anti Air", "AA (Para)"));
             icon.Add(new KeyValuePair<string, string>("Antitank", "Antitank [v1]"));
             icon.Add(new KeyValuePair<string, string>("Antitank", "Antitank [v2]"));
             icon.Add(new KeyValuePair<string, string>("Armored Antitank", "Antitank (Armored)"));
