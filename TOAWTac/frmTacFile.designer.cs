@@ -78,12 +78,46 @@ namespace TOAWXML
             this.txtUnitSupply = new System.Windows.Forms.TextBox();
             this.txtUnitProf = new System.Windows.Forms.TextBox();
             this.txtUnitName = new System.Windows.Forms.TextBox();
+            this.drUnit = new Microsoft.VisualBasic.PowerPacks.DataRepeater();
+            this.lblEquipName = new System.Windows.Forms.Label();
+            this.txtMax = new System.Windows.Forms.TextBox();
+            this.txtQty = new System.Windows.Forms.TextBox();
+            this.txtEquipName = new System.Windows.Forms.TextBox();
+            this.pnlForce = new System.Windows.Forms.Panel();
+            this.btnForceAttribs = new System.Windows.Forms.Button();
+            this.txtHdrForceSupply = new System.Windows.Forms.TextBox();
+            this.txtHdrForceProf = new System.Windows.Forms.TextBox();
+            this.txtHdrForceName = new System.Windows.Forms.TextBox();
+            this.lblForceSupply = new System.Windows.Forms.Label();
+            this.lblForceProf = new System.Windows.Forms.Label();
+            this.lblForceName = new System.Windows.Forms.Label();
+            this.pnlFormation = new System.Windows.Forms.Panel();
+            this.pnlUnit = new System.Windows.Forms.Panel();
+            this.txtHdrFormSupply = new System.Windows.Forms.TextBox();
+            this.txtHdrFormProf = new System.Windows.Forms.TextBox();
+            this.txtHdrFormName = new System.Windows.Forms.TextBox();
+            this.lblHdrFormSupply = new System.Windows.Forms.Label();
+            this.lblHdrFormProf = new System.Windows.Forms.Label();
+            this.lblHdrFormName = new System.Windows.Forms.Label();
+            this.txtHdrUnitSupply = new System.Windows.Forms.TextBox();
+            this.txtHdrUnitProf = new System.Windows.Forms.TextBox();
+            this.txtHdrUnitName = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.gbForce.SuspendLayout();
             this.ssTac.SuspendLayout();
             this.drForce.ItemTemplate.SuspendLayout();
             this.drForce.SuspendLayout();
             this.drFormation.ItemTemplate.SuspendLayout();
             this.drFormation.SuspendLayout();
+            this.drUnit.ItemTemplate.SuspendLayout();
+            this.drUnit.SuspendLayout();
+            this.pnlForce.SuspendLayout();
+            this.pnlFormation.SuspendLayout();
+            this.pnlUnit.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCreateTacFile
@@ -138,7 +172,7 @@ namespace TOAWXML
             // 
             this.DateTimePicker.CustomFormat = "dd MMM yyyy";
             this.DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.DateTimePicker.Location = new System.Drawing.Point(772, 12);
+            this.DateTimePicker.Location = new System.Drawing.Point(222, 10);
             this.DateTimePicker.Name = "DateTimePicker";
             this.DateTimePicker.Size = new System.Drawing.Size(102, 20);
             this.DateTimePicker.TabIndex = 7;
@@ -159,9 +193,9 @@ namespace TOAWXML
             this.gbForce.Controls.Add(this.rbForce1);
             this.gbForce.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbForce.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbForce.Location = new System.Drawing.Point(13, 13);
+            this.gbForce.Location = new System.Drawing.Point(13, 4);
             this.gbForce.Name = "gbForce";
-            this.gbForce.Size = new System.Drawing.Size(276, 52);
+            this.gbForce.Size = new System.Drawing.Size(197, 71);
             this.gbForce.TabIndex = 24;
             this.gbForce.TabStop = false;
             this.gbForce.Text = "FORCE";
@@ -171,7 +205,7 @@ namespace TOAWXML
             this.rbForce2.AutoSize = true;
             this.rbForce2.Cursor = System.Windows.Forms.Cursors.Default;
             this.rbForce2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbForce2.Location = new System.Drawing.Point(136, 23);
+            this.rbForce2.Location = new System.Drawing.Point(12, 46);
             this.rbForce2.Name = "rbForce2";
             this.rbForce2.Size = new System.Drawing.Size(58, 17);
             this.rbForce2.TabIndex = 22;
@@ -242,7 +276,7 @@ namespace TOAWXML
             // 
             this.txtProf.Location = new System.Drawing.Point(111, 18);
             this.txtProf.Name = "txtProf";
-            this.txtProf.Size = new System.Drawing.Size(51, 20);
+            this.txtProf.Size = new System.Drawing.Size(40, 20);
             this.txtProf.TabIndex = 29;
             this.txtProf.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -250,7 +284,7 @@ namespace TOAWXML
             // 
             this.txtSupply.Location = new System.Drawing.Point(171, 18);
             this.txtSupply.Name = "txtSupply";
-            this.txtSupply.Size = new System.Drawing.Size(49, 20);
+            this.txtSupply.Size = new System.Drawing.Size(40, 20);
             this.txtSupply.TabIndex = 30;
             this.txtSupply.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -274,7 +308,7 @@ namespace TOAWXML
             this.drForce.ItemTemplate.Size = new System.Drawing.Size(943, 53);
             this.drForce.Location = new System.Drawing.Point(216, 84);
             this.drForce.Name = "drForce";
-            this.drForce.Size = new System.Drawing.Size(951, 500);
+            this.drForce.Size = new System.Drawing.Size(951, 511);
             this.drForce.TabIndex = 34;
             this.drForce.Text = "drForce";
             // 
@@ -371,9 +405,9 @@ namespace TOAWXML
             this.lblProf.AutoSize = true;
             this.lblProf.Location = new System.Drawing.Point(111, 3);
             this.lblProf.Name = "lblProf";
-            this.lblProf.Size = new System.Drawing.Size(62, 13);
+            this.lblProf.Size = new System.Drawing.Size(29, 13);
             this.lblProf.TabIndex = 35;
-            this.lblProf.Text = "Proficiency:";
+            this.lblProf.Text = "Prof:";
             // 
             // lblName
             // 
@@ -409,10 +443,10 @@ namespace TOAWXML
             this.drFormation.ItemTemplate.Controls.Add(this.txtUnitSupply);
             this.drFormation.ItemTemplate.Controls.Add(this.txtUnitProf);
             this.drFormation.ItemTemplate.Controls.Add(this.txtUnitName);
-            this.drFormation.ItemTemplate.Size = new System.Drawing.Size(943, 46);
+            this.drFormation.ItemTemplate.Size = new System.Drawing.Size(943, 54);
             this.drFormation.Location = new System.Drawing.Point(216, 285);
             this.drFormation.Name = "drFormation";
-            this.drFormation.Size = new System.Drawing.Size(951, 296);
+            this.drFormation.Size = new System.Drawing.Size(951, 68);
             this.drFormation.TabIndex = 43;
             this.drFormation.Text = "dataRepeater2";
             // 
@@ -779,12 +813,278 @@ namespace TOAWXML
             this.txtUnitName.Size = new System.Drawing.Size(87, 20);
             this.txtUnitName.TabIndex = 0;
             // 
+            // drUnit
+            // 
+            // 
+            // drUnit.ItemTemplate
+            // 
+            this.drUnit.ItemTemplate.Controls.Add(this.label15);
+            this.drUnit.ItemTemplate.Controls.Add(this.label14);
+            this.drUnit.ItemTemplate.Controls.Add(this.lblEquipName);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtMax);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtQty);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipName);
+            this.drUnit.ItemTemplate.Size = new System.Drawing.Size(943, 45);
+            this.drUnit.Location = new System.Drawing.Point(216, 381);
+            this.drUnit.Name = "drUnit";
+            this.drUnit.Size = new System.Drawing.Size(951, 64);
+            this.drUnit.TabIndex = 55;
+            this.drUnit.Text = "dataRepeater1";
+            // 
+            // lblEquipName
+            // 
+            this.lblEquipName.AutoSize = true;
+            this.lblEquipName.Location = new System.Drawing.Point(4, 1);
+            this.lblEquipName.Name = "lblEquipName";
+            this.lblEquipName.Size = new System.Drawing.Size(38, 13);
+            this.lblEquipName.TabIndex = 58;
+            this.lblEquipName.Text = "Name:";
+            // 
+            // txtMax
+            // 
+            this.txtMax.Location = new System.Drawing.Point(248, 17);
+            this.txtMax.Name = "txtMax";
+            this.txtMax.Size = new System.Drawing.Size(35, 20);
+            this.txtMax.TabIndex = 57;
+            // 
+            // txtQty
+            // 
+            this.txtQty.Location = new System.Drawing.Point(192, 17);
+            this.txtQty.Name = "txtQty";
+            this.txtQty.Size = new System.Drawing.Size(38, 20);
+            this.txtQty.TabIndex = 56;
+            // 
+            // txtEquipName
+            // 
+            this.txtEquipName.Location = new System.Drawing.Point(3, 17);
+            this.txtEquipName.Name = "txtEquipName";
+            this.txtEquipName.Size = new System.Drawing.Size(183, 20);
+            this.txtEquipName.TabIndex = 55;
+            // 
+            // pnlForce
+            // 
+            this.pnlForce.Controls.Add(this.btnForceAttribs);
+            this.pnlForce.Controls.Add(this.txtHdrForceSupply);
+            this.pnlForce.Controls.Add(this.txtHdrForceProf);
+            this.pnlForce.Controls.Add(this.txtHdrForceName);
+            this.pnlForce.Controls.Add(this.lblForceSupply);
+            this.pnlForce.Controls.Add(this.lblForceProf);
+            this.pnlForce.Controls.Add(this.lblForceName);
+            this.pnlForce.Location = new System.Drawing.Point(221, 33);
+            this.pnlForce.Name = "pnlForce";
+            this.pnlForce.Size = new System.Drawing.Size(946, 48);
+            this.pnlForce.TabIndex = 56;
+            this.pnlForce.Visible = false;
+            // 
+            // btnForceAttribs
+            // 
+            this.btnForceAttribs.Location = new System.Drawing.Point(240, 11);
+            this.btnForceAttribs.Name = "btnForceAttribs";
+            this.btnForceAttribs.Size = new System.Drawing.Size(95, 31);
+            this.btnForceAttribs.TabIndex = 6;
+            this.btnForceAttribs.Text = "Force Attributes";
+            this.btnForceAttribs.UseVisualStyleBackColor = true;
+            // 
+            // txtHdrForceSupply
+            // 
+            this.txtHdrForceSupply.Location = new System.Drawing.Point(185, 23);
+            this.txtHdrForceSupply.Name = "txtHdrForceSupply";
+            this.txtHdrForceSupply.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrForceSupply.TabIndex = 5;
+            // 
+            // txtHdrForceProf
+            // 
+            this.txtHdrForceProf.Location = new System.Drawing.Point(128, 23);
+            this.txtHdrForceProf.Name = "txtHdrForceProf";
+            this.txtHdrForceProf.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrForceProf.TabIndex = 4;
+            // 
+            // txtHdrForceName
+            // 
+            this.txtHdrForceName.Location = new System.Drawing.Point(17, 23);
+            this.txtHdrForceName.Name = "txtHdrForceName";
+            this.txtHdrForceName.Size = new System.Drawing.Size(102, 20);
+            this.txtHdrForceName.TabIndex = 3;
+            // 
+            // lblForceSupply
+            // 
+            this.lblForceSupply.AutoSize = true;
+            this.lblForceSupply.Location = new System.Drawing.Point(185, 7);
+            this.lblForceSupply.Name = "lblForceSupply";
+            this.lblForceSupply.Size = new System.Drawing.Size(42, 13);
+            this.lblForceSupply.TabIndex = 2;
+            this.lblForceSupply.Text = "Supply:";
+            // 
+            // lblForceProf
+            // 
+            this.lblForceProf.AutoSize = true;
+            this.lblForceProf.Location = new System.Drawing.Point(129, 7);
+            this.lblForceProf.Name = "lblForceProf";
+            this.lblForceProf.Size = new System.Drawing.Size(29, 13);
+            this.lblForceProf.TabIndex = 1;
+            this.lblForceProf.Text = "Prof:";
+            // 
+            // lblForceName
+            // 
+            this.lblForceName.AutoSize = true;
+            this.lblForceName.Location = new System.Drawing.Point(16, 7);
+            this.lblForceName.Name = "lblForceName";
+            this.lblForceName.Size = new System.Drawing.Size(38, 13);
+            this.lblForceName.TabIndex = 0;
+            this.lblForceName.Text = "Name:";
+            // 
+            // pnlFormation
+            // 
+            this.pnlFormation.Controls.Add(this.txtHdrFormSupply);
+            this.pnlFormation.Controls.Add(this.txtHdrFormProf);
+            this.pnlFormation.Controls.Add(this.txtHdrFormName);
+            this.pnlFormation.Controls.Add(this.lblHdrFormSupply);
+            this.pnlFormation.Controls.Add(this.lblHdrFormProf);
+            this.pnlFormation.Controls.Add(this.lblHdrFormName);
+            this.pnlFormation.Location = new System.Drawing.Point(216, 451);
+            this.pnlFormation.Name = "pnlFormation";
+            this.pnlFormation.Size = new System.Drawing.Size(946, 53);
+            this.pnlFormation.TabIndex = 57;
+            this.pnlFormation.Visible = false;
+            // 
+            // pnlUnit
+            // 
+            this.pnlUnit.Controls.Add(this.txtHdrUnitSupply);
+            this.pnlUnit.Controls.Add(this.txtHdrUnitProf);
+            this.pnlUnit.Controls.Add(this.txtHdrUnitName);
+            this.pnlUnit.Controls.Add(this.label11);
+            this.pnlUnit.Controls.Add(this.label12);
+            this.pnlUnit.Controls.Add(this.label13);
+            this.pnlUnit.Location = new System.Drawing.Point(216, 510);
+            this.pnlUnit.Name = "pnlUnit";
+            this.pnlUnit.Size = new System.Drawing.Size(946, 53);
+            this.pnlUnit.TabIndex = 58;
+            this.pnlUnit.Visible = false;
+            // 
+            // txtHdrFormSupply
+            // 
+            this.txtHdrFormSupply.Location = new System.Drawing.Point(179, 20);
+            this.txtHdrFormSupply.Name = "txtHdrFormSupply";
+            this.txtHdrFormSupply.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrFormSupply.TabIndex = 11;
+            // 
+            // txtHdrFormProf
+            // 
+            this.txtHdrFormProf.Location = new System.Drawing.Point(132, 20);
+            this.txtHdrFormProf.Name = "txtHdrFormProf";
+            this.txtHdrFormProf.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrFormProf.TabIndex = 10;
+            // 
+            // txtHdrFormName
+            // 
+            this.txtHdrFormName.Location = new System.Drawing.Point(23, 20);
+            this.txtHdrFormName.Name = "txtHdrFormName";
+            this.txtHdrFormName.Size = new System.Drawing.Size(102, 20);
+            this.txtHdrFormName.TabIndex = 9;
+            // 
+            // lblHdrFormSupply
+            // 
+            this.lblHdrFormSupply.AutoSize = true;
+            this.lblHdrFormSupply.Location = new System.Drawing.Point(179, 4);
+            this.lblHdrFormSupply.Name = "lblHdrFormSupply";
+            this.lblHdrFormSupply.Size = new System.Drawing.Size(42, 13);
+            this.lblHdrFormSupply.TabIndex = 8;
+            this.lblHdrFormSupply.Text = "Supply:";
+            // 
+            // lblHdrFormProf
+            // 
+            this.lblHdrFormProf.AutoSize = true;
+            this.lblHdrFormProf.Location = new System.Drawing.Point(133, 4);
+            this.lblHdrFormProf.Name = "lblHdrFormProf";
+            this.lblHdrFormProf.Size = new System.Drawing.Size(29, 13);
+            this.lblHdrFormProf.TabIndex = 7;
+            this.lblHdrFormProf.Text = "Prof:";
+            // 
+            // lblHdrFormName
+            // 
+            this.lblHdrFormName.AutoSize = true;
+            this.lblHdrFormName.Location = new System.Drawing.Point(22, 4);
+            this.lblHdrFormName.Name = "lblHdrFormName";
+            this.lblHdrFormName.Size = new System.Drawing.Size(38, 13);
+            this.lblHdrFormName.TabIndex = 6;
+            this.lblHdrFormName.Text = "Name:";
+            // 
+            // txtHdrUnitSupply
+            // 
+            this.txtHdrUnitSupply.Location = new System.Drawing.Point(177, 24);
+            this.txtHdrUnitSupply.Name = "txtHdrUnitSupply";
+            this.txtHdrUnitSupply.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrUnitSupply.TabIndex = 17;
+            // 
+            // txtHdrUnitProf
+            // 
+            this.txtHdrUnitProf.Location = new System.Drawing.Point(130, 24);
+            this.txtHdrUnitProf.Name = "txtHdrUnitProf";
+            this.txtHdrUnitProf.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrUnitProf.TabIndex = 16;
+            // 
+            // txtHdrUnitName
+            // 
+            this.txtHdrUnitName.Location = new System.Drawing.Point(21, 24);
+            this.txtHdrUnitName.Name = "txtHdrUnitName";
+            this.txtHdrUnitName.Size = new System.Drawing.Size(102, 20);
+            this.txtHdrUnitName.TabIndex = 15;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(177, 8);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(42, 13);
+            this.label11.TabIndex = 14;
+            this.label11.Text = "Supply:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(131, 8);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(29, 13);
+            this.label12.TabIndex = 13;
+            this.label12.Text = "Prof:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(20, 8);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(38, 13);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "Name:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(200, 1);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(26, 13);
+            this.label14.TabIndex = 59;
+            this.label14.Text = "Qty:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(252, 1);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(30, 13);
+            this.label15.TabIndex = 60;
+            this.label15.Text = "Max:";
+            // 
             // frmTacFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1179, 697);
             this.ControlBox = false;
+            this.Controls.Add(this.pnlUnit);
+            this.Controls.Add(this.pnlFormation);
+            this.Controls.Add(this.pnlForce);
+            this.Controls.Add(this.drUnit);
             this.Controls.Add(this.drFormation);
             this.Controls.Add(this.drForce);
             this.Controls.Add(this.trvUnitTree);
@@ -814,6 +1114,15 @@ namespace TOAWXML
             this.drFormation.ItemTemplate.ResumeLayout(false);
             this.drFormation.ItemTemplate.PerformLayout();
             this.drFormation.ResumeLayout(false);
+            this.drUnit.ItemTemplate.ResumeLayout(false);
+            this.drUnit.ItemTemplate.PerformLayout();
+            this.drUnit.ResumeLayout(false);
+            this.pnlForce.ResumeLayout(false);
+            this.pnlForce.PerformLayout();
+            this.pnlFormation.ResumeLayout(false);
+            this.pnlFormation.PerformLayout();
+            this.pnlUnit.ResumeLayout(false);
+            this.pnlUnit.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -869,5 +1178,34 @@ namespace TOAWXML
         private System.Windows.Forms.ComboBox cboUnitType;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtUnitReadiness;
+        private DataRepeater drUnit;
+        private System.Windows.Forms.Label lblEquipName;
+        private System.Windows.Forms.TextBox txtMax;
+        private System.Windows.Forms.TextBox txtQty;
+        private System.Windows.Forms.TextBox txtEquipName;
+        private System.Windows.Forms.Panel pnlForce;
+        private System.Windows.Forms.Label lblForceName;
+        private System.Windows.Forms.Panel pnlFormation;
+        private System.Windows.Forms.Panel pnlUnit;
+        private System.Windows.Forms.Label lblForceSupply;
+        private System.Windows.Forms.Label lblForceProf;
+        private System.Windows.Forms.TextBox txtHdrForceName;
+        private System.Windows.Forms.Button btnForceAttribs;
+        private System.Windows.Forms.TextBox txtHdrForceSupply;
+        private System.Windows.Forms.TextBox txtHdrForceProf;
+        private System.Windows.Forms.TextBox txtHdrFormSupply;
+        private System.Windows.Forms.TextBox txtHdrFormProf;
+        private System.Windows.Forms.TextBox txtHdrFormName;
+        private System.Windows.Forms.Label lblHdrFormSupply;
+        private System.Windows.Forms.Label lblHdrFormProf;
+        private System.Windows.Forms.Label lblHdrFormName;
+        private System.Windows.Forms.TextBox txtHdrUnitSupply;
+        private System.Windows.Forms.TextBox txtHdrUnitProf;
+        private System.Windows.Forms.TextBox txtHdrUnitName;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
     }
 }

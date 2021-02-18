@@ -95,10 +95,16 @@ namespace TOAWXML
             //SET GAME DATE
             DateTimePicker.Format = DateTimePickerFormat.Custom;
             DateTimePicker.CustomFormat = "dd-MMM-yyyy";
-            
+
+            //MAKE PANELS INVISIBLE
+            pnlForce.Visible = false;
+            pnlFormation.Visible = false;
+            pnlUnit.Visible = false; 
+
             //MAKE DATA REPEATERS INVISIBLE
             drForce.Visible = false;
             drFormation.Visible = false;
+            drUnit.Visible = false;
 
             //DISABLE FORCE RADIO BUTTONS
             rbForce1.Enabled = false;
@@ -127,6 +133,9 @@ namespace TOAWXML
             dtUnit.Columns.Add("UnitSize", typeof(string));
             dtUnit.Columns.Add("UnitExp", typeof(string));
             dtUnit.Columns.Add("UnitReplace", typeof(string));
+
+            //CREATE DATATABLE FOR EQUIP
+            dtEquip.Columns.Add("EquipName", typeof(string));
 
             txtName.Visible = false;
             txtProf.Visible = false;
@@ -341,7 +350,11 @@ namespace TOAWXML
         private void rbForce1_CheckedChanged(object sender, EventArgs e)
         {
             ssTac.Visible = true;
-            if(rbForce1.Checked == true) LoadTree("1");
+            pnlFormation.Visible = false;
+            pnlUnit.Visible = false;
+            pnlForce.Visible = true;
+
+            if (rbForce1.Checked == true) LoadTree("1");
             trvUnitTree.SelectedNode = trvUnitTree.TopNode;
             ssTac.Visible = false;
            
@@ -350,7 +363,11 @@ namespace TOAWXML
         private void rbForce2_CheckedChanged(object sender, EventArgs e)
         {
             ssTac.Visible = true;
-            if(rbForce2.Checked == true) LoadTree("2");
+            pnlFormation.Visible = false;
+            pnlUnit.Visible = false;
+            pnlForce.Visible = true;
+            
+            if (rbForce2.Checked == true) LoadTree("2");
             trvUnitTree.SelectedNode = trvUnitTree.TopNode;
             ssTac.Visible = false;
         }
@@ -524,6 +541,11 @@ namespace TOAWXML
                     //SET CONTROL VISIBILITY
                     drForce.Visible = true;
                     drFormation.Visible = false;
+                    drUnit.Visible = false;
+
+                    pnlForce.Visible = true;
+                    pnlFormation.Visible = false;
+                    pnlUnit.Visible = false;
 
                     txtName.Visible = true;
                     txtProf.Visible = true;
@@ -547,6 +569,18 @@ namespace TOAWXML
                     //XPATH FOR FORCE VARIABLES PORTION OF XML
                     string xpathforcevariables = "FORCEVARIABLES/FORCE[@ID =" + forceID + "]";
                     var forcevariables = xelem.XPathSelectElement(xpathforcevariables);
+
+                    //SET CONTROLS ON HEADER
+                    if (forceID == "1")
+                    {
+                        txtHdrForceName.Text = rbForce1.Text;
+                    }
+                    else if (forceID == "2")
+                    {
+                        txtHdrForceName.Text = rbForce2.Text;
+                    }
+                    txtHdrForceProf.Text = force.Attribute("proficiency").Value;
+                    txtHdrForceSupply.Text = force.Attribute("supply").Value;
 
                     //SET DATA BINDINGS
                     txtName.DataBindings.Add("Text", dtFormation, "Name");
@@ -642,6 +676,13 @@ namespace TOAWXML
                     drFormation.Visible = true;
                     drFormation.Location = new Point(216, 84);
                     drFormation.Size = new Size(951, 500);
+                    drUnit.Visible = false; 
+
+                    pnlForce.Visible = false;
+                    pnlFormation.Visible = true;
+                    pnlFormation.Location = new Point(221, 33);
+                    pnlFormation.Size = new Size(946, 48);
+                    pnlUnit.Visible = false; 
 
                     txtUnitName.Visible = true;
                     txtUnitProf.Visible = true;
@@ -653,10 +694,14 @@ namespace TOAWXML
                     cboExp.Visible = true;
                     cboReplace.Visible = true;
                     cboUnitOrders.Visible = true;
-                    //cboAirOrders.Visible = true;
 
                     xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID =" + formid + "]";
                     var units = xelem.XPathSelectElements(xpath);
+
+                    //SET HEADER DATA
+                    txtHdrFormName.Text = units.First().Attribute("NAME").Value;
+                    txtHdrFormProf.Text = units.First().Attribute("PROFICIENCY").Value;
+                    txtHdrFormSupply.Text = units.First().Attribute("SUPPLY").Value;
 
                     //SET DATABINDINGS
                     txtUnitName.DataBindings.Clear();
@@ -664,7 +709,6 @@ namespace TOAWXML
                     txtUnitSupply.DataBindings.Clear();
                     txtUnitReadiness.DataBindings.Clear();
                     cboUnitOrders.DataBindings.Clear();
-                    //cboAirOrders.DataBindings.Clear();
                     cboUnitLossTol.DataBindings.Clear();
                     cboUnitSize.DataBindings.Clear();
                     cboUnitType.DataBindings.Clear();
@@ -675,7 +719,6 @@ namespace TOAWXML
                     txtUnitProf.DataBindings.Add("Text", dtUnit, "UnitProf");
                     txtUnitSupply.DataBindings.Add("Text", dtUnit, "UnitSupply");
                     cboUnitOrders.DataBindings.Add("Text", dtUnit, "UnitOrders");
-                    //cboAirOrders.DataBindings.Add("Text", dtUnit, "AirOrders");
                     cboUnitLossTol.DataBindings.Add("Text", dtUnit, "UnitLossTol");
                     txtUnitReadiness.DataBindings.Add("Text", dtUnit, "UnitReadiness");
                     cboUnitType.DataBindings.Add("Text", dtUnit, "UnitType");
@@ -690,151 +733,62 @@ namespace TOAWXML
                         string replacePriority = GetReplacementPriorityText(unit.Attribute("REPLACEMENTPRIORITY").Value);
 
                         string iconID = "";
+                        string orderID = unit.Attribute("STATUS").Value;
                         string icon = unit.Attribute("ICON").Value;
                         bool isAirUnit = IsAirUnit(icon);
 
                         if (unit.Attribute("ICONID") != null) iconID = unit.Attribute("ICONID").Value;
                         string iconDisplay = GetIconText(iconID, icon);
 
-                       string unitorders = SetUnitOrders(isAirUnit);
+                       string unitorders = SetUnitOrders(isAirUnit, orderID);
 
                         dtUnit.Rows.Add(unit.Attribute("NAME").Value, unit.Attribute("PROFICIENCY").Value,
-                            unit.Attribute("SUPPLY").Value,
-                            //unitorders, unitorders, unit.Attribute("EMPHASIS").Value, unit.Attribute("READINESS").Value, iconDisplay,
-                            unitorders, unit.Attribute("EMPHASIS").Value, unit.Attribute("READINESS").Value, iconDisplay,
-                            unit.Attribute("SIZE").Value, unit.Attribute("EXPERIENCE").Value, replacePriority);
+                            unit.Attribute("SUPPLY").Value, unitorders, unit.Attribute("EMPHASIS").Value, 
+                            unit.Attribute("READINESS").Value, iconDisplay, unit.Attribute("SIZE").Value, 
+                            unit.Attribute("EXPERIENCE").Value, replacePriority);
                     }
 
                     drFormation.DataSource = dtUnit;
                     break;
 
-                case 2:  //UNITS
-                    //xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
-                    //unit = xelem.XPathSelectElement(xpath);
+                case 2:  //IF UNIT SELECTED
+                    drForce.Visible = false;
+                    drFormation.Visible = false;
+                    drUnit.Location = new Point(216, 84);
+                    drUnit.Size = new Size(951, 500);
+                    drUnit.Visible = true;
 
-                    ////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                    ////SET DEPLOYMENT COMBO BOX FOR LAND OR AIR UNITS
+                    //SET HEADER PANEL VISIBILITY
+                    pnlForce.Visible = false;
+                    pnlFormation.Visible = false;
+                    pnlUnit.Visible = true;
+                    pnlUnit.Location = new Point(221, 33);
+                    pnlUnit.Size = new Size(946, 48);
 
-                    ////SET DEPLOY COMBOBOX FOR AIR OR LAND UNITS
-                    //if (airunits.Contains(unit.Attribute("ICON").Value.ToString()))  //IF UNIT HAS AIR UNIT ICON TYPE, SET DEPLOY COMBOBOX TO AIR MISSIONS
-                    //{
-                    //    var deployment = new BindingList<KeyValuePair<string, string>>();
-                    //    deployment.Add(new KeyValuePair<string, string>("3", "Interdiction"));
-                    //    deployment.Add(new KeyValuePair<string, string>("4", "Air Superiority"));
-                    //    deployment.Add(new KeyValuePair<string, string>("5", "Combat Support"));
-                    //    deployment.Add(new KeyValuePair<string, string>("8", "Rest"));
-                    //    deployment.Add(new KeyValuePair<string, string>("23", "Sea Interdiction"));
+                    dtEquip.Clear();
 
-                    //    cboDeployment.DataSource = deployment;
-                    //    cboDeployment.ValueMember = "Key";
-                    //    cboDeployment.DisplayMember = "Value";
-                    //}
-                    //else // OTHERWISE SET TO LAND DEPLOYMENTS
-                    //{
-                    //    var deployment = new BindingList<KeyValuePair<string, string>>();
-                    //    deployment.Add(new KeyValuePair<string, string>("1", "Reinforce (Turn)"));
-                    //    deployment.Add(new KeyValuePair<string, string>("2", "Reinforce (Event)"));
-                    //    deployment.Add(new KeyValuePair<string, string>("3", "Defend/Dig In"));
-                    //    deployment.Add(new KeyValuePair<string, string>("4", "Entrenched"));
-                    //    deployment.Add(new KeyValuePair<string, string>("5", "Fortified"));
-                    //    deployment.Add(new KeyValuePair<string, string>("6", "Tactical Reserve"));
-                    //    deployment.Add(new KeyValuePair<string, string>("7", "Local Reserve"));
-                    //    deployment.Add(new KeyValuePair<string, string>("8", "Mobile"));
-                    //    deployment.Add(new KeyValuePair<string, string>("9", "Moving"));
-                    //    deployment.Add(new KeyValuePair<string, string>("10", "Attacking"));
-                    //    deployment.Add(new KeyValuePair<string, string>("11", "Supporting"));
-                    //    deployment.Add(new KeyValuePair<string, string>("12", "Retreated"));
-                    //    deployment.Add(new KeyValuePair<string, string>("13", "Routed"));
-                    //    deployment.Add(new KeyValuePair<string, string>("14", "Advancing"));
-                    //    deployment.Add(new KeyValuePair<string, string>("15", "Withdrawn"));
-                    //    deployment.Add(new KeyValuePair<string, string>("16", "Exited"));
-                    //    deployment.Add(new KeyValuePair<string, string>("17", "Embarked"));
-                    //    deployment.Add(new KeyValuePair<string, string>("18", "Disbanded"));
-                    //    deployment.Add(new KeyValuePair<string, string>("19", "Tact React"));
-                    //    deployment.Add(new KeyValuePair<string, string>("20", "Local React"));
-                    //    deployment.Add(new KeyValuePair<string, string>("21", "Entrained"));
-                    //    deployment.Add(new KeyValuePair<string, string>("22", "Airborne"));
-                    //    deployment.Add(new KeyValuePair<string, string>("23", "Seaborne"));
-                    //    deployment.Add(new KeyValuePair<string, string>("24", "Divided"));
-                    //    deployment.Add(new KeyValuePair<string, string>("25", "Nuclear"));
-                    //    deployment.Add(new KeyValuePair<string, string>("26", "Airmobile"));
-                    //    deployment.Add(new KeyValuePair<string, string>("27", "Bridge Attack"));
-                    //    deployment.Add(new KeyValuePair<string, string>("28", "Airfield Attack"));
-                    //    deployment.Add(new KeyValuePair<string, string>("29", "Reorganizing"));
-                    //    deployment.Add(new KeyValuePair<string, string>("30", "Port Attack"));
-                    //    cboDeployment.DataSource = deployment;
-                    //    cboDeployment.ValueMember = "Key";
-                    //    cboDeployment.DisplayMember = "Value";
-                    //}
+                    xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID =" + unitid + "]";
+                    XElement equipment = xelem.XPathSelectElement(xpath);
 
-                    ////SET ICON COMBOBOX
-                    //if (unit.Attribute("ICONID") == null)
-                    //{
-                    //    cboIcon.SelectedValue = unit.Attribute("ICON").Value.ToString();
-                    //}
-                    //else //IF ALTERNATE ICONS EXIST
-                    //{
-                    //    switch (unit.Attribute("ICONID").Value.ToString())
-                    //    {
-                    //        case "0":
-                    //            cboIcon.Text = "Headquarters [v1]";
-                    //            break;
-                    //        case "1":
-                    //            cboIcon.Text = "Headquarters [v2]";
-                    //            break;
-                    //        case "14":
-                    //            cboIcon.Text = "Antitank [v1]";
-                    //            break;
-                    //        case "15":
-                    //            cboIcon.Text = "Antitank [v2]";
-                    //            break;
-                    //        case "25":
-                    //            cboIcon.Text = "Antitank (Mot) [v1]";
-                    //            break;
-                    //        case "26":
-                    //            cboIcon.Text = "Antitank (Mot) [v2]";
-                    //            break;
-                    //        case "41":
-                    //            cboIcon.Text = "Fighter [icon]";
-                    //            break;
-                    //        case "42":
-                    //            cboIcon.Text = "Fighter Bomber [icon]";
-                    //            break;
-                    //        case "43":
-                    //            cboIcon.Text = "Bomber (Light) [icon]";
-                    //            break;
-                    //        case "45":
-                    //            cboIcon.Text = "Bomber (Heavy) [icon]";
-                    //            break;
-                    //        case "62":
-                    //            cboIcon.Text = "Artillery (Coast) [icon]";
-                    //            break;
-                    //        case "63":
-                    //            cboIcon.Text = "Artillery (Coast) [silh]";
-                    //            break;
-                    //        case "66":
-                    //            cboIcon.Text = "Fighter [silh]";
-                    //            break;
-                    //        case "67":
-                    //            cboIcon.Text = "Fighter Bomber [silh]";
-                    //            break;
-                    //        case "68":
-                    //            cboIcon.Text = "Bomber (Light) [silh]";
-                    //            break;
-                    //        case "69":
-                    //            cboIcon.Text = "Bomber (Heavy) [silh]";
-                    //            break;
-                    //        case "82":
-                    //            cboIcon.Text = "Transport [icon]";
-                    //            break;
-                    //        case "94":
-                    //            cboIcon.Text = "Transport [silh]";
-                    //            break;
-                    //    }
-                    //}
+                    //SET HEADER PANEL DATA
+                    txtHdrUnitName.Text = equipment.Attribute("NAME").Value;
+                    txtHdrUnitProf.Text = equipment.Attribute("PROFICIENCY").Value;
+                    txtHdrUnitSupply.Text = equipment.Attribute("SUPPLY").Value;
 
-                    ////SET DEPLOY COMBOBOX
-                    //string deploy;
+                    txtEquipName.DataBindings.Clear();
+                    txtEquipName.DataBindings.Add("Text", dtEquip, "EquipName");
+                    drUnit.DataSource = dtEquip;
+
+                    foreach (XElement equip in equipment.Descendants("EQUIPMENT"))
+                    {
+                        int qty = Int32.Parse(equip.Attribute("NUMBER").Value);
+                        for (int i = 1; i <= qty; i++)
+                        {
+                            dtEquip.Rows.Add(equip.Attribute("NAME").Value);
+                        }
+                    }
+
+                    drUnit.DataSource = dtEquip;
 
                     ////IF NO DEPLOYMENT HAS BEEN SET PREVIOUSLY
                     //if (cboDeployment.SelectedValue != null)
@@ -1159,6 +1113,7 @@ namespace TOAWXML
             }
             return replacePriorityText;
         }
+        
         public string GetIconText(string iconID, string iconName)
             {
                 string iconDisplay = "";
@@ -1570,6 +1525,7 @@ namespace TOAWXML
                 }
             return iconDisplay;
         }
+        
         private void cboSupport_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1577,6 +1533,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
+        
         private void cboOrders_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1584,6 +1541,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
+        
         private void cboLossTol_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1591,6 +1549,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
+        
         private void cboUnitType_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1598,6 +1557,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
+        
         private void cboUnitSize_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1605,6 +1565,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
+        
         private void cboUnitOrders_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1612,6 +1573,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
+        
         private void cboUnitLossTol_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1619,6 +1581,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
+        
         private void cboExp_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1626,6 +1589,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
+        
         private void cboReplace_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1658,20 +1622,110 @@ namespace TOAWXML
             return isAirUnit;
         }
 
-        private string SetUnitOrders(bool isAirUnit)
+        private string SetUnitOrders(bool isAirUnit, string orderID)
         {
             string unitorders = "";
             cboUnitOrders.Items.Clear();
 
             if (isAirUnit == false)
             {
-                //this.cboAirOrders.Visible = false;
-                //this.cboAirOrders.Enabled = false;
                 this.cboUnitOrders.Visible = true;
                 this.cboUnitOrders.Enabled = true;
                 this.cboUnitOrders.Focus();
 
-                unitorders = "Entrenched";
+                switch (orderID)
+                {
+                    case "1":
+                        unitorders = "Reinforce (Turn)";
+                        break;
+                    case "2":
+                        unitorders = "Reinforce (Event)";
+                        break;
+                    case "3":
+                        unitorders = "Defend/Dig In";
+                        break;
+                    case "4":
+                        unitorders = "Entrenched";
+                        break;
+                    case "5":
+                        unitorders = "Fortified";
+                        break;
+                    case "6":
+                        unitorders = "Tactical Reserve";
+                        break;
+                    case "7":
+                        unitorders = "Local Reserve";
+                        break;
+                    case "8":
+                        unitorders = "Mobile";
+                        break;
+                    case "9":
+                        unitorders = "Moving";
+                        break;
+                    case "10":
+                        unitorders = "Attacking";
+                        break;
+                    case "11":
+                        unitorders = "Supporting";
+                        break;
+                    case "12":
+                        unitorders = "Retreated";
+                        break;
+                    case "13":
+                        unitorders = "Routed";
+                        break;
+                    case "14":
+                        unitorders = "Advancing";
+                        break;
+                    case "15":
+                        unitorders = "Withdrawn";
+                        break;
+                    case "16":
+                        unitorders = "Exited";
+                        break;
+                    case "17":
+                        unitorders = "Embarked";
+                        break;
+                    case "18":
+                        unitorders = "Disbanded";
+                        break;
+                    case "19":
+                        unitorders = "Tact React";
+                        break;
+                    case "20":
+                        unitorders = "Local React";
+                        break;
+                    case "21":
+                        unitorders = "Entrained";
+                        break;
+                    case "22":
+                        unitorders = "Airborne";
+                        break;
+                    case "23":
+                        unitorders = "Seaborne";
+                        break;
+                    case "24":
+                        unitorders = "Divided";
+                        break;
+                    case "25":
+                        unitorders = "Nuclear";
+                        break;
+                    case "26":
+                        unitorders = "Airmobile";
+                        break;
+                    case "27":
+                        unitorders = "Bridge Attack";
+                        break;
+                    case "28":
+                        unitorders = "Airfield Attack";
+                        break;
+                    case "29":
+                        unitorders = "Reorganizing";
+                        break;
+                    case "30":
+                        unitorders = "Port Attack";
+                        break;
+                }
 
                 cboUnitOrders.Items.Add("Reinforce (Turn)");
                 cboUnitOrders.Items.Add("Reinforce (Event)");
@@ -1707,11 +1761,27 @@ namespace TOAWXML
 
             else if (isAirUnit == true)
             {
-                //this.cboAirOrders.Visible = true;
-                //this.cboAirOrders.Enabled = true;
-                //this.cboAirOrders.Focus();
                 this.cboUnitOrders.Visible = true;
                 this.cboUnitOrders.Enabled = true;
+
+                switch (orderID)
+                {
+                    case "3":
+                        unitorders = "Interdiction";
+                        break;
+                    case "4":
+                        unitorders = "Air Superiority";
+                        break;
+                    case "5":
+                        unitorders = "Combat Support";
+                        break;
+                    case "8":
+                        unitorders = "Rest";
+                        break;
+                    case "23":
+                        unitorders = "Sea Interdiction";
+                        break;
+                }
 
                 unitorders = "Interdiction";
 
