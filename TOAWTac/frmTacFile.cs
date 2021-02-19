@@ -71,6 +71,8 @@ namespace TOAWXML
         DataTable dtUnit = new DataTable();
         DataTable dtEquip = new DataTable();
 
+        static XDocument tacFile;
+
         //private class ReplacementPriority
         //{
         //    public string Name { get; set; }
@@ -170,7 +172,7 @@ namespace TOAWXML
             if (FilePath != "" && FilePath != null)  //THERE IS IS NO "ELSE" TO COVER WHAT IF FILEPATH == "" OR NULL!!
             {
                 ssTac.Visible = true;
-
+                
                 //CREATE TACFILE
                 XDocument xdoc = XDocument.Load(FilePath);
                 string TacFilePath = FilePath.Substring(0, FilePath.Length - 3) + "tac";
@@ -183,9 +185,12 @@ namespace TOAWXML
                 //SSSSSSSSSSSSSSSS
                 //XDocument tacFile = new XDocument();
                 //tacFile = new XDocument(new XElement("GAME", new XElement("OOB")));
-
-                XDocument tacFile = xdoc;
                 //SSSSSSSSSSSSSSSS
+
+                //ZZZZZZZZZZZZZZZZZZ
+                //XDocument tacFile = xdoc;
+                tacFile = xdoc;
+                //ZZZZZZZZZZZZZZZZZ
 
                 //LOAD COMMANDER NAMES FILE
                 string CdrNameDirectory = Path.GetDirectoryName(TacFilePath);
@@ -350,7 +355,10 @@ namespace TOAWXML
                 TOAWTac.Properties.Settings.Default.FilePath = FilePath;
                 TOAWTac.Properties.Settings.Default.Save();
 
-                XDocument tacFile = XDocument.Load(TacFilePath);
+                //ZZZZZZZZZZZZZZZ
+                //XDocument tacFile = XDocument.Load(TacFilePath);
+                tacFile = XDocument.Load(TacFilePath);
+                //ZZZZZZZZZZZZZZZZZZZZ
                 txtTacFile.Text = TacFilePath;
 
                 //ENABLE FORCE RADIO BUTTONS, SET FORCE NAMES
