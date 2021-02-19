@@ -126,7 +126,6 @@ namespace TOAWXML
             dtUnit.Columns.Add("UnitProf", typeof(string));
             dtUnit.Columns.Add("UnitSupply", typeof(string));
             dtUnit.Columns.Add("UnitOrders", typeof(string));
-            //dtUnit.Columns.Add("AirOrders", typeof(string));
             dtUnit.Columns.Add("UnitLossTol", typeof(string));
             dtUnit.Columns.Add("UnitReadiness", typeof(string));
             dtUnit.Columns.Add("UnitType", typeof(string));
@@ -164,23 +163,29 @@ namespace TOAWXML
             trvUnitTree.Nodes.Clear();
             dtFormation.Clear();
             dtUnit.Clear();
+
             rbForce1.Checked = false;
             rbForce2.Checked = false;
 
-            if (FilePath != "" && FilePath != null)
+            if (FilePath != "" && FilePath != null)  //THERE IS IS NO "ELSE" TO COVER WHAT IF FILEPATH == "" OR NULL!!
             {
                 ssTac.Visible = true;
 
                 //CREATE TACFILE
                 XDocument xdoc = XDocument.Load(FilePath);
-                string TacFilePath = FilePath.Substring(0, FilePath.Length - 3) + "tam";
+                string TacFilePath = FilePath.Substring(0, FilePath.Length - 3) + "tac";
                 txtTacFile.Text = TacFilePath;
                 TOAWTac.Properties.Settings.Default.TacFilePath = TacFilePath;
                 TOAWTac.Properties.Settings.Default.Save();
 
                 //CREATE TACFILE
-                XDocument tacFile = new XDocument();
-                tacFile = new XDocument(new XElement("GAME", new XElement("OOB")));
+
+                //SSSSSSSSSSSSSSSS
+                //XDocument tacFile = new XDocument();
+                //tacFile = new XDocument(new XElement("GAME", new XElement("OOB")));
+
+                XDocument tacFile = xdoc;
+                //SSSSSSSSSSSSSSSS
 
                 //LOAD COMMANDER NAMES FILE
                 string CdrNameDirectory = Path.GetDirectoryName(TacFilePath);
@@ -191,29 +196,39 @@ namespace TOAWXML
                 //RUN ASYNC TO FILL TACFILE
                 await Task.Run(() =>
                 {
-                    //ADD HEADER DATA TO TACFILE
-                    var gamenode = tacFile.Descendants("GAME").FirstOrDefault();
+                    //SSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+                    ////ADD HEADER DATA TO TACFILE
+                    //var gamenode = tacFile.Descendants("GAME").FirstOrDefault();
 
-                    XElement header = new XElement("HEADER",
-                    new XAttribute("version", xdoc.Descendants("HEADER").First().Attribute("version").Value),
-                    new XAttribute("fileType", xdoc.Descendants("HEADER").First().Attribute("fileType").Value),
-                    new XAttribute("firstPlayer", xdoc.Descendants("HEADER").First().Attribute("firstPlayer").Value),
-                    new XAttribute("name", xdoc.Descendants("HEADER").First().Attribute("name").Value),
-                    new XAttribute("forceName1", xdoc.Descendants("HEADER").First().Attribute("forceName1").Value),
-                    new XAttribute("forceName2", xdoc.Descendants("HEADER").First().Attribute("forceName2").Value));
+                    //XElement header = new XElement("HEADER",
+                    //new XAttribute("version", xdoc.Descendants("HEADER").First().Attribute("version").Value),
+                    //new XAttribute("fileType", xdoc.Descendants("HEADER").First().Attribute("fileType").Value),
+                    //new XAttribute("firstPlayer", xdoc.Descendants("HEADER").First().Attribute("firstPlayer").Value),
+                    //new XAttribute("name", xdoc.Descendants("HEADER").First().Attribute("name").Value),
+                    //new XAttribute("forceName1", xdoc.Descendants("HEADER").First().Attribute("forceName1").Value),
+                    //new XAttribute("forceName2", xdoc.Descendants("HEADER").First().Attribute("forceName2").Value));
 
-                    gamenode.AddFirst(header);
+                    //gamenode.AddFirst(header);
+                    //SSSSSSSSSSSSSSSSSSSSSSS
 
                     //ADD FORCES TO TACFILE
-                    foreach (XElement force in xdoc.Descendants("OOB").Descendants("FORCE"))
+                    //SSSSSSSSSSSS
+                    //foreach (XElement force in xdoc.Descendants("OOB").Descendants("FORCE"))
+
+                    foreach (XElement force in tacFile.Descendants("OOB").Descendants("FORCE"))
+                    //SSSSSSSSSSSSSSSSSSSSSSSSSSS
                     {
                         string forceID = force.Attribute("ID").Value;
                         string forcecdrname = AssignCdrName(xdocCDR, forceID, rng);
 
-                        tacFile.Descendants("OOB").FirstOrDefault().Add(new XElement("FORCE",
-                                                                    new XAttribute("ID", force.Attribute("ID").Value),
-                                                                    new XAttribute("NAME", force.Attribute("NAME").Value),
-                                                                    new XAttribute("CDR", forcecdrname)));
+                        //SSSSSSSSSSSSSSSSSS
+                        //tacFile.Descendants("OOB").FirstOrDefault().Add(new XElement("FORCE",
+                        //                                            new XAttribute("ID", force.Attribute("ID").Value),
+                        //                                            new XAttribute("NAME", force.Attribute("NAME").Value),
+                        //                                            new XAttribute("CDR", forcecdrname)));
+
+                        force.Add(new XAttribute("CDR", forcecdrname));
+                        //SSSSSSSSSSSSSSSSSS
 
                         //LIST FORMATIONS
                         foreach (XElement formation in force.Descendants("FORMATION").Where(f => f.Parent.Attribute("ID").Value == forceID))
@@ -221,15 +236,22 @@ namespace TOAWXML
                             //ADD FORMATIONS TO TACFILE
                             string formcdrname = AssignCdrName(xdocCDR, forceID, rng);
 
-                            tacFile.Descendants("OOB").Descendants("FORCE")
-                                .Where(g => g.Attribute("ID").Value == forceID).FirstOrDefault()
-                                .Add(
-                                    new XElement("FORMATION",
-                                    new XAttribute("ID", formation.Attribute("ID").Value),
-                                    new XAttribute("NAME", formation.Attribute("NAME").Value),
-                                    new XAttribute("CDR", formcdrname),
-                                    new XAttribute("RANK", "LT"),
-                                    new XAttribute("FORMDATE", date)));
+                            //SSSSSSSSSSSSSSSSSSS
+                            //tacFile.Descendants("OOB").Descendants("FORCE")
+                            //    .Where(g => g.Attribute("ID").Value == forceID).FirstOrDefault()
+                            //    .Add(
+                            //        new XElement("FORMATION",
+                            //        new XAttribute("ID", formation.Attribute("ID").Value),
+                            //        new XAttribute("NAME", formation.Attribute("NAME").Value),
+                            //        new XAttribute("CDR", formcdrname),
+                            //        new XAttribute("RANK", "CPT"),
+                            //        new XAttribute("FORMDATE", date)));
+
+                            formation.Add(
+                                new XAttribute("CDR", formcdrname),
+                                new XAttribute("RANK", "CPT"),
+                                new XAttribute("FORMDATE", date));
+                            //SSSSSSSSSSSSSSSSSSSSSSSS
 
                             string formID = formation.Attribute("ID").Value;
 
@@ -241,16 +263,23 @@ namespace TOAWXML
                                 string unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
 
                                 //ADD UNITS TO TACFILE
-                                tacFile.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION")
-                                    .Where(g => g.Attribute("ID").Value == formID)
-                                    .Where(g => g.Parent.Attribute("ID").Value == forceID).FirstOrDefault()
-                                    .Add(
-                                        new XElement("UNIT",
-                                        new XAttribute("ID", unit.Attribute("ID").Value),
-                                        new XAttribute("NAME", unit.Attribute("NAME").Value),
-                                        new XAttribute("CDR", unitcdrname),
-                                        new XAttribute("RANK", "LT"),
-                                        new XAttribute("FORMDATE", date)));
+                                //SSSSSSSSSSSSSSSSSSSSSSSS
+                                //tacFile.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION")
+                                //    .Where(g => g.Attribute("ID").Value == formID)
+                                //    .Where(g => g.Parent.Attribute("ID").Value == forceID).FirstOrDefault()
+                                //    .Add(
+                                //        new XElement("UNIT",
+                                //        new XAttribute("ID", unit.Attribute("ID").Value),
+                                //        new XAttribute("NAME", unit.Attribute("NAME").Value),
+                                //        new XAttribute("CDR", unitcdrname),
+                                //        new XAttribute("RANK", "LT"),
+                                //        new XAttribute("FORMDATE", date)));
+
+                                unit.Add(
+                                     new XAttribute("CDR", unitcdrname),
+                                     new XAttribute("RANK", "LT"),
+                                     new XAttribute("FORMDATE", date));
+                                //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 
                                 string unitID = unit.Attribute("ID").Value;
 
@@ -285,12 +314,17 @@ namespace TOAWXML
                 //ENABLE FORCE RADIO BUTTONS, SET FORCE NAMES
                 rbForce1.Enabled = true;
                 rbForce2.Enabled = true;
-                rbForce1.Text = xdoc.Descendants("HEADER").First().Attribute("forceName1").Value;
-                rbForce2.Text = xdoc.Descendants("HEADER").First().Attribute("forceName2").Value;
+                //SSSSSSSSSSSSSSSSS
+                //rbForce1.Text = xdoc.Descendants("HEADER").First().Attribute("forceName1").Value;
+                //rbForce2.Text = xdoc.Descendants("HEADER").First().Attribute("forceName2").Value;
 
+                rbForce1.Text = tacFile.Descendants("HEADER").First().Attribute("forceName1").Value;
+                rbForce2.Text = tacFile.Descendants("HEADER").First().Attribute("forceName2").Value;
+                //SSSSSSSSSSSSSSSSSSSSSSSSS
                 tacFile.Save(TacFilePath);
                 ssTac.Visible = false;
             }
+            //  WHAT IF == "" OR NULL??
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -309,7 +343,7 @@ namespace TOAWXML
             //TOAWTac.Properties.Settings.Default.FilePath = FilePath;
             //TOAWTac.Properties.Settings.Default.Save();
 
-            //LOAD TAM FILE
+            //LOAD TAC FILE
             if (TacFilePath != "" && TacFilePath != null)
             {
                 string FilePath = TacFilePath.Substring(0, TacFilePath.Length - 3) + "gam";
@@ -333,7 +367,14 @@ namespace TOAWXML
                     this.rbForce2.Text = fn2;
                 }
             }
-            rbForce1.Select();
+
+            rbForce1.Checked = false;
+            rbForce2.Checked = false;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+
         }
 
         private string AssignCdrName(XDocument xdoc, string forceID, Random rng)
@@ -477,7 +518,6 @@ namespace TOAWXML
             drForce.DataSource = dtFormation;
         }
 
-        // Hides the checkbox for the specified node on TreeView.
         private void HideCheckBox(TreeView tvw, TreeNode node)
         {
             TVITEM tvi = new TVITEM();
@@ -1794,6 +1834,8 @@ namespace TOAWXML
 
             return unitorders;
         }
+
+      
     }
 }
 

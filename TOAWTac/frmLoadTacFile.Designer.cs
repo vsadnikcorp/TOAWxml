@@ -51,7 +51,7 @@
             this.btnLoadFile.Name = "btnLoadFile";
             this.btnLoadFile.Size = new System.Drawing.Size(91, 41);
             this.btnLoadFile.TabIndex = 3;
-            this.btnLoadFile.Text = "Load *.tam File";
+            this.btnLoadFile.Text = "Load *.tac File";
             this.btnLoadFile.UseVisualStyleBackColor = true;
             this.btnLoadFile.Click += new System.EventHandler(this.btnLoadFile_Click);
             // 
@@ -63,7 +63,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(187, 40);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Select an existing tactical\r\nfile (*.tam) to load.";
+            this.label1.Text = "Select an existing tactical\r\nfile (*.tac) to load.";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmLoadTacFile

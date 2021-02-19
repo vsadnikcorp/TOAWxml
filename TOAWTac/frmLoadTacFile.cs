@@ -27,7 +27,7 @@ namespace TOAWTac
         {
             OpenFileDialog file = new OpenFileDialog();
             file.Multiselect = false;
-            file.Filter = "*.tam files *.tam|*.tam";
+            file.Filter = "*.tac files *.tac|*.tac";
 
             if (file.ShowDialog() == DialogResult.OK)
             {

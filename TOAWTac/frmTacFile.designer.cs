@@ -13,6 +13,7 @@ namespace TOAWXML
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// 
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -79,6 +80,8 @@ namespace TOAWXML
             this.txtUnitProf = new System.Windows.Forms.TextBox();
             this.txtUnitName = new System.Windows.Forms.TextBox();
             this.drUnit = new Microsoft.VisualBasic.PowerPacks.DataRepeater();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.lblEquipName = new System.Windows.Forms.Label();
             this.txtMax = new System.Windows.Forms.TextBox();
             this.txtQty = new System.Windows.Forms.TextBox();
@@ -92,21 +95,19 @@ namespace TOAWXML
             this.lblForceProf = new System.Windows.Forms.Label();
             this.lblForceName = new System.Windows.Forms.Label();
             this.pnlFormation = new System.Windows.Forms.Panel();
-            this.pnlUnit = new System.Windows.Forms.Panel();
             this.txtHdrFormSupply = new System.Windows.Forms.TextBox();
             this.txtHdrFormProf = new System.Windows.Forms.TextBox();
             this.txtHdrFormName = new System.Windows.Forms.TextBox();
             this.lblHdrFormSupply = new System.Windows.Forms.Label();
             this.lblHdrFormProf = new System.Windows.Forms.Label();
             this.lblHdrFormName = new System.Windows.Forms.Label();
+            this.pnlUnit = new System.Windows.Forms.Panel();
             this.txtHdrUnitSupply = new System.Windows.Forms.TextBox();
             this.txtHdrUnitProf = new System.Windows.Forms.TextBox();
             this.txtHdrUnitName = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
             this.gbForce.SuspendLayout();
             this.ssTac.SuspendLayout();
             this.drForce.ItemTemplate.SuspendLayout();
@@ -186,6 +187,7 @@ namespace TOAWXML
             this.btnSave.TabIndex = 8;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // gbForce
             // 
@@ -831,6 +833,24 @@ namespace TOAWXML
             this.drUnit.TabIndex = 55;
             this.drUnit.Text = "dataRepeater1";
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(252, 1);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(30, 13);
+            this.label15.TabIndex = 60;
+            this.label15.Text = "Max:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(200, 1);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(26, 13);
+            this.label14.TabIndex = 59;
+            this.label14.Text = "Qty:";
+            // 
             // lblEquipName
             // 
             this.lblEquipName.AutoSize = true;
@@ -947,20 +967,6 @@ namespace TOAWXML
             this.pnlFormation.TabIndex = 57;
             this.pnlFormation.Visible = false;
             // 
-            // pnlUnit
-            // 
-            this.pnlUnit.Controls.Add(this.txtHdrUnitSupply);
-            this.pnlUnit.Controls.Add(this.txtHdrUnitProf);
-            this.pnlUnit.Controls.Add(this.txtHdrUnitName);
-            this.pnlUnit.Controls.Add(this.label11);
-            this.pnlUnit.Controls.Add(this.label12);
-            this.pnlUnit.Controls.Add(this.label13);
-            this.pnlUnit.Location = new System.Drawing.Point(216, 510);
-            this.pnlUnit.Name = "pnlUnit";
-            this.pnlUnit.Size = new System.Drawing.Size(946, 53);
-            this.pnlUnit.TabIndex = 58;
-            this.pnlUnit.Visible = false;
-            // 
             // txtHdrFormSupply
             // 
             this.txtHdrFormSupply.Location = new System.Drawing.Point(179, 20);
@@ -1009,6 +1015,20 @@ namespace TOAWXML
             this.lblHdrFormName.TabIndex = 6;
             this.lblHdrFormName.Text = "Name:";
             // 
+            // pnlUnit
+            // 
+            this.pnlUnit.Controls.Add(this.txtHdrUnitSupply);
+            this.pnlUnit.Controls.Add(this.txtHdrUnitProf);
+            this.pnlUnit.Controls.Add(this.txtHdrUnitName);
+            this.pnlUnit.Controls.Add(this.label11);
+            this.pnlUnit.Controls.Add(this.label12);
+            this.pnlUnit.Controls.Add(this.label13);
+            this.pnlUnit.Location = new System.Drawing.Point(216, 510);
+            this.pnlUnit.Name = "pnlUnit";
+            this.pnlUnit.Size = new System.Drawing.Size(946, 53);
+            this.pnlUnit.TabIndex = 58;
+            this.pnlUnit.Visible = false;
+            // 
             // txtHdrUnitSupply
             // 
             this.txtHdrUnitSupply.Location = new System.Drawing.Point(177, 24);
@@ -1056,24 +1076,6 @@ namespace TOAWXML
             this.label13.Size = new System.Drawing.Size(38, 13);
             this.label13.TabIndex = 12;
             this.label13.Text = "Name:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(200, 1);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(26, 13);
-            this.label14.TabIndex = 59;
-            this.label14.Text = "Qty:";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(252, 1);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(30, 13);
-            this.label15.TabIndex = 60;
-            this.label15.Text = "Max:";
             // 
             // frmTacFile
             // 
