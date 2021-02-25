@@ -14,6 +14,7 @@ using System.Xml.XPath;
 using TOAWTac;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
+using Microsoft.VisualBasic.PowerPacks;
 
 namespace TOAWXML
 {
@@ -71,7 +72,9 @@ namespace TOAWXML
         DataTable dtUnit = new DataTable();
         DataTable dtEquip = new DataTable();
 
-        static XDocument tacFile;
+        //QQQ static XDocument tacFile;
+        static XElement tacFile;
+        static string forceID;
 
         //private class ReplacementPriority
         //{
@@ -101,7 +104,7 @@ namespace TOAWXML
             //MAKE PANELS INVISIBLE
             pnlForce.Visible = false;
             pnlFormation.Visible = false;
-            pnlUnit.Visible = false; 
+            pnlUnit.Visible = false;
 
             //MAKE DATA REPEATERS INVISIBLE
             drForce.Visible = false;
@@ -111,7 +114,7 @@ namespace TOAWXML
             //DISABLE FORCE RADIO BUTTONS
             rbForce1.Enabled = false;
             rbForce2.Enabled = false;
-            
+
             rbForce1.Checked = false;
             rbForce2.Checked = false;
 
@@ -122,6 +125,7 @@ namespace TOAWXML
             dtFormation.Columns.Add("Support", typeof(string));
             dtFormation.Columns.Add("Orders", typeof(string));
             dtFormation.Columns.Add("LossTol", typeof(string));
+            dtFormation.Columns.Add("FormID", typeof(string));
 
             //CREATE DATA TABLE FOR UNITS
             dtUnit.Columns.Add("UnitName", typeof(string));
@@ -172,9 +176,10 @@ namespace TOAWXML
             if (FilePath != "" && FilePath != null)  //THERE IS IS NO "ELSE" TO COVER WHAT IF FILEPATH == "" OR NULL!!
             {
                 ssTac.Visible = true;
-                
+
                 //CREATE TACFILE
-                XDocument xdoc = XDocument.Load(FilePath);
+                //QQQ XDocument xdoc = XDocument.Load(FilePath);
+                tacFile = XElement.Load(FilePath);
                 string TacFilePath = FilePath.Substring(0, FilePath.Length - 3) + "tac";
                 txtTacFile.Text = TacFilePath;
                 TOAWTac.Properties.Settings.Default.TacFilePath = TacFilePath;
@@ -189,7 +194,7 @@ namespace TOAWXML
 
                 //ZZZZZZZZZZZZZZZZZZ
                 //XDocument tacFile = xdoc;
-                tacFile = xdoc;
+                //QQQ tacFile = xdoc;
                 //ZZZZZZZZZZZZZZZZZ
 
                 //LOAD COMMANDER NAMES FILE
@@ -357,7 +362,8 @@ namespace TOAWXML
 
                 //ZZZZZZZZZZZZZZZ
                 //XDocument tacFile = XDocument.Load(TacFilePath);
-                tacFile = XDocument.Load(TacFilePath);
+                //QQQ tacFile = XDocument.Load(TacFilePath);
+                tacFile = XElement.Load(TacFilePath);
                 //ZZZZZZZZZZZZZZZZZZZZ
                 txtTacFile.Text = TacFilePath;
 
@@ -382,7 +388,7 @@ namespace TOAWXML
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-
+            tacFile.Save(txtTacFile.Text);
         }
 
         private string AssignCdrName(XDocument xdoc, string forceID, Random rng)
@@ -403,10 +409,14 @@ namespace TOAWXML
             pnlUnit.Visible = false;
             pnlForce.Visible = true;
 
-            if (rbForce1.Checked == true) LoadTree("1");
+            if (rbForce1.Checked == true)
+            {
+                forceID = "1";
+                //LoadTree("1");
+                LoadTree(forceID);
+            }
             trvUnitTree.SelectedNode = trvUnitTree.TopNode;
             ssTac.Visible = false;
-           
         }
 
         private void rbForce2_CheckedChanged(object sender, EventArgs e)
@@ -415,8 +425,13 @@ namespace TOAWXML
             pnlFormation.Visible = false;
             pnlUnit.Visible = false;
             pnlForce.Visible = true;
-            
-            if (rbForce2.Checked == true) LoadTree("2");
+
+            if (rbForce2.Checked == true)
+            {
+                forceID = "2";
+                //LoadTree("2");
+                LoadTree(forceID);
+            }
             trvUnitTree.SelectedNode = trvUnitTree.TopNode;
             ssTac.Visible = false;
         }
@@ -428,8 +443,8 @@ namespace TOAWXML
 
             if (txtTacFile.Text != "")
             {
-                string FilePath = TOAWTac.Properties.Settings.Default.FilePath.ToString();
-                xelem = XElement.Load(FilePath);
+                string TacFilePath = TOAWTac.Properties.Settings.Default.TacFilePath.ToString();
+                xelem = XElement.Load(TacFilePath);
             }
             else
             {
@@ -441,8 +456,11 @@ namespace TOAWXML
 
             trvUnitTree.Nodes.Clear();
 
+
             foreach (XElement force in xelem.Descendants("FORCE").Where(f => f.Attribute("ID").Value == forceID))
             {
+
+
                 if (force.Attribute("NAME") != null)
                 {
                     forceNode = trvUnitTree.Nodes.Add(force.Attribute("NAME").Value);
@@ -549,7 +567,7 @@ namespace TOAWXML
                 if (node.Checked)
                 {
                     list.Add(node);
-                    Console.WriteLine("name: " + node.Text + " ID: " + node.Tag);
+                    //Console.WriteLine("name: " + node.Text + " ID: " + node.Tag);
                 }
 
                 GetCheckedNodes(node.Nodes, list);
@@ -558,7 +576,7 @@ namespace TOAWXML
 
         private void trvUnitTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            string forceID = "";
+            //string forceID = "";
             string unitid = trvUnitTree.SelectedNode.Tag.ToString();
             string formid = trvUnitTree.SelectedNode.Tag.ToString();
             string equipid = trvUnitTree.SelectedNode.Tag.ToString();
@@ -568,6 +586,7 @@ namespace TOAWXML
 
             drFormation.DataSource = null;
 
+            /*QQQ
             if (rbForce1.Checked == true)
             {
                 forceID = "1";
@@ -576,10 +595,13 @@ namespace TOAWXML
             {
                 forceID = "2";
             }
+            */
 
             int treeLevel = trvUnitTree.SelectedNode.Level;
 
-            XElement xelem = XElement.Load(TOAWTac.Properties.Settings.Default.FilePath);
+            //QQQQQQQQQQQQQ
+            //XElement xelem = XElement.Load(TOAWTac.Properties.Settings.Default.FilePath);
+            //QQQQQQQQQQQQQQQQQQQ
 
             trvUnitTree.Update();
 
@@ -609,14 +631,18 @@ namespace TOAWXML
                     cboSupport.DataBindings.Clear();
                     cboOrders.DataBindings.Clear();
                     cboLossTol.DataBindings.Clear();
+                    lblFormID.DataBindings.Clear();
 
                     //XPATH FOR OOB PORTION OF XML
                     string xpath = "OOB/FORCE[@ID=" + forceID + "]";
-                    var force = xelem.XPathSelectElement(xpath);
+                    //QQQ  var force = xelem.XPathSelectElement(xpath);
+                    var force = tacFile.XPathSelectElement(xpath);
 
                     //XPATH FOR FORCE VARIABLES PORTION OF XML
                     string xpathforcevariables = "FORCEVARIABLES/FORCE[@ID =" + forceID + "]";
-                    var forcevariables = xelem.XPathSelectElement(xpathforcevariables);
+                    //QQQQ var forcevariables = xelem.XPathSelectElement(xpathforcevariables);
+
+                    var forcevariables = tacFile.XPathSelectElement(xpathforcevariables);
 
                     //SET CONTROLS ON HEADER
                     if (forceID == "1")
@@ -637,12 +663,13 @@ namespace TOAWXML
                     cboSupport.DataBindings.Add("Text", dtFormation, "Support");
                     cboOrders.DataBindings.Add("Text", dtFormation, "Orders");
                     cboLossTol.DataBindings.Add("Text", dtFormation, "LossTol");
+                    lblFormID.DataBindings.Add("Text", dtFormation, "FormID");
 
                     foreach (XElement formation in force.Descendants("FORMATION").Where(f => f.Parent.Attribute("ID").Value == forceID))
                     {
-                        dtFormation.Rows.Add(formation.Attribute("NAME").Value, formation.Attribute("PROFICIENCY").Value, 
-                            formation.Attribute("SUPPLY").Value, formation.Attribute("SUPPORTSCOPE").Value, 
-                            formation.Attribute("ORDERS").Value, formation.Attribute("EMPHASIS").Value);
+                        dtFormation.Rows.Add(formation.Attribute("NAME").Value, formation.Attribute("PROFICIENCY").Value,
+                            formation.Attribute("SUPPLY").Value, formation.Attribute("SUPPORTSCOPE").Value,
+                            formation.Attribute("ORDERS").Value, formation.Attribute("EMPHASIS").Value, formation.Attribute("ID").Value);
                     }
 
                     drForce.DataSource = dtFormation;
@@ -724,18 +751,18 @@ namespace TOAWXML
                     drFormation.Visible = true;
                     drFormation.Location = new Point(216, 84);
                     drFormation.Size = new Size(951, 500);
-                    drUnit.Visible = false; 
+                    drUnit.Visible = false;
 
                     pnlForce.Visible = false;
                     pnlFormation.Visible = true;
                     pnlFormation.Location = new Point(221, 33);
                     pnlFormation.Size = new Size(946, 48);
-                    pnlUnit.Visible = false; 
+                    pnlUnit.Visible = false;
 
                     txtUnitName.Visible = true;
                     txtUnitProf.Visible = true;
                     txtUnitSupply.Visible = true;
-                    txtUnitReadiness.Visible = true; 
+                    txtUnitReadiness.Visible = true;
                     cboUnitLossTol.Visible = true;
                     cboUnitSize.Visible = true;
                     cboUnitType.Visible = true;
@@ -744,7 +771,8 @@ namespace TOAWXML
                     cboUnitOrders.Visible = true;
 
                     xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID =" + formid + "]";
-                    var units = xelem.XPathSelectElements(xpath);
+                    //QQQ  var units = xelem.XPathSelectElements(xpath);
+                    var units = tacFile.XPathSelectElements(xpath);
 
                     //SET HEADER DATA
                     txtHdrFormName.Text = units.First().Attribute("NAME").Value;
@@ -762,6 +790,7 @@ namespace TOAWXML
                     cboUnitType.DataBindings.Clear();
                     cboExp.DataBindings.Clear();
                     cboReplace.DataBindings.Clear();
+                    //lblFormID.DataBindings.Clear();
 
                     txtUnitName.DataBindings.Add("Text", dtUnit, "UnitName");
                     txtUnitProf.DataBindings.Add("Text", dtUnit, "UnitProf");
@@ -773,6 +802,7 @@ namespace TOAWXML
                     cboUnitSize.DataBindings.Add("Text", dtUnit, "UnitSize");
                     cboExp.DataBindings.Add("Text", dtUnit, "UnitExp");
                     cboReplace.DataBindings.Add("Text", dtUnit, "UnitReplace");
+                    //lblFormID.DataBindings.Add("Text", dtUnit, "ID");
 
                     drFormation.DataSource = dtUnit;
 
@@ -788,11 +818,11 @@ namespace TOAWXML
                         if (unit.Attribute("ICONID") != null) iconID = unit.Attribute("ICONID").Value;
                         string iconDisplay = GetIconText(iconID, icon);
 
-                       string unitorders = SetUnitOrders(isAirUnit, orderID);
+                        string unitorders = SetUnitOrders(isAirUnit, orderID);
 
                         dtUnit.Rows.Add(unit.Attribute("NAME").Value, unit.Attribute("PROFICIENCY").Value,
-                            unit.Attribute("SUPPLY").Value, unitorders, unit.Attribute("EMPHASIS").Value, 
-                            unit.Attribute("READINESS").Value, iconDisplay, unit.Attribute("SIZE").Value, 
+                            unit.Attribute("SUPPLY").Value, unitorders, unit.Attribute("EMPHASIS").Value,
+                            unit.Attribute("READINESS").Value, iconDisplay, unit.Attribute("SIZE").Value,
                             unit.Attribute("EXPERIENCE").Value, replacePriority);
                     }
 
@@ -816,7 +846,8 @@ namespace TOAWXML
                     dtEquip.Clear();
 
                     xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID =" + unitid + "]";
-                    XElement equipment = xelem.XPathSelectElement(xpath);
+                    //QQQ  XElement equipment = xelem.XPathSelectElement(xpath);
+                    XElement equipment = tacFile.XPathSelectElement(xpath);
 
                     //SET HEADER PANEL DATA
                     txtHdrUnitName.Text = equipment.Attribute("NAME").Value;
@@ -1161,419 +1192,419 @@ namespace TOAWXML
             }
             return replacePriorityText;
         }
-        
-        public string GetIconText(string iconID, string iconName)
-            {
-                string iconDisplay = "";
 
-                //SET ICON COMBOBOX
-                //if (iconID == null)
-                if (iconID == "")
+        public string GetIconText(string iconID, string iconName)
+        {
+            string iconDisplay = "";
+
+            //SET ICON COMBOBOX
+            //if (iconID == null)
+            if (iconID == "")
+            {
+                switch (iconName)
                 {
-                   switch (iconName)
-                    {
-                        case "Air":
-                            iconDisplay = "Air";
-                            break;
-                        case "Anti Aircraft":
-                            iconDisplay = "AA";
-                            break;
-                        case "Airmobile Anti Air":
-                            iconDisplay = "AA (Airmob)";
-                            break;
-                        case "Motor Anti Air":
-                            iconDisplay = "AA (Mot)";
-                            break;
-                        case "Parachute Anti Air":
-                            iconDisplay = "AA (Para)";
-                            break;
-                        case "Airmobile":
-                            iconDisplay = "Airmobile";
-                            break;
-                        case "Amphibious":
-                            iconDisplay = "Amphibious";
-                            break;
-                        case "Armored Antitank":
-                            iconDisplay = "Antitank (Armored)";
-                            break;
-                        case "Airmobile Antitank":
-                            iconDisplay = "Antitank (Airmob)";
-                            break;
-                        case "Glider Antitank":
-                            iconDisplay = "Antitank (Glider)";
-                            break;
-                        case "Hvy Antitank":
-                            iconDisplay = "Antitank (Heavy)";
-                            break;
-                        case "Parachute Antitank":
-                            iconDisplay = "Antitank (Para)";
-                            break;
-                        case "Tank":
-                            iconDisplay = "Armor";
-                            break;
-                        case "Amphibious Armor":
-                            iconDisplay = "Armor (Amphib)";
-                            break;
-                        case "Assault Gun":
-                            iconDisplay = "Armor (Asslt Gun)";
-                            break;
-                        case "Glider Tank":
-                            iconDisplay = "Armor (Glider)";
-                            break;
-                        case "Hvy Armor":
-                            iconDisplay = "Armor (Heavy)";
-                            break;
-                        case "Armored Train":
-                            iconDisplay = "Armored Train";
-                            break;
-                        case "Artillery":
-                            iconDisplay = "Artillery";
-                            break;
-                        case "Airborne Artillery":
-                            iconDisplay = "Artillery (Abn)";
-                            break;
-                        case "Airmobile Arty":
-                            iconDisplay = "Artillery (Airmob)";
-                            break;
-                        case "Armored Artillery":
-                            iconDisplay = "Artillery (Armored)";
-                            break;
-                        case "Armored Hvy Arty":
-                            iconDisplay = "Artillery (Arm, Hvy)";
-                            break;
-                        case "Chemical Artillery":
-                            iconDisplay = "Artillery (Chem)";
-                            break;
-                        case "Fixed Artillery":
-                            iconDisplay = "Artillery (Fixed)";
-                            break;
-                        case "Glider Artillery":
-                            iconDisplay = "Artillery (Glider)";
-                            break;
-                        case "Hvy Artillery":
-                            iconDisplay = "Artillery (Heavy)";
-                            break;
-                        case "Horse Artillery":
-                            iconDisplay = "Artillery (Horse)";
-                            break;
-                        case "Inf Artillery":
-                            iconDisplay = "Artillery (Infantry)";
-                            break;
-                        case "Missile Artillery":
-                            iconDisplay = "Artillery (Missile)";
-                            break;
-                        case "Motor Artillery":
-                            iconDisplay = "Artillery (Mot)";
-                            break;
-                        case "Rail Artillery":
-                            iconDisplay = "Artillery (Rail)";
-                            break;
-                        case "Rocket Artillery":
-                            iconDisplay = "Artillery (Rocket)";
-                            break;
-                        case "Motor Rocket":
-                            iconDisplay = "Artillery (Rocket, Mot)";
-                            break;
-                        case "Bicycle":
-                            iconDisplay = "Bicycle";
-                            break;
-                        case "Jet Bomber":
-                            iconDisplay = "Bomber (Jet)";
-                            break;
-                        case "Jet Heavy Bomber":
-                            iconDisplay = "Bomber (Jet, Heavy)";
-                            break;
-                        case "Medium Bomber":
-                            iconDisplay = "Bomber (Medium)";
-                            break;
-                        case "Naval Bomber":
-                            iconDisplay = "Bomber (Naval)";
-                            break;
-                        case "Border":
-                            iconDisplay = "Border";
-                            break;
-                        case "Cavalry":
-                            iconDisplay = "Cavalry";
-                            break;
-                        case "Airmobile Cavalry":
-                            iconDisplay = "Cavalry (Airmob)";
-                            break;
-                        case "Armored Cavalry":
-                            iconDisplay = "Cavalry (Armored)";
-                            break;
-                        case "Motor Cavalry":
-                            iconDisplay = "Cavalry (Mot)";
-                            break;
-                        case "Mountain Cavalry":
-                            iconDisplay = "Cavalry (Mtn)";
-                            break;
-                        case "Civilian":
-                            iconDisplay = "Civilian";
-                            break;
-                        case "Embarked Air":
-                            iconDisplay = "Embarked Air";
-                            break;
-                        case "Embarked Heli":
-                            iconDisplay = "Embarked Heli";
-                            break;
-                        case "Embarked Naval":
-                            iconDisplay = "Embarked Naval";
-                            break;
-                        case "Embarked Rail":
-                            iconDisplay = "Embarked Rail";
-                            break;
-                        case "Engineer":
-                            iconDisplay = "Engineer";
-                            break;
-                        case "Airborne Engineer":
-                            iconDisplay = "Engineer (Abn)";
-                            break;
-                        case "Airmobile Engineer":
-                            iconDisplay = "Engineer (Airmob)";
-                            break;
-                        case "Armored Engineer":
-                            iconDisplay = "Engineer (Armored)";
-                            break;
-                        case "Ferry Engineer": 
-                            iconDisplay = "Engineer (Ferry)";
-                            break;
-                        case "Motor Engineer":
-                            iconDisplay = "Engineer (Mot)";
-                            break;
-                        case "Jet Fighter": 
-                            iconDisplay = "Fighter (Jet)";
-                            break;
-                        case "Naval Fighter":
-                            iconDisplay = "Fighter (Naval)";
-                            break;
-                        case "Garrison":
-                            iconDisplay = "Garrison";
-                            break;
-                        case "Guerilla":
-                            iconDisplay = "Guerilla";
-                            break;
-                        case "Airmobile Hvy Wpns":
-                            iconDisplay = "Heavy Wpns (Airmob)";
-                            break;
-                        case "Mountain Cav Hvy Wpns":
-                            iconDisplay = "Heavy Wpns (Mtn Cav)";
-                            break;
-                        case "Glider Hvy Wpns":
-                            iconDisplay = "Heavy Wpns (Glider)";
-                            break;
-                        case "Infantry Hvy Wpns":
-                            iconDisplay = "Heavy Wpns (Infantry)";
-                            break;
-                        case "Motor Hvy Wpns": 
-                            iconDisplay = "Heavy Wpns (Mot)";
-                            break;
-                        case "Mountain Hvy Wpns":
-                            iconDisplay = "Heavy Wpns (Mtn)";
-                            break;
-                        case "Parachute Hvy Wpns":
-                            iconDisplay = "Heavy Wpns (Para)";
-                            break;
-                        case "Attack Helicopter":
-                            iconDisplay = "Helicopter (Attack)";
-                            break;
-                        case "Recon Helicopter":
-                            iconDisplay = "Helicopter (Recon)";
-                            break;
-                        case "Trans Helicopter":
-                            iconDisplay = "Helicopter (Transport)";
-                            break;
-                        case "Infantry": 
-                            iconDisplay = "Infantry";
-                            break;
-                        case "Airmobile Infantry":
-                            iconDisplay = "Infantry (Airmob)";
-                            break;
-                        case "Glider Infantry":
-                            iconDisplay = "Infantry (Glider)";
-                            break;
-                        case "Marine Infantry":
-                            iconDisplay = "Infantry (Marine)";
-                            break;
-                        case "Mechanized":
-                            iconDisplay = "Infantry (Mech)";
-                            break;
-                        case "Motor Infantry": 
-                            iconDisplay = "Infantry (Mot)";
-                            break;
-                        case "Mountain Infantry":
-                            iconDisplay = "Infantry (Mtn)";
-                            break;
-                        case "Parachute Infantry": 
-                            iconDisplay = "Infantry (Para)";
-                            break;
-                        case "Irregular": 
-                            iconDisplay = "Irregular";
-                            break;
-                        case "Machine Gun": 
-                            iconDisplay = "Machine Gun";
-                            break;
-                        case "Motor Machinegun":
-                            iconDisplay = "Machine Gun (Mot)";
-                            break;
-                        case "Military Police":
-                            iconDisplay = "Military Police";
-                            break;
-                        case "Mortar":
-                            iconDisplay = "Mortar";
-                            break;
-                        case "Hvy Mortar":
-                            iconDisplay = "Mortar (Heavy)";
-                            break;
-                        case "Carrier Naval":
-                            iconDisplay = "Naval (Carrier)";
-                            break;
-                        case "Heavy Naval":
-                            iconDisplay = "Naval (Heavy)";
-                            break;
-                        case "Light Naval":
-                            iconDisplay = "Naval (Light)";
-                            break;
-                        case "Medium Naval":
-                            iconDisplay = "Naval (Medium)";
-                            break;
-                        case "Riverine":
-                            iconDisplay = "Naval (Riverine)";
-                            break;
-                        case "Naval Task Force":
-                            iconDisplay = "Naval (Task Force)";
-                            break;
-                        case "Naval Attack":
-                            iconDisplay = "Naval Attack Aircraft";
-                            break;
-                        case "Parachute":
-                            iconDisplay = "Parachute";
-                            break;
-                        case "Railroad Repair":
-                            iconDisplay = "Railroad Repair";
-                            break;
-                        case "Airborne Recon":
-                            iconDisplay = "Recon (Airborne)";
-                            break;
-                        case "Armored Recon":
-                            iconDisplay = "Recon (Armored)";
-                            break;
-                        case "Glider Recon":
-                            iconDisplay = "Recon (Glider)";
-                            break;
-                        case "Reserve":
-                            iconDisplay = "Reserve";
-                            break;
-                        case "Security":
-                            iconDisplay = "Security";
-                            break;
-                        case "Ski":
-                            iconDisplay = "Ski";
-                            break;
-                        case "Special Forces":
-                            iconDisplay = "Special Forces";
-                            break;
-                        case "Supply":
-                            iconDisplay = "Supply";
-                            break;
-                        case "Amphib Transport":
-                            iconDisplay = "Transport (Amphib)";
-                            break;
-                        case "Task Force":
-                            iconDisplay = "Task Force";
-                            break;
-                        case "Battlegroup":
-                            iconDisplay = "Battle Group";
-                            break;
-                        case "Kampfgruppe":
-                            iconDisplay = "Kampfgruppe";
-                            break;
-                        case "Combat Command A":
-                            iconDisplay = "Combat Command A";
-                            break;
-                        case "Combat Command B":
-                            iconDisplay = "Combat Command B";
-                            break;
-                        case "Combat Command C":
-                            iconDisplay = "Combat Command C";
-                            break;
-                        case "Combat Command R":
-                            iconDisplay = "Combat Command R";
-                            break;
-                        case "":
-                            iconDisplay = "NO ICON";
-                            break;
-                        default:
-                            iconDisplay = "NO ICON";
-                            break;
-                    }
+                    case "Air":
+                        iconDisplay = "Air";
+                        break;
+                    case "Anti Aircraft":
+                        iconDisplay = "AA";
+                        break;
+                    case "Airmobile Anti Air":
+                        iconDisplay = "AA (Airmob)";
+                        break;
+                    case "Motor Anti Air":
+                        iconDisplay = "AA (Mot)";
+                        break;
+                    case "Parachute Anti Air":
+                        iconDisplay = "AA (Para)";
+                        break;
+                    case "Airmobile":
+                        iconDisplay = "Airmobile";
+                        break;
+                    case "Amphibious":
+                        iconDisplay = "Amphibious";
+                        break;
+                    case "Armored Antitank":
+                        iconDisplay = "Antitank (Armored)";
+                        break;
+                    case "Airmobile Antitank":
+                        iconDisplay = "Antitank (Airmob)";
+                        break;
+                    case "Glider Antitank":
+                        iconDisplay = "Antitank (Glider)";
+                        break;
+                    case "Hvy Antitank":
+                        iconDisplay = "Antitank (Heavy)";
+                        break;
+                    case "Parachute Antitank":
+                        iconDisplay = "Antitank (Para)";
+                        break;
+                    case "Tank":
+                        iconDisplay = "Armor";
+                        break;
+                    case "Amphibious Armor":
+                        iconDisplay = "Armor (Amphib)";
+                        break;
+                    case "Assault Gun":
+                        iconDisplay = "Armor (Asslt Gun)";
+                        break;
+                    case "Glider Tank":
+                        iconDisplay = "Armor (Glider)";
+                        break;
+                    case "Hvy Armor":
+                        iconDisplay = "Armor (Heavy)";
+                        break;
+                    case "Armored Train":
+                        iconDisplay = "Armored Train";
+                        break;
+                    case "Artillery":
+                        iconDisplay = "Artillery";
+                        break;
+                    case "Airborne Artillery":
+                        iconDisplay = "Artillery (Abn)";
+                        break;
+                    case "Airmobile Arty":
+                        iconDisplay = "Artillery (Airmob)";
+                        break;
+                    case "Armored Artillery":
+                        iconDisplay = "Artillery (Armored)";
+                        break;
+                    case "Armored Hvy Arty":
+                        iconDisplay = "Artillery (Arm, Hvy)";
+                        break;
+                    case "Chemical Artillery":
+                        iconDisplay = "Artillery (Chem)";
+                        break;
+                    case "Fixed Artillery":
+                        iconDisplay = "Artillery (Fixed)";
+                        break;
+                    case "Glider Artillery":
+                        iconDisplay = "Artillery (Glider)";
+                        break;
+                    case "Hvy Artillery":
+                        iconDisplay = "Artillery (Heavy)";
+                        break;
+                    case "Horse Artillery":
+                        iconDisplay = "Artillery (Horse)";
+                        break;
+                    case "Inf Artillery":
+                        iconDisplay = "Artillery (Infantry)";
+                        break;
+                    case "Missile Artillery":
+                        iconDisplay = "Artillery (Missile)";
+                        break;
+                    case "Motor Artillery":
+                        iconDisplay = "Artillery (Mot)";
+                        break;
+                    case "Rail Artillery":
+                        iconDisplay = "Artillery (Rail)";
+                        break;
+                    case "Rocket Artillery":
+                        iconDisplay = "Artillery (Rocket)";
+                        break;
+                    case "Motor Rocket":
+                        iconDisplay = "Artillery (Rocket, Mot)";
+                        break;
+                    case "Bicycle":
+                        iconDisplay = "Bicycle";
+                        break;
+                    case "Jet Bomber":
+                        iconDisplay = "Bomber (Jet)";
+                        break;
+                    case "Jet Heavy Bomber":
+                        iconDisplay = "Bomber (Jet, Heavy)";
+                        break;
+                    case "Medium Bomber":
+                        iconDisplay = "Bomber (Medium)";
+                        break;
+                    case "Naval Bomber":
+                        iconDisplay = "Bomber (Naval)";
+                        break;
+                    case "Border":
+                        iconDisplay = "Border";
+                        break;
+                    case "Cavalry":
+                        iconDisplay = "Cavalry";
+                        break;
+                    case "Airmobile Cavalry":
+                        iconDisplay = "Cavalry (Airmob)";
+                        break;
+                    case "Armored Cavalry":
+                        iconDisplay = "Cavalry (Armored)";
+                        break;
+                    case "Motor Cavalry":
+                        iconDisplay = "Cavalry (Mot)";
+                        break;
+                    case "Mountain Cavalry":
+                        iconDisplay = "Cavalry (Mtn)";
+                        break;
+                    case "Civilian":
+                        iconDisplay = "Civilian";
+                        break;
+                    case "Embarked Air":
+                        iconDisplay = "Embarked Air";
+                        break;
+                    case "Embarked Heli":
+                        iconDisplay = "Embarked Heli";
+                        break;
+                    case "Embarked Naval":
+                        iconDisplay = "Embarked Naval";
+                        break;
+                    case "Embarked Rail":
+                        iconDisplay = "Embarked Rail";
+                        break;
+                    case "Engineer":
+                        iconDisplay = "Engineer";
+                        break;
+                    case "Airborne Engineer":
+                        iconDisplay = "Engineer (Abn)";
+                        break;
+                    case "Airmobile Engineer":
+                        iconDisplay = "Engineer (Airmob)";
+                        break;
+                    case "Armored Engineer":
+                        iconDisplay = "Engineer (Armored)";
+                        break;
+                    case "Ferry Engineer":
+                        iconDisplay = "Engineer (Ferry)";
+                        break;
+                    case "Motor Engineer":
+                        iconDisplay = "Engineer (Mot)";
+                        break;
+                    case "Jet Fighter":
+                        iconDisplay = "Fighter (Jet)";
+                        break;
+                    case "Naval Fighter":
+                        iconDisplay = "Fighter (Naval)";
+                        break;
+                    case "Garrison":
+                        iconDisplay = "Garrison";
+                        break;
+                    case "Guerilla":
+                        iconDisplay = "Guerilla";
+                        break;
+                    case "Airmobile Hvy Wpns":
+                        iconDisplay = "Heavy Wpns (Airmob)";
+                        break;
+                    case "Mountain Cav Hvy Wpns":
+                        iconDisplay = "Heavy Wpns (Mtn Cav)";
+                        break;
+                    case "Glider Hvy Wpns":
+                        iconDisplay = "Heavy Wpns (Glider)";
+                        break;
+                    case "Infantry Hvy Wpns":
+                        iconDisplay = "Heavy Wpns (Infantry)";
+                        break;
+                    case "Motor Hvy Wpns":
+                        iconDisplay = "Heavy Wpns (Mot)";
+                        break;
+                    case "Mountain Hvy Wpns":
+                        iconDisplay = "Heavy Wpns (Mtn)";
+                        break;
+                    case "Parachute Hvy Wpns":
+                        iconDisplay = "Heavy Wpns (Para)";
+                        break;
+                    case "Attack Helicopter":
+                        iconDisplay = "Helicopter (Attack)";
+                        break;
+                    case "Recon Helicopter":
+                        iconDisplay = "Helicopter (Recon)";
+                        break;
+                    case "Trans Helicopter":
+                        iconDisplay = "Helicopter (Transport)";
+                        break;
+                    case "Infantry":
+                        iconDisplay = "Infantry";
+                        break;
+                    case "Airmobile Infantry":
+                        iconDisplay = "Infantry (Airmob)";
+                        break;
+                    case "Glider Infantry":
+                        iconDisplay = "Infantry (Glider)";
+                        break;
+                    case "Marine Infantry":
+                        iconDisplay = "Infantry (Marine)";
+                        break;
+                    case "Mechanized":
+                        iconDisplay = "Infantry (Mech)";
+                        break;
+                    case "Motor Infantry":
+                        iconDisplay = "Infantry (Mot)";
+                        break;
+                    case "Mountain Infantry":
+                        iconDisplay = "Infantry (Mtn)";
+                        break;
+                    case "Parachute Infantry":
+                        iconDisplay = "Infantry (Para)";
+                        break;
+                    case "Irregular":
+                        iconDisplay = "Irregular";
+                        break;
+                    case "Machine Gun":
+                        iconDisplay = "Machine Gun";
+                        break;
+                    case "Motor Machinegun":
+                        iconDisplay = "Machine Gun (Mot)";
+                        break;
+                    case "Military Police":
+                        iconDisplay = "Military Police";
+                        break;
+                    case "Mortar":
+                        iconDisplay = "Mortar";
+                        break;
+                    case "Hvy Mortar":
+                        iconDisplay = "Mortar (Heavy)";
+                        break;
+                    case "Carrier Naval":
+                        iconDisplay = "Naval (Carrier)";
+                        break;
+                    case "Heavy Naval":
+                        iconDisplay = "Naval (Heavy)";
+                        break;
+                    case "Light Naval":
+                        iconDisplay = "Naval (Light)";
+                        break;
+                    case "Medium Naval":
+                        iconDisplay = "Naval (Medium)";
+                        break;
+                    case "Riverine":
+                        iconDisplay = "Naval (Riverine)";
+                        break;
+                    case "Naval Task Force":
+                        iconDisplay = "Naval (Task Force)";
+                        break;
+                    case "Naval Attack":
+                        iconDisplay = "Naval Attack Aircraft";
+                        break;
+                    case "Parachute":
+                        iconDisplay = "Parachute";
+                        break;
+                    case "Railroad Repair":
+                        iconDisplay = "Railroad Repair";
+                        break;
+                    case "Airborne Recon":
+                        iconDisplay = "Recon (Airborne)";
+                        break;
+                    case "Armored Recon":
+                        iconDisplay = "Recon (Armored)";
+                        break;
+                    case "Glider Recon":
+                        iconDisplay = "Recon (Glider)";
+                        break;
+                    case "Reserve":
+                        iconDisplay = "Reserve";
+                        break;
+                    case "Security":
+                        iconDisplay = "Security";
+                        break;
+                    case "Ski":
+                        iconDisplay = "Ski";
+                        break;
+                    case "Special Forces":
+                        iconDisplay = "Special Forces";
+                        break;
+                    case "Supply":
+                        iconDisplay = "Supply";
+                        break;
+                    case "Amphib Transport":
+                        iconDisplay = "Transport (Amphib)";
+                        break;
+                    case "Task Force":
+                        iconDisplay = "Task Force";
+                        break;
+                    case "Battlegroup":
+                        iconDisplay = "Battle Group";
+                        break;
+                    case "Kampfgruppe":
+                        iconDisplay = "Kampfgruppe";
+                        break;
+                    case "Combat Command A":
+                        iconDisplay = "Combat Command A";
+                        break;
+                    case "Combat Command B":
+                        iconDisplay = "Combat Command B";
+                        break;
+                    case "Combat Command C":
+                        iconDisplay = "Combat Command C";
+                        break;
+                    case "Combat Command R":
+                        iconDisplay = "Combat Command R";
+                        break;
+                    case "":
+                        iconDisplay = "NO ICON";
+                        break;
+                    default:
+                        iconDisplay = "NO ICON";
+                        break;
+                }
                 //Console.WriteLine(iconDisplay);
-                }
-                else //IF ALTERNATE ICONS EXIST
+            }
+            else //IF ALTERNATE ICONS EXIST
+            {
+                switch (iconID)
                 {
-                    switch (iconID)
-                    {
-                        case "0":
-                            iconDisplay = "Headquarters [v1]";
-                            break;
-                        case "1":
-                            iconDisplay = "Headquarters [v2]";
-                            break;
-                        case "14":
-                            iconDisplay = "Antitank [v1]";
-                            break;
-                        case "15":
-                            iconDisplay = "Antitank [v2]";
-                            break;
-                        case "25":
-                            iconDisplay = "Antitank (Mot) [v1]";
-                            break;
-                        case "26":
-                            iconDisplay = "Antitank (Mot) [v2]";
-                            break;
-                        case "41":
-                            iconDisplay = "Fighter [icon]";
-                            break;
-                        case "42":
-                            iconDisplay = "Fighter Bomber [icon]";
-                            break;
-                        case "43":
-                            iconDisplay = "Bomber (Light) [icon]";
-                            break;
-                        case "45":
-                            iconDisplay = "Bomber (Heavy) [icon]";
-                            break;
-                        case "62":
-                            iconDisplay = "Artillery (Coast) [icon]";
-                            break;
-                        case "63":
-                            iconDisplay = "Artillery (Coast) [silh]";
-                            break;
-                        case "66":
-                            iconDisplay = "Fighter [silh]";
-                            break;
-                        case "67":
-                            iconDisplay = "Fighter Bomber [silh]";
-                            break;
-                        case "68":
-                            iconDisplay = "Bomber (Light) [silh]";
-                            break;
-                        case "69":
-                            iconDisplay = "Bomber (Heavy) [silh]";
-                            break;
-                        case "82":
-                            iconDisplay = "Transport [icon]";
-                            break;
-                        case "94":
-                            iconDisplay = "Transport [silh]";
-                            break;
-                        default:
-                            iconDisplay = "NO ICON";
-                            break;
-                    }
+                    case "0":
+                        iconDisplay = "Headquarters [v1]";
+                        break;
+                    case "1":
+                        iconDisplay = "Headquarters [v2]";
+                        break;
+                    case "14":
+                        iconDisplay = "Antitank [v1]";
+                        break;
+                    case "15":
+                        iconDisplay = "Antitank [v2]";
+                        break;
+                    case "25":
+                        iconDisplay = "Antitank (Mot) [v1]";
+                        break;
+                    case "26":
+                        iconDisplay = "Antitank (Mot) [v2]";
+                        break;
+                    case "41":
+                        iconDisplay = "Fighter [icon]";
+                        break;
+                    case "42":
+                        iconDisplay = "Fighter Bomber [icon]";
+                        break;
+                    case "43":
+                        iconDisplay = "Bomber (Light) [icon]";
+                        break;
+                    case "45":
+                        iconDisplay = "Bomber (Heavy) [icon]";
+                        break;
+                    case "62":
+                        iconDisplay = "Artillery (Coast) [icon]";
+                        break;
+                    case "63":
+                        iconDisplay = "Artillery (Coast) [silh]";
+                        break;
+                    case "66":
+                        iconDisplay = "Fighter [silh]";
+                        break;
+                    case "67":
+                        iconDisplay = "Fighter Bomber [silh]";
+                        break;
+                    case "68":
+                        iconDisplay = "Bomber (Light) [silh]";
+                        break;
+                    case "69":
+                        iconDisplay = "Bomber (Heavy) [silh]";
+                        break;
+                    case "82":
+                        iconDisplay = "Transport [icon]";
+                        break;
+                    case "94":
+                        iconDisplay = "Transport [silh]";
+                        break;
+                    default:
+                        iconDisplay = "NO ICON";
+                        break;
                 }
+            }
             return iconDisplay;
         }
-        
+
         private void cboSupport_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1581,7 +1612,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
-        
+
         private void cboOrders_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1589,7 +1620,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
-        
+
         private void cboLossTol_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1597,7 +1628,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
-        
+
         private void cboUnitType_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1605,7 +1636,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
-        
+
         private void cboUnitSize_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1613,7 +1644,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
-        
+
         private void cboUnitOrders_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1621,7 +1652,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
-        
+
         private void cboUnitLossTol_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1629,7 +1660,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
-        
+
         private void cboExp_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1637,7 +1668,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
-        
+
         private void cboReplace_MouseWheel(object sender, MouseEventArgs e)
         {
             if (sender == cboUnitType)
@@ -1645,7 +1676,7 @@ namespace TOAWXML
                 ((HandledMouseEventArgs)e).Handled = false;
             }
         }
-        
+
         private bool IsAirUnit(string unittype)
         {
             bool isAirUnit = false;
@@ -1843,7 +1874,145 @@ namespace TOAWXML
             return unitorders;
         }
 
-      
+        private void txtHdrForceName_TextChanged(object sender, EventArgs e)
+        {
+            //CHANGE TACFILE XML
+            //string xpath = "OOB/FORCE[@ID=" + forceID + "]";
+            string xpath = "HEADER";
+            string xpath2 = "OOB/FORCE[@ID=" + forceID + "]";
+
+            var force = tacFile.XPathSelectElement(xpath);
+            var force2 = tacFile.XPathSelectElement(xpath2);
+
+            force.Attribute("forceName1").Value = txtHdrForceName.Text;
+            force2.Attribute("NAME").Value = txtHdrForceName.Text;
+
+            //CHANGE RADIO BUTTON TEXT
+            if (forceID == "1")
+            {
+                rbForce1.Text = txtHdrForceName.Text;
+            }
+            else if (forceID == "2")
+            {
+                rbForce2.Text = txtHdrForceName.Text;
+            }
+            trvUnitTree.TopNode.Text = txtHdrForceName.Text;
+            trvUnitTree.Refresh();
+        }
+
+        private void txtHdrForceProf_TextChanged(object sender, EventArgs e)
+        {
+            //CHANGE TACFILE XML
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]";
+            var force = tacFile.XPathSelectElement(xpath);
+            force.Attribute("proficiency").Value = txtHdrForceProf.Text;
+        }
+
+        private void txtHdrForceSupply_TextChanged(object sender, EventArgs e)
+        {
+            //CHANGE TACFILE XML
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]";
+            var force = tacFile.XPathSelectElement(xpath);
+            force.Attribute("supply").Value = txtHdrForceSupply.Text;
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            //string formID = lblFormID.Text;
+            //Console.WriteLine(formID);
+            //var result = trvUnitTree.Nodes.OfType<TreeNode>().FirstOrDefault(node => node.Tag.Equals(formID));
+
+            ////CHANGE TACFILE XML
+            //string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID= "+formID+"]";
+            //var formation = tacFile.XPathSelectElement(xpath);
+            ////if(txtName.Text !=null) formation.Attribute("NAME").Value = txtName.Text;
+
+            ////result.Text = txtName.Text;
+
+
+
+        }
+
+        private void txtName_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drForce.CurrentItemIndex;
+            string formID = "";
+
+            foreach (DataRepeaterItem row in drForce.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblFormID", true).First();
+                    Control name = row.Controls.Find("txtName", true).First();
+                    formID = label.Text;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID= " + formID + "]";
+                    var formation = tacFile.XPathSelectElement(xpath);
+                    if(name.Text !=null) formation.Attribute("NAME").Value = name.Text;
+
+                    //REVISE TREE NODE
+                    foreach (TreeNode node in trvUnitTree.Nodes)
+                    {
+                        foreach (TreeNode child in node.Nodes)
+                        {
+                            if (child.Name == "FORMATION")
+                            {
+                                if (child.Tag.ToString() == formID)
+                                {
+                                    child.Text = name.Text;
+                                    trvUnitTree.Refresh();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        private void txtProf_TextChanged(object sender, EventArgs e)
+        {
+            int drIndex = drForce.CurrentItemIndex;
+            string formID = "";
+
+            foreach (DataRepeaterItem row in drForce.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblFormID", true).First();
+                    Control prof = row.Controls.Find("txtProf", true).First();
+                    formID = label.Text;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID= " + formID + "]";
+                    var formation = tacFile.XPathSelectElement(xpath);
+                    if (prof.Text != null) formation.Attribute("PROFICIENCY").Value = prof.Text;
+                }
+            }
+        }
+
+        private void txtSupply_TextChanged(object sender, EventArgs e)
+        {
+            int drIndex = drForce.CurrentItemIndex;
+            string formID = "";
+
+            foreach (DataRepeaterItem row in drForce.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblFormID", true).First();
+                    Control supply = row.Controls.Find("txtSupply", true).First();
+                    formID = label.Text;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID= " + formID + "]";
+                    var formation = tacFile.XPathSelectElement(xpath);
+                    if (supply.Text != null) formation.Attribute("SUPPLY").Value = supply.Text;
+                }
+            }
+        }
     }
 }
 

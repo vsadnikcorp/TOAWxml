@@ -49,6 +49,7 @@ namespace TOAWXML
             this.txtProf = new System.Windows.Forms.TextBox();
             this.txtSupply = new System.Windows.Forms.TextBox();
             this.drForce = new Microsoft.VisualBasic.PowerPacks.DataRepeater();
+            this.lblFormID = new System.Windows.Forms.Label();
             this.lblOrders = new System.Windows.Forms.Label();
             this.cboOrders = new System.Windows.Forms.ComboBox();
             this.lblSupport = new System.Windows.Forms.Label();
@@ -146,9 +147,9 @@ namespace TOAWXML
             this.lblTacFile.AutoSize = true;
             this.lblTacFile.Location = new System.Drawing.Point(16, 604);
             this.lblTacFile.Name = "lblTacFile";
-            this.lblTacFile.Size = new System.Drawing.Size(71, 13);
+            this.lblTacFile.Size = new System.Drawing.Size(69, 13);
             this.lblTacFile.TabIndex = 5;
-            this.lblTacFile.Text = "Current *.tam:";
+            this.lblTacFile.Text = "Current *.tac:";
             this.lblTacFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // txtTacFile
@@ -273,6 +274,8 @@ namespace TOAWXML
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(102, 20);
             this.txtName.TabIndex = 28;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            this.txtName.Leave += new System.EventHandler(this.txtName_Leave);
             // 
             // txtProf
             // 
@@ -281,6 +284,7 @@ namespace TOAWXML
             this.txtProf.Size = new System.Drawing.Size(40, 20);
             this.txtProf.TabIndex = 29;
             this.txtProf.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtProf.TextChanged += new System.EventHandler(this.txtProf_TextChanged);
             // 
             // txtSupply
             // 
@@ -289,12 +293,14 @@ namespace TOAWXML
             this.txtSupply.Size = new System.Drawing.Size(40, 20);
             this.txtSupply.TabIndex = 30;
             this.txtSupply.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtSupply.TextChanged += new System.EventHandler(this.txtSupply_TextChanged);
             // 
             // drForce
             // 
             // 
             // drForce.ItemTemplate
             // 
+            this.drForce.ItemTemplate.Controls.Add(this.lblFormID);
             this.drForce.ItemTemplate.Controls.Add(this.lblOrders);
             this.drForce.ItemTemplate.Controls.Add(this.cboOrders);
             this.drForce.ItemTemplate.Controls.Add(this.lblSupport);
@@ -313,6 +319,15 @@ namespace TOAWXML
             this.drForce.Size = new System.Drawing.Size(951, 511);
             this.drForce.TabIndex = 34;
             this.drForce.Text = "drForce";
+            // 
+            // lblFormID
+            // 
+            this.lblFormID.AutoSize = true;
+            this.lblFormID.Location = new System.Drawing.Point(884, 0);
+            this.lblFormID.Name = "lblFormID";
+            this.lblFormID.Size = new System.Drawing.Size(41, 13);
+            this.lblFormID.TabIndex = 43;
+            this.lblFormID.Text = "label16";
             // 
             // lblOrders
             // 
@@ -373,7 +388,7 @@ namespace TOAWXML
             // lblLossTol
             // 
             this.lblLossTol.AutoSize = true;
-            this.lblLossTol.Location = new System.Drawing.Point(440, 3);
+            this.lblLossTol.Location = new System.Drawing.Point(454, 3);
             this.lblLossTol.Name = "lblLossTol";
             this.lblLossTol.Size = new System.Drawing.Size(83, 13);
             this.lblLossTol.TabIndex = 38;
@@ -911,6 +926,7 @@ namespace TOAWXML
             this.txtHdrForceSupply.Name = "txtHdrForceSupply";
             this.txtHdrForceSupply.Size = new System.Drawing.Size(40, 20);
             this.txtHdrForceSupply.TabIndex = 5;
+            this.txtHdrForceSupply.TextChanged += new System.EventHandler(this.txtHdrForceSupply_TextChanged);
             // 
             // txtHdrForceProf
             // 
@@ -918,6 +934,7 @@ namespace TOAWXML
             this.txtHdrForceProf.Name = "txtHdrForceProf";
             this.txtHdrForceProf.Size = new System.Drawing.Size(40, 20);
             this.txtHdrForceProf.TabIndex = 4;
+            this.txtHdrForceProf.TextChanged += new System.EventHandler(this.txtHdrForceProf_TextChanged);
             // 
             // txtHdrForceName
             // 
@@ -925,6 +942,7 @@ namespace TOAWXML
             this.txtHdrForceName.Name = "txtHdrForceName";
             this.txtHdrForceName.Size = new System.Drawing.Size(102, 20);
             this.txtHdrForceName.TabIndex = 3;
+            this.txtHdrForceName.TextChanged += new System.EventHandler(this.txtHdrForceName_TextChanged);
             // 
             // lblForceSupply
             // 
@@ -1209,5 +1227,6 @@ namespace TOAWXML
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label lblFormID;
     }
 }

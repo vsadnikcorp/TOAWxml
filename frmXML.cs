@@ -83,9 +83,6 @@ namespace TOAWXML
                     txtPath.Text = filePath;
                     if (!System.IO.File.Exists(filePath))
                     {
-                        //frmMissingFile loadfileform = new frmMissingFile();
-                        //loadfileform.ShowDialog();
-                        //return;
                         frmLoadFile loadfileform = new frmLoadFile();
                         loadfileform.ShowDialog();
                         return;
@@ -93,7 +90,6 @@ namespace TOAWXML
                     FixInvalidXML();
                     FixForce2SubunitBug();
 
-                    ///XDocument xdoc = XDocument.Load(Globals.GlobalVariables.PATH);
                     XDocument xdoc = XDocument.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
                     //GET NAME OF FORCE 1 AND ASSIGN TO radio button text
@@ -121,6 +117,7 @@ namespace TOAWXML
                 return;
             }
             //<<<<<<<<<<<<<<<<<<<<<<<<
+
             //POPULATES DEPLOYMENT COMBO BOX
             var deployment = new BindingList<KeyValuePair<string, string>>();
             deployment.Add(new KeyValuePair<string, string>("1", "Reinforce (Turn)"));
@@ -505,6 +502,7 @@ namespace TOAWXML
                     Globals.GlobalVariables.MICROICON = forcevariables.Attribute("microUnitIcon").Value.ToString();
                     cboStratBias.SelectedValue = forcevariables.Attribute("externalPOBias").Value.ToString();
                     txtPGWMult.Text = forcevariables.Attribute("forcePGWMultiplier").Value.ToString();
+
                     //SEEMS TO BE ERROR IN XML EXPORT FOR FORCEREFUEL--DEFAULT IS 0, WHICH IS INVALID VALUE
                     if (forcevariables.Attribute("forceAirRefuel").Value == "0")
                         {

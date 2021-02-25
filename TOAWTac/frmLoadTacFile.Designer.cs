@@ -78,7 +78,7 @@
             this.Name = "frmLoadTacFile";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Load *.tam File";
+            this.Text = "Load *.tac File";
             this.ResumeLayout(false);
             this.PerformLayout();
 
