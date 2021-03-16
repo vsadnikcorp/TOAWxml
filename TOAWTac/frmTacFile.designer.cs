@@ -60,6 +60,7 @@ namespace TOAWXML
             this.lblProf = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.drFormation = new Microsoft.VisualBasic.PowerPacks.DataRepeater();
+            this.lblUnitID = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.cboReplace = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -274,7 +275,6 @@ namespace TOAWXML
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(102, 20);
             this.txtName.TabIndex = 28;
-            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             this.txtName.Leave += new System.EventHandler(this.txtName_Leave);
             // 
             // txtProf
@@ -447,6 +447,7 @@ namespace TOAWXML
             // 
             // drFormation.ItemTemplate
             // 
+            this.drFormation.ItemTemplate.Controls.Add(this.lblUnitID);
             this.drFormation.ItemTemplate.Controls.Add(this.label10);
             this.drFormation.ItemTemplate.Controls.Add(this.cboReplace);
             this.drFormation.ItemTemplate.Controls.Add(this.label9);
@@ -473,6 +474,15 @@ namespace TOAWXML
             this.drFormation.Size = new System.Drawing.Size(951, 68);
             this.drFormation.TabIndex = 43;
             this.drFormation.Text = "dataRepeater2";
+            // 
+            // lblUnitID
+            // 
+            this.lblUnitID.AutoSize = true;
+            this.lblUnitID.Location = new System.Drawing.Point(884, 3);
+            this.lblUnitID.Name = "lblUnitID";
+            this.lblUnitID.Size = new System.Drawing.Size(41, 13);
+            this.lblUnitID.TabIndex = 54;
+            this.lblUnitID.Text = "label17";
             // 
             // label10
             // 
@@ -555,6 +565,7 @@ namespace TOAWXML
             this.cboUnitSize.Name = "cboUnitSize";
             this.cboUnitSize.Size = new System.Drawing.Size(74, 21);
             this.cboUnitSize.TabIndex = 47;
+            this.cboUnitSize.SelectedIndexChanged += new System.EventHandler(this.cboUnitSize_SelectedIndexChanged);
             // 
             // cboUnitType
             // 
@@ -695,6 +706,7 @@ namespace TOAWXML
             this.cboUnitType.Name = "cboUnitType";
             this.cboUnitType.Size = new System.Drawing.Size(108, 21);
             this.cboUnitType.TabIndex = 46;
+            this.cboUnitType.SelectedIndexChanged += new System.EventHandler(this.cboUnitType_SelectedIndexChanged);
             // 
             // label6
             // 
@@ -832,10 +844,11 @@ namespace TOAWXML
             // 
             // txtUnitName
             // 
-            this.txtUnitName.Location = new System.Drawing.Point(3, 20);
+            this.txtUnitName.Location = new System.Drawing.Point(1, 20);
             this.txtUnitName.Name = "txtUnitName";
             this.txtUnitName.Size = new System.Drawing.Size(87, 20);
             this.txtUnitName.TabIndex = 0;
+            this.txtUnitName.Leave += new System.EventHandler(this.txtUnitName_Leave);
             // 
             // drUnit
             // 
@@ -998,10 +1011,13 @@ namespace TOAWXML
             // 
             // txtHdrFormSupply
             // 
-            this.txtHdrFormSupply.Location = new System.Drawing.Point(179, 20);
+            this.txtHdrFormSupply.Location = new System.Drawing.Point(188, 20);
             this.txtHdrFormSupply.Name = "txtHdrFormSupply";
             this.txtHdrFormSupply.Size = new System.Drawing.Size(40, 20);
             this.txtHdrFormSupply.TabIndex = 11;
+            this.txtHdrFormSupply.Enter += new System.EventHandler(this.txtHdrFormSupply_Enter);
+            this.txtHdrFormSupply.MouseLeave += new System.EventHandler(this.txtHdrFormSupply_MouseLeave);
+            this.txtHdrFormSupply.Validating += new System.ComponentModel.CancelEventHandler(this.txtHdrFormSupply_Validating);
             // 
             // txtHdrFormProf
             // 
@@ -1009,6 +1025,9 @@ namespace TOAWXML
             this.txtHdrFormProf.Name = "txtHdrFormProf";
             this.txtHdrFormProf.Size = new System.Drawing.Size(40, 20);
             this.txtHdrFormProf.TabIndex = 10;
+            this.txtHdrFormProf.Enter += new System.EventHandler(this.txtHdrFormProf_Enter);
+            this.txtHdrFormProf.MouseLeave += new System.EventHandler(this.txtHdrFormProf_MouseLeave);
+            this.txtHdrFormProf.Validating += new System.ComponentModel.CancelEventHandler(this.txtHdrFormProf_Validating);
             // 
             // txtHdrFormName
             // 
@@ -1020,7 +1039,7 @@ namespace TOAWXML
             // lblHdrFormSupply
             // 
             this.lblHdrFormSupply.AutoSize = true;
-            this.lblHdrFormSupply.Location = new System.Drawing.Point(179, 4);
+            this.lblHdrFormSupply.Location = new System.Drawing.Point(190, 4);
             this.lblHdrFormSupply.Name = "lblHdrFormSupply";
             this.lblHdrFormSupply.Size = new System.Drawing.Size(42, 13);
             this.lblHdrFormSupply.TabIndex = 8;
@@ -1029,11 +1048,11 @@ namespace TOAWXML
             // lblHdrFormProf
             // 
             this.lblHdrFormProf.AutoSize = true;
-            this.lblHdrFormProf.Location = new System.Drawing.Point(133, 4);
+            this.lblHdrFormProf.Location = new System.Drawing.Point(125, 4);
             this.lblHdrFormProf.Name = "lblHdrFormProf";
-            this.lblHdrFormProf.Size = new System.Drawing.Size(29, 13);
+            this.lblHdrFormProf.Size = new System.Drawing.Size(62, 13);
             this.lblHdrFormProf.TabIndex = 7;
-            this.lblHdrFormProf.Text = "Prof:";
+            this.lblHdrFormProf.Text = "Proficiency:";
             // 
             // lblHdrFormName
             // 
@@ -1060,10 +1079,13 @@ namespace TOAWXML
             // 
             // txtHdrUnitSupply
             // 
-            this.txtHdrUnitSupply.Location = new System.Drawing.Point(177, 24);
+            this.txtHdrUnitSupply.Location = new System.Drawing.Point(188, 24);
             this.txtHdrUnitSupply.Name = "txtHdrUnitSupply";
             this.txtHdrUnitSupply.Size = new System.Drawing.Size(40, 20);
             this.txtHdrUnitSupply.TabIndex = 17;
+            this.txtHdrUnitSupply.Enter += new System.EventHandler(this.txtHdrUnitSupply_Enter);
+            this.txtHdrUnitSupply.MouseLeave += new System.EventHandler(this.txtHdrUnitSupply_MouseLeave);
+            this.txtHdrUnitSupply.Validating += new System.ComponentModel.CancelEventHandler(this.txtHdrUnitSupply_Validating);
             // 
             // txtHdrUnitProf
             // 
@@ -1071,6 +1093,9 @@ namespace TOAWXML
             this.txtHdrUnitProf.Name = "txtHdrUnitProf";
             this.txtHdrUnitProf.Size = new System.Drawing.Size(40, 20);
             this.txtHdrUnitProf.TabIndex = 16;
+            this.txtHdrUnitProf.Enter += new System.EventHandler(this.txtHdrUnitProf_Enter);
+            this.txtHdrUnitProf.MouseLeave += new System.EventHandler(this.txtHdrUnitProf_MouseLeave);
+            this.txtHdrUnitProf.Validating += new System.ComponentModel.CancelEventHandler(this.txtHdrUnitProf_Validating);
             // 
             // txtHdrUnitName
             // 
@@ -1082,7 +1107,7 @@ namespace TOAWXML
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(177, 8);
+            this.label11.Location = new System.Drawing.Point(190, 8);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(42, 13);
             this.label11.TabIndex = 14;
@@ -1091,11 +1116,11 @@ namespace TOAWXML
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(131, 8);
+            this.label12.Location = new System.Drawing.Point(123, 8);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(29, 13);
+            this.label12.Size = new System.Drawing.Size(62, 13);
             this.label12.TabIndex = 13;
-            this.label12.Text = "Prof:";
+            this.label12.Text = "Proficiency:";
             // 
             // label13
             // 
@@ -1239,5 +1264,6 @@ namespace TOAWXML
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label lblFormID;
+        private System.Windows.Forms.Label lblUnitID;
     }
 }

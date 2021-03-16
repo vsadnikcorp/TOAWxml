@@ -66,18 +66,15 @@ namespace TOAWXML
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, ref TVITEM lParam);
-        //$$$$$$$$$$$$$$$$$$$$$$$$
 
         DataTable dtFormation = new DataTable();
         DataTable dtUnit = new DataTable();
         DataTable dtEquip = new DataTable();
 
-        //QQQ static XDocument tacFile;
         static XElement tacFile;
         static string forceID;
         static string oldprof;
         static string oldsupply;
-       
 
         public frmTacFile()
         {
@@ -135,9 +132,13 @@ namespace TOAWXML
             dtUnit.Columns.Add("UnitSize", typeof(string));
             dtUnit.Columns.Add("UnitExp", typeof(string));
             dtUnit.Columns.Add("UnitReplace", typeof(string));
+            dtUnit.Columns.Add("UnitID", typeof(string));
 
             //CREATE DATATABLE FOR EQUIP
             dtEquip.Columns.Add("EquipName", typeof(string));
+            dtEquip.Columns.Add("Qty", typeof(string));
+            dtEquip.Columns.Add("Max", typeof(string));
+            dtEquip.Columns.Add("Dam", typeof(string));
 
             txtName.Visible = false;
             txtProf.Visible = false;
@@ -153,7 +154,9 @@ namespace TOAWXML
             cboReplace.Items.Add("Normal");
             cboReplace.Items.Add("High");
             cboReplace.Items.Add("Very High");
-            
+
+        
+
         }
 
         private async void btnCreateTacFile_Click(object sender, EventArgs e)
@@ -574,32 +577,17 @@ namespace TOAWXML
 
         private void trvUnitTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            //string forceID = "";
             string unitid = trvUnitTree.SelectedNode.Tag.ToString();
             string formid = trvUnitTree.SelectedNode.Tag.ToString();
             string equipid = trvUnitTree.SelectedNode.Tag.ToString();
 
             dtFormation.Clear();
             dtUnit.Clear();
+            dtEquip.Clear();
 
             drFormation.DataSource = null;
 
-            /*QQQ
-            if (rbForce1.Checked == true)
-            {
-                forceID = "1";
-            }
-            else if (rbForce2.Checked == true)
-            {
-                forceID = "2";
-            }
-            */
-
             int treeLevel = trvUnitTree.SelectedNode.Level;
-
-            //QQQQQQQQQQQQQ
-            //XElement xelem = XElement.Load(TOAWTac.Properties.Settings.Default.FilePath);
-            //QQQQQQQQQQQQQQQQQQQ
 
             trvUnitTree.Update();
 
@@ -633,12 +621,10 @@ namespace TOAWXML
 
                     //XPATH FOR OOB PORTION OF XML
                     string xpath = "OOB/FORCE[@ID=" + forceID + "]";
-                    //QQQ  var force = xelem.XPathSelectElement(xpath);
                     var force = tacFile.XPathSelectElement(xpath);
 
                     //XPATH FOR FORCE VARIABLES PORTION OF XML
                     string xpathforcevariables = "FORCEVARIABLES/FORCE[@ID =" + forceID + "]";
-                    //QQQQ var forcevariables = xelem.XPathSelectElement(xpathforcevariables);
 
                     var forcevariables = tacFile.XPathSelectElement(xpathforcevariables);
 
@@ -676,75 +662,6 @@ namespace TOAWXML
 
                 case 1: //IF FORMATION SELECTED
 
-                    //if (cboOrders.Text == "Static")
-                    //{
-                    //    txtEntryTurn.Visible = true;
-                    //    lblEntryTurn.Visible = true;
-                    //    txtEntryTurn.Text = unit.Attribute("ENTRYTURN").Value;
-                    //    string date = txtEntryTurn.Text;
-                    //    tssLabel1.Text = GameTime.getReleaseDate(date);
-
-                    //    trvUnitTree.SelectedNode.ForeColor = System.Drawing.Color.IndianRed;
-                    //    Font font = new Font(trvUnitTree.Font, FontStyle.Bold);
-                    //    trvUnitTree.SelectedNode.NodeFont = font;
-                    //}
-                    //else
-                    //{
-                    //    txtEntryTurn.Visible = false;
-                    //    lblEntryTurn.Visible = false;
-                    //    tssLabel1.Text = "";
-
-                    //    trvUnitTree.SelectedNode.ForeColor = System.Drawing.Color.Black;
-                    //    Font font = new Font(trvUnitTree.Font, FontStyle.Regular);
-                    //    trvUnitTree.SelectedNode.NodeFont = font;
-                    //}
-
-                    ////SET UP OBJECTIVES DATAGRIDVIEW
-                    //string strTrack = cboTrack.SelectedValue.ToString();
-
-                    //dgvObjectives.Columns[0].Name = "ID";
-                    //dgvObjectives.Columns["ID"].DataPropertyName = "ID";
-                    //dgvObjectives.Columns[1].Name = "DESCRIPTION";
-                    //dgvObjectives.Columns["DESCRIPTION"].DataPropertyName = "DESCRIPTION";
-                    //dgvObjectives.Columns[2].Name = "X";
-                    //dgvObjectives.Columns["X"].DataPropertyName = "X";
-                    //dgvObjectives.Columns[3].Name = "Y";
-                    //dgvObjectives.Columns["Y"].DataPropertyName = "Y";
-
-                    //dgvObjectives.Columns[0].ReadOnly = true;
-
-                    //dgvObjectives.Columns[0].Width = 25;
-                    //dgvObjectives.Columns[1].Width = 165;
-                    //dgvObjectives.Columns[2].Width = 30;
-                    //dgvObjectives.Columns[3].Width = 30;
-                    //dgvObjectives.Columns[1].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-                    //dgvObjectives.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                    //dgvObjectives.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-                    //dgvObjectives.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                    //dgvObjectives.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-                    //DataTable dt = new DataTable();
-
-                    //dt.Columns.Add("ID", typeof(Int32));
-                    //dt.Columns.Add("DESCRIPTION", typeof(string));
-                    //dt.Columns.Add("X", typeof(Int32));
-                    //dt.Columns.Add("Y", typeof(Int32));
-                    //XDocument xdoc = XDocument.Load(TOAWXML.Properties.Settings.Default.FilePath);
-
-                    //var objectives = (from d in xdoc.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION").Descendants("OBJECTIVES").Descendants("OBJECTIVE")
-                    //                  where (string)d.Parent.Parent.Parent.Attribute("ID") == Globals.GlobalVariables.FORCE && (string)d.Parent.Parent.Attribute("ID") == formid && (string)d.Parent.Attribute("TRACK") == strTrack
-                    //                  select new
-                    //                  {
-                    //                      ID = d.Attribute("ID").Value.ToString(),
-                    //                      DESCRIPTION = d.Attribute("DESCRIPTION").Value,
-                    //                      X = d.Attribute("X").Value.ToString(),
-                    //                      Y = d.Attribute("Y").Value.ToString()
-                    //                  });
-                    //objectives.ToList().ForEach(i => dt.Rows.Add(i.ID, i.DESCRIPTION, i.X, i.Y));
-                    //dgvObjectives.DataSource = dt;
-                    ///END OF DGVOBJECTIVES BLOCK
-                    ///
-
                     drForce.Visible = false;
                     drFormation.Visible = true;
                     drFormation.Location = new Point(216, 84);
@@ -769,7 +686,6 @@ namespace TOAWXML
                     cboUnitOrders.Visible = true;
 
                     xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID =" + formid + "]";
-                    //QQQ  var units = xelem.XPathSelectElements(xpath);
                     var units = tacFile.XPathSelectElements(xpath);
 
                     //SET HEADER DATA
@@ -788,7 +704,7 @@ namespace TOAWXML
                     cboUnitType.DataBindings.Clear();
                     cboExp.DataBindings.Clear();
                     cboReplace.DataBindings.Clear();
-                    //lblFormID.DataBindings.Clear();
+                    lblUnitID.DataBindings.Clear();
 
                     txtUnitName.DataBindings.Add("Text", dtUnit, "UnitName");
                     txtUnitProf.DataBindings.Add("Text", dtUnit, "UnitProf");
@@ -800,7 +716,7 @@ namespace TOAWXML
                     cboUnitSize.DataBindings.Add("Text", dtUnit, "UnitSize");
                     cboExp.DataBindings.Add("Text", dtUnit, "UnitExp");
                     cboReplace.DataBindings.Add("Text", dtUnit, "UnitReplace");
-                    //lblFormID.DataBindings.Add("Text", dtUnit, "ID");
+                    lblUnitID.DataBindings.Add("Text", dtUnit, "UnitID");
 
                     drFormation.DataSource = dtUnit;
 
@@ -821,7 +737,7 @@ namespace TOAWXML
                         dtUnit.Rows.Add(unit.Attribute("NAME").Value, unit.Attribute("PROFICIENCY").Value,
                             unit.Attribute("SUPPLY").Value, unitorders, unit.Attribute("EMPHASIS").Value,
                             unit.Attribute("READINESS").Value, iconDisplay, unit.Attribute("SIZE").Value,
-                            unit.Attribute("EXPERIENCE").Value, replacePriority);
+                            unit.Attribute("EXPERIENCE").Value, replacePriority, unit.Attribute("ID").Value);
                     }
 
                     drFormation.DataSource = dtUnit;
@@ -844,7 +760,6 @@ namespace TOAWXML
                     dtEquip.Clear();
 
                     xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID =" + unitid + "]";
-                    //QQQ  XElement equipment = xelem.XPathSelectElement(xpath);
                     XElement equipment = tacFile.XPathSelectElement(xpath);
 
                     //SET HEADER PANEL DATA
@@ -853,7 +768,13 @@ namespace TOAWXML
                     txtHdrUnitSupply.Text = equipment.Attribute("SUPPLY").Value;
 
                     txtEquipName.DataBindings.Clear();
+                    txtQty.DataBindings.Clear();
+                    txtMax.DataBindings.Clear();
+
                     txtEquipName.DataBindings.Add("Text", dtEquip, "EquipName");
+                    txtQty.DataBindings.Add("Text", dtEquip, "Qty");
+                    txtMax.DataBindings.Add("Text", dtEquip, "Max");
+
                     drUnit.DataSource = dtEquip;
 
                     foreach (XElement equip in equipment.Descendants("EQUIPMENT"))
@@ -862,6 +783,8 @@ namespace TOAWXML
                         for (int i = 1; i <= qty; i++)
                         {
                             dtEquip.Rows.Add(equip.Attribute("NAME").Value);
+                            //dtEquip.Rows.Add(equip.Attribute("NAME").Value, equip.Attribute("NUMBER").Value, 
+                            //equip.Attribute("MAX").Value, equip.Attribute("DAMAGE").Value);
                         }
                     }
 
@@ -1897,23 +1820,6 @@ namespace TOAWXML
             trvUnitTree.Refresh();
         }
 
-        private void txtName_TextChanged(object sender, EventArgs e)
-        {
-            //string formID = lblFormID.Text;
-            //Console.WriteLine(formID);
-            //var result = trvUnitTree.Nodes.OfType<TreeNode>().FirstOrDefault(node => node.Tag.Equals(formID));
-
-            ////CHANGE TACFILE XML
-            //string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID= "+formID+"]";
-            //var formation = tacFile.XPathSelectElement(xpath);
-            ////if(txtName.Text !=null) formation.Attribute("NAME").Value = txtName.Text;
-
-            ////result.Text = txtName.Text;
-
-
-
-        }
-
         private void txtName_Leave(object sender, EventArgs e)
         {
             int drIndex = drForce.CurrentItemIndex;
@@ -1930,7 +1836,7 @@ namespace TOAWXML
                     //CHANGE TACFILE XML
                     string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID= " + formID + "]";
                     var formation = tacFile.XPathSelectElement(xpath);
-                    if(name.Text !=null) formation.Attribute("NAME").Value = name.Text;
+                    if (name.Text != null) formation.Attribute("NAME").Value = name.Text;
 
                     //REVISE TREE NODE
                     foreach (TreeNode node in trvUnitTree.Nodes)
@@ -2050,6 +1956,7 @@ namespace TOAWXML
             }
 
         }
+
         private void txtSupply_Enter(object sender, EventArgs e)
         {
             int drIndex = drForce.CurrentItemIndex;
@@ -2106,7 +2013,6 @@ namespace TOAWXML
                 }
             }
         }
-
 
         private void txtSupply_MouseLeave(object sender, EventArgs e)
         {
@@ -2231,7 +2137,7 @@ namespace TOAWXML
             {
                 return true;
             }
-          
+
         }
 
         private void txtHdrForceProf_Enter(object sender, EventArgs e)
@@ -2298,7 +2204,7 @@ namespace TOAWXML
                     if (txtHdrForceProf.Text != null) force.Attribute("proficiency").Value = txtHdrForceProf.Text;
                 }
             }
-          
+
         }
 
         private void txtHdrForceSupply_Enter(object sender, EventArgs e)
@@ -2362,6 +2268,675 @@ namespace TOAWXML
             string xpath = "OOB/FORCE[@ID=" + forceID + "]";
             var force = tacFile.XPathSelectElement(xpath);
             if (txtHdrForceSupply.Text != null) force.Attribute("supply").Value = txtHdrForceSupply.Text;
+        }
+
+        private void txtHdrFormProf_Enter(object sender, EventArgs e)
+        {
+            oldprof = txtHdrFormProf.Text;
+        }
+
+        private void txtHdrFormProf_Validating(object sender, CancelEventArgs e)
+        {
+            if (!txtHdrFormProf.Focused) return;
+
+            //VALIDATE AS NUMBER
+            int profnum = 0;
+            bool isNum = int.TryParse(txtHdrFormProf.Text, out profnum);
+
+            if (isNum == false)
+            {
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                txtHdrFormProf.Text = oldprof;
+                e.Cancel = true;
+            }
+            else
+            {
+                bool withinRange = IsWithinRange(profnum, "Proficiency", 1, 100);
+
+                if (!withinRange)
+                {
+                    txtHdrFormProf.Text = oldprof;
+                    e.Cancel = true;
+                }
+            }
+            //CHANGE TACFILE XML
+            string formid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID =" + formid + "]";
+            var force = tacFile.XPathSelectElement(xpath);
+            if (txtHdrFormProf.Text != null) force.Attribute("PROFICIENCY").Value = txtHdrFormProf.Text;
+        }
+
+        private void txtHdrFormProf_MouseLeave(object sender, EventArgs e)
+        {
+            if (!txtHdrFormProf.Focused) return;
+
+            //VALIDATE AS NUMBER
+            int profnum = 0;
+            bool isNum = int.TryParse(txtHdrFormProf.Text, out profnum);
+
+            if (isNum == false)
+            {
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                txtHdrFormProf.Text = oldprof;
+            }
+            else
+            {
+                bool withinRange = IsWithinRange(profnum, "Proficiency", 1, 100);
+
+                if (!withinRange)
+                {
+                    txtHdrFormProf.Text = oldprof;
+                }
+            }
+            //CHANGE TACFILE XML
+            string formid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID =" + formid + "]";
+            var force = tacFile.XPathSelectElement(xpath);
+            if (txtHdrFormProf.Text != null) force.Attribute("PROFICIENCY").Value = txtHdrFormProf.Text;
+        }
+
+        private void txtHdrFormSupply_Enter(object sender, EventArgs e)
+        {
+            oldsupply = txtHdrFormSupply.Text;
+        }
+
+        private void txtHdrFormSupply_Validating(object sender, CancelEventArgs e)
+        {
+            if (!txtHdrFormSupply.Focused) return;
+
+            //VALIDATE AS NUMBER
+            int supplynum = 0;
+            bool isNum = int.TryParse(txtHdrFormSupply.Text, out supplynum);
+
+            if (isNum == false)
+            {
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                txtHdrFormSupply.Text = oldsupply;
+                e.Cancel = true;
+            }
+            else
+            {
+                bool withinRange = IsWithinRange(supplynum, "Supply", 1, 100);
+
+                if (!withinRange)
+                {
+                    txtHdrFormSupply.Text = oldsupply;
+                    e.Cancel = true;
+                }
+            }
+            //CHANGE TACFILE XML
+            string formid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID =" + formid + "]";
+            var force = tacFile.XPathSelectElement(xpath);
+            if (txtHdrFormSupply.Text != null) force.Attribute("SUPPLY").Value = txtHdrFormSupply.Text;
+        }
+
+        private void txtHdrFormSupply_MouseLeave(object sender, EventArgs e)
+        {
+            if (!txtHdrFormSupply.Focused) return;
+
+            //VALIDATE AS NUMBER
+            int supplynum = 0;
+            bool isNum = int.TryParse(txtHdrFormSupply.Text, out supplynum);
+
+            if (isNum == false)
+            {
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                txtHdrFormSupply.Text = oldsupply;
+            }
+            else
+            {
+                bool withinRange = IsWithinRange(supplynum, "Supply", 1, 100);
+
+                if (!withinRange)
+                {
+                    txtHdrFormSupply.Text = oldsupply;
+                }
+            }
+            //CHANGE TACFILE XML
+            string formid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID =" + formid + "]";
+            var force = tacFile.XPathSelectElement(xpath);
+            if (txtHdrFormSupply.Text != null) force.Attribute("SUPPLY").Value = txtHdrFormSupply.Text;
+        }
+
+        private void txtHdrUnitProf_Enter(object sender, EventArgs e)
+        {
+            oldprof = txtHdrUnitProf.Text;
+        }
+
+        private void txtHdrUnitProf_Validating(object sender, CancelEventArgs e)
+        {
+            if (!txtHdrUnitProf.Focused) return;
+
+            //VALIDATE AS NUMBER
+            int profnum = 0;
+            bool isNum = int.TryParse(txtHdrUnitProf.Text, out profnum);
+
+            if (isNum == false)
+            {
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                txtHdrUnitProf.Text = oldprof;
+                e.Cancel = true;
+            }
+            else
+            {
+                bool withinRange = IsWithinRange(profnum, "Proficiency", 1, 100);
+
+                if (!withinRange)
+                {
+                    txtHdrUnitProf.Text = oldprof;
+                    e.Cancel = true;
+                }
+            }
+            //CHANGE TACFILE XML
+            string unitid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID =" + unitid + "]";
+            var unit = tacFile.XPathSelectElement(xpath);
+            if (txtHdrUnitProf.Text != null) unit.Attribute("PROFICIENCY").Value = txtHdrUnitProf.Text;
+        }
+
+        private void txtHdrUnitProf_MouseLeave(object sender, EventArgs e)
+        {
+            if (!txtHdrUnitProf.Focused) return;
+
+            //VALIDATE AS NUMBER
+            int profnum = 0;
+            bool isNum = int.TryParse(txtHdrUnitProf.Text, out profnum);
+
+            if (isNum == false)
+            {
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                txtHdrUnitProf.Text = oldprof;
+            }
+            else
+            {
+                bool withinRange = IsWithinRange(profnum, "Proficiency", 1, 100);
+
+                if (!withinRange)
+                {
+                    txtHdrUnitProf.Text = oldprof;
+                }
+            }
+            //CHANGE TACFILE XML
+            string unitid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID =" + unitid + "]";
+            var unit = tacFile.XPathSelectElement(xpath);
+            if (txtHdrUnitProf.Text != null) unit.Attribute("PROFICIENCY").Value = txtHdrUnitProf.Text;
+        }
+
+        private void txtHdrUnitSupply_Enter(object sender, EventArgs e)
+        {
+            oldsupply = txtHdrUnitSupply.Text;
+        }
+
+        private void txtHdrUnitSupply_Validating(object sender, CancelEventArgs e)
+        {
+            if (!txtHdrUnitSupply.Focused) return;
+
+            //VALIDATE AS NUMBER
+            int supplynum = 0;
+            bool isNum = int.TryParse(txtHdrUnitSupply.Text, out supplynum);
+
+            if (isNum == false)
+            {
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                txtHdrUnitSupply.Text = oldsupply;
+                e.Cancel = true;
+            }
+            else
+            {
+                bool withinRange = IsWithinRange(supplynum, "Supply", 1, 100);
+
+                if (!withinRange)
+                {
+                    txtHdrUnitSupply.Text = oldsupply;
+                    e.Cancel = true;
+                }
+            }
+            //CHANGE TACFILE XML
+            string unitid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID =" + unitid + "]";
+            var unit = tacFile.XPathSelectElement(xpath);
+            if (txtHdrUnitSupply.Text != null) unit.Attribute("SUPPLY").Value = txtHdrUnitSupply.Text;
+        }
+
+        private void txtHdrUnitSupply_MouseLeave(object sender, EventArgs e)
+        {
+            if (!txtHdrUnitSupply.Focused) return;
+
+            //VALIDATE AS NUMBER
+            int supplynum = 0;
+            bool isNum = int.TryParse(txtHdrUnitSupply.Text, out supplynum);
+
+            if (isNum == false)
+            {
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                txtHdrUnitSupply.Text = oldsupply;
+            }
+            else
+            {
+                bool withinRange = IsWithinRange(supplynum, "Supply", 1, 100);
+
+                if (!withinRange)
+                {
+                    txtHdrUnitSupply.Text = oldsupply;
+                }
+            }
+            //CHANGE TACFILE XML
+            string unitid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID =" + unitid + "]";
+            var unit = tacFile.XPathSelectElement(xpath);
+            if (txtHdrUnitSupply.Text != null) unit.Attribute("SUPPLY").Value = txtHdrUnitSupply.Text;
+        }
+
+        private void txtUnitName_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    Control name = row.Controls.Find("txtUnitName", true).First();
+                    unitID = label.Text;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+                    if (name.Text != null) unit.Attribute("NAME").Value = name.Text;
+
+                    //REVISE TREE NODE
+                    foreach (TreeNode node in trvUnitTree.Nodes)
+                    {
+                        foreach (TreeNode child in node.Nodes)
+                        {
+                            foreach (TreeNode grandchild in child.Nodes)
+                                if (grandchild.Name == "UNIT")
+                                {
+                                    if (grandchild.Tag.ToString() == unitID)
+                                    {
+                                        grandchild.Text = name.Text;
+                                        trvUnitTree.Refresh();
+                                        break;
+                                    }
+                                }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        private void cboUnitType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+
+            //BINDING LIST OF ALL ICONS
+            var icons = new BindingList<KeyValuePair<string, string>>();
+
+            icons.Add(new KeyValuePair<string, string>("Air", "Air"));
+            icons.Add(new KeyValuePair<string, string>("Anti Aircraft", "AA"));
+            icons.Add(new KeyValuePair<string, string>("Airmobile Anti Air", "AA (Airmob)"));
+            icons.Add(new KeyValuePair<string, string>("Motor Anti Air", "AA (Mot)"));
+            icons.Add(new KeyValuePair<string, string>("Parachute Anti Air", "AA (Para)"));
+            icons.Add(new KeyValuePair<string, string>("Airmobile", "Airmobile"));
+            icons.Add(new KeyValuePair<string, string>("Amphibious", "Amphibious"));
+            icons.Add(new KeyValuePair<string, string>("Antitank", "Antitank [v1]"));
+            icons.Add(new KeyValuePair<string, string>("Antitank", "Antitank [v2]"));
+            icons.Add(new KeyValuePair<string, string>("Armored Antitank", "Antitank (Armored)"));
+            icons.Add(new KeyValuePair<string, string>("Airmobile Antitank", "Antitank (Airmob)"));
+            icons.Add(new KeyValuePair<string, string>("Glider Antitank", "Antitank (Glider)"));
+            icons.Add(new KeyValuePair<string, string>("Hvy Antitank", "Antitank (Heavy)"));
+            icons.Add(new KeyValuePair<string, string>("Motor Antitank", "Antitank (Mot) [v1]"));
+            icons.Add(new KeyValuePair<string, string>("Motor Antitank", "Antitank (Mot) [v2]"));
+            icons.Add(new KeyValuePair<string, string>("Parachute Antitank", "Antitank (Para)"));
+            icons.Add(new KeyValuePair<string, string>("Tank", "Armor"));
+            icons.Add(new KeyValuePair<string, string>("Amphibious Armor", "Armor (Amphib)"));
+            icons.Add(new KeyValuePair<string, string>("Assault Gun", "Armor (Asslt Gun)"));
+            icons.Add(new KeyValuePair<string, string>("Glider Tank", "Armor (Glider)"));
+            icons.Add(new KeyValuePair<string, string>("Hvy Armor", "Armor (Heavy)"));
+            icons.Add(new KeyValuePair<string, string>("Armored Train", "Armored Train"));
+            icons.Add(new KeyValuePair<string, string>("Artillery", "Artillery"));
+            icons.Add(new KeyValuePair<string, string>("Airborne Artillery", "Artillery (Abn)"));
+            icons.Add(new KeyValuePair<string, string>("Airmobile Arty", "Artillery (Airmob)"));
+            icons.Add(new KeyValuePair<string, string>("Armored Artillery", "Artillery (Armored)"));
+            icons.Add(new KeyValuePair<string, string>("Armored Hvy Arty", "Artillery (Arm, Hvy)"));
+            icons.Add(new KeyValuePair<string, string>("Chemical Artillery", "Artillery (Chem)"));
+            icons.Add(new KeyValuePair<string, string>("Coastal Artillery", "Artillery (Coast) [icon]"));
+            icons.Add(new KeyValuePair<string, string>("Coastal Artillery", "Artillery (Coast) [silh]"));
+            icons.Add(new KeyValuePair<string, string>("Fixed Artillery", "Artillery (Fixed)"));
+            icons.Add(new KeyValuePair<string, string>("Glider Artillery", "Artillery (Glider)"));
+            icons.Add(new KeyValuePair<string, string>("Hvy Artillery", "Artillery (Heavy)"));
+            icons.Add(new KeyValuePair<string, string>("Horse Artillery", "Artillery (Horse)"));
+            icons.Add(new KeyValuePair<string, string>("Inf Artillery", "Artillery (Infantry)"));
+            icons.Add(new KeyValuePair<string, string>("Missile Artillery", "Artillery (Missile)"));
+            icons.Add(new KeyValuePair<string, string>("Motor Artillery", "Artillery (Mot)"));
+            icons.Add(new KeyValuePair<string, string>("Rail Artillery", "Artillery (Rail)"));
+            icons.Add(new KeyValuePair<string, string>("Rocket Artillery", "Artillery (Rocket)"));
+            icons.Add(new KeyValuePair<string, string>("Motor Rocket", "Artillery (Rocket, Mot)"));
+            icons.Add(new KeyValuePair<string, string>("Bicycle", "Bicycle"));
+            icons.Add(new KeyValuePair<string, string>("Heavy Bomber", "Bomber (Heavy) [icon]"));
+            icons.Add(new KeyValuePair<string, string>("Heavy Bomber", "Bomber (Heavy) [silh]"));
+            icons.Add(new KeyValuePair<string, string>("Jet Bomber", "Bomber (Jet)"));
+            icons.Add(new KeyValuePair<string, string>("Jet Heavy Bomber", "Bomber (Jet, Heavy)"));
+            icons.Add(new KeyValuePair<string, string>("Light Bomber", "Bomber (Light) [icon]"));
+            icons.Add(new KeyValuePair<string, string>("Light Bomber", "Bomber (Light) [silh]"));
+            icons.Add(new KeyValuePair<string, string>("Medium Bomber", "Bomber (Medium)"));
+            icons.Add(new KeyValuePair<string, string>("Naval Bomber", "Bomber (Naval)"));
+            icons.Add(new KeyValuePair<string, string>("Border", "Border"));
+            icons.Add(new KeyValuePair<string, string>("Cavalry", "Cavalry"));
+            icons.Add(new KeyValuePair<string, string>("Airmobile Cavalry", "Cavalry (Airmob)"));
+            icons.Add(new KeyValuePair<string, string>("Armored Cavalry", "Cavalry (Armored)"));
+            icons.Add(new KeyValuePair<string, string>("Motor Cavalry", "Cavalry (Mot)"));
+            icons.Add(new KeyValuePair<string, string>("Mountain Cavalry", "Cavalry (Mtn)"));
+            icons.Add(new KeyValuePair<string, string>("Civilian", "Civilian"));
+            icons.Add(new KeyValuePair<string, string>("Embarked Air", "Embarked Air"));
+            icons.Add(new KeyValuePair<string, string>("Embarked Heli", "Embarked Heli"));
+            icons.Add(new KeyValuePair<string, string>("Embarked Naval", "Embarked Naval"));
+            icons.Add(new KeyValuePair<string, string>("Embarked Rail", "Embarked Rail"));
+            icons.Add(new KeyValuePair<string, string>("Engineer", "Engineer"));
+            icons.Add(new KeyValuePair<string, string>("Airborne Engineer", "Engineer (Abn)"));
+            icons.Add(new KeyValuePair<string, string>("Airmobile Engineer", "Engineer (Airmob)"));
+            icons.Add(new KeyValuePair<string, string>("Armored Engineer", "Engineer (Armored)"));
+            icons.Add(new KeyValuePair<string, string>("Ferry Engineer", "Engineer (Ferry)"));
+            icons.Add(new KeyValuePair<string, string>("Motor Engineer", "Engineer (Mot)"));
+            icons.Add(new KeyValuePair<string, string>("Fighter", "Fighter [icon]"));
+            icons.Add(new KeyValuePair<string, string>("Fighter", "Fighter [silh]"));
+            icons.Add(new KeyValuePair<string, string>("Jet Fighter", "Fighter (Jet)"));
+            icons.Add(new KeyValuePair<string, string>("Naval Fighter", "Fighter (Naval)"));
+            icons.Add(new KeyValuePair<string, string>("Fighter Bomber", "Fighter Bomber [icon]"));
+            icons.Add(new KeyValuePair<string, string>("Fighter Bomber", "Fighter Bomber [silh]"));
+            icons.Add(new KeyValuePair<string, string>("Garrison", "Garrison"));
+            icons.Add(new KeyValuePair<string, string>("Guerilla", "Guerilla"));
+            icons.Add(new KeyValuePair<string, string>("Headquarters", "Headquarters [v1]"));
+            icons.Add(new KeyValuePair<string, string>("Headquarters", "Headquarters [v2]"));
+            icons.Add(new KeyValuePair<string, string>("Airmobile Hvy Wpns", "Heavy Wpns (Airmob)"));
+            icons.Add(new KeyValuePair<string, string>("Mountain Cav Hvy Wpns", "Heavy Wpns (Mtn Cav)"));
+            icons.Add(new KeyValuePair<string, string>("Glider Hvy Wpns", "Heavy Wpns (Glider)"));
+            icons.Add(new KeyValuePair<string, string>("Infantry Hvy Wpns", "Heavy Wpns (Infantry)"));
+            icons.Add(new KeyValuePair<string, string>("Motor Hvy Wpns", "Heavy Wpns (Mot)"));
+            icons.Add(new KeyValuePair<string, string>("Mountain Hvy Wpns", "Heavy Wpns (Mtn)"));
+            icons.Add(new KeyValuePair<string, string>("Parachute Hvy Wpns", "Heavy Wpns (Para)"));
+            icons.Add(new KeyValuePair<string, string>("Attack Helicopter", "Helicopter (Attack)"));
+            icons.Add(new KeyValuePair<string, string>("Recon Helicopter", "Helicopter (Recon)"));
+            icons.Add(new KeyValuePair<string, string>("Trans Helicopter", "Helicopter (Transport)"));
+            icons.Add(new KeyValuePair<string, string>("Infantry", "Infantry"));
+            icons.Add(new KeyValuePair<string, string>("Airmobile Infantry", "Infantry (Airmob)"));
+            icons.Add(new KeyValuePair<string, string>("Glider Infantry", "Infantry (Glider)"));
+            icons.Add(new KeyValuePair<string, string>("Marine Infantry", "Infantry (Marine)"));
+            icons.Add(new KeyValuePair<string, string>("Mechanized", "Infantry (Mech)"));
+            icons.Add(new KeyValuePair<string, string>("Motor Infantry", "Infantry (Mot)"));
+            icons.Add(new KeyValuePair<string, string>("Mountain Infantry", "Infantry (Mtn)"));
+            icons.Add(new KeyValuePair<string, string>("Parachute Infantry", "Infantry (Para)"));
+            icons.Add(new KeyValuePair<string, string>("Irregular", "Irregular"));
+            icons.Add(new KeyValuePair<string, string>("Machine Gun", "Machine Gun"));
+            icons.Add(new KeyValuePair<string, string>("Motor Machinegun", "Machine Gun (Mot)"));
+            icons.Add(new KeyValuePair<string, string>("Military Police", "Military Police"));
+            icons.Add(new KeyValuePair<string, string>("Mortar", "Mortar"));
+            icons.Add(new KeyValuePair<string, string>("Hvy Mortar", "Mortar (Heavy)"));
+            icons.Add(new KeyValuePair<string, string>("Carrier Naval", "Naval (Carrier)"));
+            icons.Add(new KeyValuePair<string, string>("Heavy Naval", "Naval (Heavy)"));
+            icons.Add(new KeyValuePair<string, string>("Light Naval", "Naval (Light)"));
+            icons.Add(new KeyValuePair<string, string>("Medium Naval", "Naval (Medium)"));
+            icons.Add(new KeyValuePair<string, string>("Riverine", "Naval (Riverine)"));
+            icons.Add(new KeyValuePair<string, string>("Naval Task Force", "Naval (Task Force)"));
+            icons.Add(new KeyValuePair<string, string>("Naval Attack", "Naval Attack Aircraft"));
+            icons.Add(new KeyValuePair<string, string>("Parachute", "Parachute"));
+            icons.Add(new KeyValuePair<string, string>("Railroad Repair", "Railroad Repair"));
+            icons.Add(new KeyValuePair<string, string>("Airborne Recon", "Recon (Airborne)"));
+            icons.Add(new KeyValuePair<string, string>("Armored Recon", "Recon (Armored)"));
+            icons.Add(new KeyValuePair<string, string>("Glider Recon", "Recon (Glider)"));
+            icons.Add(new KeyValuePair<string, string>("Reserve", "Reserve"));
+            icons.Add(new KeyValuePair<string, string>("Security", "Security"));
+            icons.Add(new KeyValuePair<string, string>("Ski", "Ski"));
+            icons.Add(new KeyValuePair<string, string>("Special Forces", "Special Forces"));
+            icons.Add(new KeyValuePair<string, string>("Supply", "Supply"));
+            icons.Add(new KeyValuePair<string, string>("Transport", "Transport [icon]"));
+            icons.Add(new KeyValuePair<string, string>("Transport", "Transport [silh]"));
+            icons.Add(new KeyValuePair<string, string>("Amphib Transport", "Transport (Amphib)"));
+            icons.Add(new KeyValuePair<string, string>("Task Force", "Task Force"));
+            icons.Add(new KeyValuePair<string, string>("Battlegroup", "Battle Group"));
+            icons.Add(new KeyValuePair<string, string>("Kampfgruppe", "Kampfgruppe"));
+            icons.Add(new KeyValuePair<string, string>("Combat Command A", "Combat Command A"));
+            icons.Add(new KeyValuePair<string, string>("Combat Command B", "Combat Command B"));
+            icons.Add(new KeyValuePair<string, string>("Combat Command C", "Combat Command C"));
+            icons.Add(new KeyValuePair<string, string>("Combat Command R", "Combat Command R"));
+
+            //LIST OF ALL ICONS WITH VARIANTS
+            List<string> iconsVariants = new List<string>();
+            iconsVariants.Add("Headquarters");
+            iconsVariants.Add("Antitank");
+            iconsVariants.Add("Motor Antitank");
+            iconsVariants.Add("Fighter");
+            iconsVariants.Add("Fighter Bomber");
+            iconsVariants.Add("Light Bomber");
+            iconsVariants.Add("Heavy Bomber");
+            iconsVariants.Add("Coastal Artillery");
+            iconsVariants.Add("Transport");
+
+            //bool hasVariant;
+
+            //LOOP THROUGH DATA REPEATERS
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    Control control = row.Controls.Find("cboUnitType", true).First();
+                    unitID = label.Text;
+
+                    if (!control.Focused) return;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+
+                    //LOOP THROUGH ALL ICONS
+                    foreach (KeyValuePair<string, string> icon in icons)
+                    {
+                        //FOR ICONS W/O VARIANTS SWITCHING TO THOSE WITH VARIANTS
+                        if ((icon.Value.ToString() == control.Text) && (unit.Attribute("ICONID") == null) && (iconsVariants.Contains(icon.Key.ToString()) == true))
+                        {
+                           //Console.WriteLine("key: " + icon.Key.ToString());
+
+                            switch (control.Text)
+                            {
+                            case "Antitank [v1]":
+                                    unit.Attribute("ICON").Value = "Antitank";
+                                    unit.Add(new XAttribute("ICONID", "14"));
+                                    break;
+                            case "Antitank [v2]":
+                                    unit.Attribute("ICON").Value = "Antitank";
+                                    unit.Add(new XAttribute("ICONID", "15"));
+                                    break;
+                            case "Antitank (Mot) [v1]":
+                                    unit.Attribute("ICON").Value = "Motor Antitank";
+                                    unit.Add(new XAttribute("ICONID", "25"));
+                                    break;
+                            case "Antitank (Mot) [v2]":
+                                    unit.Attribute("ICON").Value = "Motor Antitank";
+                                    unit.Add(new XAttribute("ICONID", "26"));
+                                    break;
+                            case "Artillery (Coast) [icon]":
+                                    unit.Attribute("ICON").Value = "Coastal Artillery";
+                                    unit.Add(new XAttribute("ICONID", "62"));
+                                    break;
+                            case "Artillery (Coast) [silh]":
+                                    unit.Attribute("ICON").Value = "Coastal Artillery";
+                                    unit.Add(new XAttribute("ICONID", "63"));
+                                    break;
+                            case "Bomber (Heavy) [icon]":
+                                    unit.Attribute("ICON").Value = "Heavy Bomber";
+                                    unit.Add(new XAttribute("ICONID", "69"));
+                                    break;
+                            case "Bomber (Heavy) [silh]":
+                                    unit.Attribute("ICON").Value = "Heavy Bomber";
+                                    unit.Add(new XAttribute("ICONID", "45"));
+                                    break;
+                            case "Bomber (Light) [icon]":
+                                    unit.Attribute("ICON").Value = "Light Bomber";
+                                    unit.Add(new XAttribute("ICONID", "43"));
+                                    break;
+                            case "Bomber (Light) [silh]":
+                                    unit.Attribute("ICON").Value = "Light Bomber";
+                                    unit.Add(new XAttribute("ICONID", "68"));
+                                    break;
+                            case "Fighter [icon]":
+                                    unit.Attribute("ICON").Value = "Fighter";
+                                    unit.Add(new XAttribute("ICONID", "41"));
+                                    break;
+                            case "Fighter [silh]":
+                                    unit.Attribute("ICON").Value = "Fighter";
+                                    unit.Add(new XAttribute("ICONID", "66"));
+                                    break;
+                            case "Fighter Bomber [icon]":
+                                    unit.Attribute("ICON").Value = "Fighter Bomber";
+                                    unit.Add(new XAttribute("ICONID", "42"));
+                                    break;
+                            case "Fighter Bomber [silh]":
+                                    unit.Attribute("ICON").Value = "Fighter Bomber";
+                                    unit.Add(new XAttribute("ICONID", "67"));
+                                    break;
+                            case "Headquarters [v1]":
+                                    unit.Attribute("ICON").Value = "Headquarters";
+                                    unit.Add(new XAttribute("ICONID", "0"));
+                                    break;
+                            case "Headquarters [v2]":
+                                    unit.Attribute("ICON").Value = "Headquarters";
+                                    unit.Add(new XAttribute("ICONID", "1"));
+                                    break;
+                            case "Transport [icon]":
+                                    unit.Attribute("ICON").Value = "Transport";
+                                    unit.Add(new XAttribute("ICONID", "82"));
+                                    break;
+                            case "Transport [silh]":
+                                    unit.Attribute("ICON").Value = "Transport";
+                                    unit.Add(new XAttribute("ICONID", "94"));
+                                    break;
+                            }
+                        }
+
+                        //FOR ICONS WITH NO VARIANTS
+                        else if ((icon.Value.ToString() == control.Text) && (unit.Attribute("ICONID") == null))
+                        {
+                            unit.Attribute("ICON").Value = icon.Key.ToString();
+                        }
+                        //FOR ICONS WITH VARIANTS
+                        else if ((icon.Value.ToString() == control.Text) && (unit.Attribute("ICONID") != null))                        
+                        {
+                            switch (unit.Attribute("ICONID").Value.ToString())
+                            {
+                                case "0":
+                                    unit.Attribute("ICON").Value = "Headquarters";
+                                    unit.Attribute("ICONID").Value = "1";
+                                    break;
+                                case "1":
+                                    unit.Attribute("ICON").Value = "Headquarters";
+                                    unit.Attribute("ICONID").Value = "0";
+                                    break;
+                                case "14":
+                                    unit.Attribute("ICON").Value = "Antitank";
+                                    unit.Attribute("ICONID").Value = "15";
+                                    break;
+                                case "15":
+                                    unit.Attribute("ICON").Value = "Antitank";
+                                    unit.Attribute("ICONID").Value = "14";
+                                    break;
+                                case "25":
+                                    unit.Attribute("ICON").Value = "Motor Antitank";
+                                    unit.Attribute("ICONID").Value = "26";
+                                    break;
+                                case "26":
+                                    unit.Attribute("ICON").Value = "Motor Antitank";
+                                    unit.Attribute("ICONID").Value = "25";
+                                    break;
+                                case "41":
+                                    unit.Attribute("ICON").Value = "Fighter";
+                                    unit.Attribute("ICONID").Value = "66";
+                                    break;
+                                case "42":
+                                    unit.Attribute("ICON").Value = "Fighter Bomber";
+                                    unit.Attribute("ICONID").Value = "67";
+                                    break;
+                                case "43":
+                                    unit.Attribute("ICON").Value = "Light Bomber";
+                                    unit.Attribute("ICONID").Value = "68";
+                                    break;
+                                case "45":
+                                    unit.Attribute("ICON").Value = "Heavy Bomber";
+                                    unit.Attribute("ICONID").Value = "69";
+                                    break;
+                                case "62":
+                                    unit.Attribute("ICON").Value = "Coastal Artillery";
+                                    unit.Attribute("ICONID").Value = "63";
+                                    break;
+                                case "63":
+                                    unit.Attribute("ICON").Value = "Coastal Artillery";
+                                    unit.Attribute("ICONID").Value = "62";
+                                    break;
+                                case "66":
+                                    unit.Attribute("ICON").Value = "Fighter";
+                                    unit.Attribute("ICONID").Value = "41";
+                                    break;
+                                case "67":
+                                    unit.Attribute("ICON").Value = "Fighter Bomber";
+                                    unit.Attribute("ICONID").Value = "42";
+                                    break;
+                                case "68":
+                                    unit.Attribute("ICON").Value = "Light Bomber";
+                                    unit.Attribute("ICONID").Value = "43";
+                                    break;
+                                case "69":
+                                    unit.Attribute("ICON").Value = "Heavy Bomber";
+                                    unit.Attribute("ICONID").Value = "45";
+                                    break;
+                                case "82":
+                                    unit.Attribute("ICON").Value = "Transport";
+                                    unit.Attribute("ICONID").Value = "94";
+                                    break;
+                                case "94":
+                                    unit.Attribute("ICON").Value = "Transport";
+                                    unit.Attribute("ICONID").Value = "82";
+                                    break;
+                                default:
+                                    Console.WriteLine("ICON ERROR!");
+                                    unit.Attribute("ICONID").Remove();
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void cboUnitSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    Control size = row.Controls.Find("cboUnitSize", true).First();
+                    unitID = label.Text;
+
+                    if (!size.Focused) return;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+
+                    if (size.Text != null) unit.Attribute("SIZE").Value = size.Text;
+
+                    break;
+                }
+            }
         }
     }
 }
