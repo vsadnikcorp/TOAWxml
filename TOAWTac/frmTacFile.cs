@@ -75,6 +75,7 @@ namespace TOAWXML
         static string forceID;
         static string oldprof;
         static string oldsupply;
+        static string oldready;
 
         public frmTacFile()
         {
@@ -1112,6 +1113,33 @@ namespace TOAWXML
                     break;
             }
             return replacePriorityText;
+        }
+
+        public string GetReplacementPriorityID(string replacePriorityText)
+        {
+            string replacePriorityID= "";
+            switch (replacePriorityText)
+            {
+                case "Normal":
+                    replacePriorityID = "0";
+                    break;
+                case "None":
+                    replacePriorityID = "3";
+                    break;
+                case "Very Low":
+                    replacePriorityID = "4";
+                    break;
+                case "Low":
+                    replacePriorityID = "5";
+                    break;
+                case "High":
+                    replacePriorityID = "1";
+                    break;
+                case "Very High":
+                    replacePriorityID = "2";
+                    break;
+            }
+            return replacePriorityID;
         }
 
         public string GetIconText(string iconID, string iconName)
@@ -2938,6 +2966,380 @@ namespace TOAWXML
                 }
             }
         }
+
+        private void txtUnitProf_Enter(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control prof = row.Controls.Find("txtUnitProf", true).First();
+
+                    if (!prof.Focused) return;
+
+                    oldprof = prof.Text;
+                }
+            }
+        }
+
+        private void txtUnitProf_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+            Control prof = null;
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    prof = row.Controls.Find("txtUnitProf", true).First();
+                    unitID = label.Text;
+
+                    if (!prof.Focused) return;
+
+                    //VALIDATE AS NUMBER
+                    int profnum = 0;
+                    bool isNum = int.TryParse(prof.Text, out profnum);
+
+                    if (isNum == false)
+                    {
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        prof.Text = oldprof;
+                    }
+                    else
+                    {
+                        bool withinRange = IsWithinRange(profnum, "Proficiency", 1, 100);
+                        if (!withinRange) prof.Text = oldprof;
+                    }
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+                    if (prof.Text != null) unit.Attribute("PROFICIENCY").Value = prof.Text;
+                    break;
+                }
+            }
+        }
+
+        private void txtUnitProf_MouseLeave(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+            Control prof = null;
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    prof = row.Controls.Find("txtUnitProf", true).First();
+                    unitID = label.Text;
+
+                    if (!prof.Focused) return;
+
+                    //VALIDATE AS NUMBER
+                    int profnum = 0;
+                    bool isNum = int.TryParse(prof.Text, out profnum);
+
+                    if (isNum == false)
+                    {
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        prof.Text = oldprof;
+                    }
+                    else
+                    {
+                        bool withinRange = IsWithinRange(profnum, "Proficiency", 1, 100);
+                        if (!withinRange) prof.Text = oldprof;
+                    }
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+                    if (prof.Text != null) unit.Attribute("PROFICIENCY").Value = prof.Text;
+                    break;
+                }
+            }
+        }
+
+        private void txtUnitSupply_Enter(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control supply = row.Controls.Find("txtUnitSupply", true).First();
+
+                    if (!supply.Focused) return;
+
+                    oldsupply = supply.Text;
+                }
+            }
+        }
+
+        private void txtUnitSupply_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+            Control supply = null;
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    supply = row.Controls.Find("txtUnitSupply", true).First();
+                    unitID = label.Text;
+
+                    if (!supply.Focused) return;
+
+                    //VALIDATE AS NUMBER
+                    int supplynum = 0;
+                    bool isNum = int.TryParse(supply.Text, out supplynum);
+
+                    if (isNum == false)
+                    {
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        supply.Text = oldsupply;
+                    }
+                    else
+                    {
+                        bool withinRange = IsWithinRange(supplynum, "Supply", 1, 100);
+                        if (!withinRange) supply.Text = oldsupply;
+                    }
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+                    if (supply.Text != null) unit.Attribute("SUPPLY").Value = supply.Text;
+                    break;
+                }
+            }
+        }
+
+        private void txtUnitSupply_MouseLeave(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+            Control supply = null;
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    supply = row.Controls.Find("txtUnitSupply", true).First();
+                    unitID = label.Text;
+
+                    if (!supply.Focused) return;
+
+                    //VALIDATE AS NUMBER
+                    int supplynum = 0;
+                    bool isNum = int.TryParse(supply.Text, out supplynum);
+
+                    if (isNum == false)
+                    {
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        supply.Text = oldsupply;
+                    }
+                    else
+                    {
+                        bool withinRange = IsWithinRange(supplynum, "Supply", 1, 100);
+                        if (!withinRange) supply.Text = oldsupply;
+                    }
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+                    if (supply.Text != null) unit.Attribute("SUPPLY").Value = supply.Text;
+                    break;
+                }
+            }
+        }
+
+        private void txtUnitReadiness_Enter(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control ready = row.Controls.Find("txtUnitReadiness", true).First();
+
+                    if (!ready.Focused) return;
+
+                    oldready = ready.Text;
+                }
+            }
+        }
+
+        private void txtUnitReadiness_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+            Control ready = null;
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    ready = row.Controls.Find("txtUnitReadiness", true).First();
+                    unitID = label.Text;
+
+                    if (!ready.Focused) return;
+
+                    //VALIDATE AS NUMBER
+                    int readynum = 0;
+                    bool isNum = int.TryParse(ready.Text, out readynum);
+
+                    if (isNum == false)
+                    {
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        ready.Text = oldready;
+                    }
+                    else
+                    {
+                        bool withinRange = IsWithinRange(readynum, "Readiness", 1, 100);
+                        if (!withinRange) ready.Text = oldready;
+                    }
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+                    if (ready.Text != null) unit.Attribute("READINESS").Value = ready.Text;
+                    break;
+                }
+            }
+        }
+
+        private void txtUnitReadiness_MouseLeave(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+            Control ready = null;
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    ready = row.Controls.Find("txtUnitReadiness", true).First();
+                    unitID = label.Text;
+
+                    if (!ready.Focused) return;
+
+                    //VALIDATE AS NUMBER
+                    int readynum = 0;
+                    bool isNum = int.TryParse(ready.Text, out readynum);
+
+                    if (isNum == false)
+                    {
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        ready.Text = oldready;
+                    }
+                    else
+                    {
+                        bool withinRange = IsWithinRange(readynum, "Readiness", 1, 100);
+                        if (!withinRange) ready.Text = oldready;
+                    }
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+                    if (ready.Text != null) unit.Attribute("READINESS").Value = ready.Text;
+                    break;
+                }
+            }
+        }
+
+        private void cboExp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    Control exper = row.Controls.Find("cboExp", true).First();
+                    unitID = label.Text;
+
+                    if (!exper.Focused) return;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+
+                    if (exper.Text != null) unit.Attribute("EXPERIENCE").Value = exper.Text;
+
+                    break;
+                }
+            }
+        }
+
+        private void cboUnitLossTol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    Control losstol = row.Controls.Find("cboUnitLossTol", true).First();
+                    unitID = label.Text;
+
+                    if (!losstol.Focused) return;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+
+                    if (losstol.Text != null) unit.Attribute("EMPHASIS").Value = losstol.Text;
+
+                    break;
+                }
+            }
+        }
+
+        private void cboReplace_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    Control replace = row.Controls.Find("cboReplace", true).First();
+                    unitID = label.Text;
+
+                    if (!replace.Focused) return;
+
+
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+                    string replaceID = GetReplacementPriorityID(replace.Text);
+
+                    Console.WriteLine("text: " + replace.Text + " id: " + replaceID);
+                    if (replace.Text != null) unit.Attribute("REPLACEMENTPRIORITY").Value = replaceID;
+
+                    break;
+                }
+            }
+        }
     }
+    //}
 }
 

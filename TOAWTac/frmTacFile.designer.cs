@@ -502,6 +502,7 @@ namespace TOAWXML
             this.cboReplace.Name = "cboReplace";
             this.cboReplace.Size = new System.Drawing.Size(101, 21);
             this.cboReplace.TabIndex = 52;
+            this.cboReplace.SelectedIndexChanged += new System.EventHandler(this.cboReplace_SelectedIndexChanged);
             // 
             // label9
             // 
@@ -524,6 +525,7 @@ namespace TOAWXML
             this.cboExp.Name = "cboExp";
             this.cboExp.Size = new System.Drawing.Size(83, 21);
             this.cboExp.TabIndex = 50;
+            this.cboExp.SelectedIndexChanged += new System.EventHandler(this.cboExp_SelectedIndexChanged);
             // 
             // label8
             // 
@@ -723,6 +725,10 @@ namespace TOAWXML
             this.txtUnitReadiness.Name = "txtUnitReadiness";
             this.txtUnitReadiness.Size = new System.Drawing.Size(37, 20);
             this.txtUnitReadiness.TabIndex = 44;
+            this.txtUnitReadiness.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtUnitReadiness.Enter += new System.EventHandler(this.txtUnitReadiness_Enter);
+            this.txtUnitReadiness.Leave += new System.EventHandler(this.txtUnitReadiness_Leave);
+            this.txtUnitReadiness.MouseLeave += new System.EventHandler(this.txtUnitReadiness_MouseLeave);
             // 
             // label5
             // 
@@ -782,6 +788,7 @@ namespace TOAWXML
             this.cboUnitLossTol.Name = "cboUnitLossTol";
             this.cboUnitLossTol.Size = new System.Drawing.Size(110, 21);
             this.cboUnitLossTol.TabIndex = 4;
+            this.cboUnitLossTol.SelectedIndexChanged += new System.EventHandler(this.cboUnitLossTol_SelectedIndexChanged);
             // 
             // cboUnitOrders
             // 
@@ -833,6 +840,9 @@ namespace TOAWXML
             this.txtUnitSupply.Size = new System.Drawing.Size(32, 20);
             this.txtUnitSupply.TabIndex = 2;
             this.txtUnitSupply.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtUnitSupply.Enter += new System.EventHandler(this.txtUnitSupply_Enter);
+            this.txtUnitSupply.Leave += new System.EventHandler(this.txtUnitSupply_Leave);
+            this.txtUnitSupply.MouseLeave += new System.EventHandler(this.txtUnitSupply_MouseLeave);
             // 
             // txtUnitProf
             // 
@@ -841,6 +851,9 @@ namespace TOAWXML
             this.txtUnitProf.Size = new System.Drawing.Size(32, 20);
             this.txtUnitProf.TabIndex = 1;
             this.txtUnitProf.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtUnitProf.Enter += new System.EventHandler(this.txtUnitProf_Enter);
+            this.txtUnitProf.Leave += new System.EventHandler(this.txtUnitProf_Leave);
+            this.txtUnitProf.MouseLeave += new System.EventHandler(this.txtUnitProf_MouseLeave);
             // 
             // txtUnitName
             // 
