@@ -832,6 +832,7 @@ namespace TOAWXML
             this.cboUnitOrders.Name = "cboUnitOrders";
             this.cboUnitOrders.Size = new System.Drawing.Size(98, 21);
             this.cboUnitOrders.TabIndex = 3;
+            this.cboUnitOrders.SelectedIndexChanged += new System.EventHandler(this.cboUnitOrders_SelectedIndexChanged);
             // 
             // txtUnitSupply
             // 

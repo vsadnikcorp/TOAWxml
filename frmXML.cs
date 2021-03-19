@@ -116,8 +116,8 @@ namespace TOAWXML
                 loadfileform.ShowDialog();
                 return;
             }
-            //<<<<<<<<<<<<<<<<<<<<<<<<
 
+            //<<<<<<<<<<<<<<<<<<<<<<<<
             //POPULATES DEPLOYMENT COMBO BOX
             var deployment = new BindingList<KeyValuePair<string, string>>();
             deployment.Add(new KeyValuePair<string, string>("1", "Reinforce (Turn)"));

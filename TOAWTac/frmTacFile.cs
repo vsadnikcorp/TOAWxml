@@ -1810,8 +1810,7 @@ namespace TOAWXML
                         unitorders = "Sea Interdiction";
                         break;
                 }
-
-                unitorders = "Interdiction";
+                //unitorders = "Interdiction";
 
                 cboUnitOrders.Items.Add("Interdiction");
                 cboUnitOrders.Items.Add("Air Superiority");
@@ -1821,6 +1820,112 @@ namespace TOAWXML
             }
 
             return unitorders;
+        }
+
+        private string SetUnitOrderID(string order)
+        {
+            string unitorderID = "";
+
+            switch (order)
+            {
+                case "Reinforce (Turn)":
+                    unitorderID = "1";
+                    break;
+                case "Reinforce (Event)":
+                    unitorderID = "2";
+                    break;
+                case "Defend/Dig In":
+                case "Interdiction":
+                    unitorderID = "3";
+                    break;
+                case "Entrenched":
+                case "Air Superiority":
+                    unitorderID = "4";
+                    break;
+                case "Fortified":
+                case "Combat Support":
+                    unitorderID = "5";
+                    break;
+                case "Tactical Reserve":
+                    unitorderID = "6";
+                    break;
+                case "Local Reserve":
+                    unitorderID = "7";
+                    break;
+                case "Mobile":
+                case "Rest":
+                    unitorderID = "8";
+                    break;
+                case "Moving":
+                    unitorderID = "9";
+                    break;
+                case "Attacking":
+                    unitorderID = "10";
+                    break;
+                case "Supporting":
+                    unitorderID = "11";
+                    break;
+                case "Retreated":
+                    unitorderID = "12";
+                    break;
+                case "Routed":
+                    unitorderID = "13";
+                    break;
+                case "Advancing":
+                    unitorderID = "14";
+                    break;
+                case "Withdrawn":
+                    unitorderID = "15";
+                    break;
+                case "Exited":
+                    unitorderID = "16";
+                    break;
+                case "Embarked":
+                    unitorderID = "17";
+                    break;
+                case "Disbanded":
+                    unitorderID = "18";
+                    break;
+                case "Tact React":
+                    unitorderID = "19";
+                    break;
+                case "Local React":
+                    unitorderID = "20";
+                    break;
+                case "Entrained":
+                    unitorderID = "21";
+                    break;
+                case "Airborne":
+                    unitorderID = "22";
+                    break;
+                case "Seaborne":
+                case "Sea Interdiction":
+                    unitorderID = "23";
+                    break;
+                case "Divided":
+                    unitorderID = "24";
+                    break;
+                case "Nuclear":
+                    unitorderID = "25";
+                    break;
+                case "Airmobile":
+                    unitorderID = "26";
+                    break;
+                case "Bridge Attack":
+                    unitorderID = "27";
+                    break;
+                case "Airfield Attack":
+                    unitorderID = "28";
+                    break;
+                case "Reorganizing":
+                    unitorderID = "29";
+                    break;
+                case "Port Attack":
+                    unitorderID = "30";
+                    break;
+            }
+
+            return unitorderID;
         }
 
         private void txtHdrForceName_TextChanged(object sender, EventArgs e)
@@ -3339,7 +3444,33 @@ namespace TOAWXML
                 }
             }
         }
+
+        private void cboUnitOrders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    Control orders = row.Controls.Find("cboUnitOrders", true).First();
+                    unitID = label.Text;
+
+                    if (!orders.Focused) return;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+                    string order = SetUnitOrderID(orders.Text);
+
+                    if (orders.Text != null) unit.Attribute("STATUS").Value = order;
+
+                    break;
+                }
+            }
+        }
     }
-    //}
 }
 
