@@ -82,11 +82,7 @@ namespace TOAWXML
             this.txtUnitProf = new System.Windows.Forms.TextBox();
             this.txtUnitName = new System.Windows.Forms.TextBox();
             this.drUnit = new Microsoft.VisualBasic.PowerPacks.DataRepeater();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.lblEquipName = new System.Windows.Forms.Label();
-            this.txtMax = new System.Windows.Forms.TextBox();
-            this.txtQty = new System.Windows.Forms.TextBox();
             this.txtEquipName = new System.Windows.Forms.TextBox();
             this.pnlForce = new System.Windows.Forms.Panel();
             this.btnForceAttribs = new System.Windows.Forms.Button();
@@ -110,6 +106,12 @@ namespace TOAWXML
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cboHdrFormSupport = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cboHdrFormOrders = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.cboHdrFormLossTol = new System.Windows.Forms.ComboBox();
             this.gbForce.SuspendLayout();
             this.ssTac.SuspendLayout();
             this.drForce.ItemTemplate.SuspendLayout();
@@ -318,7 +320,7 @@ namespace TOAWXML
             this.drForce.ItemTemplate.Controls.Add(this.txtProf);
             this.drForce.ItemTemplate.Controls.Add(this.txtSupply);
             this.drForce.ItemTemplate.Size = new System.Drawing.Size(943, 53);
-            this.drForce.Location = new System.Drawing.Point(216, 84);
+            this.drForce.Location = new System.Drawing.Point(216, 89);
             this.drForce.Name = "drForce";
             this.drForce.Size = new System.Drawing.Size(951, 511);
             this.drForce.TabIndex = 34;
@@ -869,11 +871,7 @@ namespace TOAWXML
             // 
             // drUnit.ItemTemplate
             // 
-            this.drUnit.ItemTemplate.Controls.Add(this.label15);
-            this.drUnit.ItemTemplate.Controls.Add(this.label14);
             this.drUnit.ItemTemplate.Controls.Add(this.lblEquipName);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtMax);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtQty);
             this.drUnit.ItemTemplate.Controls.Add(this.txtEquipName);
             this.drUnit.ItemTemplate.Size = new System.Drawing.Size(943, 45);
             this.drUnit.Location = new System.Drawing.Point(216, 381);
@@ -881,24 +879,6 @@ namespace TOAWXML
             this.drUnit.Size = new System.Drawing.Size(951, 64);
             this.drUnit.TabIndex = 55;
             this.drUnit.Text = "dataRepeater1";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(252, 1);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(30, 13);
-            this.label15.TabIndex = 60;
-            this.label15.Text = "Max:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(200, 1);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(26, 13);
-            this.label14.TabIndex = 59;
-            this.label14.Text = "Qty:";
             // 
             // lblEquipName
             // 
@@ -909,29 +889,17 @@ namespace TOAWXML
             this.lblEquipName.TabIndex = 58;
             this.lblEquipName.Text = "Name:";
             // 
-            // txtMax
-            // 
-            this.txtMax.Location = new System.Drawing.Point(248, 17);
-            this.txtMax.Name = "txtMax";
-            this.txtMax.Size = new System.Drawing.Size(35, 20);
-            this.txtMax.TabIndex = 57;
-            // 
-            // txtQty
-            // 
-            this.txtQty.Location = new System.Drawing.Point(192, 17);
-            this.txtQty.Name = "txtQty";
-            this.txtQty.Size = new System.Drawing.Size(38, 20);
-            this.txtQty.TabIndex = 56;
-            // 
             // txtEquipName
             // 
             this.txtEquipName.Location = new System.Drawing.Point(3, 17);
             this.txtEquipName.Name = "txtEquipName";
-            this.txtEquipName.Size = new System.Drawing.Size(183, 20);
+            this.txtEquipName.ReadOnly = true;
+            this.txtEquipName.Size = new System.Drawing.Size(152, 20);
             this.txtEquipName.TabIndex = 55;
             // 
             // pnlForce
             // 
+            this.pnlForce.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlForce.Controls.Add(this.btnForceAttribs);
             this.pnlForce.Controls.Add(this.txtHdrForceSupply);
             this.pnlForce.Controls.Add(this.txtHdrForceProf);
@@ -939,15 +907,15 @@ namespace TOAWXML
             this.pnlForce.Controls.Add(this.lblForceSupply);
             this.pnlForce.Controls.Add(this.lblForceProf);
             this.pnlForce.Controls.Add(this.lblForceName);
-            this.pnlForce.Location = new System.Drawing.Point(221, 33);
+            this.pnlForce.Location = new System.Drawing.Point(221, 30);
             this.pnlForce.Name = "pnlForce";
-            this.pnlForce.Size = new System.Drawing.Size(946, 48);
+            this.pnlForce.Size = new System.Drawing.Size(946, 58);
             this.pnlForce.TabIndex = 56;
             this.pnlForce.Visible = false;
             // 
             // btnForceAttribs
             // 
-            this.btnForceAttribs.Location = new System.Drawing.Point(240, 11);
+            this.btnForceAttribs.Location = new System.Drawing.Point(240, 8);
             this.btnForceAttribs.Name = "btnForceAttribs";
             this.btnForceAttribs.Size = new System.Drawing.Size(95, 31);
             this.btnForceAttribs.TabIndex = 6;
@@ -956,7 +924,7 @@ namespace TOAWXML
             // 
             // txtHdrForceSupply
             // 
-            this.txtHdrForceSupply.Location = new System.Drawing.Point(185, 23);
+            this.txtHdrForceSupply.Location = new System.Drawing.Point(185, 20);
             this.txtHdrForceSupply.Name = "txtHdrForceSupply";
             this.txtHdrForceSupply.Size = new System.Drawing.Size(40, 20);
             this.txtHdrForceSupply.TabIndex = 5;
@@ -966,7 +934,7 @@ namespace TOAWXML
             // 
             // txtHdrForceProf
             // 
-            this.txtHdrForceProf.Location = new System.Drawing.Point(128, 23);
+            this.txtHdrForceProf.Location = new System.Drawing.Point(128, 20);
             this.txtHdrForceProf.Name = "txtHdrForceProf";
             this.txtHdrForceProf.Size = new System.Drawing.Size(40, 20);
             this.txtHdrForceProf.TabIndex = 4;
@@ -976,7 +944,7 @@ namespace TOAWXML
             // 
             // txtHdrForceName
             // 
-            this.txtHdrForceName.Location = new System.Drawing.Point(17, 23);
+            this.txtHdrForceName.Location = new System.Drawing.Point(17, 20);
             this.txtHdrForceName.Name = "txtHdrForceName";
             this.txtHdrForceName.Size = new System.Drawing.Size(102, 20);
             this.txtHdrForceName.TabIndex = 3;
@@ -985,7 +953,7 @@ namespace TOAWXML
             // lblForceSupply
             // 
             this.lblForceSupply.AutoSize = true;
-            this.lblForceSupply.Location = new System.Drawing.Point(186, 7);
+            this.lblForceSupply.Location = new System.Drawing.Point(186, 4);
             this.lblForceSupply.Name = "lblForceSupply";
             this.lblForceSupply.Size = new System.Drawing.Size(42, 13);
             this.lblForceSupply.TabIndex = 2;
@@ -994,7 +962,7 @@ namespace TOAWXML
             // lblForceProf
             // 
             this.lblForceProf.AutoSize = true;
-            this.lblForceProf.Location = new System.Drawing.Point(122, 7);
+            this.lblForceProf.Location = new System.Drawing.Point(122, 4);
             this.lblForceProf.Name = "lblForceProf";
             this.lblForceProf.Size = new System.Drawing.Size(62, 13);
             this.lblForceProf.TabIndex = 1;
@@ -1003,7 +971,7 @@ namespace TOAWXML
             // lblForceName
             // 
             this.lblForceName.AutoSize = true;
-            this.lblForceName.Location = new System.Drawing.Point(16, 7);
+            this.lblForceName.Location = new System.Drawing.Point(16, 4);
             this.lblForceName.Name = "lblForceName";
             this.lblForceName.Size = new System.Drawing.Size(38, 13);
             this.lblForceName.TabIndex = 0;
@@ -1011,6 +979,13 @@ namespace TOAWXML
             // 
             // pnlFormation
             // 
+            this.pnlFormation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlFormation.Controls.Add(this.label16);
+            this.pnlFormation.Controls.Add(this.cboHdrFormLossTol);
+            this.pnlFormation.Controls.Add(this.label15);
+            this.pnlFormation.Controls.Add(this.cboHdrFormOrders);
+            this.pnlFormation.Controls.Add(this.label14);
+            this.pnlFormation.Controls.Add(this.cboHdrFormSupport);
             this.pnlFormation.Controls.Add(this.txtHdrFormSupply);
             this.pnlFormation.Controls.Add(this.txtHdrFormProf);
             this.pnlFormation.Controls.Add(this.txtHdrFormName);
@@ -1025,7 +1000,7 @@ namespace TOAWXML
             // 
             // txtHdrFormSupply
             // 
-            this.txtHdrFormSupply.Location = new System.Drawing.Point(188, 20);
+            this.txtHdrFormSupply.Location = new System.Drawing.Point(188, 18);
             this.txtHdrFormSupply.Name = "txtHdrFormSupply";
             this.txtHdrFormSupply.Size = new System.Drawing.Size(40, 20);
             this.txtHdrFormSupply.TabIndex = 11;
@@ -1035,7 +1010,7 @@ namespace TOAWXML
             // 
             // txtHdrFormProf
             // 
-            this.txtHdrFormProf.Location = new System.Drawing.Point(132, 20);
+            this.txtHdrFormProf.Location = new System.Drawing.Point(132, 18);
             this.txtHdrFormProf.Name = "txtHdrFormProf";
             this.txtHdrFormProf.Size = new System.Drawing.Size(40, 20);
             this.txtHdrFormProf.TabIndex = 10;
@@ -1045,7 +1020,7 @@ namespace TOAWXML
             // 
             // txtHdrFormName
             // 
-            this.txtHdrFormName.Location = new System.Drawing.Point(23, 20);
+            this.txtHdrFormName.Location = new System.Drawing.Point(23, 18);
             this.txtHdrFormName.Name = "txtHdrFormName";
             this.txtHdrFormName.Size = new System.Drawing.Size(102, 20);
             this.txtHdrFormName.TabIndex = 9;
@@ -1053,7 +1028,7 @@ namespace TOAWXML
             // lblHdrFormSupply
             // 
             this.lblHdrFormSupply.AutoSize = true;
-            this.lblHdrFormSupply.Location = new System.Drawing.Point(190, 4);
+            this.lblHdrFormSupply.Location = new System.Drawing.Point(190, 2);
             this.lblHdrFormSupply.Name = "lblHdrFormSupply";
             this.lblHdrFormSupply.Size = new System.Drawing.Size(42, 13);
             this.lblHdrFormSupply.TabIndex = 8;
@@ -1062,7 +1037,7 @@ namespace TOAWXML
             // lblHdrFormProf
             // 
             this.lblHdrFormProf.AutoSize = true;
-            this.lblHdrFormProf.Location = new System.Drawing.Point(125, 4);
+            this.lblHdrFormProf.Location = new System.Drawing.Point(125, 2);
             this.lblHdrFormProf.Name = "lblHdrFormProf";
             this.lblHdrFormProf.Size = new System.Drawing.Size(62, 13);
             this.lblHdrFormProf.TabIndex = 7;
@@ -1071,7 +1046,7 @@ namespace TOAWXML
             // lblHdrFormName
             // 
             this.lblHdrFormName.AutoSize = true;
-            this.lblHdrFormName.Location = new System.Drawing.Point(22, 4);
+            this.lblHdrFormName.Location = new System.Drawing.Point(22, 2);
             this.lblHdrFormName.Name = "lblHdrFormName";
             this.lblHdrFormName.Size = new System.Drawing.Size(38, 13);
             this.lblHdrFormName.TabIndex = 6;
@@ -1079,6 +1054,7 @@ namespace TOAWXML
             // 
             // pnlUnit
             // 
+            this.pnlUnit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlUnit.Controls.Add(this.txtHdrUnitSupply);
             this.pnlUnit.Controls.Add(this.txtHdrUnitProf);
             this.pnlUnit.Controls.Add(this.txtHdrUnitName);
@@ -1093,7 +1069,7 @@ namespace TOAWXML
             // 
             // txtHdrUnitSupply
             // 
-            this.txtHdrUnitSupply.Location = new System.Drawing.Point(188, 24);
+            this.txtHdrUnitSupply.Location = new System.Drawing.Point(188, 21);
             this.txtHdrUnitSupply.Name = "txtHdrUnitSupply";
             this.txtHdrUnitSupply.Size = new System.Drawing.Size(40, 20);
             this.txtHdrUnitSupply.TabIndex = 17;
@@ -1103,7 +1079,7 @@ namespace TOAWXML
             // 
             // txtHdrUnitProf
             // 
-            this.txtHdrUnitProf.Location = new System.Drawing.Point(130, 24);
+            this.txtHdrUnitProf.Location = new System.Drawing.Point(130, 21);
             this.txtHdrUnitProf.Name = "txtHdrUnitProf";
             this.txtHdrUnitProf.Size = new System.Drawing.Size(40, 20);
             this.txtHdrUnitProf.TabIndex = 16;
@@ -1113,7 +1089,7 @@ namespace TOAWXML
             // 
             // txtHdrUnitName
             // 
-            this.txtHdrUnitName.Location = new System.Drawing.Point(21, 24);
+            this.txtHdrUnitName.Location = new System.Drawing.Point(21, 21);
             this.txtHdrUnitName.Name = "txtHdrUnitName";
             this.txtHdrUnitName.Size = new System.Drawing.Size(102, 20);
             this.txtHdrUnitName.TabIndex = 15;
@@ -1121,7 +1097,7 @@ namespace TOAWXML
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(190, 8);
+            this.label11.Location = new System.Drawing.Point(190, 5);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(42, 13);
             this.label11.TabIndex = 14;
@@ -1130,7 +1106,7 @@ namespace TOAWXML
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(123, 8);
+            this.label12.Location = new System.Drawing.Point(123, 5);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(62, 13);
             this.label12.TabIndex = 13;
@@ -1139,11 +1115,93 @@ namespace TOAWXML
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(20, 8);
+            this.label13.Location = new System.Drawing.Point(20, 5);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(38, 13);
             this.label13.TabIndex = 12;
             this.label13.Text = "Name:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(238, 3);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(81, 13);
+            this.label14.TabIndex = 42;
+            this.label14.Text = "Support Scope:";
+            // 
+            // cboHdrFormSupport
+            // 
+            this.cboHdrFormSupport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboHdrFormSupport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboHdrFormSupport.FormattingEnabled = true;
+            this.cboHdrFormSupport.Items.AddRange(new object[] {
+            "Internal Support",
+            "Army Support",
+            "Force Support",
+            "Free Support"});
+            this.cboHdrFormSupport.Location = new System.Drawing.Point(238, 18);
+            this.cboHdrFormSupport.Name = "cboHdrFormSupport";
+            this.cboHdrFormSupport.Size = new System.Drawing.Size(102, 21);
+            this.cboHdrFormSupport.TabIndex = 41;
+            this.cboHdrFormSupport.SelectedIndexChanged += new System.EventHandler(this.cboHdrFormSupport_SelectedIndexChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(356, 2);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(41, 13);
+            this.label15.TabIndex = 44;
+            this.label15.Text = "Orders:";
+            // 
+            // cboHdrFormOrders
+            // 
+            this.cboHdrFormOrders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboHdrFormOrders.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboHdrFormOrders.FormattingEnabled = true;
+            this.cboHdrFormOrders.Items.AddRange(new object[] {
+            "Manual",
+            "Screen",
+            "Delay",
+            "Defend",
+            "Hold",
+            "Secure",
+            "Static",
+            "Wait",
+            "Garrison",
+            "Advance",
+            "Attack",
+            "Independent"});
+            this.cboHdrFormOrders.Location = new System.Drawing.Point(359, 17);
+            this.cboHdrFormOrders.Name = "cboHdrFormOrders";
+            this.cboHdrFormOrders.Size = new System.Drawing.Size(101, 21);
+            this.cboHdrFormOrders.TabIndex = 43;
+            this.cboHdrFormOrders.SelectedIndexChanged += new System.EventHandler(this.cboHdrFormOrders_SelectedIndexChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(473, 3);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(83, 13);
+            this.label16.TabIndex = 46;
+            this.label16.Text = "Loss Tolerance:";
+            // 
+            // cboHdrFormLossTol
+            // 
+            this.cboHdrFormLossTol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboHdrFormLossTol.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboHdrFormLossTol.FormattingEnabled = true;
+            this.cboHdrFormLossTol.Items.AddRange(new object[] {
+            "Minimize Losses",
+            "Limit Losses",
+            "Ignore Losses"});
+            this.cboHdrFormLossTol.Location = new System.Drawing.Point(473, 17);
+            this.cboHdrFormLossTol.Name = "cboHdrFormLossTol";
+            this.cboHdrFormLossTol.Size = new System.Drawing.Size(109, 21);
+            this.cboHdrFormLossTol.TabIndex = 45;
+            this.cboHdrFormLossTol.SelectedIndexChanged += new System.EventHandler(this.cboHdrFormLossTol_SelectedIndexChanged);
             // 
             // frmTacFile
             // 
@@ -1250,8 +1308,6 @@ namespace TOAWXML
         private System.Windows.Forms.TextBox txtUnitReadiness;
         private DataRepeater drUnit;
         private System.Windows.Forms.Label lblEquipName;
-        private System.Windows.Forms.TextBox txtMax;
-        private System.Windows.Forms.TextBox txtQty;
         private System.Windows.Forms.TextBox txtEquipName;
         private System.Windows.Forms.Panel pnlForce;
         private System.Windows.Forms.Label lblForceName;
@@ -1275,9 +1331,13 @@ namespace TOAWXML
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label lblFormID;
         private System.Windows.Forms.Label lblUnitID;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ComboBox cboHdrFormLossTol;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox cboHdrFormOrders;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox cboHdrFormSupport;
     }
 }

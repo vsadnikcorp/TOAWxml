@@ -351,9 +351,6 @@ namespace TOAWXML
 
             //SET FILE PATH STRINGS, SAVE TO SETTINGS
             string TacFilePath = TOAWTac.Properties.Settings.Default.TacFilePath.ToString();
-            //string FilePath = TacFilePath.Substring(0, TacFilePath.Length - 3) + "gam";
-            //TOAWTac.Properties.Settings.Default.FilePath = FilePath;
-            //TOAWTac.Properties.Settings.Default.Save();
 
             //LOAD TAC FILE
             if (TacFilePath != "" && TacFilePath != null)
@@ -362,11 +359,7 @@ namespace TOAWXML
                 TOAWTac.Properties.Settings.Default.FilePath = FilePath;
                 TOAWTac.Properties.Settings.Default.Save();
 
-                //ZZZZZZZZZZZZZZZ
-                //XDocument tacFile = XDocument.Load(TacFilePath);
-                //QQQ tacFile = XDocument.Load(TacFilePath);
                 tacFile = XElement.Load(TacFilePath);
-                //ZZZZZZZZZZZZZZZZZZZZ
                 txtTacFile.Text = TacFilePath;
 
                 //ENABLE FORCE RADIO BUTTONS, SET FORCE NAMES
@@ -391,6 +384,7 @@ namespace TOAWXML
         private void btnSave_Click(object sender, EventArgs e)
         {
             tacFile.Save(txtTacFile.Text);
+            trvUnitTree.Focus();
         }
 
         private string AssignCdrName(XDocument xdoc, string forceID, Random rng)
@@ -601,6 +595,8 @@ namespace TOAWXML
                     drUnit.Visible = false;
 
                     pnlForce.Visible = true;
+                    pnlForce.Location = new Point(221, 33);
+                    pnlForce.Size = new Size(944, 46);
                     pnlFormation.Visible = false;
                     pnlUnit.Visible = false;
 
@@ -640,6 +636,7 @@ namespace TOAWXML
                     }
                     txtHdrForceProf.Text = force.Attribute("proficiency").Value;
                     txtHdrForceSupply.Text = force.Attribute("supply").Value;
+                    
 
                     //SET DATA BINDINGS
                     txtName.DataBindings.Add("Text", dtFormation, "Name");
@@ -672,7 +669,7 @@ namespace TOAWXML
                     pnlForce.Visible = false;
                     pnlFormation.Visible = true;
                     pnlFormation.Location = new Point(221, 33);
-                    pnlFormation.Size = new Size(946, 48);
+                    pnlFormation.Size = new Size(944, 46);
                     pnlUnit.Visible = false;
 
                     txtUnitName.Visible = true;
@@ -693,6 +690,9 @@ namespace TOAWXML
                     txtHdrFormName.Text = units.First().Attribute("NAME").Value;
                     txtHdrFormProf.Text = units.First().Attribute("PROFICIENCY").Value;
                     txtHdrFormSupply.Text = units.First().Attribute("SUPPLY").Value;
+                    cboHdrFormSupport.Text = units.First().Attribute("SUPPORTSCOPE").Value;
+                    cboHdrFormOrders.Text = units.First().Attribute("ORDERS").Value;
+                    cboHdrFormLossTol.Text = units.First().Attribute("EMPHASIS").Value;
 
                     //SET DATABINDINGS
                     txtUnitName.DataBindings.Clear();
@@ -756,7 +756,7 @@ namespace TOAWXML
                     pnlFormation.Visible = false;
                     pnlUnit.Visible = true;
                     pnlUnit.Location = new Point(221, 33);
-                    pnlUnit.Size = new Size(946, 48);
+                    pnlUnit.Size = new Size(944, 46);
 
                     dtEquip.Clear();
 
@@ -769,12 +769,8 @@ namespace TOAWXML
                     txtHdrUnitSupply.Text = equipment.Attribute("SUPPLY").Value;
 
                     txtEquipName.DataBindings.Clear();
-                    txtQty.DataBindings.Clear();
-                    txtMax.DataBindings.Clear();
 
                     txtEquipName.DataBindings.Add("Text", dtEquip, "EquipName");
-                    txtQty.DataBindings.Add("Text", dtEquip, "Qty");
-                    txtMax.DataBindings.Add("Text", dtEquip, "Max");
 
                     drUnit.DataSource = dtEquip;
 
@@ -3470,6 +3466,39 @@ namespace TOAWXML
                     break;
                 }
             }
+        }
+
+        private void cboHdrFormSupport_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!cboHdrFormSupport.Focused) return;
+                        
+            //CHANGE TACFILE XML
+            string formid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID =" + formid + "]";
+            var form = tacFile.XPathSelectElement(xpath);
+            if (cboHdrFormSupport.Text != null) form.Attribute("SUPPORTSCOPE").Value = cboHdrFormSupport.Text;
+        }
+
+        private void cboHdrFormOrders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!cboHdrFormOrders.Focused) return;
+
+            //CHANGE TACFILE XML
+            string formid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID =" + formid + "]";
+            var form = tacFile.XPathSelectElement(xpath);
+            if (cboHdrFormOrders.Text != null) form.Attribute("ORDERS").Value = cboHdrFormOrders.Text;
+        }
+
+        private void cboHdrFormLossTol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!cboHdrFormLossTol.Focused) return;
+
+            //CHANGE TACFILE XML
+            string formid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID =" + formid + "]";
+            var form = tacFile.XPathSelectElement(xpath);
+            if (cboHdrFormLossTol.Text != null) form.Attribute("EMPHASIS").Value = cboHdrFormLossTol.Text;
         }
     }
 }
