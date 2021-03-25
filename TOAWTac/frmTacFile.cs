@@ -76,6 +76,8 @@ namespace TOAWXML
         static string oldprof;
         static string oldsupply;
         static string oldready;
+        static string oldname;
+        static bool haschanged;
 
         public frmTacFile()
         {
@@ -155,9 +157,6 @@ namespace TOAWXML
             cboReplace.Items.Add("Normal");
             cboReplace.Items.Add("High");
             cboReplace.Items.Add("Very High");
-
-        
-
         }
 
         private async void btnCreateTacFile_Click(object sender, EventArgs e)
@@ -1961,11 +1960,24 @@ namespace TOAWXML
                     Control label = row.Controls.Find("lblFormID", true).First();
                     Control name = row.Controls.Find("txtName", true).First();
                     formID = label.Text;
+                    string newname = name.Text;
 
                     //CHANGE TACFILE XML
                     string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID= " + formID + "]";
                     var formation = tacFile.XPathSelectElement(xpath);
                     if (name.Text != null) formation.Attribute("NAME").Value = name.Text;
+
+                    IEnumerable<XElement> unitname =
+                        from f in tacFile.Elements("OOB").Elements("FORCE").Elements("FORMATION")
+                        where f.Attribute("NAME").Value.Equals(newname, StringComparison.OrdinalIgnoreCase)
+                        select f;
+
+                    if ((haschanged == true) && (unitname.Count() > 1))
+                    {
+                        MessageBox.Show("Formation cannot have same name as another formation!", "Invalid Name", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        name.Text = oldname;
+                        haschanged = false;
+                    }
 
                     //REVISE TREE NODE
                     foreach (TreeNode node in trvUnitTree.Nodes)
@@ -2027,7 +2039,7 @@ namespace TOAWXML
 
                     if (isNum == false)
                     {
-                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         prof.Text = oldprof;
                     }
                     else
@@ -2067,7 +2079,7 @@ namespace TOAWXML
 
                     if (isNum == false)
                     {
-                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         prof.Text = oldprof;
                     }
                     else
@@ -2125,7 +2137,7 @@ namespace TOAWXML
 
                     if (isNum == false)
                     {
-                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         supply.Text = oldsupply;
                     }
                     else
@@ -2165,7 +2177,7 @@ namespace TOAWXML
 
                     if (isNum == false)
                     {
-                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         supply.Text = oldsupply;
                     }
                     else
@@ -2259,7 +2271,7 @@ namespace TOAWXML
         {
             if (a < min || a > max)
             {
-                MessageBox.Show(desc + " must be between " + min + " and " + max + ".", "Entry Error");
+                MessageBox.Show(desc + " must be between " + min + " and " + max + ".", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
             else
@@ -2284,7 +2296,7 @@ namespace TOAWXML
 
             if (isNum == false)
             {
-                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtHdrForceProf.Text = oldprof;
                 e.Cancel = true;
             }
@@ -2314,7 +2326,7 @@ namespace TOAWXML
 
             if (isNum == false)
             {
-                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtHdrForceProf.Text = oldprof;
             }
             else
@@ -2351,7 +2363,7 @@ namespace TOAWXML
 
             if (isNum == false)
             {
-                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtHdrForceSupply.Text = oldsupply;
                 e.Cancel = true;
             }
@@ -2381,7 +2393,7 @@ namespace TOAWXML
 
             if (isNum == false)
             {
-                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtHdrForceSupply.Text = oldsupply;
             }
             else
@@ -2414,7 +2426,7 @@ namespace TOAWXML
 
             if (isNum == false)
             {
-                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtHdrFormProf.Text = oldprof;
                 e.Cancel = true;
             }
@@ -2445,7 +2457,7 @@ namespace TOAWXML
 
             if (isNum == false)
             {
-                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtHdrFormProf.Text = oldprof;
             }
             else
@@ -2479,7 +2491,7 @@ namespace TOAWXML
 
             if (isNum == false)
             {
-                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtHdrFormSupply.Text = oldsupply;
                 e.Cancel = true;
             }
@@ -2510,7 +2522,7 @@ namespace TOAWXML
 
             if (isNum == false)
             {
-                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtHdrFormSupply.Text = oldsupply;
             }
             else
@@ -2544,7 +2556,7 @@ namespace TOAWXML
 
             if (isNum == false)
             {
-                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtHdrUnitProf.Text = oldprof;
                 e.Cancel = true;
             }
@@ -2575,7 +2587,7 @@ namespace TOAWXML
 
             if (isNum == false)
             {
-                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtHdrUnitProf.Text = oldprof;
             }
             else
@@ -2609,7 +2621,7 @@ namespace TOAWXML
 
             if (isNum == false)
             {
-                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtHdrUnitSupply.Text = oldsupply;
                 e.Cancel = true;
             }
@@ -2640,7 +2652,7 @@ namespace TOAWXML
 
             if (isNum == false)
             {
-                MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtHdrUnitSupply.Text = oldsupply;
             }
             else
@@ -2663,6 +2675,7 @@ namespace TOAWXML
         {
             int drIndex = drFormation.CurrentItemIndex;
             string unitID = "";
+            string newname = "";
 
             foreach (DataRepeaterItem row in drFormation.Controls)
             {
@@ -2671,11 +2684,40 @@ namespace TOAWXML
                     Control label = row.Controls.Find("lblUnitID", true).First();
                     Control name = row.Controls.Find("txtUnitName", true).First();
                     unitID = label.Text;
+                    newname = name.Text;
 
                     //CHANGE TACFILE XML
                     string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
                     var unit = tacFile.XPathSelectElement(xpath);
                     if (name.Text != null) unit.Attribute("NAME").Value = name.Text;
+
+                    IEnumerable<XElement> unitname =
+                       //from f in tacFile.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION").Descendants("UNIT")
+                       from f in tacFile.Elements("OOB").Elements("FORCE").Elements("FORMATION").Elements("UNIT")
+                       where f.Attribute("NAME").Value.Equals(newname, StringComparison.OrdinalIgnoreCase)
+                       select f;
+
+                    if ((haschanged == true) && (unitname.Count() > 1))
+                    {
+                        MessageBox.Show("Unit cannot have same name as another unit!", "Invalid Name", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        name.Text = oldname;
+                        haschanged = false;
+                    }
+
+
+                    //IEnumerable<XElement> unitname =
+                    //   from f in tacFile.Elements("OOB").Elements("FORCE").Elements("FORMATION")
+                    //   where f.Attribute("NAME").Value.Equals(newname, StringComparison.OrdinalIgnoreCase)
+                    //   select f;
+
+                    //if ((haschanged == true) && (unitname.Count() > 1))
+                    //{
+                    //    MessageBox.Show("Formation cannot have same name as another formation!", "Invalid Name", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    //    name.Text = oldname;
+                    //    haschanged = false;
+                    //}
+
+
 
                     //REVISE TREE NODE
                     foreach (TreeNode node in trvUnitTree.Nodes)
@@ -3107,7 +3149,7 @@ namespace TOAWXML
 
                     if (isNum == false)
                     {
-                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         prof.Text = oldprof;
                     }
                     else
@@ -3147,7 +3189,7 @@ namespace TOAWXML
 
                     if (isNum == false)
                     {
-                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         prof.Text = oldprof;
                     }
                     else
@@ -3204,7 +3246,7 @@ namespace TOAWXML
 
                     if (isNum == false)
                     {
-                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         supply.Text = oldsupply;
                     }
                     else
@@ -3244,7 +3286,7 @@ namespace TOAWXML
 
                     if (isNum == false)
                     {
-                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         supply.Text = oldsupply;
                     }
                     else
@@ -3301,7 +3343,7 @@ namespace TOAWXML
 
                     if (isNum == false)
                     {
-                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         ready.Text = oldready;
                     }
                     else
@@ -3341,7 +3383,7 @@ namespace TOAWXML
 
                     if (isNum == false)
                     {
-                        MessageBox.Show("Please enter number between 1-100!", "Entry Error");
+                        MessageBox.Show("Please enter number between 1-100!", "Entry Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         ready.Text = oldready;
                     }
                     else
@@ -3499,6 +3541,236 @@ namespace TOAWXML
             string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID =" + formid + "]";
             var form = tacFile.XPathSelectElement(xpath);
             if (cboHdrFormLossTol.Text != null) form.Attribute("EMPHASIS").Value = cboHdrFormLossTol.Text;
+        }
+
+        private void txtHdrForceName_Enter(object sender, EventArgs e)
+        {
+            oldname = txtHdrForceName.Text;
+
+        }
+
+        private void txtHdrForceName_Leave(object sender, EventArgs e)
+        {
+            //bool dupname = tacFile
+            //                 .Descendants("OOB").Descendants("FORCE").Attributes("NAME")
+            //                 //.Where(a => a.Attribute("NAME").Value == oldname)
+            //                 .Any(tacFile.Descendants("OOB").Descendants("FORCE").Attributes("NAME").Value == oldname));
+
+            string newname = txtHdrForceName.Text;
+
+            IEnumerable<XElement> forcename =
+                from f in tacFile.Descendants("OOB").Descendants("FORCE")
+                where f.Attribute("NAME").Value.Equals(newname, StringComparison.OrdinalIgnoreCase)
+                select f;
+
+            if (forcename.Count() > 1)
+            {
+                MessageBox.Show("Force cannot have same name as other force!", "Invalid Name", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                txtHdrForceName.Text = oldname;
+            }
+        }
+
+        private void txtHdrForceName_MouseLeave(object sender, EventArgs e)
+        {
+            string newname = txtHdrForceName.Text;
+
+            IEnumerable<XElement> forcename =
+                from f in tacFile.Descendants("OOB").Descendants("FORCE")
+                where f.Attribute("NAME").Value.Equals(newname, StringComparison.OrdinalIgnoreCase)
+                select f;
+
+            if (forcename.Count() > 1)
+            {
+                MessageBox.Show("Force cannot have same name as other force!", "Invalid Name", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                txtHdrForceName.Text = oldname;
+            }
+        }
+
+        private void txtHdrFormName_Enter(object sender, EventArgs e)
+        {
+            haschanged = false;
+            oldname = txtHdrFormName.Text;
+        }
+
+        private void txtHdrFormName_TextChanged(object sender, EventArgs e)
+        {
+            haschanged = true;
+        }
+
+        private void txtHdrFormName_Leave(object sender, EventArgs e)
+        {
+            string newname = txtHdrFormName.Text;
+
+            IEnumerable<XElement> formname =
+                from f in tacFile.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION")
+                where f.Attribute("NAME").Value.Equals(newname, StringComparison.OrdinalIgnoreCase)
+                select f;
+
+            if ((haschanged == true) && (formname.Count() >= 1))
+            {
+                MessageBox.Show("Formation cannot have same name as another formation!", "Invalid Name", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                txtHdrFormName.Text = oldname;
+            }
+        }
+
+        private void txtHdrFormName_MouseLeave(object sender, EventArgs e)
+        {
+            string newname = txtHdrFormName.Text;
+
+            IEnumerable<XElement> formname =
+                from f in tacFile.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION")
+                where f.Attribute("NAME").Value.Equals(newname, StringComparison.OrdinalIgnoreCase)
+                select f;
+
+            if ((haschanged == true) && (formname.Count() >= 1))
+            {
+                MessageBox.Show("Formation cannot have same name as another formation!", "Invalid Name", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                txtHdrFormName.Text = oldname;
+            }
+        }
+
+        private void txtHdrUnitName_Enter(object sender, EventArgs e)
+        {
+            haschanged = false;
+            oldname = txtHdrUnitName.Text;
+        }
+
+        private void txtHdrUnitName_TextChanged(object sender, EventArgs e)
+        {
+            haschanged = true;
+        }
+
+        private void txtHdrUnitName_Leave(object sender, EventArgs e)
+        {
+            string newname = txtHdrUnitName.Text;
+
+            IEnumerable<XElement> unitname =
+                from f in tacFile.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION").Descendants("UNIT")
+                where f.Attribute("NAME").Value.Equals(newname, StringComparison.OrdinalIgnoreCase)
+                select f;
+
+            if ((haschanged == true) && (unitname.Count() >= 1))
+            {
+                MessageBox.Show("Unit cannot have same name as another unit!", "Invalid Name", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                txtHdrUnitName.Text = oldname;
+
+            }
+        }
+
+        private void txtHdrUnitName_MouseLeave(object sender, EventArgs e)
+        {
+            string newname = txtHdrUnitName.Text;
+
+            IEnumerable<XElement> unitname =
+                from f in tacFile.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION").Descendants("UNIT")
+                where f.Attribute("NAME").Value.Equals(newname, StringComparison.OrdinalIgnoreCase)
+                select f;
+
+            if ((haschanged == true) && (unitname.Count() >= 1))
+            {
+                MessageBox.Show("Unit cannot have same name as another unit!", "Invalid Name", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                txtHdrUnitName.Text = oldname;
+            }
+        }
+
+        private void txtName_Enter(object sender, EventArgs e)
+        {
+            int drIndex = drForce.CurrentItemIndex;
+            string formID = "";
+
+            foreach (DataRepeaterItem row in drForce.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblFormID", true).First();
+                    Control name = row.Controls.Find("txtName", true).First();
+                    formID = label.Text;
+                    oldname = name.Text;
+                    haschanged = false;
+                    return;
+                }
+            }
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            haschanged = true;
+        }
+
+        private void txtName_MouseLeave(object sender, EventArgs e)
+        {
+            int drIndex = drForce.CurrentItemIndex;
+            string formID = "";
+
+            foreach (DataRepeaterItem row in drForce.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblFormID", true).First();
+                    Control name = row.Controls.Find("txtName", true).First();
+                    formID = label.Text;
+                    string newname = name.Text;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID= " + formID + "]";
+                    var formation = tacFile.XPathSelectElement(xpath);
+                    if (name.Text != null) formation.Attribute("NAME").Value = name.Text;
+
+                    IEnumerable<XElement> unitname =
+                        from f in tacFile.Elements("OOB").Elements("FORCE").Elements("FORMATION")
+                        where f.Attribute("NAME").Value.Equals(newname, StringComparison.OrdinalIgnoreCase)
+                        select f;
+
+                    if ((haschanged == true) && (unitname.Count() > 1))
+                    {
+                        MessageBox.Show("Formation cannot have same name as another formation!", "Invalid Name", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        name.Text = oldname;
+                        haschanged = false;
+                    }
+
+                    //REVISE TREE NODE
+                    foreach (TreeNode node in trvUnitTree.Nodes)
+                    {
+                        foreach (TreeNode child in node.Nodes)
+                        {
+                            if (child.Name == "FORMATION")
+                            {
+                                if (child.Tag.ToString() == formID)
+                                {
+                                    child.Text = name.Text;
+                                    trvUnitTree.Refresh();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        private void txtUnitName_Enter(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    Control name = row.Controls.Find("txtUnitName", true).First();
+                    unitID = label.Text;
+                    oldname = name.Text;
+                    haschanged = false;
+                    return;
+                }
+            }
+        }
+
+        private void txtUnitName_TextChanged(object sender, EventArgs e)
+        {
+            haschanged = true;
         }
     }
 }
