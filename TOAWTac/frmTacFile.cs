@@ -575,6 +575,15 @@ namespace TOAWXML
             string formid = trvUnitTree.SelectedNode.Tag.ToString();
             string equipid = trvUnitTree.SelectedNode.Tag.ToString();
 
+            string replacePriority = "";
+            string iconID = "";
+            string icon = "";
+            string orderID = "";
+            bool isAirUnit;
+            string iconDisplay = "";
+            string unitorders = "";
+
+
             dtFormation.Clear();
             dtUnit.Clear();
             dtEquip.Clear();
@@ -722,17 +731,17 @@ namespace TOAWXML
 
                     foreach (XElement unit in units.Descendants("UNIT"))
                     {
-                        string replacePriority = GetReplacementPriorityText(unit.Attribute("REPLACEMENTPRIORITY").Value);
+                        replacePriority = GetReplacementPriorityText(unit.Attribute("REPLACEMENTPRIORITY").Value);
 
-                        string iconID = "";
-                        string orderID = unit.Attribute("STATUS").Value;
-                        string icon = unit.Attribute("ICON").Value;
-                        bool isAirUnit = IsAirUnit(icon);
+                        iconID = "";
+                        orderID = unit.Attribute("STATUS").Value;
+                        icon = unit.Attribute("ICON").Value;
+                        isAirUnit = IsAirUnit(icon);
 
                         if (unit.Attribute("ICONID") != null) iconID = unit.Attribute("ICONID").Value;
-                        string iconDisplay = GetIconText(iconID, icon);
+                        iconDisplay = GetIconText(iconID, icon);
 
-                        string unitorders = SetUnitOrders(isAirUnit, orderID);
+                        unitorders = SetUnitOrders(isAirUnit, orderID);
 
                         dtUnit.Rows.Add(unit.Attribute("NAME").Value, unit.Attribute("PROFICIENCY").Value,
                             unit.Attribute("SUPPLY").Value, unitorders, unit.Attribute("EMPHASIS").Value,
@@ -766,7 +775,25 @@ namespace TOAWXML
                     txtHdrUnitName.Text = equipment.Attribute("NAME").Value;
                     txtHdrUnitProf.Text = equipment.Attribute("PROFICIENCY").Value;
                     txtHdrUnitSupply.Text = equipment.Attribute("SUPPLY").Value;
+                    txtHdrUnitReady.Text = equipment.Attribute("READINESS").Value;
+                    cboHdrUnitSize.Text = equipment.Attribute("SIZE").Value;
+                    cboHdrUnitLossTol.Text = equipment.Attribute("EMPHASIS").Value;
+                    cboHdrUnitExp.Text = equipment.Attribute("EXPERIENCE").Value;
 
+                    replacePriority = GetReplacementPriorityText(equipment.Attribute("REPLACEMENTPRIORITY").Value);
+                    iconID = "";
+                    orderID = equipment.Attribute("STATUS").Value;
+                    icon = equipment.Attribute("ICON").Value;
+                    isAirUnit = IsAirUnit(icon);
+                    if (equipment.Attribute("ICONID") != null) iconID = equipment.Attribute("ICONID").Value;
+                    iconDisplay = GetIconText(iconID, icon);
+                    unitorders = SetUnitOrders(isAirUnit, orderID);
+                    
+                    cboHdrUnitType.Text = iconDisplay;
+                    cboHdrUnitOrders.Text = unitorders;
+                    cboHdrUnitReplace.Text = replacePriority;
+
+                    //SET DATA REPEATER DATA
                     txtEquipName.DataBindings.Clear();
 
                     txtEquipName.DataBindings.Add("Text", dtEquip, "EquipName");
@@ -3771,6 +3798,39 @@ namespace TOAWXML
         private void txtUnitName_TextChanged(object sender, EventArgs e)
         {
             haschanged = true;
+        }
+
+        private void cboHdrUnitSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!cboHdrUnitSize.Focused) return;
+
+            //CHANGE TACFILE XML
+            string unitid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID =" + unitid + "]";
+            var form = tacFile.XPathSelectElement(xpath);
+            if (cboHdrUnitSize.Text != null) form.Attribute("SIZE").Value = cboHdrUnitSize.Text;
+        }
+
+        private void cboHdrUnitLossTol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!cboHdrUnitLossTol.Focused) return;
+
+            //CHANGE TACFILE XML
+            string unitid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID =" + unitid + "]";
+            var form = tacFile.XPathSelectElement(xpath);
+            if (cboHdrUnitLossTol.Text != null) form.Attribute("EMPHASIS").Value = cboHdrUnitLossTol.Text;
+        }
+
+        private void cboHdrUnitExp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!cboHdrUnitExp.Focused) return;
+
+            //CHANGE TACFILE XML
+            string unitid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID =" + unitid + "]";
+            var form = tacFile.XPathSelectElement(xpath);
+            if (cboHdrUnitExp.Text != null) form.Attribute("EXPERIENCE").Value = cboHdrUnitExp.Text;
         }
     }
 }
