@@ -79,36 +79,36 @@ namespace TOAWXML
             ///>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             if (TOAWXML.Properties.Settings.Default.FilePath != "")
             {
-                    string filePath = TOAWXML.Properties.Settings.Default.FilePath;
-                    txtPath.Text = filePath;
-                    if (!System.IO.File.Exists(filePath))
-                    {
-                        frmLoadFile loadfileform = new frmLoadFile();
-                        loadfileform.ShowDialog();
-                        return;
-                    }
-                    FixInvalidXML();
-                    FixForce2SubunitBug();
+                string filePath = TOAWXML.Properties.Settings.Default.FilePath;
+                txtPath.Text = filePath;
+                if (!System.IO.File.Exists(filePath))
+                {
+                    frmLoadFile loadfileform = new frmLoadFile();
+                    loadfileform.ShowDialog();
+                    return;
+                }
+                FixInvalidXML();
+                FixForce2SubunitBug();
 
-                    XDocument xdoc = XDocument.Load(TOAWXML.Properties.Settings.Default.FilePath);
+                XDocument xdoc = XDocument.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
-                    //GET NAME OF FORCE 1 AND ASSIGN TO radio button text
-                    var forcenames = xdoc.Descendants("HEADER");
-                    foreach (var f in forcenames)
-                    {
-                        string fn1 = f.Attribute("forceName1").Value.ToString();
-                        this.rbForce1.Text = fn1;
+                //GET NAME OF FORCE 1 AND ASSIGN TO radio button text
+                var forcenames = xdoc.Descendants("HEADER");
+                foreach (var f in forcenames)
+                {
+                    string fn1 = f.Attribute("forceName1").Value.ToString();
+                    this.rbForce1.Text = fn1;
 
-                        string fn2 = f.Attribute("forceName2").Value.ToString();
-                        this.rbForce2.Text = fn2;
-                    }
+                    string fn2 = f.Attribute("forceName2").Value.ToString();
+                    this.rbForce2.Text = fn2;
+                }
 
-                    //HIDE TAB HEADERS ON TAB CONTROL
-                    tabUnits.Appearance = TabAppearance.FlatButtons;
-                    tabUnits.ItemSize = new Size(0, 1);
-                    tabUnits.SizeMode = TabSizeMode.Fixed;
+                //HIDE TAB HEADERS ON TAB CONTROL
+                tabUnits.Appearance = TabAppearance.FlatButtons;
+                tabUnits.ItemSize = new Size(0, 1);
+                tabUnits.SizeMode = TabSizeMode.Fixed;
 
-                    tabUnits.SelectedIndex = 4;
+                tabUnits.SelectedIndex = 4;
             }
             else
             {
@@ -338,7 +338,7 @@ namespace TOAWXML
             cboIcon.ValueMember = "Key";
             cboIcon.DisplayMember = "Value";
 
-            //MAKE ALL CONTROLS INVISIBILE UNTIL AFTER TREE SELECT
+            //MAKE ALL CONTROLS INVISIBLE UNTIL AFTER TREE SELECT
             lblUnitName.Visible = false;
             txtUnitName.Visible = false;
             lblID.Visible = false;
@@ -436,7 +436,7 @@ namespace TOAWXML
             XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             trvUnitTree.Update();
-             
+
             switch (type)
             {
                 case "FORCE":
@@ -505,13 +505,13 @@ namespace TOAWXML
 
                     //SEEMS TO BE ERROR IN XML EXPORT FOR FORCEREFUEL--DEFAULT IS 0, WHICH IS INVALID VALUE
                     if (forcevariables.Attribute("forceAirRefuel").Value == "0")
-                        {
+                    {
                         txtAirRefuel.Text = "1";
-                        }
-                        else
-                        {
+                    }
+                    else
+                    {
                         txtAirRefuel.Text = forcevariables.Attribute("forceAirRefuel").Value.ToString();
-                        }
+                    }
                     txtRFCScal.Text = forcevariables.Attribute("RFCScalar").Value.ToString();
                     txtNavCritScal.Text = forcevariables.Attribute("navalCriticalScalar").Value.ToString();
                     txtElectSupp.Text = forcevariables.Attribute("forceElectronicSupport").Value.ToString();
@@ -582,31 +582,31 @@ namespace TOAWXML
                     txtReinforceTrigger.Visible = false;
                     txtReinforceTrigger.Text = "--";
 
-                    if(cboOrders.Text == "Static")
-                        {
-                            txtEntryTurn.Visible = true;
-                            lblEntryTurn.Visible = true;
-                            txtEntryTurn.Text = unit.Attribute("ENTRYTURN").Value;
-                            string date = txtEntryTurn.Text;
-                            tssLabel1.Text = GameTime.getReleaseDate(date);
+                    if (cboOrders.Text == "Static")
+                    {
+                        txtEntryTurn.Visible = true;
+                        lblEntryTurn.Visible = true;
+                        txtEntryTurn.Text = unit.Attribute("ENTRYTURN").Value;
+                        string date = txtEntryTurn.Text;
+                        tssLabel1.Text = GameTime.getReleaseDate(date);
 
-                            trvUnitTree.SelectedNode.ForeColor = System.Drawing.Color.IndianRed;
-                            Font font = new Font(trvUnitTree.Font, FontStyle.Bold);
-                            trvUnitTree.SelectedNode.NodeFont = font;
+                        trvUnitTree.SelectedNode.ForeColor = System.Drawing.Color.IndianRed;
+                        Font font = new Font(trvUnitTree.Font, FontStyle.Bold);
+                        trvUnitTree.SelectedNode.NodeFont = font;
                     }
                     else
-                        {
-                            txtEntryTurn.Visible = false;
-                            lblEntryTurn.Visible = false;
-                            tssLabel1.Text = "";
+                    {
+                        txtEntryTurn.Visible = false;
+                        lblEntryTurn.Visible = false;
+                        tssLabel1.Text = "";
 
-                            trvUnitTree.SelectedNode.ForeColor = System.Drawing.Color.Black;
-                            Font font = new Font(trvUnitTree.Font, FontStyle.Regular);
-                            trvUnitTree.SelectedNode.NodeFont = font;
+                        trvUnitTree.SelectedNode.ForeColor = System.Drawing.Color.Black;
+                        Font font = new Font(trvUnitTree.Font, FontStyle.Regular);
+                        trvUnitTree.SelectedNode.NodeFont = font;
                     }
 
-                //SET UP OBJECTIVES DATAGRIDVIEW
-                string strTrack = cboTrack.SelectedValue.ToString();
+                    //SET UP OBJECTIVES DATAGRIDVIEW
+                    string strTrack = cboTrack.SelectedValue.ToString();
 
                     dgvObjectives.Columns[0].Name = "ID";
                     dgvObjectives.Columns["ID"].DataPropertyName = "ID";
@@ -857,16 +857,16 @@ namespace TOAWXML
                     }
 
                     if (cboDeployment.SelectedValue.ToString() == "1" || cboDeployment.SelectedValue.ToString() == "2")
-                        {
-                            txtReinforceTrigger.Enabled = true;
-                            //lblReinfDate.Visible = true;
-                            
-                        }
+                    {
+                        txtReinforceTrigger.Enabled = true;
+                        //lblReinfDate.Visible = true;
+
+                    }
                     else
-                        {
-                            //lblReinfDate.Visible = false;
-                            tssLabel1.Text = "";
-                        }
+                    {
+                        //lblReinfDate.Visible = false;
+                        tssLabel1.Text = "";
+                    }
 
                     switch (deploy)
                     {
@@ -1434,10 +1434,10 @@ namespace TOAWXML
                     unit.Attribute("SUPPORTSCOPE").Value = cboSupportScope.Text;
                     unit.Attribute("ORDERS").Value = this.cboOrders.Text;
                     unit.Attribute("EMPHASIS").Value = this.cboEmphasis.Text;
-                    
-                    if(cboOrders.Text == "Static")
+
+                    if (cboOrders.Text == "Static")
                     {
-                        if(unit.Attribute("ENTRYTURN")!= null)
+                        if (unit.Attribute("ENTRYTURN") != null)
                         {
                             unit.Attribute("ENTRYTURN").Value = this.txtEntryTurn.Text;
                         }
@@ -1484,7 +1484,7 @@ namespace TOAWXML
                         case "1":  //SAVE ENTRY LOCATION FOR UNITS WHICH ARE REINFORCEMENTS BY TURN
                                    //SAVE X AND Y, AFTER CHECKING FOR NULL
 
-                                   //THIS CODE DEALS WITH FACT THAT ON-MAP UNITS USE "X/Y" ATTRIBUTES, WHILE OFF-MAP UNITS USE "GOINGTOX/Y" ATTRIBUTES.  ALSO CHECKS THAT USE OF DEFAULT VALUES IS INTENDED
+                            //THIS CODE DEALS WITH FACT THAT ON-MAP UNITS USE "X/Y" ATTRIBUTES, WHILE OFF-MAP UNITS USE "GOINGTOX/Y" ATTRIBUTES.  ALSO CHECKS THAT USE OF DEFAULT VALUES IS INTENDED
                             if (unit.Attribute("GOINGTOX") == null && unit.Attribute("X") == null)
                             {
                                 if (txtX.Text == "1")
@@ -1693,7 +1693,7 @@ namespace TOAWXML
                             {
                                 unit.Attribute("GOINGTOX").Value = txtX.Text;
                                 unit.Attribute("GOINGTOY").Value = txtY.Text;
-                            } 
+                            }
 
                             if (txtReinforceTrigger.Text == "999")
                             {
@@ -1810,7 +1810,7 @@ namespace TOAWXML
                 TOAWXML.Properties.Settings.Default.FilePath = file.FileName;
                 TOAWXML.Properties.Settings.Default.Save();
                 FixInvalidXML();
-                
+
                 xmlform_Load(null, EventArgs.Empty);
                 trvUnitTree.Nodes.Clear();
                 LoadTree();
@@ -2052,79 +2052,79 @@ namespace TOAWXML
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-                if (MessageBox.Show("Are you SURE you want to delete this formation?"  + Environment.NewLine + Environment.NewLine + "This will also delete all of its subordinate units.",
-                    "Confirm Deletion",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Exclamation,
-                    MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            if (MessageBox.Show("Are you SURE you want to delete this formation?" + Environment.NewLine + Environment.NewLine + "This will also delete all of its subordinate units.",
+                "Confirm Deletion",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                TreeNode tnode;
+                tnode = trvUnitTree.SelectedNode;
+                int unitLevel = tnode.Level;
+                string formationid = tnode.Tag.ToString();
+                string parentid = tnode.Parent.Tag.ToString();
+                XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
+
+                string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION[@ID =" + formationid + "]";
+                string xpath2 = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION";
+                string xpath3 = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT";
+                string xpath4 = "EVENTS/EVENT[@EFFECT=\"Form'n orders\"]";
+                string xpath5 = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION[@ID =" + formationid + "]/UNIT";
+
+                //RENUMBER FORMATIONS/UNITS IF ONE IS REMOVED
+                var units = xelem.XPathSelectElements(xpath2);  //ALL FORMATIONS
+                var allunits = xelem.XPathSelectElements(xpath3); //ALL UNITS
+                var formations = xelem.XPathSelectElements(xpath4); //ALL EVENTS FEATURING FORMATIONS
+                var subunits = xelem.XPathSelectElements(xpath5); //ALL FORMATION'S SUBUNITS
+                var unitevents = (from u in xelem.Elements("EVENTS").Elements("EVENT")  //ALL EVENTS FEATURING UNITS
+                                  where (string)u.Attribute("TRIGGER") == "Unit destroyed" ||
+                                  (string)u.Attribute("EFFECT") == "Disband unit" ||
+                                  (string)u.Attribute("EFFECT") == "Withdraw unit" ||
+                                  (string)u.Attribute("EFFECT") == "Withdraw army"
+                                  select u);
+
+                string forceid = "";
+
+                if (rbForce1.Checked == true)
                 {
-                    TreeNode tnode;
-                    tnode = trvUnitTree.SelectedNode;
-                    int unitLevel = tnode.Level;
-                    string formationid = tnode.Tag.ToString();
-                    string parentid = tnode.Parent.Tag.ToString();
-                    XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
-
-                    string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION[@ID =" + formationid + "]";  
-                    string xpath2 = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION";
-                    string xpath3 = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT";
-                    string xpath4 = "EVENTS/EVENT[@EFFECT=\"Form'n orders\"]";
-                    string xpath5 = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION[@ID =" + formationid + "]/UNIT";
-
-                    //RENUMBER FORMATIONS/UNITS IF ONE IS REMOVED
-                    var units = xelem.XPathSelectElements(xpath2);  //ALL FORMATIONS
-                    var allunits = xelem.XPathSelectElements(xpath3); //ALL UNITS
-                    var formations = xelem.XPathSelectElements(xpath4); //ALL EVENTS FEATURING FORMATIONS
-                    var subunits = xelem.XPathSelectElements(xpath5); //ALL FORMATION'S SUBUNITS
-                    var unitevents = (from u in xelem.Elements("EVENTS").Elements("EVENT")  //ALL EVENTS FEATURING UNITS
-                                      where (string)u.Attribute("TRIGGER") == "Unit destroyed" ||
-                                      (string)u.Attribute("EFFECT") == "Disband unit" ||
-                                      (string)u.Attribute("EFFECT") == "Withdraw unit" ||
-                                      (string)u.Attribute("EFFECT") == "Withdraw army"
-                                      select u);
-
-                    string forceid = "";
-
-                    if (rbForce1.Checked == true)
-                    {
-                        forceid = "1";
-                    }
-
-                    if (rbForce2.Checked == true)
-                    {
-                        forceid = "2";
-                    }
-
-                    //AFTER CONFIRMATION, RENUMBER FORMATIONS/UNITS USED IN EVENTS
-                    bool proceed = Renumbering.RenumberEventFormations(formations, formationid, forceid); //RENUMBER FORMATIONS USED IN EVENTS
-                    bool proceed2 = Renumbering.RenumberEventFormationUnits(subunits, unitevents, formationid, forceid);  //RENUMBER UNITS USED IN EVENTS AFTER FORMATION DELETED
-
-                    if (proceed == false || proceed2 == false)
-                    {
-                        return;
-                    };
-
-                    //RENUMBER PARENT ATTRIBUTE OF DIVIDED SUBUNITS
-                    var unitparents = from p in xelem.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION").Descendants("UNIT")
-                                      where (string)p.Parent.Parent.Attribute("ID") == "1" && p.Attribute("PARENT") != null
-                                      select p;
-
-                    Renumbering.RenumberDividedFormation(subunits, unitparents);
-
-                    //REMOVE TREE AND XML NODES FOR DELETED FORMATION/UNIT
-                    var unit = xelem.XPathSelectElement(xpath);
-                                    trvUnitTree.BeginUpdate();
-                                    tnode.Remove();
-                                    unit.Remove();
-
-                    Renumbering.RenumberAll(units);  //RENUMBER ALL FORMATIONS
-                    Renumbering.RenumberAll(allunits);  //RENUMBER ALL UNITS AFTER FORMATION DELETED
-
-                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
-                    trvUnitTree.EndUpdate();
-                    LoadTree();
-                    trvUnitTree.Refresh();
+                    forceid = "1";
                 }
+
+                if (rbForce2.Checked == true)
+                {
+                    forceid = "2";
+                }
+
+                //AFTER CONFIRMATION, RENUMBER FORMATIONS/UNITS USED IN EVENTS
+                bool proceed = Renumbering.RenumberEventFormations(formations, formationid, forceid); //RENUMBER FORMATIONS USED IN EVENTS
+                bool proceed2 = Renumbering.RenumberEventFormationUnits(subunits, unitevents, formationid, forceid);  //RENUMBER UNITS USED IN EVENTS AFTER FORMATION DELETED
+
+                if (proceed == false || proceed2 == false)
+                {
+                    return;
+                };
+
+                //RENUMBER PARENT ATTRIBUTE OF DIVIDED SUBUNITS
+                var unitparents = from p in xelem.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION").Descendants("UNIT")
+                                  where (string)p.Parent.Parent.Attribute("ID") == "1" && p.Attribute("PARENT") != null
+                                  select p;
+
+                Renumbering.RenumberDividedFormation(subunits, unitparents);
+
+                //REMOVE TREE AND XML NODES FOR DELETED FORMATION/UNIT
+                var unit = xelem.XPathSelectElement(xpath);
+                trvUnitTree.BeginUpdate();
+                tnode.Remove();
+                unit.Remove();
+
+                Renumbering.RenumberAll(units);  //RENUMBER ALL FORMATIONS
+                Renumbering.RenumberAll(allunits);  //RENUMBER ALL UNITS AFTER FORMATION DELETED
+
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
+                trvUnitTree.EndUpdate();
+                LoadTree();
+                trvUnitTree.Refresh();
+            }
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2836,9 +2836,9 @@ namespace TOAWXML
             //++++++++++++++
         }
 
-        public void FixForce2SubunitBug() 
-            //WHEN XML EXPORTED FROM TOAW, IT ASSIGNS A PARENT ATTRIBUTE TO *ALL* UNITS (OTHER THAN EXISTING, "REAL" SUBUNITS) WITH A VALUE EQUAL TO UNIT ID.
-            //THIS METHOD REMOVES THE ERRONEOUS PARENT ATTRIBUTES
+        public void FixForce2SubunitBug()
+        //WHEN XML EXPORTED FROM TOAW, IT ASSIGNS A PARENT ATTRIBUTE TO *ALL* UNITS (OTHER THAN EXISTING, "REAL" SUBUNITS) WITH A VALUE EQUAL TO UNIT ID.
+        //THIS METHOD REMOVES THE ERRONEOUS PARENT ATTRIBUTES
         {
             ///XElement xdoc = XElement.Load(Globals.GlobalVariables.PATH);
             XElement xdoc = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
@@ -2856,7 +2856,7 @@ namespace TOAWXML
                         }
                     }
                 }
-                   
+
             }
             ///xdoc.Save(Globals.GlobalVariables.PATH);
             xdoc.Save(TOAWXML.Properties.Settings.Default.FilePath);
@@ -2986,7 +2986,7 @@ namespace TOAWXML
                                 z = z + 1;
                             }
 
-                            dblSubProf2 = (dblSubProf1 + (Convert.ToDouble(subunit.Attribute("PROFICIENCY").Value.ToString())))/2;
+                            dblSubProf2 = (dblSubProf1 + (Convert.ToDouble(subunit.Attribute("PROFICIENCY").Value.ToString()))) / 2;
                             var parProf = Math.Round((dblSubProf2 * 1.25), 0, MidpointRounding.AwayFromZero);
                             unit.Attribute("PROFICIENCY").Value = parProf.ToString();
                             break;
@@ -3004,7 +3004,7 @@ namespace TOAWXML
                                 equip.Attribute("MAX").Value = newMax.ElementAt(z).ToString();
                                 z = z + 1;
                             }
-                            dblSubProf3 = ((dblSubProf2 * 2) + (Convert.ToDouble(subunit.Attribute("PROFICIENCY").Value)))/3;
+                            dblSubProf3 = ((dblSubProf2 * 2) + (Convert.ToDouble(subunit.Attribute("PROFICIENCY").Value))) / 3;
                             parProf = Math.Round((dblSubProf3 * 1.25), 0, MidpointRounding.AwayFromZero);
                             unit.Attribute("PROFICIENCY").Value = parProf.ToString();
                             break;
@@ -3052,7 +3052,7 @@ namespace TOAWXML
             XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
 
             xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
-                    
+
             var unit = xelem.XPathSelectElement(xpath);
 
             if (tparent != null)
@@ -3087,7 +3087,7 @@ namespace TOAWXML
 
             XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
             xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT[@ID =" + unitid + "]";
-                   
+
             var unit = xelem.XPathSelectElement(xpath);
 
             if (tparent != null)
@@ -3137,7 +3137,7 @@ namespace TOAWXML
                                       (string)u.Attribute("EFFECT") == "Withdraw unit" ||
                                       (string)u.Attribute("EFFECT") == "Withdraw army"
                                       select u);
-                    
+
                     string forceid = "";
 
                     //RENUMBER ANY FORMATIONS USED IN EVENTS
@@ -3251,27 +3251,27 @@ namespace TOAWXML
 
             //ADD CLONED XMLNODE 
             parentNode = copiedNode.Parent;
-                    cloneNode = new XElement(copied);
-                    newMax = oldMax + 1;
-                    cloneNode.Attribute("ID").Value = newMax.ToString();
-                    cloneNode.Attribute("NAME").Value = "Copy of " + copied.Attribute("NAME").Value.ToString();
-                    copied.AddAfterSelf(cloneNode);
+            cloneNode = new XElement(copied);
+            newMax = oldMax + 1;
+            cloneNode.Attribute("ID").Value = newMax.ToString();
+            cloneNode.Attribute("NAME").Value = "Copy of " + copied.Attribute("NAME").Value.ToString();
+            copied.AddAfterSelf(cloneNode);
 
-                    copiedClone = (TreeNode)trvUnitTree.SelectedNode.Clone();
-                    copiedClone.Text = "Copy of " + strcopiedText;
-                    copiedClone.Tag = newMax.ToString();
-                    parentNode.Nodes.Insert(copiedNode.Index + 1, copiedClone);
+            copiedClone = (TreeNode)trvUnitTree.SelectedNode.Clone();
+            copiedClone.Text = "Copy of " + strcopiedText;
+            copiedClone.Tag = newMax.ToString();
+            parentNode.Nodes.Insert(copiedNode.Index + 1, copiedClone);
 
-                    //DELETE "NEXT" ATTRIBUTES
-                    string xpathForceUnits = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT";
-                    var forceunits = xelem.XPathSelectElements(xpathForceUnits);
+            //DELETE "NEXT" ATTRIBUTES
+            string xpathForceUnits = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION/UNIT";
+            var forceunits = xelem.XPathSelectElements(xpathForceUnits);
 
-                    foreach (XElement fu in forceunits)
-                        if (fu.Attribute("NEXT") != null)
-                        {
-                            XAttribute attNext = fu.Attribute("NEXT");
-                            attNext.Remove();
-                        }
+            foreach (XElement fu in forceunits)
+                if (fu.Attribute("NEXT") != null)
+                {
+                    XAttribute attNext = fu.Attribute("NEXT");
+                    attNext.Remove();
+                }
 
             parentNode.Expand();
             Globals.GlobalVariables.TREEVIEWCHANGED = true;
@@ -3365,19 +3365,19 @@ namespace TOAWXML
             var equip = xelem.XPathSelectElement(xpath);
             //if ((equip.Parent.Attribute("STATUS").Value.ToString() != "24") && equip.Parent.Attribute("PARENT") == null) //IF UNIT IS NOT DIVIDED
             //{
-                if (MessageBox.Show("Are you SURE you want to delete this equipment?",
-                    "Confirm Deletion",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Exclamation,
-                    MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-                {
-                    trvUnitTree.BeginUpdate();
-                    tnode.Remove();
-                    equip.Remove();
-                    xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
-                    trvUnitTree.EndUpdate();
-                    trvUnitTree.Refresh();
-                }
+            if (MessageBox.Show("Are you SURE you want to delete this equipment?",
+                "Confirm Deletion",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                trvUnitTree.BeginUpdate();
+                tnode.Remove();
+                equip.Remove();
+                xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
+                trvUnitTree.EndUpdate();
+                trvUnitTree.Refresh();
+            }
             //}
             //else //IF UNIT IS DIVIDED
             //{
@@ -3471,10 +3471,10 @@ namespace TOAWXML
             newTnode.Tag = newMax.ToString();
             newTnode.Name = "FORMATION";
             //rootTnode.Nodes.Insert(trvUnitTree.TopNode.LastNode.Index+1, newTnode);
-            rootTnode.Nodes.Insert(trvUnitTree.Nodes[0].LastNode.Index+1, newTnode);
+            rootTnode.Nodes.Insert(trvUnitTree.Nodes[0].LastNode.Index + 1, newTnode);
             Globals.GlobalVariables.TREEVIEWCHANGED = true;
             xelem.Save(TOAWXML.Properties.Settings.Default.FilePath);
-            
+
             trvUnitTree.SelectedNode = newTnode;
             trvUnitTree.SelectedNode.EnsureVisible();
             Globals.GlobalVariables.TREEVIEWCHANGED = false;
@@ -3495,7 +3495,7 @@ namespace TOAWXML
             //GET FORMATION DATA TO USE FOR UNIT
             string parentProf = target.Attribute("PROFICIENCY").Value.ToString();
             string parentSupply = target.Attribute("SUPPLY").Value.ToString();
-            
+
             oldMax = parent.Descendants("FORMATION").Descendants("UNIT").Max(c => (int)c.Attribute("ID"));
             newMax = oldMax + 1;
             var newXnode = new XElement("UNIT",
@@ -3545,7 +3545,7 @@ namespace TOAWXML
             string strOldIcon = unit.Attribute("ICON").Value.ToString();
             string strNewIconDisplay = cboIcon.Text;
             string strNewIconValue = cboIcon.SelectedValue.ToString();
-            string strNewIconID =""; //PLACEHOLDER VALUE
+            string strNewIconID = ""; //PLACEHOLDER VALUE
             bool oldHasIconID = false;
             bool newHasIconID = false;
 
@@ -3554,83 +3554,83 @@ namespace TOAWXML
                 oldHasIconID = true;
                 string strOldIconID = unit.Attribute("ICONID").Value.ToString();
             }
-                switch (strNewIconDisplay)
-                {
-                    case "Headquarters [v1]":
-                        newHasIconID = true;
-                        strNewIconID = "0";
-                        break;
-                    case "Headquarters [v2]":
-                        newHasIconID = true;
-                        strNewIconID = "1";
-                        break;
-                    case "Antitank [v1]":
-                        
-                        newHasIconID = true;
-                        strNewIconID = "14";
-                        break;
-                    case "Antitank [v2]":
-                        newHasIconID = true;
-                        strNewIconID = "15";
-                        break;
-                    case "Antitank (Mot) [v1]":
-                        newHasIconID = true;
-                        strNewIconID = "25";
-                        break;
-                    case "Antitank (Mot) [v2]":
-                        newHasIconID = true;
-                        strNewIconID = "26";
-                        break;
-                    case "Fighter [icon]":
-                        newHasIconID = true;
-                        strNewIconID = "41";
-                        break;
-                    case "Fighter Bomber [icon]":
-                        newHasIconID = true;
-                        strNewIconID = "42";
-                        break;
-                    case "Bomber (Light) [icon]":
-                        newHasIconID = true;
-                        strNewIconID = "43";
-                        break;
-                    case "Bomber (Heavy) [icon]":
-                        newHasIconID = true;
-                        strNewIconID = "45";
-                        break;
-                    case "Artillery (Coast) [icon]":
-                        newHasIconID = true;
-                        strNewIconID = "62";
-                        break;
-                    case "Artillery (Coast) [silh]":
-                        newHasIconID = true;
-                        strNewIconID = "63";
-                        break;
-                    case "Fighter [silh]":
-                        newHasIconID = true;
-                        strNewIconID = "66";
-                        break;
-                    case "Fighter Bomber [silh]":
-                        newHasIconID = true;
-                        strNewIconID = "67";
-                        break;
-                    case "Bomber (Light) [silh]":
-                        newHasIconID = true;
-                        strNewIconID = "68";
-                        break;
-                    case "Bomber (Heavy) [silh]":
-                        newHasIconID = true;
-                        strNewIconID = "69";
-                        break;
-                    case "Transport [icon]":
-                        newHasIconID = true;
-                        strNewIconID = "82";
-                        break;
-                    case "Transport [silh]":
-                        newHasIconID = true;
-                        strNewIconID = "94";
-                        break;
-                }
-        
+            switch (strNewIconDisplay)
+            {
+                case "Headquarters [v1]":
+                    newHasIconID = true;
+                    strNewIconID = "0";
+                    break;
+                case "Headquarters [v2]":
+                    newHasIconID = true;
+                    strNewIconID = "1";
+                    break;
+                case "Antitank [v1]":
+
+                    newHasIconID = true;
+                    strNewIconID = "14";
+                    break;
+                case "Antitank [v2]":
+                    newHasIconID = true;
+                    strNewIconID = "15";
+                    break;
+                case "Antitank (Mot) [v1]":
+                    newHasIconID = true;
+                    strNewIconID = "25";
+                    break;
+                case "Antitank (Mot) [v2]":
+                    newHasIconID = true;
+                    strNewIconID = "26";
+                    break;
+                case "Fighter [icon]":
+                    newHasIconID = true;
+                    strNewIconID = "41";
+                    break;
+                case "Fighter Bomber [icon]":
+                    newHasIconID = true;
+                    strNewIconID = "42";
+                    break;
+                case "Bomber (Light) [icon]":
+                    newHasIconID = true;
+                    strNewIconID = "43";
+                    break;
+                case "Bomber (Heavy) [icon]":
+                    newHasIconID = true;
+                    strNewIconID = "45";
+                    break;
+                case "Artillery (Coast) [icon]":
+                    newHasIconID = true;
+                    strNewIconID = "62";
+                    break;
+                case "Artillery (Coast) [silh]":
+                    newHasIconID = true;
+                    strNewIconID = "63";
+                    break;
+                case "Fighter [silh]":
+                    newHasIconID = true;
+                    strNewIconID = "66";
+                    break;
+                case "Fighter Bomber [silh]":
+                    newHasIconID = true;
+                    strNewIconID = "67";
+                    break;
+                case "Bomber (Light) [silh]":
+                    newHasIconID = true;
+                    strNewIconID = "68";
+                    break;
+                case "Bomber (Heavy) [silh]":
+                    newHasIconID = true;
+                    strNewIconID = "69";
+                    break;
+                case "Transport [icon]":
+                    newHasIconID = true;
+                    strNewIconID = "82";
+                    break;
+                case "Transport [silh]":
+                    newHasIconID = true;
+                    strNewIconID = "94";
+                    break;
+            }
+
             //SET ICON VALUES DEPENDING ON WHETHER ALTERNATE ICONS ARE INVOLVED 
             if (oldHasIconID == true && newHasIconID == true)
             {
@@ -3800,7 +3800,7 @@ namespace TOAWXML
             //    return bPosInt;
             //}
         }
-                
+
         private void txtProficiency_TextChanged(object sender, EventArgs e)
         {
             //EMPTY TEXTBOX
@@ -3968,7 +3968,7 @@ namespace TOAWXML
                             //lblReinfDate.Visible = false;
                             //lblReinfDate.Text = "N/A";
                             tssLabel1.Text = "";
-                        }                                                                                                   
+                        }
                     }
                 }
                 else
@@ -4694,7 +4694,7 @@ namespace TOAWXML
 
         private void cboOrders_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            if(cboOrders.Text == "Static")
+            if (cboOrders.Text == "Static")
             {
                 txtEntryTurn.Visible = true;
                 lblEntryTurn.Visible = true;
@@ -4732,11 +4732,6 @@ namespace TOAWXML
         {
             frmEquipView equipviewform = new frmEquipView();
             equipviewform.ShowDialog();
-            
-        }
-
-        private void btnStar_Click(object sender, EventArgs e)
-        {
 
         }
     }

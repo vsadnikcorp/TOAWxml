@@ -31,6 +31,7 @@ namespace TOAWXML
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnCreateTacFile = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.lblTacFile = new System.Windows.Forms.Label();
@@ -126,6 +127,7 @@ namespace TOAWXML
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.gbForce.SuspendLayout();
             this.ssTac.SuspendLayout();
             this.drForce.ItemTemplate.SuspendLayout();
@@ -146,6 +148,7 @@ namespace TOAWXML
             this.btnCreateTacFile.Size = new System.Drawing.Size(60, 40);
             this.btnCreateTacFile.TabIndex = 0;
             this.btnCreateTacFile.Text = "Create TacFile";
+            this.toolTip1.SetToolTip(this.btnCreateTacFile, "Select .gam file to convert to tac file");
             this.btnCreateTacFile.UseVisualStyleBackColor = true;
             this.btnCreateTacFile.Click += new System.EventHandler(this.btnCreateTacFile_Click);
             // 
@@ -184,6 +187,7 @@ namespace TOAWXML
             this.btnLoadTacFile.Size = new System.Drawing.Size(60, 40);
             this.btnLoadTacFile.TabIndex = 6;
             this.btnLoadTacFile.Text = "Load \r\nTacFile";
+            this.toolTip1.SetToolTip(this.btnLoadTacFile, "Select .tac file to load");
             this.btnLoadTacFile.UseVisualStyleBackColor = true;
             this.btnLoadTacFile.Click += new System.EventHandler(this.btnLoadTacFile_Click);
             // 
@@ -279,6 +283,7 @@ namespace TOAWXML
             // 
             this.trvUnitTree.AllowDrop = true;
             this.trvUnitTree.CheckBoxes = true;
+            this.trvUnitTree.HideSelection = false;
             this.trvUnitTree.Location = new System.Drawing.Point(13, 84);
             this.trvUnitTree.Name = "trvUnitTree";
             this.trvUnitTree.Size = new System.Drawing.Size(197, 500);
@@ -1214,6 +1219,7 @@ namespace TOAWXML
             this.cboHdrUnitReplace.Name = "cboHdrUnitReplace";
             this.cboHdrUnitReplace.Size = new System.Drawing.Size(101, 21);
             this.cboHdrUnitReplace.TabIndex = 79;
+            this.cboHdrUnitReplace.SelectedIndexChanged += new System.EventHandler(this.cboHdrUnitReplace_SelectedIndexChanged);
             // 
             // label19
             // 
@@ -1419,6 +1425,7 @@ namespace TOAWXML
             this.cboHdrUnitType.Name = "cboHdrUnitType";
             this.cboHdrUnitType.Size = new System.Drawing.Size(108, 21);
             this.cboHdrUnitType.TabIndex = 73;
+            this.cboHdrUnitType.SelectedIndexChanged += new System.EventHandler(this.cboHdrUnitType_SelectedIndexChanged);
             // 
             // label22
             // 
@@ -1495,6 +1502,7 @@ namespace TOAWXML
             this.cboHdrUnitOrders.Name = "cboHdrUnitOrders";
             this.cboHdrUnitOrders.Size = new System.Drawing.Size(98, 21);
             this.cboHdrUnitOrders.TabIndex = 68;
+            this.cboHdrUnitOrders.SelectedIndexChanged += new System.EventHandler(this.cboHdrUnitOrders_SelectedIndexChanged);
             // 
             // txtHdrUnitReady
             // 
@@ -1720,5 +1728,6 @@ namespace TOAWXML
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.ComboBox cboHdrUnitLossTol;
         private System.Windows.Forms.ComboBox cboHdrUnitOrders;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

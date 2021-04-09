@@ -91,6 +91,15 @@ namespace TOAWXML
             cboUnitLossTol.MouseWheel += (o, e) => ((HandledMouseEventArgs)e).Handled = true;
             cboExp.MouseWheel += (o, e) => ((HandledMouseEventArgs)e).Handled = true;
             cboReplace.MouseWheel += (o, e) => ((HandledMouseEventArgs)e).Handled = true;
+            cboHdrUnitType.MouseWheel += (o, e) => ((HandledMouseEventArgs)e).Handled = true;
+            cboHdrUnitSize.MouseWheel += (o, e) => ((HandledMouseEventArgs)e).Handled = true;
+            cboHdrUnitOrders.MouseWheel += (o, e) => ((HandledMouseEventArgs)e).Handled = true;
+            cboHdrUnitLossTol.MouseWheel += (o, e) => ((HandledMouseEventArgs)e).Handled = true;
+            cboHdrUnitExp.MouseWheel += (o, e) => ((HandledMouseEventArgs)e).Handled = true;
+            cboHdrUnitReplace.MouseWheel += (o, e) => ((HandledMouseEventArgs)e).Handled = true;
+            cboHdrFormSupport.MouseWheel += (o, e) => ((HandledMouseEventArgs)e).Handled = true;
+            cboHdrFormOrders.MouseWheel += (o, e) => ((HandledMouseEventArgs)e).Handled = true;
+            cboHdrFormLossTol.MouseWheel += (o, e) => ((HandledMouseEventArgs)e).Handled = true;
         }
         private void frmTacFile_Load(object sender, EventArgs e)
         {
@@ -124,7 +133,7 @@ namespace TOAWXML
             dtFormation.Columns.Add("LossTol", typeof(string));
             dtFormation.Columns.Add("FormID", typeof(string));
 
-            //CREATE DATA TABLE FOR UNITS
+            //CREATE DATATABLE FOR UNITS
             dtUnit.Columns.Add("UnitName", typeof(string));
             dtUnit.Columns.Add("UnitProf", typeof(string));
             dtUnit.Columns.Add("UnitSupply", typeof(string));
@@ -149,6 +158,7 @@ namespace TOAWXML
             cboSupport.Visible = false;
             cboOrders.Visible = false;
             cboLossTol.Visible = false;
+            
 
             //POPULATES REPLACEMENT PRIORITY COMBO BOX
             cboReplace.Items.Add("None");
@@ -161,181 +171,194 @@ namespace TOAWXML
 
         private async void btnCreateTacFile_Click(object sender, EventArgs e)
         {
-            frmLoadGamFile loadfileform = new frmLoadGamFile();
-            loadfileform.ShowDialog();
+            //frmLoadGamFile loadfileform = new frmLoadGamFile();
+            //loadfileform.ShowDialog();
             string FilePath = TOAWTac.Properties.Settings.Default.FilePath.ToString();
             string dateformat = "dd MMM yyyy";
             string date = DateTimePicker.Value.ToString(dateformat);
 
-            trvUnitTree.Nodes.Clear();
-            dtFormation.Clear();
-            dtUnit.Clear();
+            //!!!!!!!!!!!!!!!!!!!!!
+            OpenFileDialog file = new OpenFileDialog();
+            file.Multiselect = false;
+            file.Filter = "TOAW .gam files *.gam|*.gam";
 
-            rbForce1.Checked = false;
-            rbForce2.Checked = false;
-
-            if (FilePath != "" && FilePath != null)  //THERE IS IS NO "ELSE" TO COVER WHAT IF FILEPATH == "" OR NULL!!
+            if (file.ShowDialog() == DialogResult.OK)
             {
-                ssTac.Visible = true;
-
-                //CREATE TACFILE
-                //QQQ XDocument xdoc = XDocument.Load(FilePath);
-                tacFile = XElement.Load(FilePath);
-                string TacFilePath = FilePath.Substring(0, FilePath.Length - 3) + "tac";
-                txtTacFile.Text = TacFilePath;
-                TOAWTac.Properties.Settings.Default.TacFilePath = TacFilePath;
+                TOAWTac.Properties.Settings.Default.FilePath = file.FileName;
                 TOAWTac.Properties.Settings.Default.Save();
 
-                //CREATE TACFILE
+                //!!!!!
+                trvUnitTree.Nodes.Clear();
+                dtFormation.Clear();
+                dtUnit.Clear();
 
-                //SSSSSSSSSSSSSSSS
-                //XDocument tacFile = new XDocument();
-                //tacFile = new XDocument(new XElement("GAME", new XElement("OOB")));
-                //SSSSSSSSSSSSSSSS
+                rbForce1.Checked = false;
+                rbForce2.Checked = false;
 
-                //ZZZZZZZZZZZZZZZZZZ
-                //XDocument tacFile = xdoc;
-                //QQQ tacFile = xdoc;
-                //ZZZZZZZZZZZZZZZZZ
-
-                //LOAD COMMANDER NAMES FILE
-                string CdrNameDirectory = Path.GetDirectoryName(TacFilePath);
-                string CdrNameFilePath = CdrNameDirectory + "\\CDRNAMES.XML";
-                XDocument xdocCDR = XDocument.Load(CdrNameFilePath);
-                Random rng = new Random();
-
-                //RUN ASYNC TO FILL TACFILE
-                await Task.Run(() =>
+                if (FilePath != "" && FilePath != null)  //THERE IS IS NO "ELSE" TO COVER WHAT IF FILEPATH == "" OR NULL!!
                 {
-                    //SSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-                    ////ADD HEADER DATA TO TACFILE
-                    //var gamenode = tacFile.Descendants("GAME").FirstOrDefault();
+                    ssTac.Visible = true;
 
-                    //XElement header = new XElement("HEADER",
-                    //new XAttribute("version", xdoc.Descendants("HEADER").First().Attribute("version").Value),
-                    //new XAttribute("fileType", xdoc.Descendants("HEADER").First().Attribute("fileType").Value),
-                    //new XAttribute("firstPlayer", xdoc.Descendants("HEADER").First().Attribute("firstPlayer").Value),
-                    //new XAttribute("name", xdoc.Descendants("HEADER").First().Attribute("name").Value),
-                    //new XAttribute("forceName1", xdoc.Descendants("HEADER").First().Attribute("forceName1").Value),
-                    //new XAttribute("forceName2", xdoc.Descendants("HEADER").First().Attribute("forceName2").Value));
+                    //CREATE TACFILE
+                    tacFile = XElement.Load(FilePath);
+                    string TacFilePath = FilePath.Substring(0, FilePath.Length - 3) + "tac";
+                    txtTacFile.Text = TacFilePath;
+                    TOAWTac.Properties.Settings.Default.TacFilePath = TacFilePath;
+                    TOAWTac.Properties.Settings.Default.Save();
 
-                    //gamenode.AddFirst(header);
-                    //SSSSSSSSSSSSSSSSSSSSSSS
+                    //LOAD COMMANDER NAMES FILE
+                    string CdrNameDirectory = Path.GetDirectoryName(TacFilePath);
+                    string CdrNameFilePath = CdrNameDirectory + "\\CDRNAMES.XML";
+                    XDocument xdocCDR = XDocument.Load(CdrNameFilePath);
+                    Random rng = new Random();
 
-                    //ADD FORCES TO TACFILE
-                    //SSSSSSSSSSSS
-                    //foreach (XElement force in xdoc.Descendants("OOB").Descendants("FORCE"))
-
-                    foreach (XElement force in tacFile.Descendants("OOB").Descendants("FORCE"))
-                    //SSSSSSSSSSSSSSSSSSSSSSSSSSS
+                    //RUN ASYNC TO FILL TACFILE
+                    await Task.Run(() =>
                     {
-                        string forceID = force.Attribute("ID").Value;
-                        string forcecdrname = AssignCdrName(xdocCDR, forceID, rng);
-
-                        //SSSSSSSSSSSSSSSSSS
-                        //tacFile.Descendants("OOB").FirstOrDefault().Add(new XElement("FORCE",
-                        //                                            new XAttribute("ID", force.Attribute("ID").Value),
-                        //                                            new XAttribute("NAME", force.Attribute("NAME").Value),
-                        //                                            new XAttribute("CDR", forcecdrname)));
-
-                        force.Add(new XAttribute("CDR", forcecdrname));
-                        //SSSSSSSSSSSSSSSSSS
-
-                        //LIST FORMATIONS
-                        foreach (XElement formation in force.Descendants("FORMATION").Where(f => f.Parent.Attribute("ID").Value == forceID))
+                        foreach (XElement force in tacFile.Descendants("OOB").Descendants("FORCE"))
                         {
-                            //ADD FORMATIONS TO TACFILE
-                            string formcdrname = AssignCdrName(xdocCDR, forceID, rng);
+                            string forceID = force.Attribute("ID").Value;
+                            string forcecdrname = AssignCdrName(xdocCDR, forceID, rng);
 
-                            //SSSSSSSSSSSSSSSSSSS
-                            //tacFile.Descendants("OOB").Descendants("FORCE")
-                            //    .Where(g => g.Attribute("ID").Value == forceID).FirstOrDefault()
-                            //    .Add(
-                            //        new XElement("FORMATION",
-                            //        new XAttribute("ID", formation.Attribute("ID").Value),
-                            //        new XAttribute("NAME", formation.Attribute("NAME").Value),
-                            //        new XAttribute("CDR", formcdrname),
-                            //        new XAttribute("RANK", "CPT"),
-                            //        new XAttribute("FORMDATE", date)));
+                            force.Add(new XAttribute("CDR", forcecdrname));
 
-                            formation.Add(
-                                new XAttribute("CDR", formcdrname),
-                                new XAttribute("RANK", "CPT"),
-                                new XAttribute("FORMDATE", date));
-                            //SSSSSSSSSSSSSSSSSSSSSSSS
-
-                            string formID = formation.Attribute("ID").Value;
-
-                            //LIST UNITS
-                            foreach (XElement unit in formation.Descendants("UNIT")
-                                .Where(u => u.Parent.Attribute("ID").Value == formID)
-                                .Where(u => u.Parent.Parent.Attribute("ID").Value == forceID))
+                            //LIST FORMATIONS
+                            foreach (XElement formation in force.Descendants("FORMATION").Where(f => f.Parent.Attribute("ID").Value == forceID))
                             {
-                                string unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
+                                //ADD FORMATIONS TO TACFILE
+                                string formcdrname = AssignCdrName(xdocCDR, forceID, rng);
 
-                                //ADD UNITS TO TACFILE
-                                //SSSSSSSSSSSSSSSSSSSSSSSS
-                                //tacFile.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION")
-                                //    .Where(g => g.Attribute("ID").Value == formID)
-                                //    .Where(g => g.Parent.Attribute("ID").Value == forceID).FirstOrDefault()
-                                //    .Add(
-                                //        new XElement("UNIT",
-                                //        new XAttribute("ID", unit.Attribute("ID").Value),
-                                //        new XAttribute("NAME", unit.Attribute("NAME").Value),
-                                //        new XAttribute("CDR", unitcdrname),
-                                //        new XAttribute("RANK", "LT"),
-                                //        new XAttribute("FORMDATE", date)));
+                                formation.Add(
+                                    new XAttribute("CDR", formcdrname),
+                                    new XAttribute("RANK", "CPT"),
+                                    new XAttribute("FORMDATE", date));
 
-                                unit.Add(
-                                     new XAttribute("CDR", unitcdrname),
-                                     new XAttribute("RANK", "LT"),
-                                     new XAttribute("FORMDATE", date));
-                                //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+                                string formID = formation.Attribute("ID").Value;
 
-                                string unitID = unit.Attribute("ID").Value;
+                                //LIST UNITS
+                                foreach (XElement unit in formation.Descendants("UNIT")
+                                    .Where(u => u.Parent.Attribute("ID").Value == formID)
+                                    .Where(u => u.Parent.Parent.Attribute("ID").Value == forceID))
+                                {
+                                    string unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
 
-                                //EQUIP NOT NECESSARY FOR TAC FILE?
-                                //LIST EACH PIECE OF EQUP
-                                //foreach (XElement equip in unit.Descendants("EQUIPMENT")
-                                //        .Where(q => q.Parent.Attribute("ID").Value == unitID)
-                                //        .Where(q => q.Parent.Parent.Parent.Attribute("ID").Value == forceID))
-                                //{
-                                //    int EqpQty = Convert.ToInt16(equip.Attribute("NUMBER").Value);
+                                    //ADD UNITS TO TACFILE
 
-                                //    for (int i = 1; i <= EqpQty; i++)
-                                //    {
-                                //        //ADD EQUIP TO TACFILE
-                                //        tacFile.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION").Descendants("UNIT")
-                                //            .Where(g => g.Attribute("ID").Value == unitID)
-                                //            .Where(g => g.Parent.Parent.Attribute("ID").Value == forceID).FirstOrDefault()
-                                //            .Add(
-                                //                new XElement("EQUIPMENT",
-                                //                new XAttribute("ITEM", i.ToString()),
-                                //                new XAttribute("ID", equip.Attribute("ID").Value),
-                                //                new XAttribute("NAME", equip.Attribute("NAME").Value)));
-                                //    }
-                                //}
+                                    unit.Add(
+                                         new XAttribute("CDR", unitcdrname),
+                                         new XAttribute("RANK", "LT"),
+                                         new XAttribute("FORMDATE", date));
+
+                                    string unitID = unit.Attribute("ID").Value;
+
+                                    //EQUIP NOT NECESSARY FOR TAC FILE?
+                                }
                             }
                         }
-                    }
-                });
+                    });
 
-                txtTacFile.Text = TacFilePath;
+                    txtTacFile.Text = TacFilePath;
 
-                //ENABLE FORCE RADIO BUTTONS, SET FORCE NAMES
-                rbForce1.Enabled = true;
-                rbForce2.Enabled = true;
-                //SSSSSSSSSSSSSSSSS
-                //rbForce1.Text = xdoc.Descendants("HEADER").First().Attribute("forceName1").Value;
-                //rbForce2.Text = xdoc.Descendants("HEADER").First().Attribute("forceName2").Value;
+                    //ENABLE FORCE RADIO BUTTONS, SET FORCE NAMES
+                    rbForce1.Enabled = true;
+                    rbForce2.Enabled = true;
 
-                rbForce1.Text = tacFile.Descendants("HEADER").First().Attribute("forceName1").Value;
-                rbForce2.Text = tacFile.Descendants("HEADER").First().Attribute("forceName2").Value;
-                //SSSSSSSSSSSSSSSSSSSSSSSSS
-                tacFile.Save(TacFilePath);
-                ssTac.Visible = false;
+                    rbForce1.Text = tacFile.Descendants("HEADER").First().Attribute("forceName1").Value;
+                    rbForce2.Text = tacFile.Descendants("HEADER").First().Attribute("forceName2").Value;
+                    tacFile.Save(TacFilePath);
+                    ssTac.Visible = false;
+                }
+                //!!!!!
+
+                //this.Close();
             }
-            //  WHAT IF == "" OR NULL??
+            else
+            {
+                //this.Close();
+                TOAWTac.Properties.Settings.Default.FilePath = "";
+            }
+            //!!!!!!!!!!!!!!!!!!
+
+            //trvUnitTree.Nodes.Clear();
+            //dtFormation.Clear();
+            //dtUnit.Clear();
+
+            //rbForce1.Checked = false;
+            //rbForce2.Checked = false;
+
+            //if (FilePath != "" && FilePath != null)  //THERE IS IS NO "ELSE" TO COVER WHAT IF FILEPATH == "" OR NULL!!
+            //{
+            //    ssTac.Visible = true;
+
+            //    //CREATE TACFILE
+            //    tacFile = XElement.Load(FilePath);
+            //    string TacFilePath = FilePath.Substring(0, FilePath.Length - 3) + "tac";
+            //    txtTacFile.Text = TacFilePath;
+            //    TOAWTac.Properties.Settings.Default.TacFilePath = TacFilePath;
+            //    TOAWTac.Properties.Settings.Default.Save();
+
+            //    //LOAD COMMANDER NAMES FILE
+            //    string CdrNameDirectory = Path.GetDirectoryName(TacFilePath);
+            //    string CdrNameFilePath = CdrNameDirectory + "\\CDRNAMES.XML";
+            //    XDocument xdocCDR = XDocument.Load(CdrNameFilePath);
+            //    Random rng = new Random();
+
+            //    //RUN ASYNC TO FILL TACFILE
+            //    await Task.Run(() =>
+            //    {
+            //        foreach (XElement force in tacFile.Descendants("OOB").Descendants("FORCE"))
+            //        {
+            //            string forceID = force.Attribute("ID").Value;
+            //            string forcecdrname = AssignCdrName(xdocCDR, forceID, rng);
+
+            //            force.Add(new XAttribute("CDR", forcecdrname));
+
+            //            //LIST FORMATIONS
+            //            foreach (XElement formation in force.Descendants("FORMATION").Where(f => f.Parent.Attribute("ID").Value == forceID))
+            //            {
+            //                //ADD FORMATIONS TO TACFILE
+            //                string formcdrname = AssignCdrName(xdocCDR, forceID, rng);
+
+            //                formation.Add(
+            //                    new XAttribute("CDR", formcdrname),
+            //                    new XAttribute("RANK", "CPT"),
+            //                    new XAttribute("FORMDATE", date));
+
+            //                string formID = formation.Attribute("ID").Value;
+
+            //                //LIST UNITS
+            //                foreach (XElement unit in formation.Descendants("UNIT")
+            //                    .Where(u => u.Parent.Attribute("ID").Value == formID)
+            //                    .Where(u => u.Parent.Parent.Attribute("ID").Value == forceID))
+            //                {
+            //                    string unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
+
+            //                    //ADD UNITS TO TACFILE
+
+            //                    unit.Add(
+            //                         new XAttribute("CDR", unitcdrname),
+            //                         new XAttribute("RANK", "LT"),
+            //                         new XAttribute("FORMDATE", date));
+
+            //                    string unitID = unit.Attribute("ID").Value;
+
+            //                    //EQUIP NOT NECESSARY FOR TAC FILE?
+            //                }
+            //            }
+            //        }
+            //    });
+
+            //    txtTacFile.Text = TacFilePath;
+
+            //    //ENABLE FORCE RADIO BUTTONS, SET FORCE NAMES
+            //    rbForce1.Enabled = true;
+            //    rbForce2.Enabled = true;
+
+            //    rbForce1.Text = tacFile.Descendants("HEADER").First().Attribute("forceName1").Value;
+            //    rbForce2.Text = tacFile.Descendants("HEADER").First().Attribute("forceName2").Value;
+            //    tacFile.Save(TacFilePath);
+            //    ssTac.Visible = false;
+            //}
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -345,21 +368,55 @@ namespace TOAWXML
 
         private void btnLoadTacFile_Click(object sender, EventArgs e)
         {
-            frmLoadTacFile loadtacfile = new frmLoadTacFile();
-            loadtacfile.ShowDialog();
+            //frmLoadTacFile loadtacfile = new frmLoadTacFile();
+            //loadtacfile.ShowDialog();
 
-            //SET FILE PATH STRINGS, SAVE TO SETTINGS
-            string TacFilePath = TOAWTac.Properties.Settings.Default.TacFilePath.ToString();
+            ////SET FILE PATH STRINGS, SAVE TO SETTINGS
+            //string TacFilePath = TOAWTac.Properties.Settings.Default.TacFilePath.ToString();
 
-            //LOAD TAC FILE
-            if (TacFilePath != "" && TacFilePath != null)
+            ////LOAD TAC FILE
+            //if (TacFilePath != "" && TacFilePath != null)
+            //{
+            //    string FilePath = TacFilePath.Substring(0, TacFilePath.Length - 3) + "gam";
+            //    TOAWTac.Properties.Settings.Default.FilePath = FilePath;
+            //    TOAWTac.Properties.Settings.Default.Save();
+
+            //    tacFile = XElement.Load(TacFilePath);
+            //    txtTacFile.Text = TacFilePath;
+
+            //    //ENABLE FORCE RADIO BUTTONS, SET FORCE NAMES
+            //    var forcenames = tacFile.Descendants("HEADER");
+            //    foreach (var f in forcenames)
+            //    {
+            //        rbForce1.Enabled = true;
+            //        rbForce2.Enabled = true;
+
+            //        string fn1 = f.Attribute("forceName1").Value.ToString();
+            //        this.rbForce1.Text = fn1;
+
+            //        string fn2 = f.Attribute("forceName2").Value.ToString();
+            //        this.rbForce2.Text = fn2;
+            //    }
+            //}
+
+            //rbForce1.Checked = false;
+            //rbForce2.Checked = false;
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+            OpenFileDialog file = new OpenFileDialog();
+            file.Multiselect = false;
+            file.Filter = "*.tac files *.tac|*.tac";
+
+            if (file.ShowDialog() == DialogResult.OK)
             {
-                string FilePath = TacFilePath.Substring(0, TacFilePath.Length - 3) + "gam";
-                TOAWTac.Properties.Settings.Default.FilePath = FilePath;
+                TOAWTac.Properties.Settings.Default.TacFilePath = file.FileName;
                 TOAWTac.Properties.Settings.Default.Save();
 
-                tacFile = XElement.Load(TacFilePath);
-                txtTacFile.Text = TacFilePath;
+                TOAWTac.Properties.Settings.Default.FilePath = file.FileName;
+                TOAWTac.Properties.Settings.Default.Save();
+
+                tacFile = XElement.Load(file.FileName);
+                txtTacFile.Text = file.FileName;
 
                 //ENABLE FORCE RADIO BUTTONS, SET FORCE NAMES
                 var forcenames = tacFile.Descendants("HEADER");
@@ -374,10 +431,14 @@ namespace TOAWXML
                     string fn2 = f.Attribute("forceName2").Value.ToString();
                     this.rbForce2.Text = fn2;
                 }
+                rbForce1.Checked = false;
+                rbForce2.Checked = false;
             }
-
-            rbForce1.Checked = false;
-            rbForce2.Checked = false;
+            else
+            {
+                TOAWTac.Properties.Settings.Default.TacFilePath = "";
+            }
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -583,7 +644,6 @@ namespace TOAWXML
             string iconDisplay = "";
             string unitorders = "";
 
-
             dtFormation.Clear();
             dtUnit.Clear();
             dtEquip.Clear();
@@ -759,6 +819,141 @@ namespace TOAWXML
                     drUnit.Size = new Size(951, 500);
                     drUnit.Visible = true;
 
+                    //SET DATA BINDING FOR CBOHDRUNITTYPE
+                    var icons = new BindingList<KeyValuePair<string, string>>();
+
+                    icons.Add(new KeyValuePair<string, string>("Air", "Air"));
+                    icons.Add(new KeyValuePair<string, string>("Anti Aircraft", "AA"));
+                    icons.Add(new KeyValuePair<string, string>("Airmobile Anti Air", "AA (Airmob)"));
+                    icons.Add(new KeyValuePair<string, string>("Motor Anti Air", "AA (Mot)"));
+                    icons.Add(new KeyValuePair<string, string>("Parachute Anti Air", "AA (Para)"));
+                    icons.Add(new KeyValuePair<string, string>("Airmobile", "Airmobile"));
+                    icons.Add(new KeyValuePair<string, string>("Amphibious", "Amphibious"));
+                    icons.Add(new KeyValuePair<string, string>("Antitank", "Antitank [v1]"));
+                    icons.Add(new KeyValuePair<string, string>("Antitank", "Antitank [v2]"));
+                    icons.Add(new KeyValuePair<string, string>("Armored Antitank", "Antitank (Armored)"));
+                    icons.Add(new KeyValuePair<string, string>("Airmobile Antitank", "Antitank (Airmob)"));
+                    icons.Add(new KeyValuePair<string, string>("Glider Antitank", "Antitank (Glider)"));
+                    icons.Add(new KeyValuePair<string, string>("Hvy Antitank", "Antitank (Heavy)"));
+                    icons.Add(new KeyValuePair<string, string>("Motor Antitank", "Antitank (Mot) [v1]"));
+                    icons.Add(new KeyValuePair<string, string>("Motor Antitank", "Antitank (Mot) [v2]"));
+                    icons.Add(new KeyValuePair<string, string>("Parachute Antitank", "Antitank (Para)"));
+                    icons.Add(new KeyValuePair<string, string>("Tank", "Armor"));
+                    icons.Add(new KeyValuePair<string, string>("Amphibious Armor", "Armor (Amphib)"));
+                    icons.Add(new KeyValuePair<string, string>("Assault Gun", "Armor (Asslt Gun)"));
+                    icons.Add(new KeyValuePair<string, string>("Glider Tank", "Armor (Glider)"));
+                    icons.Add(new KeyValuePair<string, string>("Hvy Armor", "Armor (Heavy)"));
+                    icons.Add(new KeyValuePair<string, string>("Armored Train", "Armored Train"));
+                    icons.Add(new KeyValuePair<string, string>("Artillery", "Artillery"));
+                    icons.Add(new KeyValuePair<string, string>("Airborne Artillery", "Artillery (Abn)"));
+                    icons.Add(new KeyValuePair<string, string>("Airmobile Arty", "Artillery (Airmob)"));
+                    icons.Add(new KeyValuePair<string, string>("Armored Artillery", "Artillery (Armored)"));
+                    icons.Add(new KeyValuePair<string, string>("Armored Hvy Arty", "Artillery (Arm, Hvy)"));
+                    icons.Add(new KeyValuePair<string, string>("Chemical Artillery", "Artillery (Chem)"));
+                    icons.Add(new KeyValuePair<string, string>("Coastal Artillery", "Artillery (Coast) [icon]"));
+                    icons.Add(new KeyValuePair<string, string>("Coastal Artillery", "Artillery (Coast) [silh]"));
+                    icons.Add(new KeyValuePair<string, string>("Fixed Artillery", "Artillery (Fixed)"));
+                    icons.Add(new KeyValuePair<string, string>("Glider Artillery", "Artillery (Glider)"));
+                    icons.Add(new KeyValuePair<string, string>("Hvy Artillery", "Artillery (Heavy)"));
+                    icons.Add(new KeyValuePair<string, string>("Horse Artillery", "Artillery (Horse)"));
+                    icons.Add(new KeyValuePair<string, string>("Inf Artillery", "Artillery (Infantry)"));
+                    icons.Add(new KeyValuePair<string, string>("Missile Artillery", "Artillery (Missile)"));
+                    icons.Add(new KeyValuePair<string, string>("Motor Artillery", "Artillery (Mot)"));
+                    icons.Add(new KeyValuePair<string, string>("Rail Artillery", "Artillery (Rail)"));
+                    icons.Add(new KeyValuePair<string, string>("Rocket Artillery", "Artillery (Rocket)"));
+                    icons.Add(new KeyValuePair<string, string>("Motor Rocket", "Artillery (Rocket, Mot)"));
+                    icons.Add(new KeyValuePair<string, string>("Bicycle", "Bicycle"));
+                    icons.Add(new KeyValuePair<string, string>("Heavy Bomber", "Bomber (Heavy) [icon]"));
+                    icons.Add(new KeyValuePair<string, string>("Heavy Bomber", "Bomber (Heavy) [silh]"));
+                    icons.Add(new KeyValuePair<string, string>("Jet Bomber", "Bomber (Jet)"));
+                    icons.Add(new KeyValuePair<string, string>("Jet Heavy Bomber", "Bomber (Jet, Heavy)"));
+                    icons.Add(new KeyValuePair<string, string>("Light Bomber", "Bomber (Light) [icon]"));
+                    icons.Add(new KeyValuePair<string, string>("Light Bomber", "Bomber (Light) [silh]"));
+                    icons.Add(new KeyValuePair<string, string>("Medium Bomber", "Bomber (Medium)"));
+                    icons.Add(new KeyValuePair<string, string>("Naval Bomber", "Bomber (Naval)"));
+                    icons.Add(new KeyValuePair<string, string>("Border", "Border"));
+                    icons.Add(new KeyValuePair<string, string>("Cavalry", "Cavalry"));
+                    icons.Add(new KeyValuePair<string, string>("Airmobile Cavalry", "Cavalry (Airmob)"));
+                    icons.Add(new KeyValuePair<string, string>("Armored Cavalry", "Cavalry (Armored)"));
+                    icons.Add(new KeyValuePair<string, string>("Motor Cavalry", "Cavalry (Mot)"));
+                    icons.Add(new KeyValuePair<string, string>("Mountain Cavalry", "Cavalry (Mtn)"));
+                    icons.Add(new KeyValuePair<string, string>("Civilian", "Civilian"));
+                    icons.Add(new KeyValuePair<string, string>("Embarked Air", "Embarked Air"));
+                    icons.Add(new KeyValuePair<string, string>("Embarked Heli", "Embarked Heli"));
+                    icons.Add(new KeyValuePair<string, string>("Embarked Naval", "Embarked Naval"));
+                    icons.Add(new KeyValuePair<string, string>("Embarked Rail", "Embarked Rail"));
+                    icons.Add(new KeyValuePair<string, string>("Engineer", "Engineer"));
+                    icons.Add(new KeyValuePair<string, string>("Airborne Engineer", "Engineer (Abn)"));
+                    icons.Add(new KeyValuePair<string, string>("Airmobile Engineer", "Engineer (Airmob)"));
+                    icons.Add(new KeyValuePair<string, string>("Armored Engineer", "Engineer (Armored)"));
+                    icons.Add(new KeyValuePair<string, string>("Ferry Engineer", "Engineer (Ferry)"));
+                    icons.Add(new KeyValuePair<string, string>("Motor Engineer", "Engineer (Mot)"));
+                    icons.Add(new KeyValuePair<string, string>("Fighter", "Fighter [icon]"));
+                    icons.Add(new KeyValuePair<string, string>("Fighter", "Fighter [silh]"));
+                    icons.Add(new KeyValuePair<string, string>("Jet Fighter", "Fighter (Jet)"));
+                    icons.Add(new KeyValuePair<string, string>("Naval Fighter", "Fighter (Naval)"));
+                    icons.Add(new KeyValuePair<string, string>("Fighter Bomber", "Fighter Bomber [icon]"));
+                    icons.Add(new KeyValuePair<string, string>("Fighter Bomber", "Fighter Bomber [silh]"));
+                    icons.Add(new KeyValuePair<string, string>("Garrison", "Garrison"));
+                    icons.Add(new KeyValuePair<string, string>("Guerilla", "Guerilla"));
+                    icons.Add(new KeyValuePair<string, string>("Headquarters", "Headquarters [v1]"));
+                    icons.Add(new KeyValuePair<string, string>("Headquarters", "Headquarters [v2]"));
+                    icons.Add(new KeyValuePair<string, string>("Airmobile Hvy Wpns", "Heavy Wpns (Airmob)"));
+                    icons.Add(new KeyValuePair<string, string>("Mountain Cav Hvy Wpns", "Heavy Wpns (Mtn Cav)"));
+                    icons.Add(new KeyValuePair<string, string>("Glider Hvy Wpns", "Heavy Wpns (Glider)"));
+                    icons.Add(new KeyValuePair<string, string>("Infantry Hvy Wpns", "Heavy Wpns (Infantry)"));
+                    icons.Add(new KeyValuePair<string, string>("Motor Hvy Wpns", "Heavy Wpns (Mot)"));
+                    icons.Add(new KeyValuePair<string, string>("Mountain Hvy Wpns", "Heavy Wpns (Mtn)"));
+                    icons.Add(new KeyValuePair<string, string>("Parachute Hvy Wpns", "Heavy Wpns (Para)"));
+                    icons.Add(new KeyValuePair<string, string>("Attack Helicopter", "Helicopter (Attack)"));
+                    icons.Add(new KeyValuePair<string, string>("Recon Helicopter", "Helicopter (Recon)"));
+                    icons.Add(new KeyValuePair<string, string>("Trans Helicopter", "Helicopter (Transport)"));
+                    icons.Add(new KeyValuePair<string, string>("Infantry", "Infantry"));
+                    icons.Add(new KeyValuePair<string, string>("Airmobile Infantry", "Infantry (Airmob)"));
+                    icons.Add(new KeyValuePair<string, string>("Glider Infantry", "Infantry (Glider)"));
+                    icons.Add(new KeyValuePair<string, string>("Marine Infantry", "Infantry (Marine)"));
+                    icons.Add(new KeyValuePair<string, string>("Mechanized", "Infantry (Mech)"));
+                    icons.Add(new KeyValuePair<string, string>("Motor Infantry", "Infantry (Mot)"));
+                    icons.Add(new KeyValuePair<string, string>("Mountain Infantry", "Infantry (Mtn)"));
+                    icons.Add(new KeyValuePair<string, string>("Parachute Infantry", "Infantry (Para)"));
+                    icons.Add(new KeyValuePair<string, string>("Irregular", "Irregular"));
+                    icons.Add(new KeyValuePair<string, string>("Machine Gun", "Machine Gun"));
+                    icons.Add(new KeyValuePair<string, string>("Motor Machinegun", "Machine Gun (Mot)"));
+                    icons.Add(new KeyValuePair<string, string>("Military Police", "Military Police"));
+                    icons.Add(new KeyValuePair<string, string>("Mortar", "Mortar"));
+                    icons.Add(new KeyValuePair<string, string>("Hvy Mortar", "Mortar (Heavy)"));
+                    icons.Add(new KeyValuePair<string, string>("Carrier Naval", "Naval (Carrier)"));
+                    icons.Add(new KeyValuePair<string, string>("Heavy Naval", "Naval (Heavy)"));
+                    icons.Add(new KeyValuePair<string, string>("Light Naval", "Naval (Light)"));
+                    icons.Add(new KeyValuePair<string, string>("Medium Naval", "Naval (Medium)"));
+                    icons.Add(new KeyValuePair<string, string>("Riverine", "Naval (Riverine)"));
+                    icons.Add(new KeyValuePair<string, string>("Naval Task Force", "Naval (Task Force)"));
+                    icons.Add(new KeyValuePair<string, string>("Naval Attack", "Naval Attack Aircraft"));
+                    icons.Add(new KeyValuePair<string, string>("Parachute", "Parachute"));
+                    icons.Add(new KeyValuePair<string, string>("Railroad Repair", "Railroad Repair"));
+                    icons.Add(new KeyValuePair<string, string>("Airborne Recon", "Recon (Airborne)"));
+                    icons.Add(new KeyValuePair<string, string>("Armored Recon", "Recon (Armored)"));
+                    icons.Add(new KeyValuePair<string, string>("Glider Recon", "Recon (Glider)"));
+                    icons.Add(new KeyValuePair<string, string>("Reserve", "Reserve"));
+                    icons.Add(new KeyValuePair<string, string>("Security", "Security"));
+                    icons.Add(new KeyValuePair<string, string>("Ski", "Ski"));
+                    icons.Add(new KeyValuePair<string, string>("Special Forces", "Special Forces"));
+                    icons.Add(new KeyValuePair<string, string>("Supply", "Supply"));
+                    icons.Add(new KeyValuePair<string, string>("Transport", "Transport [icon]"));
+                    icons.Add(new KeyValuePair<string, string>("Transport", "Transport [silh]"));
+                    icons.Add(new KeyValuePair<string, string>("Amphib Transport", "Transport (Amphib)"));
+                    icons.Add(new KeyValuePair<string, string>("Task Force", "Task Force"));
+                    icons.Add(new KeyValuePair<string, string>("Battlegroup", "Battle Group"));
+                    icons.Add(new KeyValuePair<string, string>("Kampfgruppe", "Kampfgruppe"));
+                    icons.Add(new KeyValuePair<string, string>("Combat Command A", "Combat Command A"));
+                    icons.Add(new KeyValuePair<string, string>("Combat Command B", "Combat Command B"));
+                    icons.Add(new KeyValuePair<string, string>("Combat Command C", "Combat Command C"));
+                    icons.Add(new KeyValuePair<string, string>("Combat Command R", "Combat Command R"));
+
+                    cboHdrUnitType.DataSource = icons;
+                    cboHdrUnitType.ValueMember = "Key";
+                    cboHdrUnitType.DisplayMember = "Value";
+
                     //SET HEADER PANEL VISIBILITY
                     pnlForce.Visible = false;
                     pnlFormation.Visible = false;
@@ -786,254 +981,378 @@ namespace TOAWXML
                     icon = equipment.Attribute("ICON").Value;
                     isAirUnit = IsAirUnit(icon);
                     if (equipment.Attribute("ICONID") != null) iconID = equipment.Attribute("ICONID").Value;
-                    iconDisplay = GetIconText(iconID, icon);
                     unitorders = SetUnitOrders(isAirUnit, orderID);
-                    
-                    cboHdrUnitType.Text = iconDisplay;
-                    cboHdrUnitOrders.Text = unitorders;
-                    cboHdrUnitReplace.Text = replacePriority;
 
-                    //SET DATA REPEATER DATA
-                    txtEquipName.DataBindings.Clear();
+                    //MMMMMMMMMMMMMMMMM
+                    //>>>>>>>>>>>>>>>>>>>>
+                    List<string> iconsVariants = new List<string>();
+                    iconsVariants.Add("Headquarters");
+                    iconsVariants.Add("Antitank");
+                    iconsVariants.Add("Motor Antitank");
+                    iconsVariants.Add("Fighter");
+                    iconsVariants.Add("Fighter Bomber");
+                    iconsVariants.Add("Light Bomber");
+                    iconsVariants.Add("Heavy Bomber");
+                    iconsVariants.Add("Coastal Artillery");
+                    iconsVariants.Add("Transport");
 
-                    txtEquipName.DataBindings.Add("Text", dtEquip, "EquipName");
+                    icon = equipment.Attribute("ICON").Value;
+                    bool hasVariant = iconsVariants.Any(v => v == icon);
 
-                    drUnit.DataSource = dtEquip;
-
-                    foreach (XElement equip in equipment.Descendants("EQUIPMENT"))
+                    if (!hasVariant)
                     {
-                        int qty = Int32.Parse(equip.Attribute("NUMBER").Value);
-                        for (int i = 1; i <= qty; i++)
+                        cboHdrUnitType.SelectedValue = equipment.Attribute("ICON").Value;
+                    }
+                    else if (hasVariant)
+                    {
+                        switch (icon)
                         {
-                            dtEquip.Rows.Add(equip.Attribute("NAME").Value);
-                            //dtEquip.Rows.Add(equip.Attribute("NAME").Value, equip.Attribute("NUMBER").Value, 
-                            //equip.Attribute("MAX").Value, equip.Attribute("DAMAGE").Value);
+                            case "Antitank":
+                                if (equipment.Attribute("ICONID").Value == "14")
+                                {
+                                    cboHdrUnitType.Text = "Antitank [v1]";
+                                }
+                                else if (equipment.Attribute("ICONID").Value == "15")
+                                {
+                                    cboHdrUnitType.Text = "Antitank [v2]";
+                                }
+                                break;
+
+                            case "Motor Antitank":
+                                if (equipment.Attribute("ICONID").Value == "25")
+                                {
+                                    cboHdrUnitType.Text = "Antitank (Mot) [v1]";
+                                }
+                                else if (equipment.Attribute("ICONID").Value == "26")
+                                {
+                                    cboHdrUnitType.Text = "Antitank (Mot) [v2]";
+                                }
+                                break;
+
+                            case "Coastal Artillery":
+                                if (equipment.Attribute("ICONID").Value == "62")
+                                {
+                                    cboHdrUnitType.Text = "Artillery (Coast) [icon]";
+                                }
+                                else if (equipment.Attribute("ICONID").Value == "63")
+                                {
+                                    cboHdrUnitType.Text = "Artillery (Coast) [silh]";
+                                }
+                                break;
+
+                            case "Heavy Bomber":
+                                if (equipment.Attribute("ICONID").Value == "69")
+                                {
+                                    cboHdrUnitType.Text = "Bomber (Heavy) [icon]";
+                                }
+                                else if (equipment.Attribute("ICONID").Value == "45")
+                                {
+                                    cboHdrUnitType.Text = "Bomber (Heavy) [silh]";
+                                }
+                                break;
+
+                            case "Light Bomber":
+                                if (equipment.Attribute("ICONID").Value == "43")
+                                {
+                                    cboHdrUnitType.Text = "Bomber (Light) [icon]";
+                                }
+                                else if (equipment.Attribute("ICONID").Value == "68")
+                                {
+                                    cboHdrUnitType.Text = "Bomber (Light) [silh]";
+                                }
+                                break;
+
+                            case "Fighter":
+                                if (equipment.Attribute("ICONID").Value == "41")
+                                {
+                                    cboHdrUnitType.Text = "Fighter [icon]";
+                                }
+                                else if (equipment.Attribute("ICONID").Value == "66")
+                                {
+                                    cboHdrUnitType.Text = "Fighter [silh]";
+                                }
+                                break;
+
+                            case "Fighter Bomber":
+                                if (equipment.Attribute("ICONID").Value == "42")
+                                {
+                                    cboHdrUnitType.Text = "Fighter Bomber [icon]";
+                                }
+                                else if (equipment.Attribute("ICONID").Value == "67")
+                                {
+                                    cboHdrUnitType.Text = "Fighter Bomber [silh]";
+                                }
+                                break;
+
+                            case "Headquarters":
+                                if (equipment.Attribute("ICONID").Value == "0")
+                                {
+                                    cboHdrUnitType.Text = "Headquarters [v1]";
+                                }
+                                else if (equipment.Attribute("ICONID").Value == "1")
+                                {
+                                    cboHdrUnitType.Text = "Headquarters [v2]";
+                                }
+                                break;
+
+                            case "Transport":
+                                if (equipment.Attribute("ICONID").Value == "82")
+                                {
+                                    cboHdrUnitType.Text = "Transport [icon]";
+                                }
+                                else if (equipment.Attribute("ICONID").Value == "94")
+                                {
+                                    cboHdrUnitType.Text = "Transport [silh]";
+                                }
+                                break;
                         }
                     }
+                        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-                    drUnit.DataSource = dtEquip;
+                        cboHdrUnitOrders.Text = unitorders;
+                        cboHdrUnitReplace.Text = replacePriority;
 
-                    ////IF NO DEPLOYMENT HAS BEEN SET PREVIOUSLY
-                    //if (cboDeployment.SelectedValue != null)
-                    //{
-                    //    deploy = cboDeployment.SelectedValue.ToString();
-                    //}
-                    //else
-                    //{
-                    //    cboDeployment.SelectedValue = "8";
-                    //    deploy = cboDeployment.SelectedValue.ToString();
-                    //}
+                        //SET DATA REPEATER DATA
+                        txtEquipName.DataBindings.Clear();
 
-                    //if (cboDeployment.SelectedValue.ToString() == "1" || cboDeployment.SelectedValue.ToString() == "2")
-                    //{
-                    //    txtReinforceTrigger.Enabled = true;
-                    //    //lblReinfDate.Visible = true;
+                        txtEquipName.DataBindings.Add("Text", dtEquip, "EquipName");
 
-                    //}
-                    //else
-                    //{
-                    //    //lblReinfDate.Visible = false;
-                    //    tssLabel1.Text = "";
-                    //}
+                        drUnit.DataSource = dtEquip;
 
-                    //switch (deploy)
-                    //{
-                    //    case "1":  //SET ENTRY LOCATION FOR UNITS WHICH ARE REINFORCEMENTS BY TURN
-                    //        lblReinforce.Visible = true;
-                    //        lblReinforce2.Visible = true;
-                    //        txtReinforceTrigger.Visible = true;
-                    //        lblReinforce.Text = "Turn";
+                        foreach (XElement equip in equipment.Descendants("EQUIPMENT"))
+                        {
+                            int qty = Int32.Parse(equip.Attribute("NUMBER").Value);
+                            for (int i = 1; i <= qty; i++)
+                            {
+                                dtEquip.Rows.Add(equip.Attribute("NAME").Value);
+                                //dtEquip.Rows.Add(equip.Attribute("NAME").Value, equip.Attribute("NUMBER").Value, 
+                                //equip.Attribute("MAX").Value, equip.Attribute("DAMAGE").Value);
+                            }
+                        }
 
-                    //        //SET X AND Y, AFTER CHECKING FOR NULL
-                    //        if (unit.Attribute("GOINGTOX") == null && unit.Attribute("X") == null)
-                    //        {
-                    //            unit.Add(new XAttribute("GOINGTOX", "1"));
-                    //            unit.Add(new XAttribute("GOINGTOY", "1"));
-                    //        }
+                        drUnit.DataSource = dtEquip;
+                        break;
+                        ////IF NO DEPLOYMENT HAS BEEN SET PREVIOUSLY
+                        //if (cboDeployment.SelectedValue != null)
+                        //{
+                        //    deploy = cboDeployment.SelectedValue.ToString();
+                        //}
+                        //else
+                        //{
+                        //    cboDeployment.SelectedValue = "8";
+                        //    deploy = cboDeployment.SelectedValue.ToString();
+                        //}
 
-                    //        if (unit.Attribute("GOINGTOX") != null)
-                    //        {
-                    //            txtX.Text = unit.Attribute("GOINGTOX").Value.ToString();
-                    //        }
-                    //        else
-                    //        {
-                    //            txtX.Text = "1";
-                    //        }
+                        //if (cboDeployment.SelectedValue.ToString() == "1" || cboDeployment.SelectedValue.ToString() == "2")
+                        //{
+                        //    txtReinforceTrigger.Enabled = true;
+                        //    //lblReinfDate.Visible = true;
 
-                    //        if (unit.Attribute("GOINGTOY") != null)
-                    //        {
-                    //            txtY.Text = unit.Attribute("GOINGTOY").Value.ToString();
-                    //        }
-                    //        else
-                    //        {
-                    //            txtY.Text = "1";
-                    //        }
+                        //}
+                        //else
+                        //{
+                        //    //lblReinfDate.Visible = false;
+                        //    tssLabel1.Text = "";
+                        //}
 
-                    //        //SET ENTRY TURN AFTER CHECKING FOR NULL
-                    //        if (unit.Attribute("ENTRY") != null)
-                    //        {
-                    //            //lblReinfDate.Visible = true;
-                    //            txtReinforceTrigger.Text = unit.Attribute("ENTRY").Value.ToString();
-                    //            tssLabel1.Text = GameTime.getReleaseDate(txtReinforceTrigger.Text);
-                    //        }
-                    //        else
-                    //        {
-                    //            //lblReinfDate.Visible = false;
-                    //            tssLabel1.Text = "";
-                    //            txtReinforceTrigger.Text = "998";
-                    //        }
+                        //switch (deploy)
+                        //{
+                        //    case "1":  //SET ENTRY LOCATION FOR UNITS WHICH ARE REINFORCEMENTS BY TURN
+                        //        lblReinforce.Visible = true;
+                        //        lblReinforce2.Visible = true;
+                        //        txtReinforceTrigger.Visible = true;
+                        //        lblReinforce.Text = "Turn";
 
-                    //        //ENABLE UNIT ATTRIBUTES FOR NON-DIVIDED UNITS
-                    //        NonDivideUnitGUI();
+                        //        //SET X AND Y, AFTER CHECKING FOR NULL
+                        //        if (unit.Attribute("GOINGTOX") == null && unit.Attribute("X") == null)
+                        //        {
+                        //            unit.Add(new XAttribute("GOINGTOX", "1"));
+                        //            unit.Add(new XAttribute("GOINGTOY", "1"));
+                        //        }
 
-                    //        ////DISABLE "DIVIDE UNIT" MENU ITEM
-                    //        //divideUnitToolStripMenuItem1.Enabled = false;
+                        //        if (unit.Attribute("GOINGTOX") != null)
+                        //        {
+                        //            txtX.Text = unit.Attribute("GOINGTOX").Value.ToString();
+                        //        }
+                        //        else
+                        //        {
+                        //            txtX.Text = "1";
+                        //        }
 
-                    //        break;
+                        //        if (unit.Attribute("GOINGTOY") != null)
+                        //        {
+                        //            txtY.Text = unit.Attribute("GOINGTOY").Value.ToString();
+                        //        }
+                        //        else
+                        //        {
+                        //            txtY.Text = "1";
+                        //        }
 
-                    //    case "2": //SET ENTRY LOCATION FOR UNITS WHICH ARE REINFORCEMENTS BY EVENT
-                    //        lblReinforce.Visible = true;
-                    //        lblReinforce2.Visible = true;
-                    //        txtReinforceTrigger.Visible = true;
-                    //        txtReinforceTrigger.Enabled = true;
-                    //        lblReinforce.Text = "Event";
+                        //        //SET ENTRY TURN AFTER CHECKING FOR NULL
+                        //        if (unit.Attribute("ENTRY") != null)
+                        //        {
+                        //            //lblReinfDate.Visible = true;
+                        //            txtReinforceTrigger.Text = unit.Attribute("ENTRY").Value.ToString();
+                        //            tssLabel1.Text = GameTime.getReleaseDate(txtReinforceTrigger.Text);
+                        //        }
+                        //        else
+                        //        {
+                        //            //lblReinfDate.Visible = false;
+                        //            tssLabel1.Text = "";
+                        //            txtReinforceTrigger.Text = "998";
+                        //        }
 
-                    //        //SET X AND Y, AFTER CHECKING FOR NULL
-                    //        if (unit.Attribute("GOINGTOX") == null && unit.Attribute("X") == null)
-                    //        {
-                    //            unit.Add(new XAttribute("GOINGTOX", "1"));
-                    //            unit.Add(new XAttribute("GOINGTOY", "1"));
-                    //        }
+                        //        //ENABLE UNIT ATTRIBUTES FOR NON-DIVIDED UNITS
+                        //        NonDivideUnitGUI();
 
-                    //        if (unit.Attribute("GOINGTOX") != null)
-                    //        {
-                    //            txtX.Text = unit.Attribute("GOINGTOX").Value.ToString();
-                    //        }
-                    //        else
-                    //        {
-                    //            txtX.Text = "1";
-                    //        }
+                        //        ////DISABLE "DIVIDE UNIT" MENU ITEM
+                        //        //divideUnitToolStripMenuItem1.Enabled = false;
 
-                    //        if (unit.Attribute("GOINGTOY") != null)
-                    //        {
-                    //            txtY.Text = unit.Attribute("GOINGTOY").Value.ToString();
-                    //        }
-                    //        else
-                    //        {
-                    //            txtY.Text = "1";
-                    //        }
+                        //        break;
 
-                    //        //SET ENTRY EVENT AFTER CHECKING FOR NULL
-                    //        if (unit.Attribute("ENTRY") != null)
-                    //        {
-                    //            txtReinforceTrigger.Text = unit.Attribute("ENTRY").Value.ToString();
-                    //        }
-                    //        else
-                    //        {
-                    //            txtReinforceTrigger.Text = "999";
-                    //        }
-                    //        //ENABLE UNIT ATTRIBUTES FOR NON-DIVIDED UNITS
-                    //        NonDivideUnitGUI();
+                        //    case "2": //SET ENTRY LOCATION FOR UNITS WHICH ARE REINFORCEMENTS BY EVENT
+                        //        lblReinforce.Visible = true;
+                        //        lblReinforce2.Visible = true;
+                        //        txtReinforceTrigger.Visible = true;
+                        //        txtReinforceTrigger.Enabled = true;
+                        //        lblReinforce.Text = "Event";
 
-                    //        break;
+                        //        //SET X AND Y, AFTER CHECKING FOR NULL
+                        //        if (unit.Attribute("GOINGTOX") == null && unit.Attribute("X") == null)
+                        //        {
+                        //            unit.Add(new XAttribute("GOINGTOX", "1"));
+                        //            unit.Add(new XAttribute("GOINGTOY", "1"));
+                        //        }
 
-                    //    case "24": //SET NO LOCATION FOR DIVIDED UNITS
-                    //        txtX.Text = "--";
-                    //        txtY.Text = "--";
+                        //        if (unit.Attribute("GOINGTOX") != null)
+                        //        {
+                        //            txtX.Text = unit.Attribute("GOINGTOX").Value.ToString();
+                        //        }
+                        //        else
+                        //        {
+                        //            txtX.Text = "1";
+                        //        }
 
-                    //        //DISABLE UNIT ATTRIBUTES FOR DIVIDED UNITS
-                    //        DivideUnitGUI();
+                        //        if (unit.Attribute("GOINGTOY") != null)
+                        //        {
+                        //            txtY.Text = unit.Attribute("GOINGTOY").Value.ToString();
+                        //        }
+                        //        else
+                        //        {
+                        //            txtY.Text = "1";
+                        //        }
 
-                    //        break;
+                        //        //SET ENTRY EVENT AFTER CHECKING FOR NULL
+                        //        if (unit.Attribute("ENTRY") != null)
+                        //        {
+                        //            txtReinforceTrigger.Text = unit.Attribute("ENTRY").Value.ToString();
+                        //        }
+                        //        else
+                        //        {
+                        //            txtReinforceTrigger.Text = "999";
+                        //        }
+                        //        //ENABLE UNIT ATTRIBUTES FOR NON-DIVIDED UNITS
+                        //        NonDivideUnitGUI();
 
-                    //    default: //SET LOCATION FOR ON-MAP UNITS
-                    //        lblReinforce.Visible = false;
-                    //        lblReinforce2.Visible = false;
-                    //        txtReinforceTrigger.Visible = false;
+                        //        break;
 
-                    //        if (unit.Attribute("GOINGTOX") == null && unit.Attribute("X") == null)
-                    //        {
-                    //            unit.Add(new XAttribute("X", "--"));
-                    //            unit.Add(new XAttribute("Y", "--"));
-                    //        }
+                        //    case "24": //SET NO LOCATION FOR DIVIDED UNITS
+                        //        txtX.Text = "--";
+                        //        txtY.Text = "--";
 
-                    //        if (unit.Attribute("X") != null)
-                    //        {
-                    //            txtX.Text = unit.Attribute("X").Value.ToString();
-                    //        }
-                    //        else
-                    //        {
-                    //            txtX.Text = "--";
-                    //        }
+                        //        //DISABLE UNIT ATTRIBUTES FOR DIVIDED UNITS
+                        //        DivideUnitGUI();
 
-                    //        if (unit.Attribute("Y") != null)
-                    //        {
-                    //            txtY.Text = unit.Attribute("Y").Value.ToString();
-                    //        }
-                    //        else
-                    //        {
-                    //            txtY.Text = "--";
-                    //        }
+                        //        break;
 
-                    //        //ENABLE UNIT ATTRIBUTES FOR NON-DIVIDED UNITS
-                    //        NonDivideUnitGUI();
+                        //    default: //SET LOCATION FOR ON-MAP UNITS
+                        //        lblReinforce.Visible = false;
+                        //        lblReinforce2.Visible = false;
+                        //        txtReinforceTrigger.Visible = false;
 
-                    //        break;
-                    //}
+                        //        if (unit.Attribute("GOINGTOX") == null && unit.Attribute("X") == null)
+                        //        {
+                        //            unit.Add(new XAttribute("X", "--"));
+                        //            unit.Add(new XAttribute("Y", "--"));
+                        //        }
 
-                    //lblNumber.Visible = false;
-                    //txtNumber.Visible = false;
-                    //lblMax.Visible = false;
-                    //txtMax.Visible = false;
-                    //lblDamage.Visible = false;
-                    //txtDamage.Visible = false;
+                        //        if (unit.Attribute("X") != null)
+                        //        {
+                        //            txtX.Text = unit.Attribute("X").Value.ToString();
+                        //        }
+                        //        else
+                        //        {
+                        //            txtX.Text = "--";
+                        //        }
 
-                    ////SHOW LABEL FOR DIVIDED SUBUNITS
-                    //if (unit.Attribute("PARENT") != null)
-                    //{
-                    //    lblDivided.Text = "DIVIDED SUBUNIT";
-                    //    lblDivided.Visible = true;
-                    //}
+                        //        if (unit.Attribute("Y") != null)
+                        //        {
+                        //            txtY.Text = unit.Attribute("Y").Value.ToString();
+                        //        }
+                        //        else
+                        //        {
+                        //            txtY.Text = "--";
+                        //        }
 
-                    ////IF UNIT IS NOT DIVIDED SUBUNIT, CAN DIVIDE & ADD EQUIP, CANNOT REUNITE
-                    //if (unit.Attribute("PARENT") == null)
-                    //{
-                    //    divideUnitToolStripMenuItem1.Enabled = true;
-                    //    reuniteUnitToolStripMenuItem1.Enabled = false;
-                    //    addeqpNewEquipUnitStripMenuItem.Enabled = true;
-                    //}
-                    ////
-                    ////IF UNIT IS DIVIDED PARENT, CANNOT DIVIDE OR ADD EQUIP, CAN REUNITE
-                    //if ((unit.Attribute("PARENT") == null) && (unit.Attribute("STATUS").Value.ToString() == "24"))
-                    //{
-                    //    divideUnitToolStripMenuItem1.Enabled = false;
-                    //    reuniteUnitToolStripMenuItem1.Enabled = true;
-                    //    addeqpNewEquipUnitStripMenuItem.Enabled = false;
-                    //}
+                        //        //ENABLE UNIT ATTRIBUTES FOR NON-DIVIDED UNITS
+                        //        NonDivideUnitGUI();
 
-                    ////IF UNIT IS DIVIDED SUBUNIT, CANNOT DIVIDE, REUNITE, OR ADD EQUIP
-                    //if ((unit.Attribute("PARENT") != null) && (unit.Attribute("STATUS").Value.ToString() != "24"))
-                    //{
-                    //    divideUnitToolStripMenuItem1.Enabled = false;
-                    //    reuniteUnitToolStripMenuItem1.Enabled = false;
-                    //    addeqpNewEquipUnitStripMenuItem.Enabled = false;
-                    //}
+                        //        break;
+                        //}
 
-                    ////IF UNIT IF REINFORCMENT, CANNOT DIVIDE
-                    //if (deploy == "1" || deploy == "2")
-                    //{
-                    //    divideUnitToolStripMenuItem1.Enabled = false;
-                    //}
+                        //lblNumber.Visible = false;
+                        //txtNumber.Visible = false;
+                        //lblMax.Visible = false;
+                        //txtMax.Visible = false;
+                        //lblDamage.Visible = false;
+                        //txtDamage.Visible = false;
 
-                    ////IF UNIT IS SECTION-SIZED, CANNOT DIVIDE OR REUNITE, BUT CAN ADD EQUIP
-                    //if (unit.Attribute("SIZE").Value.ToString() == "Section")
-                    //{
-                    //    divideUnitToolStripMenuItem1.Enabled = false;
-                    //    reuniteUnitToolStripMenuItem1.Enabled = false;
-                    //    addeqpNewEquipUnitStripMenuItem.Enabled = true;
-                    //}
+                        ////SHOW LABEL FOR DIVIDED SUBUNITS
+                        //if (unit.Attribute("PARENT") != null)
+                        //{
+                        //    lblDivided.Text = "DIVIDED SUBUNIT";
+                        //    lblDivided.Visible = true;
+                        //}
 
-                    break;
+                        ////IF UNIT IS NOT DIVIDED SUBUNIT, CAN DIVIDE & ADD EQUIP, CANNOT REUNITE
+                        //if (unit.Attribute("PARENT") == null)
+                        //{
+                        //    divideUnitToolStripMenuItem1.Enabled = true;
+                        //    reuniteUnitToolStripMenuItem1.Enabled = false;
+                        //    addeqpNewEquipUnitStripMenuItem.Enabled = true;
+                        //}
+                        ////
+                        ////IF UNIT IS DIVIDED PARENT, CANNOT DIVIDE OR ADD EQUIP, CAN REUNITE
+                        //if ((unit.Attribute("PARENT") == null) && (unit.Attribute("STATUS").Value.ToString() == "24"))
+                        //{
+                        //    divideUnitToolStripMenuItem1.Enabled = false;
+                        //    reuniteUnitToolStripMenuItem1.Enabled = true;
+                        //    addeqpNewEquipUnitStripMenuItem.Enabled = false;
+                        //}
+
+                        ////IF UNIT IS DIVIDED SUBUNIT, CANNOT DIVIDE, REUNITE, OR ADD EQUIP
+                        //if ((unit.Attribute("PARENT") != null) && (unit.Attribute("STATUS").Value.ToString() != "24"))
+                        //{
+                        //    divideUnitToolStripMenuItem1.Enabled = false;
+                        //    reuniteUnitToolStripMenuItem1.Enabled = false;
+                        //    addeqpNewEquipUnitStripMenuItem.Enabled = false;
+                        //}
+
+                        ////IF UNIT IF REINFORCMENT, CANNOT DIVIDE
+                        //if (deploy == "1" || deploy == "2")
+                        //{
+                        //    divideUnitToolStripMenuItem1.Enabled = false;
+                        //}
+
+                        ////IF UNIT IS SECTION-SIZED, CANNOT DIVIDE OR REUNITE, BUT CAN ADD EQUIP
+                        //if (unit.Attribute("SIZE").Value.ToString() == "Section")
+                        //{
+                        //    divideUnitToolStripMenuItem1.Enabled = false;
+                        //    reuniteUnitToolStripMenuItem1.Enabled = false;
+                        //    addeqpNewEquipUnitStripMenuItem.Enabled = true;
+                        //}
+                  // }
+                    //break;
 
                 case 3: //EQUIPMENT
                     //tabUnits.SelectedIndex = 3;
@@ -1508,7 +1827,6 @@ namespace TOAWXML
                         iconDisplay = "NO ICON";
                         break;
                 }
-                //Console.WriteLine(iconDisplay);
             }
             else //IF ALTERNATE ICONS EXIST
             {
@@ -2939,8 +3257,6 @@ namespace TOAWXML
                         //FOR ICONS W/O VARIANTS SWITCHING TO THOSE WITH VARIANTS
                         if ((icon.Value.ToString() == control.Text) && (unit.Attribute("ICONID") == null) && (iconsVariants.Contains(icon.Key.ToString()) == true))
                         {
-                           //Console.WriteLine("key: " + icon.Key.ToString());
-
                             switch (control.Text)
                             {
                             case "Antitank [v1]":
@@ -3495,14 +3811,11 @@ namespace TOAWXML
 
                     if (!replace.Focused) return;
 
-
-
                     //CHANGE TACFILE XML
                     string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
                     var unit = tacFile.XPathSelectElement(xpath);
                     string replaceID = GetReplacementPriorityID(replace.Text);
 
-                    Console.WriteLine("text: " + replace.Text + " id: " + replaceID);
                     if (replace.Text != null) unit.Attribute("REPLACEMENTPRIORITY").Value = replaceID;
 
                     break;
@@ -3831,6 +4144,444 @@ namespace TOAWXML
             string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID =" + unitid + "]";
             var form = tacFile.XPathSelectElement(xpath);
             if (cboHdrUnitExp.Text != null) form.Attribute("EXPERIENCE").Value = cboHdrUnitExp.Text;
+        }
+
+        private void cboHdrUnitType_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (sender == cboUnitType)
+            {
+                ((HandledMouseEventArgs)e).Handled = false;
+            }
+        }
+
+        private void cboHdrUnitType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string unitID = "";
+            string icon = "";
+
+            //LIST OF ALL ICONS WITH VARIANTS
+            List<string> iconsVariants = new List<string>();
+            iconsVariants.Add("Headquarters");
+            iconsVariants.Add("Antitank");
+            iconsVariants.Add("Motor Antitank");
+            iconsVariants.Add("Fighter");
+            iconsVariants.Add("Fighter Bomber");
+            iconsVariants.Add("Light Bomber");
+            iconsVariants.Add("Heavy Bomber");
+            iconsVariants.Add("Coastal Artillery");
+            iconsVariants.Add("Transport");
+
+            if (!cboHdrUnitType.Focused) return;
+
+            //CHANGE TACFILE XML
+            unitID = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+            var unit = tacFile.XPathSelectElement(xpath);
+
+            icon = cboHdrUnitType.SelectedValue.ToString();
+            bool hasVariant = iconsVariants.Any(v=>v == icon);
+
+            if (!hasVariant)
+            {
+                unit.Attribute("ICON").Value = icon;
+                if (unit.Attribute("ICONID") != null) unit.Attribute("ICONID").Remove();
+            }
+            else
+            {
+                switch (cboHdrUnitType.Text)
+                {
+                    case "Antitank [v1]":
+                        unit.Attribute("ICON").Value = "Antitank";
+                        if(unit.Attribute("ICONID")==null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "14"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "14";
+                        }
+                        break;
+                    case "Antitank [v2]":
+                        unit.Attribute("ICON").Value = "Antitank";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "15"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "15";
+                        }
+                        break;
+                    case "Antitank (Mot) [v1]":
+                        unit.Attribute("ICON").Value = "Motor Antitank";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "25"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "25";
+                        }
+                        break;
+                    case "Antitank (Mot) [v2]":
+                        unit.Attribute("ICON").Value = "Motor Antitank";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "26"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "26";
+                        }
+                        break;
+                    case "Artillery (Coast) [icon]":
+                        unit.Attribute("ICON").Value = "Coastal Artillery";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "62"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "62";
+                        }
+                        break;
+                    case "Artillery (Coast) [silh]":
+                        unit.Attribute("ICON").Value = "Coastal Artillery";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "63"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "63";
+                        }
+                        break;
+                    case "Bomber (Heavy) [icon]":
+                        unit.Attribute("ICON").Value = "Heavy Bomber";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "69"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "69";
+                        }
+                        break;
+                    case "Bomber (Heavy) [silh]":
+                        unit.Attribute("ICON").Value = "Heavy Bomber";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "45"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "45";
+                        }
+                        break;
+                    case "Bomber (Light) [icon]":
+                        unit.Attribute("ICON").Value = "Light Bomber";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "43"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "43";
+                        }
+                        break;
+                    case "Bomber (Light) [silh]":
+                        unit.Attribute("ICON").Value = "Light Bomber";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "68"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "68";
+                        }
+                        break;
+                    case "Fighter [icon]":
+                        unit.Attribute("ICON").Value = "Fighter";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "41"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "41";
+                        }
+                        break;
+                    case "Fighter [silh]":
+                        unit.Attribute("ICON").Value = "Fighter";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "66"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "66";
+                        }
+                        break;
+                    case "Fighter Bomber [icon]":
+                        unit.Attribute("ICON").Value = "Fighter Bomber";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "42"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "42";
+                        }
+                        break;
+                    case "Fighter Bomber [silh]":
+                        unit.Attribute("ICON").Value = "Fighter Bomber";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "67"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "67";
+                        }
+                        break;
+                    case "Headquarters [v1]":
+                        unit.Attribute("ICON").Value = "Headquarters";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "0"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "0";
+                        }
+                        break;
+                    case "Headquarters [v2]":
+                        unit.Attribute("ICON").Value = "Headquarters";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "1"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "1";
+                        }
+                        break;
+                    case "Transport [icon]":
+                        unit.Attribute("ICON").Value = "Transport";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "82"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "82";
+                        }
+                        break;
+                    case "Transport [silh]":
+                        unit.Attribute("ICON").Value = "Transport";
+                        if (unit.Attribute("ICONID") == null)
+                        {
+                            unit.Add(new XAttribute("ICONID", "94"));
+                        }
+                        else
+                        {
+                            unit.Attribute("ICONID").Value = "94";
+                        }
+                        break;
+                }
+            }
+                //    ////LOOP THROUGH ALL ICONS
+                //    //foreach (KeyValuePair<string, string> icon in icons)
+                //    //{
+                //    //    //FOR ICONS W/O VARIANTS SWITCHING TO THOSE WITH VARIANTS
+                //    //    if ((icon.Value.ToString() == cboHdrUnitType.Text) && (unit.Attribute("ICONID") == null) && (iconsVariants.Contains(icon.Key.ToString()) == true))
+                //    //    {
+                //    //        switch (cboHdrUnitType.Text)
+                //    //        {
+                //    //            case "Antitank [v1]":
+                //    //                unit.Attribute("ICON").Value = "Antitank";
+                //    //                unit.Add(new XAttribute("ICONID", "14"));
+                //    //                break;
+                //    //            case "Antitank [v2]":
+                //    //                unit.Attribute("ICON").Value = "Antitank";
+                //    //                unit.Add(new XAttribute("ICONID", "15"));
+                //    //                break;
+                //    //            case "Antitank (Mot) [v1]":
+                //    //                unit.Attribute("ICON").Value = "Motor Antitank";
+                //    //                unit.Add(new XAttribute("ICONID", "25"));
+                //    //                break;
+                //    //            case "Antitank (Mot) [v2]":
+                //    //                unit.Attribute("ICON").Value = "Motor Antitank";
+                //    //                unit.Add(new XAttribute("ICONID", "26"));
+                //    //                break;
+                //    //            case "Artillery (Coast) [icon]":
+                //    //                unit.Attribute("ICON").Value = "Coastal Artillery";
+                //    //                unit.Add(new XAttribute("ICONID", "62"));
+                //    //                break;
+                //    //            case "Artillery (Coast) [silh]":
+                //    //                unit.Attribute("ICON").Value = "Coastal Artillery";
+                //    //                unit.Add(new XAttribute("ICONID", "63"));
+                //    //                break;
+                //    //            case "Bomber (Heavy) [icon]":
+                //    //                unit.Attribute("ICON").Value = "Heavy Bomber";
+                //    //                unit.Add(new XAttribute("ICONID", "69"));
+                //    //                break;
+                //    //            case "Bomber (Heavy) [silh]":
+                //    //                unit.Attribute("ICON").Value = "Heavy Bomber";
+                //    //                unit.Add(new XAttribute("ICONID", "45"));
+                //    //                break;
+                //    //            case "Bomber (Light) [icon]":
+                //    //                unit.Attribute("ICON").Value = "Light Bomber";
+                //    //                unit.Add(new XAttribute("ICONID", "43"));
+                //    //                break;
+                //    //            case "Bomber (Light) [silh]":
+                //    //                unit.Attribute("ICON").Value = "Light Bomber";
+                //    //                unit.Add(new XAttribute("ICONID", "68"));
+                //    //                break;
+                //    //            case "Fighter [icon]":
+                //    //                unit.Attribute("ICON").Value = "Fighter";
+                //    //                unit.Add(new XAttribute("ICONID", "41"));
+                //    //                break;
+                //    //            case "Fighter [silh]":
+                //    //                unit.Attribute("ICON").Value = "Fighter";
+                //    //                unit.Add(new XAttribute("ICONID", "66"));
+                //    //                break;
+                //    //            case "Fighter Bomber [icon]":
+                //    //                unit.Attribute("ICON").Value = "Fighter Bomber";
+                //    //                unit.Add(new XAttribute("ICONID", "42"));
+                //    //                break;
+                //    //            case "Fighter Bomber [silh]":
+                //    //                unit.Attribute("ICON").Value = "Fighter Bomber";
+                //    //                unit.Add(new XAttribute("ICONID", "67"));
+                //    //                break;
+                //    //            case "Headquarters [v1]":
+                //    //                unit.Attribute("ICON").Value = "Headquarters";
+                //    //                unit.Add(new XAttribute("ICONID", "0"));
+                //    //                break;
+                //    //            case "Headquarters [v2]":
+                //    //                unit.Attribute("ICON").Value = "Headquarters";
+                //    //                unit.Add(new XAttribute("ICONID", "1"));
+                //    //                break;
+                //    //            case "Transport [icon]":
+                //    //                unit.Attribute("ICON").Value = "Transport";
+                //    //                unit.Add(new XAttribute("ICONID", "82"));
+                //    //                break;
+                //    //            case "Transport [silh]":
+                //    //                unit.Attribute("ICON").Value = "Transport";
+                //    //                unit.Add(new XAttribute("ICONID", "94"));
+                //    //                break;
+                //    //        }
+                //    //    }
+
+                //    //    //FOR ICONS WITH NO VARIANTS
+                //    //    else if ((icon.Value.ToString() == cboHdrUnitType.Text) && (unit.Attribute("ICONID") == null))
+                //    //    {
+                //    //        unit.Attribute("ICON").Value = icon.Key.ToString();
+                //    //    }
+                //    //    //FOR ICONS WITH VARIANTS
+                //    //    else if ((icon.Value.ToString() == cboHdrUnitType.Text) && (unit.Attribute("ICONID") != null))
+                //    //    {
+                //    //        switch (unit.Attribute("ICONID").Value.ToString())
+                //    //        {
+                //    //            case "0":
+                //    //                unit.Attribute("ICON").Value = "Headquarters";
+                //    //                unit.Attribute("ICONID").Value = "1";
+                //    //                break;
+                //    //            case "1":
+                //    //                unit.Attribute("ICON").Value = "Headquarters";
+                //    //                unit.Attribute("ICONID").Value = "0";
+                //    //                break;
+                //    //            case "14":
+                //    //                unit.Attribute("ICON").Value = "Antitank";
+                //    //                unit.Attribute("ICONID").Value = "15";
+                //    //                break;
+                //    //            case "15":
+                //    //                unit.Attribute("ICON").Value = "Antitank";
+                //    //                unit.Attribute("ICONID").Value = "14";
+                //    //                break;
+                //    //            case "25":
+                //    //                unit.Attribute("ICON").Value = "Motor Antitank";
+                //    //                unit.Attribute("ICONID").Value = "26";
+                //    //                break;
+                //    //            case "26":
+                //    //                unit.Attribute("ICON").Value = "Motor Antitank";
+                //    //                unit.Attribute("ICONID").Value = "25";
+                //    //                break;
+                //    //            case "41":
+                //    //                unit.Attribute("ICON").Value = "Fighter";
+                //    //                unit.Attribute("ICONID").Value = "66";
+                //    //                break;
+                //    //            case "42":
+                //    //                unit.Attribute("ICON").Value = "Fighter Bomber";
+                //    //                unit.Attribute("ICONID").Value = "67";
+                //    //                break;
+                //    //            case "43":
+                //    //                unit.Attribute("ICON").Value = "Light Bomber";
+                //    //                unit.Attribute("ICONID").Value = "68";
+                //    //                break;
+                //    //            case "45":
+                //    //                unit.Attribute("ICON").Value = "Heavy Bomber";
+                //    //                unit.Attribute("ICONID").Value = "69";
+                //    //                break;
+                //    //            case "62":
+                //    //                unit.Attribute("ICON").Value = "Coastal Artillery";
+                //    //                unit.Attribute("ICONID").Value = "63";
+                //    //                break;
+                //    //            case "63":
+                //    //                unit.Attribute("ICON").Value = "Coastal Artillery";
+                //    //                unit.Attribute("ICONID").Value = "62";
+                //    //                break;
+                //    //            case "66":
+                //    //                unit.Attribute("ICON").Value = "Fighter";
+                //    //                unit.Attribute("ICONID").Value = "41";
+                //    //                break;
+                //    //            case "67":
+                //    //                unit.Attribute("ICON").Value = "Fighter Bomber";
+                //    //                unit.Attribute("ICONID").Value = "42";
+                //    //                break;
+                //    //            case "68":
+                //    //                unit.Attribute("ICON").Value = "Light Bomber";
+                //    //                unit.Attribute("ICONID").Value = "43";
+                //    //                break;
+                //    //            case "69":
+                //    //                unit.Attribute("ICON").Value = "Heavy Bomber";
+                //    //                unit.Attribute("ICONID").Value = "45";
+                //    //                break;
+                //    //            case "82":
+                //    //                unit.Attribute("ICON").Value = "Transport";
+                //    //                unit.Attribute("ICONID").Value = "94";
+                //    //                break;
+                //    //            case "94":
+                //    //                unit.Attribute("ICON").Value = "Transport";
+                //    //                unit.Attribute("ICONID").Value = "82";
+                //    //                break;
+                //    //            default:
+                //    //                Console.WriteLine("ICON ERROR!");
+                //    //                unit.Attribute("ICONID").Remove();
+                //    //                break;
+                //    //        }
+                //    //    }
+                //    //}
+                //    //}
+                //    //}
+            }
+
+        private void cboHdrUnitOrders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string unitid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitid + "]";
+            var unit = tacFile.XPathSelectElement(xpath);
+            string order = SetUnitOrderID(cboHdrUnitOrders.Text);
+            unit.Attribute("STATUS").Value = order;
+        }
+
+        private void cboHdrUnitReplace_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string unitid = trvUnitTree.SelectedNode.Tag.ToString();
+            string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitid + "]";
+            var unit = tacFile.XPathSelectElement(xpath);
+            string replaceID = GetReplacementPriorityID(cboHdrUnitReplace.Text);
+            unit.Attribute("REPLACEMENTPRIORITY").Value = replaceID;
         }
     }
 }
