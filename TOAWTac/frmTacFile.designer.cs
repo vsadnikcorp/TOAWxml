@@ -341,17 +341,17 @@ namespace TOAWXML
             this.drForce.ItemTemplate.Controls.Add(this.txtName);
             this.drForce.ItemTemplate.Controls.Add(this.txtProf);
             this.drForce.ItemTemplate.Controls.Add(this.txtSupply);
-            this.drForce.ItemTemplate.Size = new System.Drawing.Size(943, 53);
+            this.drForce.ItemTemplate.Size = new System.Drawing.Size(1093, 53);
             this.drForce.Location = new System.Drawing.Point(216, 89);
             this.drForce.Name = "drForce";
-            this.drForce.Size = new System.Drawing.Size(951, 511);
+            this.drForce.Size = new System.Drawing.Size(1101, 511);
             this.drForce.TabIndex = 34;
             this.drForce.Text = "drForce";
             // 
             // lblFormID
             // 
             this.lblFormID.AutoSize = true;
-            this.lblFormID.Location = new System.Drawing.Point(884, 0);
+            this.lblFormID.Location = new System.Drawing.Point(1036, 0);
             this.lblFormID.Name = "lblFormID";
             this.lblFormID.Size = new System.Drawing.Size(41, 13);
             this.lblFormID.TabIndex = 43;
@@ -492,17 +492,17 @@ namespace TOAWXML
             this.drFormation.ItemTemplate.Controls.Add(this.cboUnitLossTol);
             this.drFormation.ItemTemplate.Controls.Add(this.cboUnitOrders);
             this.drFormation.ItemTemplate.Controls.Add(this.txtUnitName);
-            this.drFormation.ItemTemplate.Size = new System.Drawing.Size(943, 54);
+            this.drFormation.ItemTemplate.Size = new System.Drawing.Size(1089, 54);
             this.drFormation.Location = new System.Drawing.Point(216, 285);
             this.drFormation.Name = "drFormation";
-            this.drFormation.Size = new System.Drawing.Size(951, 68);
+            this.drFormation.Size = new System.Drawing.Size(1097, 68);
             this.drFormation.TabIndex = 43;
             this.drFormation.Text = "dataRepeater2";
             // 
             // lblUnitID
             // 
             this.lblUnitID.AutoSize = true;
-            this.lblUnitID.Location = new System.Drawing.Point(884, 3);
+            this.lblUnitID.Location = new System.Drawing.Point(1033, 3);
             this.lblUnitID.Name = "lblUnitID";
             this.lblUnitID.Size = new System.Drawing.Size(41, 13);
             this.lblUnitID.TabIndex = 54;
@@ -897,10 +897,10 @@ namespace TOAWXML
             // 
             this.drUnit.ItemTemplate.Controls.Add(this.lblEquipName);
             this.drUnit.ItemTemplate.Controls.Add(this.txtEquipName);
-            this.drUnit.ItemTemplate.Size = new System.Drawing.Size(943, 45);
+            this.drUnit.ItemTemplate.Size = new System.Drawing.Size(1089, 45);
             this.drUnit.Location = new System.Drawing.Point(216, 381);
             this.drUnit.Name = "drUnit";
-            this.drUnit.Size = new System.Drawing.Size(951, 64);
+            this.drUnit.Size = new System.Drawing.Size(1097, 64);
             this.drUnit.TabIndex = 55;
             this.drUnit.Text = "dataRepeater1";
             // 
@@ -933,13 +933,14 @@ namespace TOAWXML
             this.pnlForce.Controls.Add(this.lblForceName);
             this.pnlForce.Location = new System.Drawing.Point(221, 30);
             this.pnlForce.Name = "pnlForce";
-            this.pnlForce.Size = new System.Drawing.Size(946, 58);
+            this.pnlForce.Size = new System.Drawing.Size(1096, 58);
             this.pnlForce.TabIndex = 56;
             this.pnlForce.Visible = false;
             // 
             // btnForceAttribs
             // 
-            this.btnForceAttribs.Location = new System.Drawing.Point(240, 8);
+            this.btnForceAttribs.Enabled = false;
+            this.btnForceAttribs.Location = new System.Drawing.Point(352, 8);
             this.btnForceAttribs.Name = "btnForceAttribs";
             this.btnForceAttribs.Size = new System.Drawing.Size(95, 31);
             this.btnForceAttribs.TabIndex = 6;
@@ -1021,7 +1022,7 @@ namespace TOAWXML
             this.pnlFormation.Controls.Add(this.lblHdrFormName);
             this.pnlFormation.Location = new System.Drawing.Point(216, 451);
             this.pnlFormation.Name = "pnlFormation";
-            this.pnlFormation.Size = new System.Drawing.Size(946, 53);
+            this.pnlFormation.Size = new System.Drawing.Size(1097, 53);
             this.pnlFormation.TabIndex = 57;
             this.pnlFormation.Visible = false;
             // 
@@ -1190,7 +1191,7 @@ namespace TOAWXML
             this.pnlUnit.Controls.Add(this.label13);
             this.pnlUnit.Location = new System.Drawing.Point(216, 510);
             this.pnlUnit.Name = "pnlUnit";
-            this.pnlUnit.Size = new System.Drawing.Size(946, 53);
+            this.pnlUnit.Size = new System.Drawing.Size(1097, 53);
             this.pnlUnit.TabIndex = 58;
             this.pnlUnit.Visible = false;
             // 
@@ -1582,7 +1583,7 @@ namespace TOAWXML
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1179, 697);
+            this.ClientSize = new System.Drawing.Size(1329, 697);
             this.ControlBox = false;
             this.Controls.Add(this.pnlUnit);
             this.Controls.Add(this.pnlFormation);
