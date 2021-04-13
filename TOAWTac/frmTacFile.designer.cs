@@ -128,6 +128,34 @@ namespace TOAWXML
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.txtHdrForceCdr = new System.Windows.Forms.TextBox();
+            this.txtHdrForceRank = new System.Windows.Forms.TextBox();
+            this.lblForceCdr = new System.Windows.Forms.Label();
+            this.lblForceRank = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.txtHdrFormRank = new System.Windows.Forms.TextBox();
+            this.txtHdrFormCdr = new System.Windows.Forms.TextBox();
+            this.txtHdrFormDate = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.txtHdrUnitDate = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.txtHdrUnitRank = new System.Windows.Forms.TextBox();
+            this.txtHdrUnitCdr = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.txtFormDate = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.txtRank = new System.Windows.Forms.TextBox();
+            this.txtCdr = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.txtUnitDate = new System.Windows.Forms.TextBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.txtUnitRank = new System.Windows.Forms.TextBox();
+            this.txtUnitCdr = new System.Windows.Forms.TextBox();
             this.gbForce.SuspendLayout();
             this.ssTac.SuspendLayout();
             this.drForce.ItemTemplate.SuspendLayout();
@@ -203,7 +231,7 @@ namespace TOAWXML
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(1084, 629);
+            this.btnSave.Location = new System.Drawing.Point(1239, 627);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(78, 38);
             this.btnSave.TabIndex = 8;
@@ -328,6 +356,12 @@ namespace TOAWXML
             // 
             // drForce.ItemTemplate
             // 
+            this.drForce.ItemTemplate.Controls.Add(this.label30);
+            this.drForce.ItemTemplate.Controls.Add(this.txtFormDate);
+            this.drForce.ItemTemplate.Controls.Add(this.label31);
+            this.drForce.ItemTemplate.Controls.Add(this.label32);
+            this.drForce.ItemTemplate.Controls.Add(this.txtRank);
+            this.drForce.ItemTemplate.Controls.Add(this.txtCdr);
             this.drForce.ItemTemplate.Controls.Add(this.lblFormID);
             this.drForce.ItemTemplate.Controls.Add(this.lblOrders);
             this.drForce.ItemTemplate.Controls.Add(this.cboOrders);
@@ -356,6 +390,7 @@ namespace TOAWXML
             this.lblFormID.Size = new System.Drawing.Size(41, 13);
             this.lblFormID.TabIndex = 43;
             this.lblFormID.Text = "label16";
+            this.lblFormID.Visible = false;
             // 
             // lblOrders
             // 
@@ -471,6 +506,12 @@ namespace TOAWXML
             // 
             // drFormation.ItemTemplate
             // 
+            this.drFormation.ItemTemplate.Controls.Add(this.label33);
+            this.drFormation.ItemTemplate.Controls.Add(this.txtUnitDate);
+            this.drFormation.ItemTemplate.Controls.Add(this.label34);
+            this.drFormation.ItemTemplate.Controls.Add(this.label35);
+            this.drFormation.ItemTemplate.Controls.Add(this.txtUnitRank);
+            this.drFormation.ItemTemplate.Controls.Add(this.txtUnitCdr);
             this.drFormation.ItemTemplate.Controls.Add(this.lblUnitID);
             this.drFormation.ItemTemplate.Controls.Add(this.label10);
             this.drFormation.ItemTemplate.Controls.Add(this.txtUnitReadiness);
@@ -502,11 +543,12 @@ namespace TOAWXML
             // lblUnitID
             // 
             this.lblUnitID.AutoSize = true;
-            this.lblUnitID.Location = new System.Drawing.Point(1033, 3);
+            this.lblUnitID.Location = new System.Drawing.Point(1031, 1);
             this.lblUnitID.Name = "lblUnitID";
             this.lblUnitID.Size = new System.Drawing.Size(41, 13);
             this.lblUnitID.TabIndex = 54;
             this.lblUnitID.Text = "label17";
+            this.lblUnitID.Visible = false;
             // 
             // label10
             // 
@@ -924,6 +966,10 @@ namespace TOAWXML
             // pnlForce
             // 
             this.pnlForce.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlForce.Controls.Add(this.lblForceRank);
+            this.pnlForce.Controls.Add(this.lblForceCdr);
+            this.pnlForce.Controls.Add(this.txtHdrForceRank);
+            this.pnlForce.Controls.Add(this.txtHdrForceCdr);
             this.pnlForce.Controls.Add(this.btnForceAttribs);
             this.pnlForce.Controls.Add(this.txtHdrForceSupply);
             this.pnlForce.Controls.Add(this.txtHdrForceProf);
@@ -940,7 +986,7 @@ namespace TOAWXML
             // btnForceAttribs
             // 
             this.btnForceAttribs.Enabled = false;
-            this.btnForceAttribs.Location = new System.Drawing.Point(352, 8);
+            this.btnForceAttribs.Location = new System.Drawing.Point(400, 12);
             this.btnForceAttribs.Name = "btnForceAttribs";
             this.btnForceAttribs.Size = new System.Drawing.Size(95, 31);
             this.btnForceAttribs.TabIndex = 6;
@@ -1008,6 +1054,12 @@ namespace TOAWXML
             // pnlFormation
             // 
             this.pnlFormation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlFormation.Controls.Add(this.label26);
+            this.pnlFormation.Controls.Add(this.txtHdrFormDate);
+            this.pnlFormation.Controls.Add(this.label24);
+            this.pnlFormation.Controls.Add(this.label25);
+            this.pnlFormation.Controls.Add(this.txtHdrFormRank);
+            this.pnlFormation.Controls.Add(this.txtHdrFormCdr);
             this.pnlFormation.Controls.Add(this.label16);
             this.pnlFormation.Controls.Add(this.cboHdrFormLossTol);
             this.pnlFormation.Controls.Add(this.label15);
@@ -1169,6 +1221,12 @@ namespace TOAWXML
             // pnlUnit
             // 
             this.pnlUnit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlUnit.Controls.Add(this.label27);
+            this.pnlUnit.Controls.Add(this.txtHdrUnitDate);
+            this.pnlUnit.Controls.Add(this.label28);
+            this.pnlUnit.Controls.Add(this.label29);
+            this.pnlUnit.Controls.Add(this.txtHdrUnitRank);
+            this.pnlUnit.Controls.Add(this.txtHdrUnitCdr);
             this.pnlUnit.Controls.Add(this.label18);
             this.pnlUnit.Controls.Add(this.cboHdrUnitReplace);
             this.pnlUnit.Controls.Add(this.label19);
@@ -1579,6 +1637,247 @@ namespace TOAWXML
             this.label13.TabIndex = 12;
             this.label13.Text = "Name:";
             // 
+            // txtHdrForceCdr
+            // 
+            this.txtHdrForceCdr.Location = new System.Drawing.Point(239, 20);
+            this.txtHdrForceCdr.Name = "txtHdrForceCdr";
+            this.txtHdrForceCdr.Size = new System.Drawing.Size(102, 20);
+            this.txtHdrForceCdr.TabIndex = 7;
+            // 
+            // txtHdrForceRank
+            // 
+            this.txtHdrForceRank.Location = new System.Drawing.Point(348, 20);
+            this.txtHdrForceRank.Name = "txtHdrForceRank";
+            this.txtHdrForceRank.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrForceRank.TabIndex = 8;
+            this.txtHdrForceRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblForceCdr
+            // 
+            this.lblForceCdr.AutoSize = true;
+            this.lblForceCdr.Location = new System.Drawing.Point(239, 4);
+            this.lblForceCdr.Name = "lblForceCdr";
+            this.lblForceCdr.Size = new System.Drawing.Size(66, 13);
+            this.lblForceCdr.TabIndex = 9;
+            this.lblForceCdr.Text = "Commander:";
+            // 
+            // lblForceRank
+            // 
+            this.lblForceRank.AutoSize = true;
+            this.lblForceRank.Location = new System.Drawing.Point(349, 4);
+            this.lblForceRank.Name = "lblForceRank";
+            this.lblForceRank.Size = new System.Drawing.Size(36, 13);
+            this.lblForceRank.TabIndex = 10;
+            this.lblForceRank.Text = "Rank:";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(702, 2);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(36, 13);
+            this.label24.TabIndex = 50;
+            this.label24.Text = "Rank:";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(592, 2);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(66, 13);
+            this.label25.TabIndex = 49;
+            this.label25.Text = "Commander:";
+            // 
+            // txtHdrFormRank
+            // 
+            this.txtHdrFormRank.Location = new System.Drawing.Point(701, 18);
+            this.txtHdrFormRank.Name = "txtHdrFormRank";
+            this.txtHdrFormRank.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrFormRank.TabIndex = 48;
+            this.txtHdrFormRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtHdrFormCdr
+            // 
+            this.txtHdrFormCdr.Location = new System.Drawing.Point(592, 18);
+            this.txtHdrFormCdr.Name = "txtHdrFormCdr";
+            this.txtHdrFormCdr.Size = new System.Drawing.Size(102, 20);
+            this.txtHdrFormCdr.TabIndex = 47;
+            // 
+            // txtHdrFormDate
+            // 
+            this.txtHdrFormDate.Location = new System.Drawing.Point(750, 17);
+            this.txtHdrFormDate.Name = "txtHdrFormDate";
+            this.txtHdrFormDate.ReadOnly = true;
+            this.txtHdrFormDate.Size = new System.Drawing.Size(83, 20);
+            this.txtHdrFormDate.TabIndex = 51;
+            this.txtHdrFormDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(751, 4);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(82, 13);
+            this.label26.TabIndex = 52;
+            this.label26.Text = "Formation Date:";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(988, 6);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(59, 13);
+            this.label27.TabIndex = 86;
+            this.label27.Text = "Form Date:";
+            // 
+            // txtHdrUnitDate
+            // 
+            this.txtHdrUnitDate.Location = new System.Drawing.Point(989, 19);
+            this.txtHdrUnitDate.Name = "txtHdrUnitDate";
+            this.txtHdrUnitDate.ReadOnly = true;
+            this.txtHdrUnitDate.Size = new System.Drawing.Size(72, 20);
+            this.txtHdrUnitDate.TabIndex = 85;
+            this.txtHdrUnitDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(946, 5);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(36, 13);
+            this.label28.TabIndex = 84;
+            this.label28.Text = "Rank:";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(857, 5);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(66, 13);
+            this.label29.TabIndex = 83;
+            this.label29.Text = "Commander:";
+            // 
+            // txtHdrUnitRank
+            // 
+            this.txtHdrUnitRank.Location = new System.Drawing.Point(946, 19);
+            this.txtHdrUnitRank.Name = "txtHdrUnitRank";
+            this.txtHdrUnitRank.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrUnitRank.TabIndex = 82;
+            this.txtHdrUnitRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtHdrUnitCdr
+            // 
+            this.txtHdrUnitCdr.Location = new System.Drawing.Point(857, 19);
+            this.txtHdrUnitCdr.Name = "txtHdrUnitCdr";
+            this.txtHdrUnitCdr.Size = new System.Drawing.Size(83, 20);
+            this.txtHdrUnitCdr.TabIndex = 81;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(734, 4);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(82, 13);
+            this.label30.TabIndex = 58;
+            this.label30.Text = "Formation Date:";
+            // 
+            // txtFormDate
+            // 
+            this.txtFormDate.Location = new System.Drawing.Point(733, 17);
+            this.txtFormDate.Name = "txtFormDate";
+            this.txtFormDate.ReadOnly = true;
+            this.txtFormDate.Size = new System.Drawing.Size(83, 20);
+            this.txtFormDate.TabIndex = 57;
+            this.txtFormDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(685, 2);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(36, 13);
+            this.label31.TabIndex = 56;
+            this.label31.Text = "Rank:";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(575, 2);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(66, 13);
+            this.label32.TabIndex = 55;
+            this.label32.Text = "Commander:";
+            // 
+            // txtRank
+            // 
+            this.txtRank.Location = new System.Drawing.Point(684, 18);
+            this.txtRank.Name = "txtRank";
+            this.txtRank.Size = new System.Drawing.Size(40, 20);
+            this.txtRank.TabIndex = 54;
+            this.txtRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtRank.Leave += new System.EventHandler(this.txtRank_Leave);
+            // 
+            // txtCdr
+            // 
+            this.txtCdr.Location = new System.Drawing.Point(575, 18);
+            this.txtCdr.Name = "txtCdr";
+            this.txtCdr.Size = new System.Drawing.Size(102, 20);
+            this.txtCdr.TabIndex = 53;
+            this.txtCdr.Leave += new System.EventHandler(this.txtCdr_Leave);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(968, 6);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(59, 13);
+            this.label33.TabIndex = 92;
+            this.label33.Text = "Form Date:";
+            // 
+            // txtUnitDate
+            // 
+            this.txtUnitDate.Location = new System.Drawing.Point(969, 19);
+            this.txtUnitDate.Name = "txtUnitDate";
+            this.txtUnitDate.ReadOnly = true;
+            this.txtUnitDate.Size = new System.Drawing.Size(72, 20);
+            this.txtUnitDate.TabIndex = 91;
+            this.txtUnitDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(926, 5);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(36, 13);
+            this.label34.TabIndex = 90;
+            this.label34.Text = "Rank:";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(837, 5);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(66, 13);
+            this.label35.TabIndex = 89;
+            this.label35.Text = "Commander:";
+            // 
+            // txtUnitRank
+            // 
+            this.txtUnitRank.Location = new System.Drawing.Point(926, 19);
+            this.txtUnitRank.Name = "txtUnitRank";
+            this.txtUnitRank.Size = new System.Drawing.Size(40, 20);
+            this.txtUnitRank.TabIndex = 88;
+            this.txtUnitRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtUnitRank.Leave += new System.EventHandler(this.txtUnitRank_Leave);
+            // 
+            // txtUnitCdr
+            // 
+            this.txtUnitCdr.Location = new System.Drawing.Point(837, 19);
+            this.txtUnitCdr.Name = "txtUnitCdr";
+            this.txtUnitCdr.Size = new System.Drawing.Size(83, 20);
+            this.txtUnitCdr.TabIndex = 87;
+            this.txtUnitCdr.Leave += new System.EventHandler(this.txtUnitCdr_Leave);
+            // 
             // frmTacFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1730,5 +2029,33 @@ namespace TOAWXML
         private System.Windows.Forms.ComboBox cboHdrUnitLossTol;
         private System.Windows.Forms.ComboBox cboHdrUnitOrders;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label lblForceRank;
+        private System.Windows.Forms.Label lblForceCdr;
+        private System.Windows.Forms.TextBox txtHdrForceRank;
+        private System.Windows.Forms.TextBox txtHdrForceCdr;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox txtHdrFormDate;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox txtHdrFormRank;
+        private System.Windows.Forms.TextBox txtHdrFormCdr;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox txtHdrUnitDate;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TextBox txtHdrUnitRank;
+        private System.Windows.Forms.TextBox txtHdrUnitCdr;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.TextBox txtFormDate;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.TextBox txtRank;
+        private System.Windows.Forms.TextBox txtCdr;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.TextBox txtUnitDate;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.TextBox txtUnitRank;
+        private System.Windows.Forms.TextBox txtUnitCdr;
     }
 }

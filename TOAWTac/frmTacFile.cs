@@ -132,6 +132,9 @@ namespace TOAWXML
             dtFormation.Columns.Add("Orders", typeof(string));
             dtFormation.Columns.Add("LossTol", typeof(string));
             dtFormation.Columns.Add("FormID", typeof(string));
+            dtFormation.Columns.Add("Cdr", typeof(string));
+            dtFormation.Columns.Add("Rank", typeof(string));
+            dtFormation.Columns.Add("FormDate", typeof(string));
 
             //CREATE DATATABLE FOR UNITS
             dtUnit.Columns.Add("UnitName", typeof(string));
@@ -145,6 +148,9 @@ namespace TOAWXML
             dtUnit.Columns.Add("UnitExp", typeof(string));
             dtUnit.Columns.Add("UnitReplace", typeof(string));
             dtUnit.Columns.Add("UnitID", typeof(string));
+            dtUnit.Columns.Add("Cdr", typeof(string));
+            dtUnit.Columns.Add("Rank", typeof(string));
+            dtUnit.Columns.Add("FormDate", typeof(string));
 
             //CREATE DATATABLE FOR EQUIP
             dtEquip.Columns.Add("EquipName", typeof(string));
@@ -158,7 +164,9 @@ namespace TOAWXML
             cboSupport.Visible = false;
             cboOrders.Visible = false;
             cboLossTol.Visible = false;
-            
+            txtCdr.Visible = false;
+            txtRank.Visible = false;
+            txtFormDate.Visible = false;
 
             //POPULATES REPLACEMENT PRIORITY COMBO BOX
             cboReplace.Items.Add("None");
@@ -171,13 +179,10 @@ namespace TOAWXML
 
         private async void btnCreateTacFile_Click(object sender, EventArgs e)
         {
-            //frmLoadGamFile loadfileform = new frmLoadGamFile();
-            //loadfileform.ShowDialog();
             string FilePath = TOAWTac.Properties.Settings.Default.FilePath.ToString();
             string dateformat = "dd MMM yyyy";
             string date = DateTimePicker.Value.ToString(dateformat);
 
-            //!!!!!!!!!!!!!!!!!!!!!
             OpenFileDialog file = new OpenFileDialog();
             file.Multiselect = false;
             file.Filter = "TOAW .gam files *.gam|*.gam";
@@ -187,7 +192,6 @@ namespace TOAWXML
                 TOAWTac.Properties.Settings.Default.FilePath = file.FileName;
                 TOAWTac.Properties.Settings.Default.Save();
 
-                //!!!!!
                 trvUnitTree.Nodes.Clear();
                 dtFormation.Clear();
                 dtUnit.Clear();
@@ -220,7 +224,8 @@ namespace TOAWXML
                             string forceID = force.Attribute("ID").Value;
                             string forcecdrname = AssignCdrName(xdocCDR, forceID, rng);
 
-                            force.Add(new XAttribute("CDR", forcecdrname));
+                            force.Add(new XAttribute("CDR", forcecdrname),
+                            new XAttribute("RANK", "COL"));
 
                             //LIST FORMATIONS
                             foreach (XElement formation in force.Descendants("FORMATION").Where(f => f.Parent.Attribute("ID").Value == forceID))
@@ -468,7 +473,6 @@ namespace TOAWXML
             if (rbForce1.Checked == true)
             {
                 forceID = "1";
-                //LoadTree("1");
                 LoadTree(forceID);
             }
             trvUnitTree.SelectedNode = trvUnitTree.TopNode;
@@ -485,7 +489,6 @@ namespace TOAWXML
             if (rbForce2.Checked == true)
             {
                 forceID = "2";
-                //LoadTree("2");
                 LoadTree(forceID);
             }
             trvUnitTree.SelectedNode = trvUnitTree.TopNode;
@@ -535,11 +538,6 @@ namespace TOAWXML
                         formationNode.Tag = formation.Attribute("ID").Value;
                         formationNode.Name = "FORMATION";
                         HideCheckBox(trvUnitTree, formationNode);
-
-                        ////>>>>>>>>>>>>>>>JAN 30 2021
-                        //dt.Rows.Add(formation.Attribute("NAME").Value, formation.Attribute("PROFICIENCY").Value, formation.Attribute("SUPPLY").Value,
-                        //    formation.Attribute("EMPHASIS").Value, formation.Attribute("SUPPORTSCOPE").Value);
-                        ////<<<<<<<<<<<<<
 
                         //###CHANGE TREENODE COLOR IF FORMATION IS STATIC
                         if (formation.Attribute("ORDERS").Value == "Static" || formation.Attribute("ORDERS").Value == "Wait" || formation.Attribute("ORDERS").Value == "Delay" || formation.Attribute("ORDERS").Value == "Hold" || formation.Attribute("ORDERS").Value == "Manual" || formation.Attribute("ORDERS").Value == "Garrison")
@@ -596,7 +594,6 @@ namespace TOAWXML
             trvUnitTree.Nodes[0].Expand();
             ssTac.Visible = false;
 
-            //>>>>>>>>>>>>>>
             drForce.DataSource = dtFormation;
         }
 
@@ -664,7 +661,7 @@ namespace TOAWXML
 
                     pnlForce.Visible = true;
                     pnlForce.Location = new Point(221, 33);
-                    pnlForce.Size = new Size(944, 46);
+                    pnlForce.Size = new Size(1097, 46);
                     pnlFormation.Visible = false;
                     pnlUnit.Visible = false;
 
@@ -674,6 +671,9 @@ namespace TOAWXML
                     cboSupport.Visible = true;
                     cboOrders.Visible = true;
                     cboLossTol.Visible = true;
+                    txtCdr.Visible = true;
+                    txtRank.Visible = true;
+                    txtFormDate.Visible = true;
 
                     //CLEAR CONTROL DATABINDINGS
                     txtName.DataBindings.Clear();
@@ -683,6 +683,9 @@ namespace TOAWXML
                     cboOrders.DataBindings.Clear();
                     cboLossTol.DataBindings.Clear();
                     lblFormID.DataBindings.Clear();
+                    txtCdr.DataBindings.Clear();
+                    txtRank.DataBindings.Clear();
+                    txtFormDate.DataBindings.Clear();
 
                     //XPATH FOR OOB PORTION OF XML
                     string xpath = "OOB/FORCE[@ID=" + forceID + "]";
@@ -704,8 +707,9 @@ namespace TOAWXML
                     }
                     txtHdrForceProf.Text = force.Attribute("proficiency").Value;
                     txtHdrForceSupply.Text = force.Attribute("supply").Value;
+                    txtHdrForceCdr.Text = force.Attribute("CDR").Value;
+                    txtHdrForceRank.Text = force.Attribute("RANK").Value;
                     
-
                     //SET DATA BINDINGS
                     txtName.DataBindings.Add("Text", dtFormation, "Name");
                     txtProf.DataBindings.Add("Text", dtFormation, "Prof");
@@ -714,12 +718,17 @@ namespace TOAWXML
                     cboOrders.DataBindings.Add("Text", dtFormation, "Orders");
                     cboLossTol.DataBindings.Add("Text", dtFormation, "LossTol");
                     lblFormID.DataBindings.Add("Text", dtFormation, "FormID");
+                    txtCdr.DataBindings.Add("Text", dtFormation, "Cdr");
+                    txtRank.DataBindings.Add("Text", dtFormation, "Rank");
+                    txtFormDate.DataBindings.Add("Text", dtFormation, "FormDate");
+
 
                     foreach (XElement formation in force.Descendants("FORMATION").Where(f => f.Parent.Attribute("ID").Value == forceID))
                     {
                         dtFormation.Rows.Add(formation.Attribute("NAME").Value, formation.Attribute("PROFICIENCY").Value,
                             formation.Attribute("SUPPLY").Value, formation.Attribute("SUPPORTSCOPE").Value,
-                            formation.Attribute("ORDERS").Value, formation.Attribute("EMPHASIS").Value, formation.Attribute("ID").Value);
+                            formation.Attribute("ORDERS").Value, formation.Attribute("EMPHASIS").Value, formation.Attribute("ID").Value,
+                            formation.Attribute("CDR").Value, formation.Attribute("RANK").Value, formation.Attribute("FORMDATE").Value);
                     }
 
                     drForce.DataSource = dtFormation;
@@ -731,13 +740,13 @@ namespace TOAWXML
                     drForce.Visible = false;
                     drFormation.Visible = true;
                     drFormation.Location = new Point(216, 84);
-                    drFormation.Size = new Size(951, 500);
+                    drFormation.Size = new Size(1097, 500);
                     drUnit.Visible = false;
 
                     pnlForce.Visible = false;
                     pnlFormation.Visible = true;
                     pnlFormation.Location = new Point(221, 33);
-                    pnlFormation.Size = new Size(944, 46);
+                    pnlFormation.Size = new Size(1097, 46);
                     pnlUnit.Visible = false;
 
                     txtUnitName.Visible = true;
@@ -750,6 +759,9 @@ namespace TOAWXML
                     cboExp.Visible = true;
                     cboReplace.Visible = true;
                     cboUnitOrders.Visible = true;
+                    txtUnitCdr.Visible = true;
+                    txtUnitRank.Visible = true;
+                    txtUnitDate.Visible = true;
 
                     xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID =" + formid + "]";
                     var units = tacFile.XPathSelectElements(xpath);
@@ -761,6 +773,9 @@ namespace TOAWXML
                     cboHdrFormSupport.Text = units.First().Attribute("SUPPORTSCOPE").Value;
                     cboHdrFormOrders.Text = units.First().Attribute("ORDERS").Value;
                     cboHdrFormLossTol.Text = units.First().Attribute("EMPHASIS").Value;
+                    txtHdrFormCdr.Text = units.First().Attribute("CDR").Value;
+                    txtHdrFormRank.Text = units.First().Attribute("RANK").Value;
+                    txtHdrFormDate.Text = units.First().Attribute("FORMDATE").Value;
 
                     //SET DATABINDINGS
                     txtUnitName.DataBindings.Clear();
@@ -774,6 +789,9 @@ namespace TOAWXML
                     cboExp.DataBindings.Clear();
                     cboReplace.DataBindings.Clear();
                     lblUnitID.DataBindings.Clear();
+                    txtUnitCdr.DataBindings.Clear();
+                    txtUnitRank.DataBindings.Clear();
+                    txtUnitDate.DataBindings.Clear();
 
                     txtUnitName.DataBindings.Add("Text", dtUnit, "UnitName");
                     txtUnitProf.DataBindings.Add("Text", dtUnit, "UnitProf");
@@ -786,6 +804,9 @@ namespace TOAWXML
                     cboExp.DataBindings.Add("Text", dtUnit, "UnitExp");
                     cboReplace.DataBindings.Add("Text", dtUnit, "UnitReplace");
                     lblUnitID.DataBindings.Add("Text", dtUnit, "UnitID");
+                    txtUnitCdr.DataBindings.Add("Text", dtUnit, "Cdr");
+                    txtUnitRank.DataBindings.Add("Text", dtUnit, "Rank");
+                    txtUnitDate.DataBindings.Add("Text", dtUnit, "FormDate");
 
                     drFormation.DataSource = dtUnit;
 
@@ -806,7 +827,8 @@ namespace TOAWXML
                         dtUnit.Rows.Add(unit.Attribute("NAME").Value, unit.Attribute("PROFICIENCY").Value,
                             unit.Attribute("SUPPLY").Value, unitorders, unit.Attribute("EMPHASIS").Value,
                             unit.Attribute("READINESS").Value, iconDisplay, unit.Attribute("SIZE").Value,
-                            unit.Attribute("EXPERIENCE").Value, replacePriority, unit.Attribute("ID").Value);
+                            unit.Attribute("EXPERIENCE").Value, replacePriority, unit.Attribute("ID").Value,
+                            unit.Attribute("CDR").Value, unit.Attribute("RANK").Value, unit.Attribute("FORMDATE").Value);
                     }
 
                     drFormation.DataSource = dtUnit;
@@ -959,7 +981,7 @@ namespace TOAWXML
                     pnlFormation.Visible = false;
                     pnlUnit.Visible = true;
                     pnlUnit.Location = new Point(221, 33);
-                    pnlUnit.Size = new Size(944, 46);
+                    pnlUnit.Size = new Size(1097, 46);
 
                     dtEquip.Clear();
 
@@ -974,6 +996,9 @@ namespace TOAWXML
                     cboHdrUnitSize.Text = equipment.Attribute("SIZE").Value;
                     cboHdrUnitLossTol.Text = equipment.Attribute("EMPHASIS").Value;
                     cboHdrUnitExp.Text = equipment.Attribute("EXPERIENCE").Value;
+                    txtHdrUnitCdr.Text = equipment.Attribute("CDR").Value;
+                    txtHdrUnitRank.Text = equipment.Attribute("RANK").Value;
+                    txtHdrUnitDate.Text = equipment.Attribute("FORMDATE").Value;
 
                     replacePriority = GetReplacementPriorityText(equipment.Attribute("REPLACEMENTPRIORITY").Value);
                     iconID = "";
@@ -4583,6 +4608,105 @@ namespace TOAWXML
             string replaceID = GetReplacementPriorityID(cboHdrUnitReplace.Text);
             unit.Attribute("REPLACEMENTPRIORITY").Value = replaceID;
         }
+
+        private void txtCdr_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drForce.CurrentItemIndex;
+            string formID = "";
+            Control cdr = null;
+
+            foreach (DataRepeaterItem row in drForce.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblFormID", true).First();
+                    cdr = row.Controls.Find("txtCdr", true).First();
+                    formID = label.Text;
+
+                    if (!cdr.Focused) return;
+
+                   //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID= " + formID + "]";
+                    var formation = tacFile.XPathSelectElement(xpath);
+                    if (cdr.Text != null) formation.Attribute("CDR").Value = cdr.Text;
+                }
+            }
+        }
+
+        private void txtRank_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drForce.CurrentItemIndex;
+            string formID = "";
+            Control rank = null;
+
+            foreach (DataRepeaterItem row in drForce.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblFormID", true).First();
+                    rank = row.Controls.Find("txtRank", true).First();
+                    formID = label.Text;
+
+                    if (!rank.Focused) return;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION[@ID= " + formID + "]";
+                    var formation = tacFile.XPathSelectElement(xpath);
+                    if (rank.Text != null) formation.Attribute("RANK").Value = rank.Text;
+                }
+            }
+        }
+
+        private void txtUnitCdr_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+            Control cdr = null;
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    cdr = row.Controls.Find("txtUnitCdr", true).First();
+                    unitID = label.Text;
+
+                    if (!cdr.Focused) return;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+                    if (cdr.Text != null) unit.Attribute("CDR").Value = cdr.Text;
+                }
+            }
+        }
+
+        private void txtUnitRank_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drFormation.CurrentItemIndex;
+            string unitID = "";
+            Control rank = null;
+
+            foreach (DataRepeaterItem row in drFormation.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    Control label = row.Controls.Find("lblUnitID", true).First();
+                    rank = row.Controls.Find("txtUnitRank", true).First();
+                    unitID = label.Text;
+
+                    if (!rank.Focused) return;
+
+                    //CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
+                    var unit = tacFile.XPathSelectElement(xpath);
+                    if (rank.Text != null) unit.Attribute("RANK").Value = rank.Text;
+                }
+            }
+        }
     }
+
+        //}
+    //}
 }
 
