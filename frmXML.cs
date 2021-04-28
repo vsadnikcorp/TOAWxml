@@ -1125,7 +1125,6 @@ namespace TOAWXML
                         txtEntryTurn.Visible = false;
                         lblEntryTurn.Visible = false;
                         tssLabel1.Text = "";
-                        //lblEntryDate.Visible = false;
 
                         if ((unit.Parent.Attribute("STATUS").Value.ToString() == "24") || unit.Parent.Attribute("PARENT") != null) //IF UNIT DIVIDED PARENT OR SUBUNIT
                         {
@@ -1143,6 +1142,7 @@ namespace TOAWXML
 
             btnSave.Enabled = true;
         }
+
         private async void rbForce1_CheckedChanged(object sender, EventArgs e)
         {
             ssMainProgress.Visible = true;

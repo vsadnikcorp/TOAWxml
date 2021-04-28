@@ -50,6 +50,12 @@ namespace TOAWXML
             this.txtProf = new System.Windows.Forms.TextBox();
             this.txtSupply = new System.Windows.Forms.TextBox();
             this.drForce = new Microsoft.VisualBasic.PowerPacks.DataRepeater();
+            this.label30 = new System.Windows.Forms.Label();
+            this.txtFormDate = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.txtRank = new System.Windows.Forms.TextBox();
+            this.txtCdr = new System.Windows.Forms.TextBox();
             this.lblFormID = new System.Windows.Forms.Label();
             this.lblOrders = new System.Windows.Forms.Label();
             this.cboOrders = new System.Windows.Forms.ComboBox();
@@ -61,6 +67,12 @@ namespace TOAWXML
             this.lblProf = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.drFormation = new Microsoft.VisualBasic.PowerPacks.DataRepeater();
+            this.label33 = new System.Windows.Forms.Label();
+            this.txtUnitDate = new System.Windows.Forms.TextBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.txtUnitRank = new System.Windows.Forms.TextBox();
+            this.txtUnitCdr = new System.Windows.Forms.TextBox();
             this.lblUnitID = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.txtUnitReadiness = new System.Windows.Forms.TextBox();
@@ -86,6 +98,10 @@ namespace TOAWXML
             this.lblEquipName = new System.Windows.Forms.Label();
             this.txtEquipName = new System.Windows.Forms.TextBox();
             this.pnlForce = new System.Windows.Forms.Panel();
+            this.lblForceRank = new System.Windows.Forms.Label();
+            this.lblForceCdr = new System.Windows.Forms.Label();
+            this.txtHdrForceRank = new System.Windows.Forms.TextBox();
+            this.txtHdrForceCdr = new System.Windows.Forms.TextBox();
             this.btnForceAttribs = new System.Windows.Forms.Button();
             this.txtHdrForceSupply = new System.Windows.Forms.TextBox();
             this.txtHdrForceProf = new System.Windows.Forms.TextBox();
@@ -94,6 +110,12 @@ namespace TOAWXML
             this.lblForceProf = new System.Windows.Forms.Label();
             this.lblForceName = new System.Windows.Forms.Label();
             this.pnlFormation = new System.Windows.Forms.Panel();
+            this.label26 = new System.Windows.Forms.Label();
+            this.txtHdrFormDate = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.txtHdrFormRank = new System.Windows.Forms.TextBox();
+            this.txtHdrFormCdr = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.cboHdrFormLossTol = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -107,6 +129,12 @@ namespace TOAWXML
             this.lblHdrFormProf = new System.Windows.Forms.Label();
             this.lblHdrFormName = new System.Windows.Forms.Label();
             this.pnlUnit = new System.Windows.Forms.Panel();
+            this.label27 = new System.Windows.Forms.Label();
+            this.txtHdrUnitDate = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.txtHdrUnitRank = new System.Windows.Forms.TextBox();
+            this.txtHdrUnitCdr = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.cboHdrUnitReplace = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -128,34 +156,52 @@ namespace TOAWXML
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.txtHdrForceCdr = new System.Windows.Forms.TextBox();
-            this.txtHdrForceRank = new System.Windows.Forms.TextBox();
-            this.lblForceCdr = new System.Windows.Forms.Label();
-            this.lblForceRank = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.txtHdrFormRank = new System.Windows.Forms.TextBox();
-            this.txtHdrFormCdr = new System.Windows.Forms.TextBox();
-            this.txtHdrFormDate = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.txtHdrUnitDate = new System.Windows.Forms.TextBox();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.txtHdrUnitRank = new System.Windows.Forms.TextBox();
-            this.txtHdrUnitCdr = new System.Windows.Forms.TextBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.txtFormDate = new System.Windows.Forms.TextBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.txtRank = new System.Windows.Forms.TextBox();
-            this.txtCdr = new System.Windows.Forms.TextBox();
-            this.label33 = new System.Windows.Forms.Label();
-            this.txtUnitDate = new System.Windows.Forms.TextBox();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.txtUnitRank = new System.Windows.Forms.TextBox();
-            this.txtUnitCdr = new System.Windows.Forms.TextBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.txtRating = new System.Windows.Forms.TextBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.txtUnitRating = new System.Windows.Forms.TextBox();
+            this.label38 = new System.Windows.Forms.Label();
+            this.txtHdrFormRating = new System.Windows.Forms.TextBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.txtHdrUnitRating = new System.Windows.Forms.TextBox();
+            this.label40 = new System.Windows.Forms.Label();
+            this.txtHdrForceRating = new System.Windows.Forms.TextBox();
+            this.txtEqpID = new System.Windows.Forms.TextBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.txtEqpExp = new System.Windows.Forms.TextBox();
+            this.label42 = new System.Windows.Forms.Label();
+            this.chbCas = new System.Windows.Forms.CheckBox();
+            this.chbEqpCas = new System.Windows.Forms.CheckBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.txtKills = new System.Windows.Forms.TextBox();
+            this.label44 = new System.Windows.Forms.Label();
+            this.txtEqpCdr = new System.Windows.Forms.TextBox();
+            this.label45 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label46 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.label47 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label48 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label49 = new System.Windows.Forms.Label();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.label50 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label51 = new System.Windows.Forms.Label();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.label52 = new System.Windows.Forms.Label();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.label53 = new System.Windows.Forms.Label();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.label54 = new System.Windows.Forms.Label();
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.lblDamage = new System.Windows.Forms.Label();
+            this.txtDamage = new System.Windows.Forms.TextBox();
             this.gbForce.SuspendLayout();
             this.ssTac.SuspendLayout();
             this.drForce.ItemTemplate.SuspendLayout();
@@ -356,6 +402,8 @@ namespace TOAWXML
             // 
             // drForce.ItemTemplate
             // 
+            this.drForce.ItemTemplate.Controls.Add(this.label36);
+            this.drForce.ItemTemplate.Controls.Add(this.txtRating);
             this.drForce.ItemTemplate.Controls.Add(this.label30);
             this.drForce.ItemTemplate.Controls.Add(this.txtFormDate);
             this.drForce.ItemTemplate.Controls.Add(this.label31);
@@ -381,6 +429,61 @@ namespace TOAWXML
             this.drForce.Size = new System.Drawing.Size(1101, 511);
             this.drForce.TabIndex = 34;
             this.drForce.Text = "drForce";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(767, 4);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(82, 13);
+            this.label30.TabIndex = 58;
+            this.label30.Text = "Formation Date:";
+            // 
+            // txtFormDate
+            // 
+            this.txtFormDate.Location = new System.Drawing.Point(766, 17);
+            this.txtFormDate.Name = "txtFormDate";
+            this.txtFormDate.ReadOnly = true;
+            this.txtFormDate.Size = new System.Drawing.Size(83, 20);
+            this.txtFormDate.TabIndex = 57;
+            this.txtFormDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(683, 2);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(36, 13);
+            this.label31.TabIndex = 56;
+            this.label31.Text = "Rank:";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(575, 2);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(66, 13);
+            this.label32.TabIndex = 55;
+            this.label32.Text = "Commander:";
+            // 
+            // txtRank
+            // 
+            this.txtRank.Location = new System.Drawing.Point(684, 18);
+            this.txtRank.Name = "txtRank";
+            this.txtRank.Size = new System.Drawing.Size(30, 20);
+            this.txtRank.TabIndex = 54;
+            this.txtRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtRank.Leave += new System.EventHandler(this.txtRank_Leave);
+            this.txtRank.MouseLeave += new System.EventHandler(this.txtRank_MouseLeave);
+            // 
+            // txtCdr
+            // 
+            this.txtCdr.Location = new System.Drawing.Point(575, 18);
+            this.txtCdr.Name = "txtCdr";
+            this.txtCdr.Size = new System.Drawing.Size(102, 20);
+            this.txtCdr.TabIndex = 53;
+            this.txtCdr.Leave += new System.EventHandler(this.txtCdr_Leave);
+            this.txtCdr.MouseLeave += new System.EventHandler(this.txtCdr_MouseLeave);
             // 
             // lblFormID
             // 
@@ -506,6 +609,8 @@ namespace TOAWXML
             // 
             // drFormation.ItemTemplate
             // 
+            this.drFormation.ItemTemplate.Controls.Add(this.label37);
+            this.drFormation.ItemTemplate.Controls.Add(this.txtUnitRating);
             this.drFormation.ItemTemplate.Controls.Add(this.label33);
             this.drFormation.ItemTemplate.Controls.Add(this.txtUnitDate);
             this.drFormation.ItemTemplate.Controls.Add(this.label34);
@@ -539,6 +644,61 @@ namespace TOAWXML
             this.drFormation.Size = new System.Drawing.Size(1097, 68);
             this.drFormation.TabIndex = 43;
             this.drFormation.Text = "dataRepeater2";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(1001, 6);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(59, 13);
+            this.label33.TabIndex = 92;
+            this.label33.Text = "Form Date:";
+            // 
+            // txtUnitDate
+            // 
+            this.txtUnitDate.Location = new System.Drawing.Point(1003, 19);
+            this.txtUnitDate.Name = "txtUnitDate";
+            this.txtUnitDate.ReadOnly = true;
+            this.txtUnitDate.Size = new System.Drawing.Size(70, 20);
+            this.txtUnitDate.TabIndex = 91;
+            this.txtUnitDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(922, 5);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(36, 13);
+            this.label34.TabIndex = 90;
+            this.label34.Text = "Rank:";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(837, 5);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(66, 13);
+            this.label35.TabIndex = 89;
+            this.label35.Text = "Commander:";
+            // 
+            // txtUnitRank
+            // 
+            this.txtUnitRank.Location = new System.Drawing.Point(924, 19);
+            this.txtUnitRank.Name = "txtUnitRank";
+            this.txtUnitRank.Size = new System.Drawing.Size(30, 20);
+            this.txtUnitRank.TabIndex = 88;
+            this.txtUnitRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtUnitRank.Leave += new System.EventHandler(this.txtUnitRank_Leave);
+            this.txtUnitRank.MouseLeave += new System.EventHandler(this.txtUnitRank_MouseLeave);
+            // 
+            // txtUnitCdr
+            // 
+            this.txtUnitCdr.Location = new System.Drawing.Point(837, 19);
+            this.txtUnitCdr.Name = "txtUnitCdr";
+            this.txtUnitCdr.Size = new System.Drawing.Size(83, 20);
+            this.txtUnitCdr.TabIndex = 87;
+            this.txtUnitCdr.Leave += new System.EventHandler(this.txtUnitCdr_Leave);
+            this.txtUnitCdr.MouseLeave += new System.EventHandler(this.txtUnitCdr_MouseLeave);
             // 
             // lblUnitID
             // 
@@ -937,8 +1097,44 @@ namespace TOAWXML
             // 
             // drUnit.ItemTemplate
             // 
+            this.drUnit.ItemTemplate.Controls.Add(this.lblDamage);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtDamage);
+            this.drUnit.ItemTemplate.Controls.Add(this.label44);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtEqpCdr);
+            this.drUnit.ItemTemplate.Controls.Add(this.label43);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtKills);
+            this.drUnit.ItemTemplate.Controls.Add(this.chbEqpCas);
+            this.drUnit.ItemTemplate.Controls.Add(this.chbCas);
+            this.drUnit.ItemTemplate.Controls.Add(this.label42);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtEqpExp);
+            this.drUnit.ItemTemplate.Controls.Add(this.label41);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtEqpID);
             this.drUnit.ItemTemplate.Controls.Add(this.lblEquipName);
             this.drUnit.ItemTemplate.Controls.Add(this.txtEquipName);
+            this.drUnit.ItemTemplate.Controls.Add(this.label46);
+            this.drUnit.ItemTemplate.Controls.Add(this.textBox2);
+            this.drUnit.ItemTemplate.Controls.Add(this.label45);
+            this.drUnit.ItemTemplate.Controls.Add(this.textBox1);
+            this.drUnit.ItemTemplate.Controls.Add(this.checkBox1);
+            this.drUnit.ItemTemplate.Controls.Add(this.checkBox2);
+            this.drUnit.ItemTemplate.Controls.Add(this.label47);
+            this.drUnit.ItemTemplate.Controls.Add(this.textBox3);
+            this.drUnit.ItemTemplate.Controls.Add(this.label48);
+            this.drUnit.ItemTemplate.Controls.Add(this.textBox4);
+            this.drUnit.ItemTemplate.Controls.Add(this.label49);
+            this.drUnit.ItemTemplate.Controls.Add(this.textBox5);
+            this.drUnit.ItemTemplate.Controls.Add(this.label51);
+            this.drUnit.ItemTemplate.Controls.Add(this.textBox7);
+            this.drUnit.ItemTemplate.Controls.Add(this.label50);
+            this.drUnit.ItemTemplate.Controls.Add(this.textBox6);
+            this.drUnit.ItemTemplate.Controls.Add(this.checkBox3);
+            this.drUnit.ItemTemplate.Controls.Add(this.checkBox4);
+            this.drUnit.ItemTemplate.Controls.Add(this.label52);
+            this.drUnit.ItemTemplate.Controls.Add(this.textBox8);
+            this.drUnit.ItemTemplate.Controls.Add(this.label53);
+            this.drUnit.ItemTemplate.Controls.Add(this.textBox9);
+            this.drUnit.ItemTemplate.Controls.Add(this.label54);
+            this.drUnit.ItemTemplate.Controls.Add(this.textBox10);
             this.drUnit.ItemTemplate.Size = new System.Drawing.Size(1089, 45);
             this.drUnit.Location = new System.Drawing.Point(216, 381);
             this.drUnit.Name = "drUnit";
@@ -949,7 +1145,7 @@ namespace TOAWXML
             // lblEquipName
             // 
             this.lblEquipName.AutoSize = true;
-            this.lblEquipName.Location = new System.Drawing.Point(4, 1);
+            this.lblEquipName.Location = new System.Drawing.Point(41, 0);
             this.lblEquipName.Name = "lblEquipName";
             this.lblEquipName.Size = new System.Drawing.Size(38, 13);
             this.lblEquipName.TabIndex = 58;
@@ -957,7 +1153,7 @@ namespace TOAWXML
             // 
             // txtEquipName
             // 
-            this.txtEquipName.Location = new System.Drawing.Point(3, 17);
+            this.txtEquipName.Location = new System.Drawing.Point(40, 16);
             this.txtEquipName.Name = "txtEquipName";
             this.txtEquipName.ReadOnly = true;
             this.txtEquipName.Size = new System.Drawing.Size(152, 20);
@@ -966,6 +1162,8 @@ namespace TOAWXML
             // pnlForce
             // 
             this.pnlForce.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlForce.Controls.Add(this.label40);
+            this.pnlForce.Controls.Add(this.txtHdrForceRating);
             this.pnlForce.Controls.Add(this.lblForceRank);
             this.pnlForce.Controls.Add(this.lblForceCdr);
             this.pnlForce.Controls.Add(this.txtHdrForceRank);
@@ -983,10 +1181,47 @@ namespace TOAWXML
             this.pnlForce.TabIndex = 56;
             this.pnlForce.Visible = false;
             // 
+            // lblForceRank
+            // 
+            this.lblForceRank.AutoSize = true;
+            this.lblForceRank.Location = new System.Drawing.Point(347, 4);
+            this.lblForceRank.Name = "lblForceRank";
+            this.lblForceRank.Size = new System.Drawing.Size(36, 13);
+            this.lblForceRank.TabIndex = 10;
+            this.lblForceRank.Text = "Rank:";
+            // 
+            // lblForceCdr
+            // 
+            this.lblForceCdr.AutoSize = true;
+            this.lblForceCdr.Location = new System.Drawing.Point(239, 4);
+            this.lblForceCdr.Name = "lblForceCdr";
+            this.lblForceCdr.Size = new System.Drawing.Size(66, 13);
+            this.lblForceCdr.TabIndex = 9;
+            this.lblForceCdr.Text = "Commander:";
+            // 
+            // txtHdrForceRank
+            // 
+            this.txtHdrForceRank.Location = new System.Drawing.Point(348, 20);
+            this.txtHdrForceRank.Name = "txtHdrForceRank";
+            this.txtHdrForceRank.Size = new System.Drawing.Size(30, 20);
+            this.txtHdrForceRank.TabIndex = 8;
+            this.txtHdrForceRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtHdrForceRank.Leave += new System.EventHandler(this.txtHdrForceRank_Leave);
+            this.txtHdrForceRank.MouseLeave += new System.EventHandler(this.txtHdrForceRank_MouseLeave);
+            // 
+            // txtHdrForceCdr
+            // 
+            this.txtHdrForceCdr.Location = new System.Drawing.Point(239, 20);
+            this.txtHdrForceCdr.Name = "txtHdrForceCdr";
+            this.txtHdrForceCdr.Size = new System.Drawing.Size(102, 20);
+            this.txtHdrForceCdr.TabIndex = 7;
+            this.txtHdrForceCdr.Leave += new System.EventHandler(this.txtHdrForceCdr_Leave);
+            this.txtHdrForceCdr.MouseLeave += new System.EventHandler(this.txtHdrForceCdr_MouseLeave);
+            // 
             // btnForceAttribs
             // 
             this.btnForceAttribs.Enabled = false;
-            this.btnForceAttribs.Location = new System.Drawing.Point(400, 12);
+            this.btnForceAttribs.Location = new System.Drawing.Point(437, 12);
             this.btnForceAttribs.Name = "btnForceAttribs";
             this.btnForceAttribs.Size = new System.Drawing.Size(95, 31);
             this.btnForceAttribs.TabIndex = 6;
@@ -1054,6 +1289,8 @@ namespace TOAWXML
             // pnlFormation
             // 
             this.pnlFormation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlFormation.Controls.Add(this.label38);
+            this.pnlFormation.Controls.Add(this.txtHdrFormRating);
             this.pnlFormation.Controls.Add(this.label26);
             this.pnlFormation.Controls.Add(this.txtHdrFormDate);
             this.pnlFormation.Controls.Add(this.label24);
@@ -1077,6 +1314,61 @@ namespace TOAWXML
             this.pnlFormation.Size = new System.Drawing.Size(1097, 53);
             this.pnlFormation.TabIndex = 57;
             this.pnlFormation.Visible = false;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(779, 5);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(82, 13);
+            this.label26.TabIndex = 52;
+            this.label26.Text = "Formation Date:";
+            // 
+            // txtHdrFormDate
+            // 
+            this.txtHdrFormDate.Location = new System.Drawing.Point(778, 18);
+            this.txtHdrFormDate.Name = "txtHdrFormDate";
+            this.txtHdrFormDate.ReadOnly = true;
+            this.txtHdrFormDate.Size = new System.Drawing.Size(83, 20);
+            this.txtHdrFormDate.TabIndex = 51;
+            this.txtHdrFormDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(699, 2);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(36, 13);
+            this.label24.TabIndex = 50;
+            this.label24.Text = "Rank:";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(592, 2);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(66, 13);
+            this.label25.TabIndex = 49;
+            this.label25.Text = "Commander:";
+            // 
+            // txtHdrFormRank
+            // 
+            this.txtHdrFormRank.Location = new System.Drawing.Point(698, 18);
+            this.txtHdrFormRank.Name = "txtHdrFormRank";
+            this.txtHdrFormRank.Size = new System.Drawing.Size(30, 20);
+            this.txtHdrFormRank.TabIndex = 48;
+            this.txtHdrFormRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtHdrFormRank.Leave += new System.EventHandler(this.txtHdrFormRank_Leave);
+            this.txtHdrFormRank.MouseLeave += new System.EventHandler(this.txtHdrFormRank_MouseLeave);
+            // 
+            // txtHdrFormCdr
+            // 
+            this.txtHdrFormCdr.Location = new System.Drawing.Point(592, 18);
+            this.txtHdrFormCdr.Name = "txtHdrFormCdr";
+            this.txtHdrFormCdr.Size = new System.Drawing.Size(102, 20);
+            this.txtHdrFormCdr.TabIndex = 47;
+            this.txtHdrFormCdr.Leave += new System.EventHandler(this.txtHdrFormCdr_Leave);
+            this.txtHdrFormCdr.MouseLeave += new System.EventHandler(this.txtHdrFormCdr_MouseLeave);
             // 
             // label16
             // 
@@ -1221,6 +1513,8 @@ namespace TOAWXML
             // pnlUnit
             // 
             this.pnlUnit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlUnit.Controls.Add(this.label39);
+            this.pnlUnit.Controls.Add(this.txtHdrUnitRating);
             this.pnlUnit.Controls.Add(this.label27);
             this.pnlUnit.Controls.Add(this.txtHdrUnitDate);
             this.pnlUnit.Controls.Add(this.label28);
@@ -1252,6 +1546,61 @@ namespace TOAWXML
             this.pnlUnit.Size = new System.Drawing.Size(1097, 53);
             this.pnlUnit.TabIndex = 58;
             this.pnlUnit.Visible = false;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(1019, 6);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(59, 13);
+            this.label27.TabIndex = 86;
+            this.label27.Text = "Form Date:";
+            // 
+            // txtHdrUnitDate
+            // 
+            this.txtHdrUnitDate.Location = new System.Drawing.Point(1020, 19);
+            this.txtHdrUnitDate.Name = "txtHdrUnitDate";
+            this.txtHdrUnitDate.ReadOnly = true;
+            this.txtHdrUnitDate.Size = new System.Drawing.Size(72, 20);
+            this.txtHdrUnitDate.TabIndex = 85;
+            this.txtHdrUnitDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(942, 5);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(36, 13);
+            this.label28.TabIndex = 84;
+            this.label28.Text = "Rank:";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(857, 5);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(66, 13);
+            this.label29.TabIndex = 83;
+            this.label29.Text = "Commander:";
+            // 
+            // txtHdrUnitRank
+            // 
+            this.txtHdrUnitRank.Location = new System.Drawing.Point(943, 19);
+            this.txtHdrUnitRank.Name = "txtHdrUnitRank";
+            this.txtHdrUnitRank.Size = new System.Drawing.Size(30, 20);
+            this.txtHdrUnitRank.TabIndex = 82;
+            this.txtHdrUnitRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtHdrUnitRank.Leave += new System.EventHandler(this.txtHdrUnitRank_Leave);
+            this.txtHdrUnitRank.MouseLeave += new System.EventHandler(this.txtHdrUnitRank_MouseLeave);
+            // 
+            // txtHdrUnitCdr
+            // 
+            this.txtHdrUnitCdr.Location = new System.Drawing.Point(857, 19);
+            this.txtHdrUnitCdr.Name = "txtHdrUnitCdr";
+            this.txtHdrUnitCdr.Size = new System.Drawing.Size(83, 20);
+            this.txtHdrUnitCdr.TabIndex = 81;
+            this.txtHdrUnitCdr.Leave += new System.EventHandler(this.txtHdrUnitCdr_Leave);
+            this.txtHdrUnitCdr.MouseLeave += new System.EventHandler(this.txtHdrUnitCdr_MouseLeave);
             // 
             // label18
             // 
@@ -1637,246 +1986,406 @@ namespace TOAWXML
             this.label13.TabIndex = 12;
             this.label13.Text = "Name:";
             // 
-            // txtHdrForceCdr
+            // label36
             // 
-            this.txtHdrForceCdr.Location = new System.Drawing.Point(239, 20);
-            this.txtHdrForceCdr.Name = "txtHdrForceCdr";
-            this.txtHdrForceCdr.Size = new System.Drawing.Size(102, 20);
-            this.txtHdrForceCdr.TabIndex = 7;
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(719, 2);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(41, 13);
+            this.label36.TabIndex = 60;
+            this.label36.Text = "Rating:";
             // 
-            // txtHdrForceRank
+            // txtRating
             // 
-            this.txtHdrForceRank.Location = new System.Drawing.Point(348, 20);
-            this.txtHdrForceRank.Name = "txtHdrForceRank";
-            this.txtHdrForceRank.Size = new System.Drawing.Size(40, 20);
-            this.txtHdrForceRank.TabIndex = 8;
-            this.txtHdrForceRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtRating.Location = new System.Drawing.Point(720, 18);
+            this.txtRating.Name = "txtRating";
+            this.txtRating.Size = new System.Drawing.Size(40, 20);
+            this.txtRating.TabIndex = 59;
+            this.txtRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtRating.Leave += new System.EventHandler(this.txtRating_Leave);
+            this.txtRating.MouseLeave += new System.EventHandler(this.txtRating_MouseLeave);
             // 
-            // lblForceCdr
+            // label37
             // 
-            this.lblForceCdr.AutoSize = true;
-            this.lblForceCdr.Location = new System.Drawing.Point(239, 4);
-            this.lblForceCdr.Name = "lblForceCdr";
-            this.lblForceCdr.Size = new System.Drawing.Size(66, 13);
-            this.lblForceCdr.TabIndex = 9;
-            this.lblForceCdr.Text = "Commander:";
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(957, 5);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(41, 13);
+            this.label37.TabIndex = 94;
+            this.label37.Text = "Rating:";
             // 
-            // lblForceRank
+            // txtUnitRating
             // 
-            this.lblForceRank.AutoSize = true;
-            this.lblForceRank.Location = new System.Drawing.Point(349, 4);
-            this.lblForceRank.Name = "lblForceRank";
-            this.lblForceRank.Size = new System.Drawing.Size(36, 13);
-            this.lblForceRank.TabIndex = 10;
-            this.lblForceRank.Text = "Rank:";
+            this.txtUnitRating.Location = new System.Drawing.Point(959, 19);
+            this.txtUnitRating.Name = "txtUnitRating";
+            this.txtUnitRating.Size = new System.Drawing.Size(40, 20);
+            this.txtUnitRating.TabIndex = 93;
+            this.txtUnitRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtUnitRating.Leave += new System.EventHandler(this.txtUnitRating_Leave);
+            this.txtUnitRating.MouseLeave += new System.EventHandler(this.txtUnitRating_MouseLeave);
             // 
-            // label24
+            // label38
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(702, 2);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(36, 13);
-            this.label24.TabIndex = 50;
-            this.label24.Text = "Rank:";
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(734, 2);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(41, 13);
+            this.label38.TabIndex = 54;
+            this.label38.Text = "Rating:";
             // 
-            // label25
+            // txtHdrFormRating
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(592, 2);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(66, 13);
-            this.label25.TabIndex = 49;
-            this.label25.Text = "Commander:";
+            this.txtHdrFormRating.Location = new System.Drawing.Point(733, 18);
+            this.txtHdrFormRating.Name = "txtHdrFormRating";
+            this.txtHdrFormRating.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrFormRating.TabIndex = 53;
+            this.txtHdrFormRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtHdrFormRating.Leave += new System.EventHandler(this.txtHdrFormRating_Leave);
+            this.txtHdrFormRating.MouseLeave += new System.EventHandler(this.txtHdrFormRating_MouseLeave);
             // 
-            // txtHdrFormRank
+            // label39
             // 
-            this.txtHdrFormRank.Location = new System.Drawing.Point(701, 18);
-            this.txtHdrFormRank.Name = "txtHdrFormRank";
-            this.txtHdrFormRank.Size = new System.Drawing.Size(40, 20);
-            this.txtHdrFormRank.TabIndex = 48;
-            this.txtHdrFormRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(976, 5);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(41, 13);
+            this.label39.TabIndex = 88;
+            this.label39.Text = "Rating:";
             // 
-            // txtHdrFormCdr
+            // txtHdrUnitRating
             // 
-            this.txtHdrFormCdr.Location = new System.Drawing.Point(592, 18);
-            this.txtHdrFormCdr.Name = "txtHdrFormCdr";
-            this.txtHdrFormCdr.Size = new System.Drawing.Size(102, 20);
-            this.txtHdrFormCdr.TabIndex = 47;
+            this.txtHdrUnitRating.Location = new System.Drawing.Point(977, 19);
+            this.txtHdrUnitRating.Name = "txtHdrUnitRating";
+            this.txtHdrUnitRating.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrUnitRating.TabIndex = 87;
+            this.txtHdrUnitRating.TabStop = false;
+            this.txtHdrUnitRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtHdrUnitRating.Leave += new System.EventHandler(this.txtHdrUnitRating_Leave);
+            this.txtHdrUnitRating.MouseLeave += new System.EventHandler(this.txtHdrUnitRating_MouseLeave);
             // 
-            // txtHdrFormDate
+            // label40
             // 
-            this.txtHdrFormDate.Location = new System.Drawing.Point(750, 17);
-            this.txtHdrFormDate.Name = "txtHdrFormDate";
-            this.txtHdrFormDate.ReadOnly = true;
-            this.txtHdrFormDate.Size = new System.Drawing.Size(83, 20);
-            this.txtHdrFormDate.TabIndex = 51;
-            this.txtHdrFormDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(389, 4);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(41, 13);
+            this.label40.TabIndex = 12;
+            this.label40.Text = "Rating:";
             // 
-            // label26
+            // txtHdrForceRating
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(751, 4);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(82, 13);
-            this.label26.TabIndex = 52;
-            this.label26.Text = "Formation Date:";
+            this.txtHdrForceRating.Location = new System.Drawing.Point(388, 20);
+            this.txtHdrForceRating.Name = "txtHdrForceRating";
+            this.txtHdrForceRating.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrForceRating.TabIndex = 11;
+            this.txtHdrForceRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtHdrForceRating.Leave += new System.EventHandler(this.txtHdrForceRating_Leave);
+            this.txtHdrForceRating.MouseLeave += new System.EventHandler(this.txtHdrForceRating_MouseLeave);
             // 
-            // label27
+            // txtEqpID
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(988, 6);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(59, 13);
-            this.label27.TabIndex = 86;
-            this.label27.Text = "Form Date:";
+            this.txtEqpID.Location = new System.Drawing.Point(7, 16);
+            this.txtEqpID.Name = "txtEqpID";
+            this.txtEqpID.ReadOnly = true;
+            this.txtEqpID.Size = new System.Drawing.Size(23, 20);
+            this.txtEqpID.TabIndex = 59;
             // 
-            // txtHdrUnitDate
+            // label41
             // 
-            this.txtHdrUnitDate.Location = new System.Drawing.Point(989, 19);
-            this.txtHdrUnitDate.Name = "txtHdrUnitDate";
-            this.txtHdrUnitDate.ReadOnly = true;
-            this.txtHdrUnitDate.Size = new System.Drawing.Size(72, 20);
-            this.txtHdrUnitDate.TabIndex = 85;
-            this.txtHdrUnitDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(7, 0);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(21, 13);
+            this.label41.TabIndex = 60;
+            this.label41.Text = "ID:";
             // 
-            // label28
+            // txtEqpExp
             // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(946, 5);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(36, 13);
-            this.label28.TabIndex = 84;
-            this.label28.Text = "Rank:";
+            this.txtEqpExp.Location = new System.Drawing.Point(317, 16);
+            this.txtEqpExp.Name = "txtEqpExp";
+            this.txtEqpExp.Size = new System.Drawing.Size(111, 20);
+            this.txtEqpExp.TabIndex = 61;
             // 
-            // label29
+            // label42
             // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(857, 5);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(66, 13);
-            this.label29.TabIndex = 83;
-            this.label29.Text = "Commander:";
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(317, 0);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(63, 13);
+            this.label42.TabIndex = 62;
+            this.label42.Text = "Experience:";
             // 
-            // txtHdrUnitRank
+            // chbCas
             // 
-            this.txtHdrUnitRank.Location = new System.Drawing.Point(946, 19);
-            this.txtHdrUnitRank.Name = "txtHdrUnitRank";
-            this.txtHdrUnitRank.Size = new System.Drawing.Size(40, 20);
-            this.txtHdrUnitRank.TabIndex = 82;
-            this.txtHdrUnitRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.chbCas.AutoSize = true;
+            this.chbCas.Location = new System.Drawing.Point(478, 19);
+            this.chbCas.Name = "chbCas";
+            this.chbCas.Size = new System.Drawing.Size(66, 17);
+            this.chbCas.TabIndex = 63;
+            this.chbCas.Text = "Casualty";
+            this.chbCas.UseVisualStyleBackColor = true;
             // 
-            // txtHdrUnitCdr
+            // chbEqpCas
             // 
-            this.txtHdrUnitCdr.Location = new System.Drawing.Point(857, 19);
-            this.txtHdrUnitCdr.Name = "txtHdrUnitCdr";
-            this.txtHdrUnitCdr.Size = new System.Drawing.Size(83, 20);
-            this.txtHdrUnitCdr.TabIndex = 81;
+            this.chbEqpCas.AutoSize = true;
+            this.chbEqpCas.Location = new System.Drawing.Point(546, 19);
+            this.chbEqpCas.Name = "chbEqpCas";
+            this.chbEqpCas.Size = new System.Drawing.Size(96, 17);
+            this.chbEqpCas.TabIndex = 64;
+            this.chbEqpCas.Text = "Equip Casualty";
+            this.chbEqpCas.UseVisualStyleBackColor = true;
             // 
-            // label30
+            // label43
             // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(734, 4);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(82, 13);
-            this.label30.TabIndex = 58;
-            this.label30.Text = "Formation Date:";
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(436, 0);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(28, 13);
+            this.label43.TabIndex = 66;
+            this.label43.Text = "Kills:";
             // 
-            // txtFormDate
+            // txtKills
             // 
-            this.txtFormDate.Location = new System.Drawing.Point(733, 17);
-            this.txtFormDate.Name = "txtFormDate";
-            this.txtFormDate.ReadOnly = true;
-            this.txtFormDate.Size = new System.Drawing.Size(83, 20);
-            this.txtFormDate.TabIndex = 57;
-            this.txtFormDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtKills.Location = new System.Drawing.Point(434, 16);
+            this.txtKills.Name = "txtKills";
+            this.txtKills.Size = new System.Drawing.Size(34, 20);
+            this.txtKills.TabIndex = 65;
             // 
-            // label31
+            // label44
             // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(685, 2);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(36, 13);
-            this.label31.TabIndex = 56;
-            this.label31.Text = "Rank:";
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(197, 0);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(66, 13);
+            this.label44.TabIndex = 68;
+            this.label44.Text = "Commander:";
             // 
-            // label32
+            // txtEqpCdr
             // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(575, 2);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(66, 13);
-            this.label32.TabIndex = 55;
-            this.label32.Text = "Commander:";
+            this.txtEqpCdr.Location = new System.Drawing.Point(197, 16);
+            this.txtEqpCdr.Name = "txtEqpCdr";
+            this.txtEqpCdr.Size = new System.Drawing.Size(111, 20);
+            this.txtEqpCdr.TabIndex = 67;
             // 
-            // txtRank
+            // label45
             // 
-            this.txtRank.Location = new System.Drawing.Point(684, 18);
-            this.txtRank.Name = "txtRank";
-            this.txtRank.Size = new System.Drawing.Size(40, 20);
-            this.txtRank.TabIndex = 54;
-            this.txtRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtRank.Leave += new System.EventHandler(this.txtRank_Leave);
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(436, 0);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(28, 13);
+            this.label45.TabIndex = 66;
+            this.label45.Text = "Kills:";
             // 
-            // txtCdr
+            // textBox1
             // 
-            this.txtCdr.Location = new System.Drawing.Point(575, 18);
-            this.txtCdr.Name = "txtCdr";
-            this.txtCdr.Size = new System.Drawing.Size(102, 20);
-            this.txtCdr.TabIndex = 53;
-            this.txtCdr.Leave += new System.EventHandler(this.txtCdr_Leave);
+            this.textBox1.Location = new System.Drawing.Point(434, 16);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(34, 20);
+            this.textBox1.TabIndex = 65;
             // 
-            // label33
+            // label46
             // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(968, 6);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(59, 13);
-            this.label33.TabIndex = 92;
-            this.label33.Text = "Form Date:";
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(197, 0);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(66, 13);
+            this.label46.TabIndex = 68;
+            this.label46.Text = "Commander:";
             // 
-            // txtUnitDate
+            // textBox2
             // 
-            this.txtUnitDate.Location = new System.Drawing.Point(969, 19);
-            this.txtUnitDate.Name = "txtUnitDate";
-            this.txtUnitDate.ReadOnly = true;
-            this.txtUnitDate.Size = new System.Drawing.Size(72, 20);
-            this.txtUnitDate.TabIndex = 91;
-            this.txtUnitDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox2.Location = new System.Drawing.Point(197, 16);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(111, 20);
+            this.textBox2.TabIndex = 67;
             // 
-            // label34
+            // checkBox1
             // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(926, 5);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(36, 13);
-            this.label34.TabIndex = 90;
-            this.label34.Text = "Rank:";
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(546, 19);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(96, 17);
+            this.checkBox1.TabIndex = 64;
+            this.checkBox1.Text = "Equip Casualty";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // label35
+            // checkBox2
             // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(837, 5);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(66, 13);
-            this.label35.TabIndex = 89;
-            this.label35.Text = "Commander:";
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(478, 19);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(66, 17);
+            this.checkBox2.TabIndex = 63;
+            this.checkBox2.Text = "Casualty";
+            this.checkBox2.UseVisualStyleBackColor = true;
             // 
-            // txtUnitRank
+            // label47
             // 
-            this.txtUnitRank.Location = new System.Drawing.Point(926, 19);
-            this.txtUnitRank.Name = "txtUnitRank";
-            this.txtUnitRank.Size = new System.Drawing.Size(40, 20);
-            this.txtUnitRank.TabIndex = 88;
-            this.txtUnitRank.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtUnitRank.Leave += new System.EventHandler(this.txtUnitRank_Leave);
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(317, 0);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(63, 13);
+            this.label47.TabIndex = 62;
+            this.label47.Text = "Experience:";
             // 
-            // txtUnitCdr
+            // textBox3
             // 
-            this.txtUnitCdr.Location = new System.Drawing.Point(837, 19);
-            this.txtUnitCdr.Name = "txtUnitCdr";
-            this.txtUnitCdr.Size = new System.Drawing.Size(83, 20);
-            this.txtUnitCdr.TabIndex = 87;
-            this.txtUnitCdr.Leave += new System.EventHandler(this.txtUnitCdr_Leave);
+            this.textBox3.Location = new System.Drawing.Point(317, 16);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(111, 20);
+            this.textBox3.TabIndex = 61;
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(7, 0);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(21, 13);
+            this.label48.TabIndex = 60;
+            this.label48.Text = "ID:";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(7, 16);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
+            this.textBox4.Size = new System.Drawing.Size(23, 20);
+            this.textBox4.TabIndex = 59;
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(41, 0);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(38, 13);
+            this.label49.TabIndex = 58;
+            this.label49.Text = "Name:";
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(40, 16);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
+            this.textBox5.Size = new System.Drawing.Size(152, 20);
+            this.textBox5.TabIndex = 55;
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(436, 0);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(28, 13);
+            this.label50.TabIndex = 66;
+            this.label50.Text = "Kills:";
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(434, 16);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(34, 20);
+            this.textBox6.TabIndex = 65;
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Location = new System.Drawing.Point(197, 0);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(66, 13);
+            this.label51.TabIndex = 68;
+            this.label51.Text = "Commander:";
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(197, 16);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(111, 20);
+            this.textBox7.TabIndex = 67;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(546, 19);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(96, 17);
+            this.checkBox3.TabIndex = 64;
+            this.checkBox3.Text = "Equip Casualty";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(478, 19);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(66, 17);
+            this.checkBox4.TabIndex = 63;
+            this.checkBox4.Text = "Casualty";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(317, 0);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(63, 13);
+            this.label52.TabIndex = 62;
+            this.label52.Text = "Experience:";
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(317, 16);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(111, 20);
+            this.textBox8.TabIndex = 61;
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Location = new System.Drawing.Point(7, 0);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(21, 13);
+            this.label53.TabIndex = 60;
+            this.label53.Text = "ID:";
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(7, 16);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.ReadOnly = true;
+            this.textBox9.Size = new System.Drawing.Size(23, 20);
+            this.textBox9.TabIndex = 59;
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Location = new System.Drawing.Point(41, 0);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(38, 13);
+            this.label54.TabIndex = 58;
+            this.label54.Text = "Name:";
+            // 
+            // textBox10
+            // 
+            this.textBox10.Location = new System.Drawing.Point(40, 16);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.ReadOnly = true;
+            this.textBox10.Size = new System.Drawing.Size(152, 20);
+            this.textBox10.TabIndex = 55;
+            // 
+            // lblDamage
+            // 
+            this.lblDamage.AutoSize = true;
+            this.lblDamage.Location = new System.Drawing.Point(642, 0);
+            this.lblDamage.Name = "lblDamage";
+            this.lblDamage.Size = new System.Drawing.Size(50, 13);
+            this.lblDamage.TabIndex = 70;
+            this.lblDamage.Text = "Damage:";
+            // 
+            // txtDamage
+            // 
+            this.txtDamage.Location = new System.Drawing.Point(647, 16);
+            this.txtDamage.Name = "txtDamage";
+            this.txtDamage.Size = new System.Drawing.Size(34, 20);
+            this.txtDamage.TabIndex = 69;
             // 
             // frmTacFile
             // 
@@ -1884,10 +2393,10 @@ namespace TOAWXML
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1329, 697);
             this.ControlBox = false;
+            this.Controls.Add(this.drUnit);
             this.Controls.Add(this.pnlUnit);
             this.Controls.Add(this.pnlFormation);
             this.Controls.Add(this.pnlForce);
-            this.Controls.Add(this.drUnit);
             this.Controls.Add(this.drFormation);
             this.Controls.Add(this.drForce);
             this.Controls.Add(this.trvUnitTree);
@@ -2057,5 +2566,51 @@ namespace TOAWXML
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.TextBox txtUnitRank;
         private System.Windows.Forms.TextBox txtUnitCdr;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.TextBox txtRating;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.TextBox txtUnitRating;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.TextBox txtHdrFormRating;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.TextBox txtHdrUnitRating;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.TextBox txtHdrForceRating;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.TextBox txtEqpExp;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.TextBox txtEqpID;
+        private System.Windows.Forms.CheckBox chbCas;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.TextBox txtEqpCdr;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.TextBox txtKills;
+        private System.Windows.Forms.CheckBox chbEqpCas;
+        private System.Windows.Forms.Label lblDamage;
+        private System.Windows.Forms.TextBox txtDamage;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.TextBox textBox10;
     }
 }
