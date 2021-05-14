@@ -156,9 +156,17 @@ namespace TOAWXML
 
             //CREATE DATATABLE FOR EQUIP
             dtEquip.Columns.Add("EquipName", typeof(string));
-            dtEquip.Columns.Add("Qty", typeof(string));
-            dtEquip.Columns.Add("Max", typeof(string));
-            dtEquip.Columns.Add("Dam", typeof(string));
+            dtEquip.Columns.Add("EquipCdr", typeof(string));
+            dtEquip.Columns.Add("EquipExp", typeof(string));
+            dtEquip.Columns.Add("EquipKills", typeof(string));
+            dtEquip.Columns.Add("Casualty", typeof(string));
+            dtEquip.Columns.Add("CrewCasualty", typeof(string));
+            dtEquip.Columns.Add("EquipCasualty", typeof(string));
+            dtEquip.Columns.Add("EquipDamage", typeof(string));
+            dtEquip.Columns.Add("EquipNote", typeof(string));
+            //dtEquip.Columns.Add("Qty", typeof(string));
+            //dtEquip.Columns.Add("Max", typeof(string));
+            //dtEquip.Columns.Add("Dam", typeof(string));
 
             txtName.Visible = false;
             txtProf.Visible = false;
@@ -252,7 +260,6 @@ namespace TOAWXML
                                     string unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
 
                                     //ADD UNITS TO TACFILE
-
                                     unit.Add(
                                          new XAttribute("CDR", unitcdrname),
                                          new XAttribute("RANK", "LT"),
@@ -1122,9 +1129,15 @@ namespace TOAWXML
                             int qty = Int32.Parse(equip.Attribute("NUMBER").Value);
                             for (int i = 1; i <= qty; i++)
                             {
-                                dtEquip.Rows.Add(equip.Attribute("NAME").Value);
-                                //dtEquip.Rows.Add(equip.Attribute("NAME").Value, equip.Attribute("NUMBER").Value, 
-                                //equip.Attribute("MAX").Value, equip.Attribute("DAMAGE").Value);
+                                dtEquip.Rows.Add(equip.Attribute("NAME").Value, 
+                                equip.Attribute("EQUIPCDR").Value,
+                                equip.Attribute("EQUIPEXP").Value,
+                                equip.Attribute("EQUIPKILLS").Value,
+                                equip.Attribute("CASUALTY").Value,
+                                equip.Attribute("CREWCASUALTY").Value,
+                                equip.Attribute("EQUIPCASUALTY").Value,
+                                equip.Attribute("EQUIPDAMAGE").Value,
+                                equip.Attribute("EQUIPNOTE").Value);
                             }
                         }
 

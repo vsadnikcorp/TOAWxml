@@ -50,6 +50,8 @@ namespace TOAWXML
             this.txtProf = new System.Windows.Forms.TextBox();
             this.txtSupply = new System.Windows.Forms.TextBox();
             this.drForce = new Microsoft.VisualBasic.PowerPacks.DataRepeater();
+            this.label36 = new System.Windows.Forms.Label();
+            this.txtRating = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.txtFormDate = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
@@ -67,6 +69,8 @@ namespace TOAWXML
             this.lblProf = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.drFormation = new Microsoft.VisualBasic.PowerPacks.DataRepeater();
+            this.label37 = new System.Windows.Forms.Label();
+            this.txtUnitRating = new System.Windows.Forms.TextBox();
             this.label33 = new System.Windows.Forms.Label();
             this.txtUnitDate = new System.Windows.Forms.TextBox();
             this.label34 = new System.Windows.Forms.Label();
@@ -95,9 +99,44 @@ namespace TOAWXML
             this.cboUnitOrders = new System.Windows.Forms.ComboBox();
             this.txtUnitName = new System.Windows.Forms.TextBox();
             this.drUnit = new Microsoft.VisualBasic.PowerPacks.DataRepeater();
+            this.lblDamage = new System.Windows.Forms.Label();
+            this.txtEquipDamage = new System.Windows.Forms.TextBox();
+            this.label44 = new System.Windows.Forms.Label();
+            this.txtEquipCdr = new System.Windows.Forms.TextBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.txtEquipKills = new System.Windows.Forms.TextBox();
+            this.chbCasualty = new System.Windows.Forms.CheckBox();
+            this.label42 = new System.Windows.Forms.Label();
+            this.txtEquipExp = new System.Windows.Forms.TextBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.txtEqpID = new System.Windows.Forms.TextBox();
             this.lblEquipName = new System.Windows.Forms.Label();
             this.txtEquipName = new System.Windows.Forms.TextBox();
+            this.label46 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label45 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.chbEquipCas = new System.Windows.Forms.CheckBox();
+            this.label47 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label48 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label49 = new System.Windows.Forms.Label();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.label51 = new System.Windows.Forms.Label();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.label50 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.label52 = new System.Windows.Forms.Label();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.label53 = new System.Windows.Forms.Label();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.label54 = new System.Windows.Forms.Label();
+            this.textBox10 = new System.Windows.Forms.TextBox();
             this.pnlForce = new System.Windows.Forms.Panel();
+            this.label40 = new System.Windows.Forms.Label();
+            this.txtHdrForceRating = new System.Windows.Forms.TextBox();
             this.lblForceRank = new System.Windows.Forms.Label();
             this.lblForceCdr = new System.Windows.Forms.Label();
             this.txtHdrForceRank = new System.Windows.Forms.TextBox();
@@ -110,6 +149,8 @@ namespace TOAWXML
             this.lblForceProf = new System.Windows.Forms.Label();
             this.lblForceName = new System.Windows.Forms.Label();
             this.pnlFormation = new System.Windows.Forms.Panel();
+            this.label38 = new System.Windows.Forms.Label();
+            this.txtHdrFormRating = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.txtHdrFormDate = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
@@ -129,6 +170,8 @@ namespace TOAWXML
             this.lblHdrFormProf = new System.Windows.Forms.Label();
             this.lblHdrFormName = new System.Windows.Forms.Label();
             this.pnlUnit = new System.Windows.Forms.Panel();
+            this.label39 = new System.Windows.Forms.Label();
+            this.txtHdrUnitRating = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
             this.txtHdrUnitDate = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
@@ -156,52 +199,9 @@ namespace TOAWXML
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label36 = new System.Windows.Forms.Label();
-            this.txtRating = new System.Windows.Forms.TextBox();
-            this.label37 = new System.Windows.Forms.Label();
-            this.txtUnitRating = new System.Windows.Forms.TextBox();
-            this.label38 = new System.Windows.Forms.Label();
-            this.txtHdrFormRating = new System.Windows.Forms.TextBox();
-            this.label39 = new System.Windows.Forms.Label();
-            this.txtHdrUnitRating = new System.Windows.Forms.TextBox();
-            this.label40 = new System.Windows.Forms.Label();
-            this.txtHdrForceRating = new System.Windows.Forms.TextBox();
-            this.txtEqpID = new System.Windows.Forms.TextBox();
-            this.label41 = new System.Windows.Forms.Label();
-            this.txtEqpExp = new System.Windows.Forms.TextBox();
-            this.label42 = new System.Windows.Forms.Label();
-            this.chbCas = new System.Windows.Forms.CheckBox();
-            this.chbEqpCas = new System.Windows.Forms.CheckBox();
-            this.label43 = new System.Windows.Forms.Label();
-            this.txtKills = new System.Windows.Forms.TextBox();
-            this.label44 = new System.Windows.Forms.Label();
-            this.txtEqpCdr = new System.Windows.Forms.TextBox();
-            this.label45 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label46 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.label47 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label48 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label49 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.label50 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.label51 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.label52 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.label53 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.label54 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.lblDamage = new System.Windows.Forms.Label();
-            this.txtDamage = new System.Windows.Forms.TextBox();
+            this.txtEquipNote = new System.Windows.Forms.TextBox();
+            this.lblEqpNote = new System.Windows.Forms.Label();
+            this.chbCrewCasualty = new System.Windows.Forms.CheckBox();
             this.gbForce.SuspendLayout();
             this.ssTac.SuspendLayout();
             this.drForce.ItemTemplate.SuspendLayout();
@@ -430,6 +430,25 @@ namespace TOAWXML
             this.drForce.TabIndex = 34;
             this.drForce.Text = "drForce";
             // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(719, 2);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(41, 13);
+            this.label36.TabIndex = 60;
+            this.label36.Text = "Rating:";
+            // 
+            // txtRating
+            // 
+            this.txtRating.Location = new System.Drawing.Point(720, 18);
+            this.txtRating.Name = "txtRating";
+            this.txtRating.Size = new System.Drawing.Size(40, 20);
+            this.txtRating.TabIndex = 59;
+            this.txtRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtRating.Leave += new System.EventHandler(this.txtRating_Leave);
+            this.txtRating.MouseLeave += new System.EventHandler(this.txtRating_MouseLeave);
+            // 
             // label30
             // 
             this.label30.AutoSize = true;
@@ -644,6 +663,25 @@ namespace TOAWXML
             this.drFormation.Size = new System.Drawing.Size(1097, 68);
             this.drFormation.TabIndex = 43;
             this.drFormation.Text = "dataRepeater2";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(957, 5);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(41, 13);
+            this.label37.TabIndex = 94;
+            this.label37.Text = "Rating:";
+            // 
+            // txtUnitRating
+            // 
+            this.txtUnitRating.Location = new System.Drawing.Point(959, 19);
+            this.txtUnitRating.Name = "txtUnitRating";
+            this.txtUnitRating.Size = new System.Drawing.Size(40, 20);
+            this.txtUnitRating.TabIndex = 93;
+            this.txtUnitRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtUnitRating.Leave += new System.EventHandler(this.txtUnitRating_Leave);
+            this.txtUnitRating.MouseLeave += new System.EventHandler(this.txtUnitRating_MouseLeave);
             // 
             // label33
             // 
@@ -1097,16 +1135,18 @@ namespace TOAWXML
             // 
             // drUnit.ItemTemplate
             // 
+            this.drUnit.ItemTemplate.Controls.Add(this.chbCrewCasualty);
+            this.drUnit.ItemTemplate.Controls.Add(this.lblEqpNote);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipNote);
             this.drUnit.ItemTemplate.Controls.Add(this.lblDamage);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtDamage);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipDamage);
             this.drUnit.ItemTemplate.Controls.Add(this.label44);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtEqpCdr);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipCdr);
             this.drUnit.ItemTemplate.Controls.Add(this.label43);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtKills);
-            this.drUnit.ItemTemplate.Controls.Add(this.chbEqpCas);
-            this.drUnit.ItemTemplate.Controls.Add(this.chbCas);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipKills);
+            this.drUnit.ItemTemplate.Controls.Add(this.chbCasualty);
             this.drUnit.ItemTemplate.Controls.Add(this.label42);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtEqpExp);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipExp);
             this.drUnit.ItemTemplate.Controls.Add(this.label41);
             this.drUnit.ItemTemplate.Controls.Add(this.txtEqpID);
             this.drUnit.ItemTemplate.Controls.Add(this.lblEquipName);
@@ -1115,8 +1155,7 @@ namespace TOAWXML
             this.drUnit.ItemTemplate.Controls.Add(this.textBox2);
             this.drUnit.ItemTemplate.Controls.Add(this.label45);
             this.drUnit.ItemTemplate.Controls.Add(this.textBox1);
-            this.drUnit.ItemTemplate.Controls.Add(this.checkBox1);
-            this.drUnit.ItemTemplate.Controls.Add(this.checkBox2);
+            this.drUnit.ItemTemplate.Controls.Add(this.chbEquipCas);
             this.drUnit.ItemTemplate.Controls.Add(this.label47);
             this.drUnit.ItemTemplate.Controls.Add(this.textBox3);
             this.drUnit.ItemTemplate.Controls.Add(this.label48);
@@ -1128,7 +1167,6 @@ namespace TOAWXML
             this.drUnit.ItemTemplate.Controls.Add(this.label50);
             this.drUnit.ItemTemplate.Controls.Add(this.textBox6);
             this.drUnit.ItemTemplate.Controls.Add(this.checkBox3);
-            this.drUnit.ItemTemplate.Controls.Add(this.checkBox4);
             this.drUnit.ItemTemplate.Controls.Add(this.label52);
             this.drUnit.ItemTemplate.Controls.Add(this.textBox8);
             this.drUnit.ItemTemplate.Controls.Add(this.label53);
@@ -1141,6 +1179,97 @@ namespace TOAWXML
             this.drUnit.Size = new System.Drawing.Size(1097, 64);
             this.drUnit.TabIndex = 55;
             this.drUnit.Text = "dataRepeater1";
+            // 
+            // lblDamage
+            // 
+            this.lblDamage.AutoSize = true;
+            this.lblDamage.Location = new System.Drawing.Point(642, 0);
+            this.lblDamage.Name = "lblDamage";
+            this.lblDamage.Size = new System.Drawing.Size(50, 13);
+            this.lblDamage.TabIndex = 70;
+            this.lblDamage.Text = "Damage:";
+            // 
+            // txtEquipDamage
+            // 
+            this.txtEquipDamage.Location = new System.Drawing.Point(647, 16);
+            this.txtEquipDamage.Name = "txtEquipDamage";
+            this.txtEquipDamage.Size = new System.Drawing.Size(34, 20);
+            this.txtEquipDamage.TabIndex = 69;
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(197, 0);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(66, 13);
+            this.label44.TabIndex = 68;
+            this.label44.Text = "Commander:";
+            // 
+            // txtEquipCdr
+            // 
+            this.txtEquipCdr.Location = new System.Drawing.Point(197, 16);
+            this.txtEquipCdr.Name = "txtEquipCdr";
+            this.txtEquipCdr.Size = new System.Drawing.Size(111, 20);
+            this.txtEquipCdr.TabIndex = 67;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(436, -1);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(28, 13);
+            this.label43.TabIndex = 66;
+            this.label43.Text = "Kills:";
+            // 
+            // txtEquipKills
+            // 
+            this.txtEquipKills.Location = new System.Drawing.Point(434, 15);
+            this.txtEquipKills.Name = "txtEquipKills";
+            this.txtEquipKills.Size = new System.Drawing.Size(34, 20);
+            this.txtEquipKills.TabIndex = 65;
+            // 
+            // chbCasualty
+            // 
+            this.chbCasualty.AutoSize = true;
+            this.chbCasualty.Location = new System.Drawing.Point(478, 13);
+            this.chbCasualty.Name = "chbCasualty";
+            this.chbCasualty.Size = new System.Drawing.Size(66, 17);
+            this.chbCasualty.TabIndex = 63;
+            this.chbCasualty.Text = "Casualty";
+            this.chbCasualty.UseVisualStyleBackColor = true;
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(317, 0);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(63, 13);
+            this.label42.TabIndex = 62;
+            this.label42.Text = "Experience:";
+            // 
+            // txtEquipExp
+            // 
+            this.txtEquipExp.Location = new System.Drawing.Point(317, 16);
+            this.txtEquipExp.Name = "txtEquipExp";
+            this.txtEquipExp.Size = new System.Drawing.Size(111, 20);
+            this.txtEquipExp.TabIndex = 61;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(7, 0);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(21, 13);
+            this.label41.TabIndex = 60;
+            this.label41.Text = "ID:";
+            // 
+            // txtEqpID
+            // 
+            this.txtEqpID.Location = new System.Drawing.Point(7, 16);
+            this.txtEqpID.Name = "txtEqpID";
+            this.txtEqpID.ReadOnly = true;
+            this.txtEqpID.Size = new System.Drawing.Size(23, 20);
+            this.txtEqpID.TabIndex = 59;
             // 
             // lblEquipName
             // 
@@ -1158,6 +1287,190 @@ namespace TOAWXML
             this.txtEquipName.ReadOnly = true;
             this.txtEquipName.Size = new System.Drawing.Size(152, 20);
             this.txtEquipName.TabIndex = 55;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(197, 0);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(66, 13);
+            this.label46.TabIndex = 68;
+            this.label46.Text = "Commander:";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(197, 16);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(111, 20);
+            this.textBox2.TabIndex = 67;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(436, -1);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(28, 13);
+            this.label45.TabIndex = 66;
+            this.label45.Text = "Kills:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(434, 15);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(34, 20);
+            this.textBox1.TabIndex = 65;
+            // 
+            // chbEquipCas
+            // 
+            this.chbEquipCas.AutoSize = true;
+            this.chbEquipCas.Location = new System.Drawing.Point(546, 22);
+            this.chbEquipCas.Name = "chbEquipCas";
+            this.chbEquipCas.Size = new System.Drawing.Size(96, 17);
+            this.chbEquipCas.TabIndex = 64;
+            this.chbEquipCas.Text = "Equip Casualty";
+            this.chbEquipCas.UseVisualStyleBackColor = true;
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(317, 0);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(63, 13);
+            this.label47.TabIndex = 62;
+            this.label47.Text = "Experience:";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(317, 16);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(111, 20);
+            this.textBox3.TabIndex = 61;
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(7, 0);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(21, 13);
+            this.label48.TabIndex = 60;
+            this.label48.Text = "ID:";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(7, 16);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
+            this.textBox4.Size = new System.Drawing.Size(23, 20);
+            this.textBox4.TabIndex = 59;
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(41, 0);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(38, 13);
+            this.label49.TabIndex = 58;
+            this.label49.Text = "Name:";
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(40, 16);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
+            this.textBox5.Size = new System.Drawing.Size(152, 20);
+            this.textBox5.TabIndex = 55;
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Location = new System.Drawing.Point(197, 0);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(66, 13);
+            this.label51.TabIndex = 68;
+            this.label51.Text = "Commander:";
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(197, 16);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(111, 20);
+            this.textBox7.TabIndex = 67;
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Location = new System.Drawing.Point(436, -1);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(28, 13);
+            this.label50.TabIndex = 66;
+            this.label50.Text = "Kills:";
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(434, 15);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(34, 20);
+            this.textBox6.TabIndex = 65;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(546, 22);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(96, 17);
+            this.checkBox3.TabIndex = 64;
+            this.checkBox3.Text = "Equip Casualty";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Location = new System.Drawing.Point(317, 0);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(63, 13);
+            this.label52.TabIndex = 62;
+            this.label52.Text = "Experience:";
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(317, 16);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(111, 20);
+            this.textBox8.TabIndex = 61;
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Location = new System.Drawing.Point(7, 0);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(21, 13);
+            this.label53.TabIndex = 60;
+            this.label53.Text = "ID:";
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(7, 16);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.ReadOnly = true;
+            this.textBox9.Size = new System.Drawing.Size(23, 20);
+            this.textBox9.TabIndex = 59;
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Location = new System.Drawing.Point(41, 0);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(38, 13);
+            this.label54.TabIndex = 58;
+            this.label54.Text = "Name:";
+            // 
+            // textBox10
+            // 
+            this.textBox10.Location = new System.Drawing.Point(40, 16);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.ReadOnly = true;
+            this.textBox10.Size = new System.Drawing.Size(152, 20);
+            this.textBox10.TabIndex = 55;
             // 
             // pnlForce
             // 
@@ -1180,6 +1493,25 @@ namespace TOAWXML
             this.pnlForce.Size = new System.Drawing.Size(1096, 58);
             this.pnlForce.TabIndex = 56;
             this.pnlForce.Visible = false;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(389, 4);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(41, 13);
+            this.label40.TabIndex = 12;
+            this.label40.Text = "Rating:";
+            // 
+            // txtHdrForceRating
+            // 
+            this.txtHdrForceRating.Location = new System.Drawing.Point(388, 20);
+            this.txtHdrForceRating.Name = "txtHdrForceRating";
+            this.txtHdrForceRating.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrForceRating.TabIndex = 11;
+            this.txtHdrForceRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtHdrForceRating.Leave += new System.EventHandler(this.txtHdrForceRating_Leave);
+            this.txtHdrForceRating.MouseLeave += new System.EventHandler(this.txtHdrForceRating_MouseLeave);
             // 
             // lblForceRank
             // 
@@ -1314,6 +1646,25 @@ namespace TOAWXML
             this.pnlFormation.Size = new System.Drawing.Size(1097, 53);
             this.pnlFormation.TabIndex = 57;
             this.pnlFormation.Visible = false;
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(734, 2);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(41, 13);
+            this.label38.TabIndex = 54;
+            this.label38.Text = "Rating:";
+            // 
+            // txtHdrFormRating
+            // 
+            this.txtHdrFormRating.Location = new System.Drawing.Point(733, 18);
+            this.txtHdrFormRating.Name = "txtHdrFormRating";
+            this.txtHdrFormRating.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrFormRating.TabIndex = 53;
+            this.txtHdrFormRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtHdrFormRating.Leave += new System.EventHandler(this.txtHdrFormRating_Leave);
+            this.txtHdrFormRating.MouseLeave += new System.EventHandler(this.txtHdrFormRating_MouseLeave);
             // 
             // label26
             // 
@@ -1546,6 +1897,26 @@ namespace TOAWXML
             this.pnlUnit.Size = new System.Drawing.Size(1097, 53);
             this.pnlUnit.TabIndex = 58;
             this.pnlUnit.Visible = false;
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(976, 5);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(41, 13);
+            this.label39.TabIndex = 88;
+            this.label39.Text = "Rating:";
+            // 
+            // txtHdrUnitRating
+            // 
+            this.txtHdrUnitRating.Location = new System.Drawing.Point(977, 19);
+            this.txtHdrUnitRating.Name = "txtHdrUnitRating";
+            this.txtHdrUnitRating.Size = new System.Drawing.Size(40, 20);
+            this.txtHdrUnitRating.TabIndex = 87;
+            this.txtHdrUnitRating.TabStop = false;
+            this.txtHdrUnitRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtHdrUnitRating.Leave += new System.EventHandler(this.txtHdrUnitRating_Leave);
+            this.txtHdrUnitRating.MouseLeave += new System.EventHandler(this.txtHdrUnitRating_MouseLeave);
             // 
             // label27
             // 
@@ -1986,406 +2357,31 @@ namespace TOAWXML
             this.label13.TabIndex = 12;
             this.label13.Text = "Name:";
             // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(719, 2);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(41, 13);
-            this.label36.TabIndex = 60;
-            this.label36.Text = "Rating:";
-            // 
-            // txtRating
-            // 
-            this.txtRating.Location = new System.Drawing.Point(720, 18);
-            this.txtRating.Name = "txtRating";
-            this.txtRating.Size = new System.Drawing.Size(40, 20);
-            this.txtRating.TabIndex = 59;
-            this.txtRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtRating.Leave += new System.EventHandler(this.txtRating_Leave);
-            this.txtRating.MouseLeave += new System.EventHandler(this.txtRating_MouseLeave);
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(957, 5);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(41, 13);
-            this.label37.TabIndex = 94;
-            this.label37.Text = "Rating:";
-            // 
-            // txtUnitRating
-            // 
-            this.txtUnitRating.Location = new System.Drawing.Point(959, 19);
-            this.txtUnitRating.Name = "txtUnitRating";
-            this.txtUnitRating.Size = new System.Drawing.Size(40, 20);
-            this.txtUnitRating.TabIndex = 93;
-            this.txtUnitRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtUnitRating.Leave += new System.EventHandler(this.txtUnitRating_Leave);
-            this.txtUnitRating.MouseLeave += new System.EventHandler(this.txtUnitRating_MouseLeave);
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(734, 2);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(41, 13);
-            this.label38.TabIndex = 54;
-            this.label38.Text = "Rating:";
-            // 
-            // txtHdrFormRating
-            // 
-            this.txtHdrFormRating.Location = new System.Drawing.Point(733, 18);
-            this.txtHdrFormRating.Name = "txtHdrFormRating";
-            this.txtHdrFormRating.Size = new System.Drawing.Size(40, 20);
-            this.txtHdrFormRating.TabIndex = 53;
-            this.txtHdrFormRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtHdrFormRating.Leave += new System.EventHandler(this.txtHdrFormRating_Leave);
-            this.txtHdrFormRating.MouseLeave += new System.EventHandler(this.txtHdrFormRating_MouseLeave);
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(976, 5);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(41, 13);
-            this.label39.TabIndex = 88;
-            this.label39.Text = "Rating:";
-            // 
-            // txtHdrUnitRating
-            // 
-            this.txtHdrUnitRating.Location = new System.Drawing.Point(977, 19);
-            this.txtHdrUnitRating.Name = "txtHdrUnitRating";
-            this.txtHdrUnitRating.Size = new System.Drawing.Size(40, 20);
-            this.txtHdrUnitRating.TabIndex = 87;
-            this.txtHdrUnitRating.TabStop = false;
-            this.txtHdrUnitRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtHdrUnitRating.Leave += new System.EventHandler(this.txtHdrUnitRating_Leave);
-            this.txtHdrUnitRating.MouseLeave += new System.EventHandler(this.txtHdrUnitRating_MouseLeave);
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(389, 4);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(41, 13);
-            this.label40.TabIndex = 12;
-            this.label40.Text = "Rating:";
-            // 
-            // txtHdrForceRating
-            // 
-            this.txtHdrForceRating.Location = new System.Drawing.Point(388, 20);
-            this.txtHdrForceRating.Name = "txtHdrForceRating";
-            this.txtHdrForceRating.Size = new System.Drawing.Size(40, 20);
-            this.txtHdrForceRating.TabIndex = 11;
-            this.txtHdrForceRating.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtHdrForceRating.Leave += new System.EventHandler(this.txtHdrForceRating_Leave);
-            this.txtHdrForceRating.MouseLeave += new System.EventHandler(this.txtHdrForceRating_MouseLeave);
-            // 
-            // txtEqpID
-            // 
-            this.txtEqpID.Location = new System.Drawing.Point(7, 16);
-            this.txtEqpID.Name = "txtEqpID";
-            this.txtEqpID.ReadOnly = true;
-            this.txtEqpID.Size = new System.Drawing.Size(23, 20);
-            this.txtEqpID.TabIndex = 59;
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(7, 0);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(21, 13);
-            this.label41.TabIndex = 60;
-            this.label41.Text = "ID:";
-            // 
-            // txtEqpExp
-            // 
-            this.txtEqpExp.Location = new System.Drawing.Point(317, 16);
-            this.txtEqpExp.Name = "txtEqpExp";
-            this.txtEqpExp.Size = new System.Drawing.Size(111, 20);
-            this.txtEqpExp.TabIndex = 61;
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(317, 0);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(63, 13);
-            this.label42.TabIndex = 62;
-            this.label42.Text = "Experience:";
-            // 
-            // chbCas
-            // 
-            this.chbCas.AutoSize = true;
-            this.chbCas.Location = new System.Drawing.Point(478, 19);
-            this.chbCas.Name = "chbCas";
-            this.chbCas.Size = new System.Drawing.Size(66, 17);
-            this.chbCas.TabIndex = 63;
-            this.chbCas.Text = "Casualty";
-            this.chbCas.UseVisualStyleBackColor = true;
-            // 
-            // chbEqpCas
-            // 
-            this.chbEqpCas.AutoSize = true;
-            this.chbEqpCas.Location = new System.Drawing.Point(546, 19);
-            this.chbEqpCas.Name = "chbEqpCas";
-            this.chbEqpCas.Size = new System.Drawing.Size(96, 17);
-            this.chbEqpCas.TabIndex = 64;
-            this.chbEqpCas.Text = "Equip Casualty";
-            this.chbEqpCas.UseVisualStyleBackColor = true;
-            // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(436, 0);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(28, 13);
-            this.label43.TabIndex = 66;
-            this.label43.Text = "Kills:";
-            // 
-            // txtKills
-            // 
-            this.txtKills.Location = new System.Drawing.Point(434, 16);
-            this.txtKills.Name = "txtKills";
-            this.txtKills.Size = new System.Drawing.Size(34, 20);
-            this.txtKills.TabIndex = 65;
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(197, 0);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(66, 13);
-            this.label44.TabIndex = 68;
-            this.label44.Text = "Commander:";
-            // 
-            // txtEqpCdr
-            // 
-            this.txtEqpCdr.Location = new System.Drawing.Point(197, 16);
-            this.txtEqpCdr.Name = "txtEqpCdr";
-            this.txtEqpCdr.Size = new System.Drawing.Size(111, 20);
-            this.txtEqpCdr.TabIndex = 67;
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(436, 0);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(28, 13);
-            this.label45.TabIndex = 66;
-            this.label45.Text = "Kills:";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(434, 16);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(34, 20);
-            this.textBox1.TabIndex = 65;
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(197, 0);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(66, 13);
-            this.label46.TabIndex = 68;
-            this.label46.Text = "Commander:";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(197, 16);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(111, 20);
-            this.textBox2.TabIndex = 67;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(546, 19);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(96, 17);
-            this.checkBox1.TabIndex = 64;
-            this.checkBox1.Text = "Equip Casualty";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(478, 19);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(66, 17);
-            this.checkBox2.TabIndex = 63;
-            this.checkBox2.Text = "Casualty";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(317, 0);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(63, 13);
-            this.label47.TabIndex = 62;
-            this.label47.Text = "Experience:";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(317, 16);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(111, 20);
-            this.textBox3.TabIndex = 61;
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(7, 0);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(21, 13);
-            this.label48.TabIndex = 60;
-            this.label48.Text = "ID:";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(7, 16);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(23, 20);
-            this.textBox4.TabIndex = 59;
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(41, 0);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(38, 13);
-            this.label49.TabIndex = 58;
-            this.label49.Text = "Name:";
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(40, 16);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.ReadOnly = true;
-            this.textBox5.Size = new System.Drawing.Size(152, 20);
-            this.textBox5.TabIndex = 55;
-            // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(436, 0);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(28, 13);
-            this.label50.TabIndex = 66;
-            this.label50.Text = "Kills:";
-            // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(434, 16);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(34, 20);
-            this.textBox6.TabIndex = 65;
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(197, 0);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(66, 13);
-            this.label51.TabIndex = 68;
-            this.label51.Text = "Commander:";
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(197, 16);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(111, 20);
-            this.textBox7.TabIndex = 67;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(546, 19);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(96, 17);
-            this.checkBox3.TabIndex = 64;
-            this.checkBox3.Text = "Equip Casualty";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(478, 19);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(66, 17);
-            this.checkBox4.TabIndex = 63;
-            this.checkBox4.Text = "Casualty";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(317, 0);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(63, 13);
-            this.label52.TabIndex = 62;
-            this.label52.Text = "Experience:";
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(317, 16);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(111, 20);
-            this.textBox8.TabIndex = 61;
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(7, 0);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(21, 13);
-            this.label53.TabIndex = 60;
-            this.label53.Text = "ID:";
-            // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(7, 16);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.ReadOnly = true;
-            this.textBox9.Size = new System.Drawing.Size(23, 20);
-            this.textBox9.TabIndex = 59;
-            // 
-            // label54
-            // 
-            this.label54.AutoSize = true;
-            this.label54.Location = new System.Drawing.Point(41, 0);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(38, 13);
-            this.label54.TabIndex = 58;
-            this.label54.Text = "Name:";
-            // 
-            // textBox10
-            // 
-            this.textBox10.Location = new System.Drawing.Point(40, 16);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.ReadOnly = true;
-            this.textBox10.Size = new System.Drawing.Size(152, 20);
-            this.textBox10.TabIndex = 55;
-            // 
-            // lblDamage
-            // 
-            this.lblDamage.AutoSize = true;
-            this.lblDamage.Location = new System.Drawing.Point(642, 0);
-            this.lblDamage.Name = "lblDamage";
-            this.lblDamage.Size = new System.Drawing.Size(50, 13);
-            this.lblDamage.TabIndex = 70;
-            this.lblDamage.Text = "Damage:";
-            // 
-            // txtDamage
-            // 
-            this.txtDamage.Location = new System.Drawing.Point(647, 16);
-            this.txtDamage.Name = "txtDamage";
-            this.txtDamage.Size = new System.Drawing.Size(34, 20);
-            this.txtDamage.TabIndex = 69;
+            // txtEquipNote
+            // 
+            this.txtEquipNote.Location = new System.Drawing.Point(698, 16);
+            this.txtEquipNote.Name = "txtEquipNote";
+            this.txtEquipNote.Size = new System.Drawing.Size(328, 20);
+            this.txtEquipNote.TabIndex = 71;
+            // 
+            // lblEqpNote
+            // 
+            this.lblEqpNote.AutoSize = true;
+            this.lblEqpNote.Location = new System.Drawing.Point(699, 1);
+            this.lblEqpNote.Name = "lblEqpNote";
+            this.lblEqpNote.Size = new System.Drawing.Size(33, 13);
+            this.lblEqpNote.TabIndex = 72;
+            this.lblEqpNote.Text = "Note:";
+            // 
+            // chbCrewCasualty
+            // 
+            this.chbCrewCasualty.AutoSize = true;
+            this.chbCrewCasualty.Location = new System.Drawing.Point(546, 6);
+            this.chbCrewCasualty.Name = "chbCrewCasualty";
+            this.chbCrewCasualty.Size = new System.Drawing.Size(93, 17);
+            this.chbCrewCasualty.TabIndex = 73;
+            this.chbCrewCasualty.Text = "Crew Casualty";
+            this.chbCrewCasualty.UseVisualStyleBackColor = true;
             // 
             // frmTacFile
             // 
@@ -2577,23 +2573,21 @@ namespace TOAWXML
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.TextBox txtHdrForceRating;
         private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.TextBox txtEqpExp;
+        private System.Windows.Forms.TextBox txtEquipExp;
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.TextBox txtEqpID;
-        private System.Windows.Forms.CheckBox chbCas;
+        private System.Windows.Forms.CheckBox chbCasualty;
         private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.TextBox txtEqpCdr;
+        private System.Windows.Forms.TextBox txtEquipCdr;
         private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.TextBox txtKills;
-        private System.Windows.Forms.CheckBox chbEqpCas;
+        private System.Windows.Forms.TextBox txtEquipKills;
         private System.Windows.Forms.Label lblDamage;
-        private System.Windows.Forms.TextBox txtDamage;
+        private System.Windows.Forms.TextBox txtEquipDamage;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox chbEquipCas;
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label48;
@@ -2605,12 +2599,14 @@ namespace TOAWXML
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.Label label52;
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.Label lblEqpNote;
+        private System.Windows.Forms.TextBox txtEquipNote;
+        private System.Windows.Forms.CheckBox chbCrewCasualty;
     }
 }
