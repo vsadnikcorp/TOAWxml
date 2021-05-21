@@ -99,6 +99,9 @@ namespace TOAWXML
             this.cboUnitOrders = new System.Windows.Forms.ComboBox();
             this.txtUnitName = new System.Windows.Forms.TextBox();
             this.drUnit = new Microsoft.VisualBasic.PowerPacks.DataRepeater();
+            this.chbCrewCasualty = new System.Windows.Forms.CheckBox();
+            this.lblEqpNote = new System.Windows.Forms.Label();
+            this.txtEquipNote = new System.Windows.Forms.TextBox();
             this.lblDamage = new System.Windows.Forms.Label();
             this.txtEquipDamage = new System.Windows.Forms.TextBox();
             this.label44 = new System.Windows.Forms.Label();
@@ -109,14 +112,14 @@ namespace TOAWXML
             this.label42 = new System.Windows.Forms.Label();
             this.txtEquipExp = new System.Windows.Forms.TextBox();
             this.label41 = new System.Windows.Forms.Label();
-            this.txtEqpID = new System.Windows.Forms.TextBox();
+            this.txtEquipID = new System.Windows.Forms.TextBox();
             this.lblEquipName = new System.Windows.Forms.Label();
             this.txtEquipName = new System.Windows.Forms.TextBox();
             this.label46 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.chbEquipCas = new System.Windows.Forms.CheckBox();
+            this.chbEquipCasualty = new System.Windows.Forms.CheckBox();
             this.label47 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label48 = new System.Windows.Forms.Label();
@@ -199,9 +202,6 @@ namespace TOAWXML
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.txtEquipNote = new System.Windows.Forms.TextBox();
-            this.lblEqpNote = new System.Windows.Forms.Label();
-            this.chbCrewCasualty = new System.Windows.Forms.CheckBox();
             this.gbForce.SuspendLayout();
             this.ssTac.SuspendLayout();
             this.drForce.ItemTemplate.SuspendLayout();
@@ -1148,14 +1148,14 @@ namespace TOAWXML
             this.drUnit.ItemTemplate.Controls.Add(this.label42);
             this.drUnit.ItemTemplate.Controls.Add(this.txtEquipExp);
             this.drUnit.ItemTemplate.Controls.Add(this.label41);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtEqpID);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipID);
             this.drUnit.ItemTemplate.Controls.Add(this.lblEquipName);
             this.drUnit.ItemTemplate.Controls.Add(this.txtEquipName);
             this.drUnit.ItemTemplate.Controls.Add(this.label46);
             this.drUnit.ItemTemplate.Controls.Add(this.textBox2);
             this.drUnit.ItemTemplate.Controls.Add(this.label45);
             this.drUnit.ItemTemplate.Controls.Add(this.textBox1);
-            this.drUnit.ItemTemplate.Controls.Add(this.chbEquipCas);
+            this.drUnit.ItemTemplate.Controls.Add(this.chbEquipCasualty);
             this.drUnit.ItemTemplate.Controls.Add(this.label47);
             this.drUnit.ItemTemplate.Controls.Add(this.textBox3);
             this.drUnit.ItemTemplate.Controls.Add(this.label48);
@@ -1180,6 +1180,32 @@ namespace TOAWXML
             this.drUnit.TabIndex = 55;
             this.drUnit.Text = "dataRepeater1";
             // 
+            // chbCrewCasualty
+            // 
+            this.chbCrewCasualty.AutoSize = true;
+            this.chbCrewCasualty.Location = new System.Drawing.Point(546, 3);
+            this.chbCrewCasualty.Name = "chbCrewCasualty";
+            this.chbCrewCasualty.Size = new System.Drawing.Size(93, 17);
+            this.chbCrewCasualty.TabIndex = 73;
+            this.chbCrewCasualty.Text = "Crew Casualty";
+            this.chbCrewCasualty.UseVisualStyleBackColor = true;
+            // 
+            // lblEqpNote
+            // 
+            this.lblEqpNote.AutoSize = true;
+            this.lblEqpNote.Location = new System.Drawing.Point(699, 1);
+            this.lblEqpNote.Name = "lblEqpNote";
+            this.lblEqpNote.Size = new System.Drawing.Size(33, 13);
+            this.lblEqpNote.TabIndex = 72;
+            this.lblEqpNote.Text = "Note:";
+            // 
+            // txtEquipNote
+            // 
+            this.txtEquipNote.Location = new System.Drawing.Point(698, 16);
+            this.txtEquipNote.Name = "txtEquipNote";
+            this.txtEquipNote.Size = new System.Drawing.Size(328, 20);
+            this.txtEquipNote.TabIndex = 71;
+            // 
             // lblDamage
             // 
             this.lblDamage.AutoSize = true;
@@ -1195,6 +1221,7 @@ namespace TOAWXML
             this.txtEquipDamage.Name = "txtEquipDamage";
             this.txtEquipDamage.Size = new System.Drawing.Size(34, 20);
             this.txtEquipDamage.TabIndex = 69;
+            this.txtEquipDamage.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label44
             // 
@@ -1227,6 +1254,7 @@ namespace TOAWXML
             this.txtEquipKills.Name = "txtEquipKills";
             this.txtEquipKills.Size = new System.Drawing.Size(34, 20);
             this.txtEquipKills.TabIndex = 65;
+            this.txtEquipKills.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // chbCasualty
             // 
@@ -1263,13 +1291,13 @@ namespace TOAWXML
             this.label41.TabIndex = 60;
             this.label41.Text = "ID:";
             // 
-            // txtEqpID
+            // txtEquipID
             // 
-            this.txtEqpID.Location = new System.Drawing.Point(7, 16);
-            this.txtEqpID.Name = "txtEqpID";
-            this.txtEqpID.ReadOnly = true;
-            this.txtEqpID.Size = new System.Drawing.Size(23, 20);
-            this.txtEqpID.TabIndex = 59;
+            this.txtEquipID.Location = new System.Drawing.Point(7, 16);
+            this.txtEquipID.Name = "txtEquipID";
+            this.txtEquipID.ReadOnly = true;
+            this.txtEquipID.Size = new System.Drawing.Size(23, 20);
+            this.txtEquipID.TabIndex = 59;
             // 
             // lblEquipName
             // 
@@ -1320,15 +1348,15 @@ namespace TOAWXML
             this.textBox1.Size = new System.Drawing.Size(34, 20);
             this.textBox1.TabIndex = 65;
             // 
-            // chbEquipCas
+            // chbEquipCasualty
             // 
-            this.chbEquipCas.AutoSize = true;
-            this.chbEquipCas.Location = new System.Drawing.Point(546, 22);
-            this.chbEquipCas.Name = "chbEquipCas";
-            this.chbEquipCas.Size = new System.Drawing.Size(96, 17);
-            this.chbEquipCas.TabIndex = 64;
-            this.chbEquipCas.Text = "Equip Casualty";
-            this.chbEquipCas.UseVisualStyleBackColor = true;
+            this.chbEquipCasualty.AutoSize = true;
+            this.chbEquipCasualty.Location = new System.Drawing.Point(546, 23);
+            this.chbEquipCasualty.Name = "chbEquipCasualty";
+            this.chbEquipCasualty.Size = new System.Drawing.Size(96, 17);
+            this.chbEquipCasualty.TabIndex = 64;
+            this.chbEquipCasualty.Text = "Equip Casualty";
+            this.chbEquipCasualty.UseVisualStyleBackColor = true;
             // 
             // label47
             // 
@@ -2357,32 +2385,6 @@ namespace TOAWXML
             this.label13.TabIndex = 12;
             this.label13.Text = "Name:";
             // 
-            // txtEquipNote
-            // 
-            this.txtEquipNote.Location = new System.Drawing.Point(698, 16);
-            this.txtEquipNote.Name = "txtEquipNote";
-            this.txtEquipNote.Size = new System.Drawing.Size(328, 20);
-            this.txtEquipNote.TabIndex = 71;
-            // 
-            // lblEqpNote
-            // 
-            this.lblEqpNote.AutoSize = true;
-            this.lblEqpNote.Location = new System.Drawing.Point(699, 1);
-            this.lblEqpNote.Name = "lblEqpNote";
-            this.lblEqpNote.Size = new System.Drawing.Size(33, 13);
-            this.lblEqpNote.TabIndex = 72;
-            this.lblEqpNote.Text = "Note:";
-            // 
-            // chbCrewCasualty
-            // 
-            this.chbCrewCasualty.AutoSize = true;
-            this.chbCrewCasualty.Location = new System.Drawing.Point(546, 6);
-            this.chbCrewCasualty.Name = "chbCrewCasualty";
-            this.chbCrewCasualty.Size = new System.Drawing.Size(93, 17);
-            this.chbCrewCasualty.TabIndex = 73;
-            this.chbCrewCasualty.Text = "Crew Casualty";
-            this.chbCrewCasualty.UseVisualStyleBackColor = true;
-            // 
             // frmTacFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2575,7 +2577,7 @@ namespace TOAWXML
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.TextBox txtEquipExp;
         private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.TextBox txtEqpID;
+        private System.Windows.Forms.TextBox txtEquipID;
         private System.Windows.Forms.CheckBox chbCasualty;
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.TextBox txtEquipCdr;
@@ -2587,7 +2589,7 @@ namespace TOAWXML
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.CheckBox chbEquipCas;
+        private System.Windows.Forms.CheckBox chbEquipCasualty;
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label48;

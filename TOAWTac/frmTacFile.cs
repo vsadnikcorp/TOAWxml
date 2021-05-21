@@ -155,6 +155,7 @@ namespace TOAWXML
             dtUnit.Columns.Add("FormDate", typeof(string));
 
             //CREATE DATATABLE FOR EQUIP
+            dtEquip.Columns.Add("EquipID", typeof(string));
             dtEquip.Columns.Add("EquipName", typeof(string));
             dtEquip.Columns.Add("EquipCdr", typeof(string));
             dtEquip.Columns.Add("EquipExp", typeof(string));
@@ -202,9 +203,12 @@ namespace TOAWXML
                 TOAWTac.Properties.Settings.Default.FilePath = file.FileName;
                 TOAWTac.Properties.Settings.Default.Save();
 
+                FilePath = file.FileName;
+
                 trvUnitTree.Nodes.Clear();
                 dtFormation.Clear();
                 dtUnit.Clear();
+                dtEquip.Clear();
 
                 rbForce1.Checked = false;
                 rbForce2.Checked = false;
@@ -240,7 +244,7 @@ namespace TOAWXML
 
                             //LIST FORMATIONS
                             foreach (XElement formation in force.Descendants("FORMATION").Where(f => f.Parent.Attribute("ID").Value == forceID))
-                            {
+                            {  //FORMATION
                                 //ADD FORMATIONS TO TACFILE
                                 string formcdrname = AssignCdrName(xdocCDR, forceID, rng);
 
@@ -256,7 +260,7 @@ namespace TOAWXML
                                 foreach (XElement unit in formation.Descendants("UNIT")
                                     .Where(u => u.Parent.Attribute("ID").Value == formID)
                                     .Where(u => u.Parent.Parent.Attribute("ID").Value == forceID))
-                                {
+                                {  //UNIT
                                     string unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
 
                                     //ADD UNITS TO TACFILE
@@ -268,9 +272,32 @@ namespace TOAWXML
 
                                     string unitID = unit.Attribute("ID").Value;
 
-                                    //EQUIP NOT NECESSARY FOR TAC FILE?
-                                }
-                            }
+                                    //ADD EQUIP FOR TAC FILE
+                                    foreach (XElement equip in unit.Descendants("EQUIPMENT")
+                                        .Where(u => u.Parent.Attribute("ID").Value == unitID)
+                                        .Where(u => u.Parent.Parent.Attribute("ID").Value == formID)
+                                        .Where(u => u.Parent.Parent.Parent.Attribute("ID").Value == forceID))
+                                    {
+                                        int qty = Int32.Parse(equip.Attribute("NUMBER").Value);
+
+                                        for (int i = 1; i <= qty; i++) //ITEM
+                                        {
+                                            equip.Add(
+                                             new XElement("ITEM",
+                                             new XAttribute("ID", i),
+                                             new XAttribute("NAME", equip.Attribute("NAME").Value),
+                                             new XAttribute("EQUIPCDR", "--"),
+                                             new XAttribute("EQUIPEXP", "--"),
+                                             new XAttribute("EQUIPKILLS", "0"),
+                                             new XAttribute("CASUALTY", "0"),
+                                             new XAttribute("CREWCASUALTY", "0"),
+                                             new XAttribute("EQUIPCASUALTY", "0"),
+                                             new XAttribute("EQUIPDAMAGE", "0"),
+                                             new XAttribute("EQUIPNOTE", "--")));
+                                        } //item
+                                    } //equip
+                                }  //unit
+                            } //formation
                         }
                     });
 
@@ -285,96 +312,11 @@ namespace TOAWXML
                     tacFile.Save(TacFilePath);
                     ssTac.Visible = false;
                 }
-                //!!!!!
-
-                //this.Close();
             }
             else
             {
                 TOAWTac.Properties.Settings.Default.FilePath = "";
             }
-            //!!!!!!!!!!!!!!!!!!
-
-            //trvUnitTree.Nodes.Clear();
-            //dtFormation.Clear();
-            //dtUnit.Clear();
-
-            //rbForce1.Checked = false;
-            //rbForce2.Checked = false;
-
-            //if (FilePath != "" && FilePath != null)  //THERE IS IS NO "ELSE" TO COVER WHAT IF FILEPATH == "" OR NULL!!
-            //{
-            //    ssTac.Visible = true;
-
-            //    //CREATE TACFILE
-            //    tacFile = XElement.Load(FilePath);
-            //    string TacFilePath = FilePath.Substring(0, FilePath.Length - 3) + "tac";
-            //    txtTacFile.Text = TacFilePath;
-            //    TOAWTac.Properties.Settings.Default.TacFilePath = TacFilePath;
-            //    TOAWTac.Properties.Settings.Default.Save();
-
-            //    //LOAD COMMANDER NAMES FILE
-            //    string CdrNameDirectory = Path.GetDirectoryName(TacFilePath);
-            //    string CdrNameFilePath = CdrNameDirectory + "\\CDRNAMES.XML";
-            //    XDocument xdocCDR = XDocument.Load(CdrNameFilePath);
-            //    Random rng = new Random();
-
-            //    //RUN ASYNC TO FILL TACFILE
-            //    await Task.Run(() =>
-            //    {
-            //        foreach (XElement force in tacFile.Descendants("OOB").Descendants("FORCE"))
-            //        {
-            //            string forceID = force.Attribute("ID").Value;
-            //            string forcecdrname = AssignCdrName(xdocCDR, forceID, rng);
-
-            //            force.Add(new XAttribute("CDR", forcecdrname));
-
-            //            //LIST FORMATIONS
-            //            foreach (XElement formation in force.Descendants("FORMATION").Where(f => f.Parent.Attribute("ID").Value == forceID))
-            //            {
-            //                //ADD FORMATIONS TO TACFILE
-            //                string formcdrname = AssignCdrName(xdocCDR, forceID, rng);
-
-            //                formation.Add(
-            //                    new XAttribute("CDR", formcdrname),
-            //                    new XAttribute("RANK", "CPT"),
-            //                    new XAttribute("FORMDATE", date));
-
-            //                string formID = formation.Attribute("ID").Value;
-
-            //                //LIST UNITS
-            //                foreach (XElement unit in formation.Descendants("UNIT")
-            //                    .Where(u => u.Parent.Attribute("ID").Value == formID)
-            //                    .Where(u => u.Parent.Parent.Attribute("ID").Value == forceID))
-            //                {
-            //                    string unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
-
-            //                    //ADD UNITS TO TACFILE
-
-            //                    unit.Add(
-            //                         new XAttribute("CDR", unitcdrname),
-            //                         new XAttribute("RANK", "LT"),
-            //                         new XAttribute("FORMDATE", date));
-
-            //                    string unitID = unit.Attribute("ID").Value;
-
-            //                    //EQUIP NOT NECESSARY FOR TAC FILE?
-            //                }
-            //            }
-            //        }
-            //    });
-
-            //    txtTacFile.Text = TacFilePath;
-
-            //    //ENABLE FORCE RADIO BUTTONS, SET FORCE NAMES
-            //    rbForce1.Enabled = true;
-            //    rbForce2.Enabled = true;
-
-            //    rbForce1.Text = tacFile.Descendants("HEADER").First().Attribute("forceName1").Value;
-            //    rbForce2.Text = tacFile.Descendants("HEADER").First().Attribute("forceName2").Value;
-            //    tacFile.Save(TacFilePath);
-            //    ssTac.Visible = false;
-            //}
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -686,7 +628,7 @@ namespace TOAWXML
                     txtHdrForceCdr.Text = force.Attribute("CDR").Value;
                     txtHdrForceRank.Text = force.Attribute("RANK").Value;
                     txtHdrForceRating.Text = force.Attribute("RATING").Value;
-                                        
+
                     //SET DATA BINDINGS
                     txtName.DataBindings.Add("Text", dtFormation, "Name");
                     txtProf.DataBindings.Add("Text", dtFormation, "Prof");
@@ -705,7 +647,7 @@ namespace TOAWXML
                         dtFormation.Rows.Add(formation.Attribute("NAME").Value, formation.Attribute("PROFICIENCY").Value,
                             formation.Attribute("SUPPLY").Value, formation.Attribute("SUPPORTSCOPE").Value,
                             formation.Attribute("ORDERS").Value, formation.Attribute("EMPHASIS").Value, formation.Attribute("ID").Value,
-                            formation.Attribute("CDR").Value, formation.Attribute("RANK").Value, formation.Attribute("RATING").Value, 
+                            formation.Attribute("CDR").Value, formation.Attribute("RANK").Value, formation.Attribute("RATING").Value,
                             formation.Attribute("FORMDATE").Value);
                     }
 
@@ -1114,31 +1056,47 @@ namespace TOAWXML
                         }
                     }
 
-                        cboHdrUnitOrders.Text = unitorders;
-                        cboHdrUnitReplace.Text = replacePriority;
+                    cboHdrUnitOrders.Text = unitorders;
+                    cboHdrUnitReplace.Text = replacePriority;
 
-                        //SET DATA REPEATER DATA
-                        txtEquipName.DataBindings.Clear();
+                    //SET EQUIPMENT DATA REPEATER DATA
+                    txtEquipID.DataBindings.Clear();
+                    txtEquipName.DataBindings.Clear();
+                    txtEquipCdr.DataBindings.Clear();
+                    txtEquipExp.DataBindings.Clear();
+                    txtEquipKills.DataBindings.Clear();
+                    chbCasualty.DataBindings.Clear();
+                    chbCrewCasualty.DataBindings.Clear();
+                    chbEquipCasualty.DataBindings.Clear();
+                    txtEquipDamage.DataBindings.Clear();
+                    txtEquipNote.DataBindings.Clear();
 
-                        txtEquipName.DataBindings.Add("Text", dtEquip, "EquipName");
+                    drUnit.DataSource = dtEquip;
 
-                        drUnit.DataSource = dtEquip;
+                    txtEquipID.DataBindings.Add("Text", dtEquip, "EquipID");
+                    txtEquipName.DataBindings.Add("Text", dtEquip, "EquipName");
+                    txtEquipCdr.DataBindings.Add("Text", dtEquip, "EquipCdr");
+                    txtEquipExp.DataBindings.Add("Text", dtEquip, "EquipExp");
+                    txtEquipKills.DataBindings.Add("Text", dtEquip, "EquipKills");
+                    chbCasualty.DataBindings.Add("Checked", dtEquip, "Casualty");
+                    chbCrewCasualty.DataBindings.Add("Checked", dtEquip, "CrewCas");
+                    chbEquipCasualty.DataBindings.Add("Checked", dtEquip, "EquipCas");
+                    txtEquipDamage.DataBindings.Add("Text", dtEquip, "EquipDamage");
+                    txtEquipNote.DataBindings.Add("Text", dtEquip, "EquipNote");
 
-                        foreach (XElement equip in equipment.Descendants("EQUIPMENT"))
+                    foreach (XElement item in equipment.Descendants("EQUIPMENT").Descendants("ITEM"))
                         {
-                            int qty = Int32.Parse(equip.Attribute("NUMBER").Value);
-                            for (int i = 1; i <= qty; i++)
-                            {
-                                dtEquip.Rows.Add(equip.Attribute("NAME").Value, 
-                                equip.Attribute("EQUIPCDR").Value,
-                                equip.Attribute("EQUIPEXP").Value,
-                                equip.Attribute("EQUIPKILLS").Value,
-                                equip.Attribute("CASUALTY").Value,
-                                equip.Attribute("CREWCASUALTY").Value,
-                                equip.Attribute("EQUIPCASUALTY").Value,
-                                equip.Attribute("EQUIPDAMAGE").Value,
-                                equip.Attribute("EQUIPNOTE").Value);
-                            }
+                        dtEquip.Rows.Add(
+                            item.Attribute("ID").Value,
+                            item.Attribute("NAME").Value,
+                            item.Attribute("EQUIPCDR").Value,
+                            item.Attribute("EQUIPEXP").Value,
+                            item.Attribute("EQUIPKILLS").Value,
+                            item.Attribute("CASUALTY").Value,
+                            item.Attribute("CREWCASUALTY").Value,
+                            item.Attribute("EQUIPCASUALTY").Value,
+                            item.Attribute("EQUIPDAMAGE").Value,
+                            item.Attribute("EQUIPNOTE").Value);
                         }
 
                         drUnit.DataSource = dtEquip;
