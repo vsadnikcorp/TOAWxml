@@ -261,6 +261,8 @@ namespace TOAWXML
                                     .Where(u => u.Parent.Attribute("ID").Value == formID)
                                     .Where(u => u.Parent.Parent.Attribute("ID").Value == forceID))
                                 {  //UNIT
+                                    //rng = new Random();
+                                   // Console.WriteLine(rng.ToString());
                                     string unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
 
                                     //ADD UNITS TO TACFILE
@@ -273,28 +275,62 @@ namespace TOAWXML
                                     string unitID = unit.Attribute("ID").Value;
 
                                     //ADD EQUIP FOR TAC FILE
+                                    string equipcdrname;
+                                    bool isFirst = true;
+
                                     foreach (XElement equip in unit.Descendants("EQUIPMENT")
                                         .Where(u => u.Parent.Attribute("ID").Value == unitID)
                                         .Where(u => u.Parent.Parent.Attribute("ID").Value == formID)
                                         .Where(u => u.Parent.Parent.Parent.Attribute("ID").Value == forceID))
                                     {
                                         int qty = Int32.Parse(equip.Attribute("NUMBER").Value);
+                                        //equipcdrname = AssignCdrName(xdocCDR, forceID, rng);
 
                                         for (int i = 1; i <= qty; i++) //ITEM
                                         {
+                                            if ((isFirst == true) ||
+                                            unit.Attribute("ICON").Value == "Air" ||
+                                            unit.Attribute("ICON").Value == "Fighter Bomber" ||
+                                            unit.Attribute("ICON").Value == "Light Bomber" ||
+                                            unit.Attribute("ICON").Value == "Medium Bomber" ||
+                                            unit.Attribute("ICON").Value == "Naval Bomber" ||
+                                            unit.Attribute("ICON").Value == "Heavy Bomber" ||
+                                            unit.Attribute("ICON").Value == "Jet Bomber" ||
+                                            unit.Attribute("ICON").Value == "Heavy Jet Bomber" ||
+                                            unit.Attribute("ICON").Value == "Fighter" ||
+                                            unit.Attribute("ICON").Value == "Jet Fighter" ||
+                                            unit.Attribute("ICON").Value == "Naval Fighter" ||
+                                            unit.Attribute("ICON").Value == "Riverine" ||
+                                            unit.Attribute("ICON").Value == "Light Naval" ||
+                                            unit.Attribute("ICON").Value == "Medium Naval" ||
+                                            unit.Attribute("ICON").Value == "Naval Task Force" ||
+                                            unit.Attribute("ICON").Value == "Naval Attack")
+                                            {
+                                                //rng = new Random();
+                                                equipcdrname = AssignCdrName(xdocCDR, forceID, rng);
+                                            }
+                                            else
+                                            {
+                                                equipcdrname = "--";
+                                            }
+
                                             equip.Add(
                                              new XElement("ITEM",
                                              new XAttribute("ID", i),
                                              new XAttribute("NAME", equip.Attribute("NAME").Value),
-                                             new XAttribute("EQUIPCDR", "--"),
-                                             new XAttribute("EQUIPEXP", "--"),
+                                             //new XAttribute("EQUIPCDR", "--"),
+                                             new XAttribute("EQUIPCDR", equipcdrname),
+                                             new XAttribute("EQUIPEXP", "40"),
                                              new XAttribute("EQUIPKILLS", "0"),
                                              new XAttribute("CASUALTY", "0"),
                                              new XAttribute("CREWCASUALTY", "0"),
                                              new XAttribute("EQUIPCASUALTY", "0"),
                                              new XAttribute("EQUIPDAMAGE", "0"),
                                              new XAttribute("EQUIPNOTE", "--")));
+
+                                            isFirst = false;
                                         } //item
+                                        //isFirst = false;
                                     } //equip
                                 }  //unit
                             } //formation
@@ -762,7 +798,7 @@ namespace TOAWXML
                     drForce.Visible = false;
                     drFormation.Visible = false;
                     drUnit.Location = new Point(216, 84);
-                    drUnit.Size = new Size(951, 500);
+                    drUnit.Size = new Size(1097, 500);
                     drUnit.Visible = true;
 
                     //SET DATA BINDING FOR CBOHDRUNITTYPE
