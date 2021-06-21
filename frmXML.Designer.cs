@@ -228,6 +228,9 @@
             this.ssMainProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.tssLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsbtnSearch = new System.Windows.Forms.ToolStripDropDownButton();
+            this.searchFormationUnitNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchFormationUnitOrdersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchUnitTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.gbForce.SuspendLayout();
             this.tabUnits.SuspendLayout();
@@ -2399,15 +2402,36 @@
             // 
             // tsbtnSearch
             // 
-            this.tsbtnSearch.BackgroundImage = global::TOAWXML.Properties.Resources.HCWhite_Search_TraySearchBox_Glyph_100;
             this.tsbtnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.tsbtnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.searchFormationUnitNameToolStripMenuItem,
+            this.searchFormationUnitOrdersToolStripMenuItem,
+            this.searchUnitTypeToolStripMenuItem});
             this.tsbtnSearch.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnSearch.Image")));
             this.tsbtnSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnSearch.Name = "tsbtnSearch";
             this.tsbtnSearch.Size = new System.Drawing.Size(29, 20);
             this.tsbtnSearch.Text = "Search";
             this.tsbtnSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // searchFormationUnitNameToolStripMenuItem
+            // 
+            this.searchFormationUnitNameToolStripMenuItem.Name = "searchFormationUnitNameToolStripMenuItem";
+            this.searchFormationUnitNameToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.searchFormationUnitNameToolStripMenuItem.Text = "Search Formation/Unit Name";
+            // 
+            // searchFormationUnitOrdersToolStripMenuItem
+            // 
+            this.searchFormationUnitOrdersToolStripMenuItem.Name = "searchFormationUnitOrdersToolStripMenuItem";
+            this.searchFormationUnitOrdersToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.searchFormationUnitOrdersToolStripMenuItem.Text = "Search Formation/Unit Orders";
+            // 
+            // searchUnitTypeToolStripMenuItem
+            // 
+            this.searchUnitTypeToolStripMenuItem.Name = "searchUnitTypeToolStripMenuItem";
+            this.searchUnitTypeToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.searchUnitTypeToolStripMenuItem.Text = "Search Unit Type";
             // 
             // xmlform
             // 
@@ -2687,6 +2711,9 @@
         private System.Windows.Forms.ToolStripStatusLabel tssLabel1;
         private System.Windows.Forms.Button btnEquipView;
         private System.Windows.Forms.ToolStripDropDownButton tsbtnSearch;
+        private System.Windows.Forms.ToolStripMenuItem searchFormationUnitNameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem searchFormationUnitOrdersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem searchUnitTypeToolStripMenuItem;
     }
 }
 
