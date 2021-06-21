@@ -5383,8 +5383,6 @@ namespace TOAWXML
                     eqpID = eqpid.Text;
                     itemID = itemid.Text;
 
-                    Console.WriteLine(eqpID + "  " + itemID);
-
                     ////CHANGE TACFILE XML
                     string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID=" + itemID + "]";
                     var eqp = tacFile.XPathSelectElement(xpath);
