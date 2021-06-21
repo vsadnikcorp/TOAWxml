@@ -1112,7 +1112,7 @@ namespace TOAWXML
 
                     drUnit.DataSource = dtEquip;
                     txtItemID.DataBindings.Add("Text", dtEquip, "ItemID");
-                    lblEquipID.DataBindings.Add("Text", dtEquip, "ItemID");
+                    lblEquipID.DataBindings.Add("Text", dtEquip, "EquipID");
                     txtItemName.DataBindings.Add("Text", dtEquip, "ItemName");
                     txtItemCdr.DataBindings.Add("Text", dtEquip, "ItemCdr");
                     txtItemExp.DataBindings.Add("Text", dtEquip, "ItemExp");
@@ -5382,6 +5382,8 @@ namespace TOAWXML
                     casualty = row.Controls.Find("cboCasualty", true).First();
                     eqpID = eqpid.Text;
                     itemID = itemid.Text;
+
+                    Console.WriteLine(eqpID + "  " + itemID);
 
                     ////CHANGE TACFILE XML
                     string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID=" + itemID + "]";
