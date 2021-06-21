@@ -155,19 +155,16 @@ namespace TOAWXML
             dtUnit.Columns.Add("FormDate", typeof(string));
 
             //CREATE DATATABLE FOR EQUIP
+            dtEquip.Columns.Add("ItemID", typeof(string));
             dtEquip.Columns.Add("EquipID", typeof(string));
-            dtEquip.Columns.Add("EquipName", typeof(string));
-            dtEquip.Columns.Add("EquipCdr", typeof(string));
-            dtEquip.Columns.Add("EquipExp", typeof(string));
-            dtEquip.Columns.Add("EquipKills", typeof(string));
+            dtEquip.Columns.Add("ItemName", typeof(string));
+            dtEquip.Columns.Add("ItemCdr", typeof(string));
+            dtEquip.Columns.Add("ItemExp", typeof(string));
+            dtEquip.Columns.Add("ItemKills", typeof(string));
             dtEquip.Columns.Add("Casualty", typeof(string));
-            dtEquip.Columns.Add("CrewCasualty", typeof(string));
-            dtEquip.Columns.Add("EquipCasualty", typeof(string));
-            dtEquip.Columns.Add("EquipDamage", typeof(string));
-            dtEquip.Columns.Add("EquipNote", typeof(string));
-            //dtEquip.Columns.Add("Qty", typeof(string));
-            //dtEquip.Columns.Add("Max", typeof(string));
-            //dtEquip.Columns.Add("Dam", typeof(string));
+            dtEquip.Columns.Add("ItemDamage", typeof(string));
+            dtEquip.Columns.Add("ItemFormDate", typeof(string));
+            dtEquip.Columns.Add("ItemNote", typeof(string));
 
             txtName.Visible = false;
             txtProf.Visible = false;
@@ -277,6 +274,7 @@ namespace TOAWXML
                                     //ADD EQUIP FOR TAC FILE
                                     string equipcdrname;
                                     bool isFirst = true;
+                                    int n = 0;
 
                                     foreach (XElement equip in unit.Descendants("EQUIPMENT")
                                         .Where(u => u.Parent.Attribute("ID").Value == unitID)
@@ -288,7 +286,11 @@ namespace TOAWXML
 
                                         for (int i = 1; i <= qty; i++) //ITEM
                                         {
-                                            if ((isFirst == true) ||
+                                            if (isFirst == true)
+                                            {
+                                                equipcdrname = unit.Attribute("CDR").Value;
+                                            }
+                                            else if ((isFirst != true) &&
                                             unit.Attribute("ICON").Value == "Air" ||
                                             unit.Attribute("ICON").Value == "Fighter Bomber" ||
                                             unit.Attribute("ICON").Value == "Light Bomber" ||
@@ -313,25 +315,26 @@ namespace TOAWXML
                                             {
                                                 equipcdrname = "--";
                                             }
+                                            //i = n + i;
+                                            n++;
 
                                             equip.Add(
                                              new XElement("ITEM",
-                                             new XAttribute("ID", i),
+                                             new XAttribute("ID", n),
                                              new XAttribute("NAME", equip.Attribute("NAME").Value),
                                              //new XAttribute("EQUIPCDR", "--"),
-                                             new XAttribute("EQUIPCDR", equipcdrname),
-                                             new XAttribute("EQUIPEXP", "40"),
-                                             new XAttribute("EQUIPKILLS", "0"),
-                                             new XAttribute("CASUALTY", "0"),
-                                             new XAttribute("CREWCASUALTY", "0"),
-                                             new XAttribute("EQUIPCASUALTY", "0"),
-                                             new XAttribute("EQUIPDAMAGE", "0"),
-                                             new XAttribute("EQUIPNOTE", "--")));
+                                             new XAttribute("ITEMCDR", equipcdrname),
+                                             new XAttribute("ITEMEXP", "40"),
+                                             new XAttribute("ITEMKILLS", "0"),
+                                             new XAttribute("CASUALTY", "None"),
+                                             new XAttribute("ITEMDAMAGE", "0"),
+                                             new XAttribute("ITEMFORMDATE", date),
+                                             new XAttribute("ITEMNOTE", "--")));
 
                                             isFirst = false;
+                                            //n = i;
                                         } //item
-                                        //isFirst = false;
-                                    } //equip
+                                     } //equip
                                 }  //unit
                             } //formation
                         }
@@ -1096,43 +1099,42 @@ namespace TOAWXML
                     cboHdrUnitReplace.Text = replacePriority;
 
                     //SET EQUIPMENT DATA REPEATER DATA
-                    txtEquipID.DataBindings.Clear();
-                    txtEquipName.DataBindings.Clear();
-                    txtEquipCdr.DataBindings.Clear();
-                    txtEquipExp.DataBindings.Clear();
-                    txtEquipKills.DataBindings.Clear();
-                    chbCasualty.DataBindings.Clear();
-                    chbCrewCasualty.DataBindings.Clear();
-                    chbEquipCasualty.DataBindings.Clear();
-                    txtEquipDamage.DataBindings.Clear();
-                    txtEquipNote.DataBindings.Clear();
+                    txtItemID.DataBindings.Clear();
+                    txtItemName.DataBindings.Clear();
+                    txtItemCdr.DataBindings.Clear();
+                    txtItemExp.DataBindings.Clear();
+                    txtItemKills.DataBindings.Clear();
+                    cboCasualty.DataBindings.Clear();
+                    txtItemDamage.DataBindings.Clear();
+                    txtItemFormDate.DataBindings.Clear();
+                    txtItemNote.DataBindings.Clear();
+                    lblEquipID.DataBindings.Clear();
 
                     drUnit.DataSource = dtEquip;
-
-                    txtEquipID.DataBindings.Add("Text", dtEquip, "EquipID");
-                    txtEquipName.DataBindings.Add("Text", dtEquip, "EquipName");
-                    txtEquipCdr.DataBindings.Add("Text", dtEquip, "EquipCdr");
-                    txtEquipExp.DataBindings.Add("Text", dtEquip, "EquipExp");
-                    txtEquipKills.DataBindings.Add("Text", dtEquip, "EquipKills");
-                    chbCasualty.DataBindings.Add("Checked", dtEquip, "Casualty");
-                    chbCrewCasualty.DataBindings.Add("Checked", dtEquip, "CrewCas");
-                    chbEquipCasualty.DataBindings.Add("Checked", dtEquip, "EquipCas");
-                    txtEquipDamage.DataBindings.Add("Text", dtEquip, "EquipDamage");
-                    txtEquipNote.DataBindings.Add("Text", dtEquip, "EquipNote");
+                    txtItemID.DataBindings.Add("Text", dtEquip, "ItemID");
+                    lblEquipID.DataBindings.Add("Text", dtEquip, "ItemID");
+                    txtItemName.DataBindings.Add("Text", dtEquip, "ItemName");
+                    txtItemCdr.DataBindings.Add("Text", dtEquip, "ItemCdr");
+                    txtItemExp.DataBindings.Add("Text", dtEquip, "ItemExp");
+                    txtItemKills.DataBindings.Add("Text", dtEquip, "ItemKills");
+                    cboCasualty.DataBindings.Add("Text", dtEquip, "Casualty");
+                    txtItemDamage.DataBindings.Add("Text", dtEquip, "ItemDamage");
+                    txtItemFormDate.DataBindings.Add("Text", dtEquip, "ItemFormDate");
+                    txtItemNote.DataBindings.Add("Text", dtEquip, "ItemNote");
 
                     foreach (XElement item in equipment.Descendants("EQUIPMENT").Descendants("ITEM"))
                         {
                         dtEquip.Rows.Add(
                             item.Attribute("ID").Value,
+                            item.Parent.Attribute("ID").Value,
                             item.Attribute("NAME").Value,
-                            item.Attribute("EQUIPCDR").Value,
-                            item.Attribute("EQUIPEXP").Value,
-                            item.Attribute("EQUIPKILLS").Value,
+                            item.Attribute("ITEMCDR").Value,
+                            item.Attribute("ITEMEXP").Value,
+                            item.Attribute("ITEMKILLS").Value,
                             item.Attribute("CASUALTY").Value,
-                            item.Attribute("CREWCASUALTY").Value,
-                            item.Attribute("EQUIPCASUALTY").Value,
-                            item.Attribute("EQUIPDAMAGE").Value,
-                            item.Attribute("EQUIPNOTE").Value);
+                            item.Attribute("ITEMDAMAGE").Value,
+                            item.Attribute("ITEMFORMDATE").Value,
+                            item.Attribute("ITEMNOTE").Value);
                         }
 
                         drUnit.DataSource = dtEquip;
@@ -3027,6 +3029,8 @@ namespace TOAWXML
             int drIndex = drFormation.CurrentItemIndex;
             string unitID = "";
             string newname = "";
+
+            if (!txtUnitName.Focused) return;
 
             foreach (DataRepeaterItem row in drFormation.Controls)
             {
@@ -5187,6 +5191,314 @@ namespace TOAWXML
                     string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]";
                     var unit = tacFile.XPathSelectElement(xpath);
                     if (rating.Text != null) unit.Attribute("RATING").Value = rating.Text;
+                }
+            }
+        }
+
+        private void txtItemCdr_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drUnit.CurrentItemIndex;
+            string unitID = trvUnitTree.SelectedNode.Tag.ToString();
+            string eqpID = "";
+            string itemID = "";
+            Control itemcdr = null;
+            Control eqpid = null;
+            Control itemid = null;
+
+            foreach (DataRepeaterItem row in drUnit.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    eqpid = row.Controls.Find("lblEquipID", true).First();
+                    itemid = row.Controls.Find("txtItemID", true).First();
+                    itemcdr = row.Controls.Find("txtItemCdr", true).First();
+                    eqpID = eqpid.Text;
+                    itemID = itemid.Text;
+
+                    ////CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID="+ itemID + "]";
+                    var eqp = tacFile.XPathSelectElement(xpath);
+                    if (itemcdr.Text != null) eqp.Attribute("ITEMCDR").Value = itemcdr.Text;
+                }
+            }
+        }
+
+        private void txtItemCdr_MouseLeave(object sender, EventArgs e)
+        {
+            int drIndex = drUnit.CurrentItemIndex;
+            string unitID = trvUnitTree.SelectedNode.Tag.ToString();
+            string eqpID = "";
+            string itemID = "";
+            Control itemcdr = null;
+            Control eqpid = null;
+            Control itemid = null;
+
+            foreach (DataRepeaterItem row in drUnit.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    eqpid = row.Controls.Find("lblEquipID", true).First();
+                    itemid = row.Controls.Find("txtItemID", true).First();
+                    itemcdr = row.Controls.Find("txtItemCdr", true).First();
+                    eqpID = eqpid.Text;
+                    itemID = itemid.Text;
+
+                    ////CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID=" + itemID + "]";
+                    var eqp = tacFile.XPathSelectElement(xpath);
+                    if (itemcdr.Text != null) eqp.Attribute("ITEMCDR").Value = itemcdr.Text;
+                }
+            }
+        }
+
+        private void txtItemExp_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drUnit.CurrentItemIndex;
+            string unitID = trvUnitTree.SelectedNode.Tag.ToString();
+            string eqpID = "";
+            string itemID = "";
+            Control itemexp = null;
+            Control eqpid = null;
+            Control itemid = null;
+
+            foreach (DataRepeaterItem row in drUnit.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    eqpid = row.Controls.Find("lblEquipID", true).First();
+                    itemid = row.Controls.Find("txtItemID", true).First();
+                    itemexp = row.Controls.Find("txtItemExp", true).First();
+                    eqpID = eqpid.Text;
+                    itemID = itemid.Text;
+
+                    ////CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID=" + itemID + "]";
+                    var eqp = tacFile.XPathSelectElement(xpath);
+                    if (itemexp.Text != null) eqp.Attribute("ITEMEXP").Value = itemexp.Text;
+                }
+            }
+        }
+
+        private void txtItemExp_MouseLeave(object sender, EventArgs e)
+        {
+            int drIndex = drUnit.CurrentItemIndex;
+            string unitID = trvUnitTree.SelectedNode.Tag.ToString();
+            string eqpID = "";
+            string itemID = "";
+            Control itemexp = null;
+            Control eqpid = null;
+            Control itemid = null;
+
+            foreach (DataRepeaterItem row in drUnit.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    eqpid = row.Controls.Find("lblEquipID", true).First();
+                    itemid = row.Controls.Find("txtItemID", true).First();
+                    itemexp = row.Controls.Find("txtItemExp", true).First();
+                    eqpID = eqpid.Text;
+                    itemID = itemid.Text;
+
+                    ////CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID=" + itemID + "]";
+                    var eqp = tacFile.XPathSelectElement(xpath);
+                    if (itemexp.Text != null) eqp.Attribute("ITEMEXP").Value = itemexp.Text;
+                }
+            }
+        }
+
+        private void txtItemKills_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drUnit.CurrentItemIndex;
+            string unitID = trvUnitTree.SelectedNode.Tag.ToString();
+            string eqpID = "";
+            string itemID = "";
+            Control itemkills = null;
+            Control eqpid = null;
+            Control itemid = null;
+
+            foreach (DataRepeaterItem row in drUnit.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    eqpid = row.Controls.Find("lblEquipID", true).First();
+                    itemid = row.Controls.Find("txtItemID", true).First();
+                    itemkills = row.Controls.Find("txtItemKills", true).First();
+                    eqpID = eqpid.Text;
+                    itemID = itemid.Text;
+
+                    ////CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID=" + itemID + "]";
+                    var eqp = tacFile.XPathSelectElement(xpath);
+                    if (itemkills.Text != null) eqp.Attribute("ITEMKILLS").Value = itemkills.Text;
+                }
+            }
+        }
+
+        private void txtItemKills_MouseLeave(object sender, EventArgs e)
+        {
+            int drIndex = drUnit.CurrentItemIndex;
+            string unitID = trvUnitTree.SelectedNode.Tag.ToString();
+            string eqpID = "";
+            string itemID = "";
+            Control itemkills = null;
+            Control eqpid = null;
+            Control itemid = null;
+
+            foreach (DataRepeaterItem row in drUnit.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    eqpid = row.Controls.Find("lblEquipID", true).First();
+                    itemid = row.Controls.Find("txtItemID", true).First();
+                    itemkills = row.Controls.Find("txtItemKills", true).First();
+                    eqpID = eqpid.Text;
+                    itemID = itemid.Text;
+
+                    ////CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID=" + itemID + "]";
+                    var eqp = tacFile.XPathSelectElement(xpath);
+                    if (itemkills.Text != null) eqp.Attribute("ITEMKILLS").Value = itemkills.Text;
+                }
+            }
+        }
+
+        private void cboCasualty_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int drIndex = drUnit.CurrentItemIndex;
+            string unitID = trvUnitTree.SelectedNode.Tag.ToString();
+            string eqpID = "";
+            string itemID = "";
+            Control casualty = null;
+            Control eqpid = null;
+            Control itemid = null;
+
+            foreach (DataRepeaterItem row in drUnit.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    eqpid = row.Controls.Find("lblEquipID", true).First();
+                    itemid = row.Controls.Find("txtItemID", true).First();
+                    casualty = row.Controls.Find("cboCasualty", true).First();
+                    eqpID = eqpid.Text;
+                    itemID = itemid.Text;
+
+                    ////CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID=" + itemID + "]";
+                    var eqp = tacFile.XPathSelectElement(xpath);
+                    if (casualty.Text != null) eqp.Attribute("CASUALTY").Value = casualty.Text;
+                }
+            }
+        }
+
+        private void txtEquipDamage_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drUnit.CurrentItemIndex;
+            string unitID = trvUnitTree.SelectedNode.Tag.ToString();
+            string eqpID = "";
+            string itemID = "";
+            Control itemdamage = null;
+            Control eqpid = null;
+            Control itemid = null;
+
+            foreach (DataRepeaterItem row in drUnit.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    eqpid = row.Controls.Find("lblEquipID", true).First();
+                    itemid = row.Controls.Find("txtItemID", true).First();
+                    itemdamage = row.Controls.Find("txtItemDamage", true).First();
+                    eqpID = eqpid.Text;
+                    itemID = itemid.Text;
+
+                    ////CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID=" + itemID + "]";
+                    var eqp = tacFile.XPathSelectElement(xpath);
+                    if (itemdamage.Text != null) eqp.Attribute("ITEMDAMAGE").Value = itemdamage.Text;
+                }
+            }
+        }
+
+        private void txtItemDamage_MouseLeave(object sender, EventArgs e)
+        {
+            int drIndex = drUnit.CurrentItemIndex;
+            string unitID = trvUnitTree.SelectedNode.Tag.ToString();
+            string eqpID = "";
+            string itemID = "";
+            Control itemdamage = null;
+            Control eqpid = null;
+            Control itemid = null;
+
+            foreach (DataRepeaterItem row in drUnit.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    eqpid = row.Controls.Find("lblEquipID", true).First();
+                    itemid = row.Controls.Find("txtItemID", true).First();
+                    itemdamage = row.Controls.Find("txtItemDamage", true).First();
+                    eqpID = eqpid.Text;
+                    itemID = itemid.Text;
+
+                    ////CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID=" + itemID + "]";
+                    var eqp = tacFile.XPathSelectElement(xpath);
+                    if (itemdamage.Text != null) eqp.Attribute("ITEMDAMAGE").Value = itemdamage.Text;
+                }
+            }
+        }
+
+        private void txtEquipNote_Leave(object sender, EventArgs e)
+        {
+            int drIndex = drUnit.CurrentItemIndex;
+            string unitID = trvUnitTree.SelectedNode.Tag.ToString();
+            string eqpID = "";
+            string itemID = "";
+            Control itemnote = null;
+            Control eqpid = null;
+            Control itemid = null;
+
+            foreach (DataRepeaterItem row in drUnit.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    eqpid = row.Controls.Find("lblEquipID", true).First();
+                    itemid = row.Controls.Find("txtItemID", true).First();
+                    itemnote = row.Controls.Find("txtItemNote", true).First();
+                    eqpID = eqpid.Text;
+                    itemID = itemid.Text;
+
+                    ////CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID=" + itemID + "]";
+                    var eqp = tacFile.XPathSelectElement(xpath);
+                    if (itemnote.Text != null) eqp.Attribute("ITEMNOTE").Value = itemnote.Text;
+                }
+            }
+        }
+
+        private void txtItemNote_MouseLeave(object sender, EventArgs e)
+        {
+            int drIndex = drUnit.CurrentItemIndex;
+            string unitID = trvUnitTree.SelectedNode.Tag.ToString();
+            string eqpID = "";
+            string itemID = "";
+            Control itemnote = null;
+            Control eqpid = null;
+            Control itemid = null;
+
+            foreach (DataRepeaterItem row in drUnit.Controls)
+            {
+                if (row.ItemIndex == drIndex)
+                {
+                    eqpid = row.Controls.Find("lblEquipID", true).First();
+                    itemid = row.Controls.Find("txtItemID", true).First();
+                    itemnote = row.Controls.Find("txtItemNote", true).First();
+                    eqpID = eqpid.Text;
+                    itemID = itemid.Text;
+
+                    ////CHANGE TACFILE XML
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@ID= " + unitID + "]/EQUIPMENT[@ID=" + eqpID + "]/ITEM[@ID=" + itemID + "]";
+                    var eqp = tacFile.XPathSelectElement(xpath);
+                    if (itemnote.Text != null) eqp.Attribute("ITEMNOTE").Value = itemnote.Text;
                 }
             }
         }

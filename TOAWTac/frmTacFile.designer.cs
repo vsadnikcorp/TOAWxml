@@ -44,7 +44,7 @@ namespace TOAWXML
             this.rbForce1 = new System.Windows.Forms.RadioButton();
             this.ssTac = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.btnSync = new System.Windows.Forms.Button();
+            this.btnSyncTacGam = new System.Windows.Forms.Button();
             this.trvUnitTree = new System.Windows.Forms.TreeView();
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtProf = new System.Windows.Forms.TextBox();
@@ -99,27 +99,29 @@ namespace TOAWXML
             this.cboUnitOrders = new System.Windows.Forms.ComboBox();
             this.txtUnitName = new System.Windows.Forms.TextBox();
             this.drUnit = new Microsoft.VisualBasic.PowerPacks.DataRepeater();
-            this.chbCrewCasualty = new System.Windows.Forms.CheckBox();
+            this.lblItemFormDate = new System.Windows.Forms.Label();
+            this.txtItemFormDate = new System.Windows.Forms.TextBox();
+            this.lblCasualty = new System.Windows.Forms.Label();
+            this.cboCasualty = new System.Windows.Forms.ComboBox();
+            this.lblEquipID = new System.Windows.Forms.Label();
             this.lblEqpNote = new System.Windows.Forms.Label();
-            this.txtEquipNote = new System.Windows.Forms.TextBox();
+            this.txtItemNote = new System.Windows.Forms.TextBox();
             this.lblDamage = new System.Windows.Forms.Label();
-            this.txtEquipDamage = new System.Windows.Forms.TextBox();
+            this.txtItemDamage = new System.Windows.Forms.TextBox();
             this.label44 = new System.Windows.Forms.Label();
-            this.txtEquipCdr = new System.Windows.Forms.TextBox();
+            this.txtItemCdr = new System.Windows.Forms.TextBox();
             this.label43 = new System.Windows.Forms.Label();
-            this.txtEquipKills = new System.Windows.Forms.TextBox();
-            this.chbCasualty = new System.Windows.Forms.CheckBox();
+            this.txtItemKills = new System.Windows.Forms.TextBox();
             this.label42 = new System.Windows.Forms.Label();
-            this.txtEquipExp = new System.Windows.Forms.TextBox();
+            this.txtItemExp = new System.Windows.Forms.TextBox();
             this.label41 = new System.Windows.Forms.Label();
-            this.txtEquipID = new System.Windows.Forms.TextBox();
+            this.txtItemID = new System.Windows.Forms.TextBox();
             this.lblEquipName = new System.Windows.Forms.Label();
-            this.txtEquipName = new System.Windows.Forms.TextBox();
+            this.txtItemName = new System.Windows.Forms.TextBox();
             this.label46 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.chbEquipCasualty = new System.Windows.Forms.CheckBox();
             this.label47 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label48 = new System.Windows.Forms.Label();
@@ -130,7 +132,6 @@ namespace TOAWXML
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.label50 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.label52 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.label53 = new System.Windows.Forms.Label();
@@ -202,6 +203,7 @@ namespace TOAWXML
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnSyncGamTac = new System.Windows.Forms.Button();
             this.gbForce.SuspendLayout();
             this.ssTac.SuspendLayout();
             this.drForce.ItemTemplate.SuspendLayout();
@@ -217,7 +219,7 @@ namespace TOAWXML
             // 
             // btnCreateTacFile
             // 
-            this.btnCreateTacFile.Location = new System.Drawing.Point(107, 627);
+            this.btnCreateTacFile.Location = new System.Drawing.Point(107, 635);
             this.btnCreateTacFile.Name = "btnCreateTacFile";
             this.btnCreateTacFile.Size = new System.Drawing.Size(60, 40);
             this.btnCreateTacFile.TabIndex = 0;
@@ -228,7 +230,7 @@ namespace TOAWXML
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(11, 627);
+            this.btnClose.Location = new System.Drawing.Point(11, 635);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(78, 38);
             this.btnClose.TabIndex = 1;
@@ -256,7 +258,7 @@ namespace TOAWXML
             // 
             // btnLoadTacFile
             // 
-            this.btnLoadTacFile.Location = new System.Drawing.Point(185, 627);
+            this.btnLoadTacFile.Location = new System.Drawing.Point(185, 635);
             this.btnLoadTacFile.Name = "btnLoadTacFile";
             this.btnLoadTacFile.Size = new System.Drawing.Size(60, 40);
             this.btnLoadTacFile.TabIndex = 6;
@@ -343,15 +345,15 @@ namespace TOAWXML
             this.toolStripProgressBar1.Size = new System.Drawing.Size(300, 16);
             this.toolStripProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
-            // btnSync
+            // btnSyncTacGam
             // 
-            this.btnSync.Location = new System.Drawing.Point(263, 627);
-            this.btnSync.Name = "btnSync";
-            this.btnSync.Size = new System.Drawing.Size(60, 40);
-            this.btnSync.TabIndex = 27;
-            this.btnSync.Text = "Sync \r\nTacFile";
-            this.btnSync.UseVisualStyleBackColor = true;
-            this.btnSync.Click += new System.EventHandler(this.btnSync_Click);
+            this.btnSyncTacGam.Location = new System.Drawing.Point(263, 635);
+            this.btnSyncTacGam.Name = "btnSyncTacGam";
+            this.btnSyncTacGam.Size = new System.Drawing.Size(79, 40);
+            this.btnSyncTacGam.TabIndex = 27;
+            this.btnSyncTacGam.Text = "Sync \r\ntac >>> gam";
+            this.btnSyncTacGam.UseVisualStyleBackColor = true;
+            this.btnSyncTacGam.Click += new System.EventHandler(this.btnSync_Click);
             // 
             // trvUnitTree
             // 
@@ -686,7 +688,7 @@ namespace TOAWXML
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(1001, 6);
+            this.label33.Location = new System.Drawing.Point(1001, 3);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(59, 13);
             this.label33.TabIndex = 92;
@@ -1135,27 +1137,29 @@ namespace TOAWXML
             // 
             // drUnit.ItemTemplate
             // 
-            this.drUnit.ItemTemplate.Controls.Add(this.chbCrewCasualty);
+            this.drUnit.ItemTemplate.Controls.Add(this.lblItemFormDate);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtItemFormDate);
+            this.drUnit.ItemTemplate.Controls.Add(this.lblCasualty);
+            this.drUnit.ItemTemplate.Controls.Add(this.cboCasualty);
+            this.drUnit.ItemTemplate.Controls.Add(this.lblEquipID);
             this.drUnit.ItemTemplate.Controls.Add(this.lblEqpNote);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipNote);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtItemNote);
             this.drUnit.ItemTemplate.Controls.Add(this.lblDamage);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipDamage);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtItemDamage);
             this.drUnit.ItemTemplate.Controls.Add(this.label44);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipCdr);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtItemCdr);
             this.drUnit.ItemTemplate.Controls.Add(this.label43);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipKills);
-            this.drUnit.ItemTemplate.Controls.Add(this.chbCasualty);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtItemKills);
             this.drUnit.ItemTemplate.Controls.Add(this.label42);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipExp);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtItemExp);
             this.drUnit.ItemTemplate.Controls.Add(this.label41);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipID);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtItemID);
             this.drUnit.ItemTemplate.Controls.Add(this.lblEquipName);
-            this.drUnit.ItemTemplate.Controls.Add(this.txtEquipName);
+            this.drUnit.ItemTemplate.Controls.Add(this.txtItemName);
             this.drUnit.ItemTemplate.Controls.Add(this.label46);
             this.drUnit.ItemTemplate.Controls.Add(this.textBox2);
             this.drUnit.ItemTemplate.Controls.Add(this.label45);
             this.drUnit.ItemTemplate.Controls.Add(this.textBox1);
-            this.drUnit.ItemTemplate.Controls.Add(this.chbEquipCasualty);
             this.drUnit.ItemTemplate.Controls.Add(this.label47);
             this.drUnit.ItemTemplate.Controls.Add(this.textBox3);
             this.drUnit.ItemTemplate.Controls.Add(this.label48);
@@ -1166,7 +1170,6 @@ namespace TOAWXML
             this.drUnit.ItemTemplate.Controls.Add(this.textBox7);
             this.drUnit.ItemTemplate.Controls.Add(this.label50);
             this.drUnit.ItemTemplate.Controls.Add(this.textBox6);
-            this.drUnit.ItemTemplate.Controls.Add(this.checkBox3);
             this.drUnit.ItemTemplate.Controls.Add(this.label52);
             this.drUnit.ItemTemplate.Controls.Add(this.textBox8);
             this.drUnit.ItemTemplate.Controls.Add(this.label53);
@@ -1180,48 +1183,92 @@ namespace TOAWXML
             this.drUnit.TabIndex = 55;
             this.drUnit.Text = "dataRepeater1";
             // 
-            // chbCrewCasualty
+            // lblItemFormDate
             // 
-            this.chbCrewCasualty.AutoSize = true;
-            this.chbCrewCasualty.Location = new System.Drawing.Point(546, 3);
-            this.chbCrewCasualty.Name = "chbCrewCasualty";
-            this.chbCrewCasualty.Size = new System.Drawing.Size(93, 17);
-            this.chbCrewCasualty.TabIndex = 73;
-            this.chbCrewCasualty.Text = "Crew Casualty";
-            this.chbCrewCasualty.UseVisualStyleBackColor = true;
+            this.lblItemFormDate.AutoSize = true;
+            this.lblItemFormDate.Location = new System.Drawing.Point(606, 2);
+            this.lblItemFormDate.Name = "lblItemFormDate";
+            this.lblItemFormDate.Size = new System.Drawing.Size(59, 13);
+            this.lblItemFormDate.TabIndex = 78;
+            this.lblItemFormDate.Text = "Form Date:";
+            // 
+            // txtItemFormDate
+            // 
+            this.txtItemFormDate.Location = new System.Drawing.Point(605, 15);
+            this.txtItemFormDate.Name = "txtItemFormDate";
+            this.txtItemFormDate.ReadOnly = true;
+            this.txtItemFormDate.Size = new System.Drawing.Size(72, 20);
+            this.txtItemFormDate.TabIndex = 72;
+            // 
+            // lblCasualty
+            // 
+            this.lblCasualty.AutoSize = true;
+            this.lblCasualty.Location = new System.Drawing.Point(476, 0);
+            this.lblCasualty.Name = "lblCasualty";
+            this.lblCasualty.Size = new System.Drawing.Size(77, 13);
+            this.lblCasualty.TabIndex = 76;
+            this.lblCasualty.Text = "Casualty Type:";
+            // 
+            // cboCasualty
+            // 
+            this.cboCasualty.FormattingEnabled = true;
+            this.cboCasualty.Items.AddRange(new object[] {
+            "None",
+            "Crew",
+            "Equipment",
+            "Full"});
+            this.cboCasualty.Location = new System.Drawing.Point(475, 15);
+            this.cboCasualty.Name = "cboCasualty";
+            this.cboCasualty.Size = new System.Drawing.Size(78, 21);
+            this.cboCasualty.TabIndex = 70;
+            this.cboCasualty.SelectedIndexChanged += new System.EventHandler(this.cboCasualty_SelectedIndexChanged);
+            // 
+            // lblEquipID
+            // 
+            this.lblEquipID.AutoSize = true;
+            this.lblEquipID.Location = new System.Drawing.Point(1032, 1);
+            this.lblEquipID.Name = "lblEquipID";
+            this.lblEquipID.Size = new System.Drawing.Size(41, 13);
+            this.lblEquipID.TabIndex = 74;
+            this.lblEquipID.Text = "label55";
+            this.lblEquipID.Visible = false;
             // 
             // lblEqpNote
             // 
             this.lblEqpNote.AutoSize = true;
-            this.lblEqpNote.Location = new System.Drawing.Point(699, 1);
+            this.lblEqpNote.Location = new System.Drawing.Point(699, 0);
             this.lblEqpNote.Name = "lblEqpNote";
             this.lblEqpNote.Size = new System.Drawing.Size(33, 13);
             this.lblEqpNote.TabIndex = 72;
             this.lblEqpNote.Text = "Note:";
             // 
-            // txtEquipNote
+            // txtItemNote
             // 
-            this.txtEquipNote.Location = new System.Drawing.Point(698, 16);
-            this.txtEquipNote.Name = "txtEquipNote";
-            this.txtEquipNote.Size = new System.Drawing.Size(328, 20);
-            this.txtEquipNote.TabIndex = 71;
+            this.txtItemNote.Location = new System.Drawing.Point(702, 15);
+            this.txtItemNote.Name = "txtItemNote";
+            this.txtItemNote.Size = new System.Drawing.Size(373, 20);
+            this.txtItemNote.TabIndex = 73;
+            this.txtItemNote.Leave += new System.EventHandler(this.txtEquipNote_Leave);
+            this.txtItemNote.MouseLeave += new System.EventHandler(this.txtItemNote_MouseLeave);
             // 
             // lblDamage
             // 
             this.lblDamage.AutoSize = true;
-            this.lblDamage.Location = new System.Drawing.Point(642, 0);
+            this.lblDamage.Location = new System.Drawing.Point(556, -1);
             this.lblDamage.Name = "lblDamage";
             this.lblDamage.Size = new System.Drawing.Size(50, 13);
             this.lblDamage.TabIndex = 70;
             this.lblDamage.Text = "Damage:";
             // 
-            // txtEquipDamage
+            // txtItemDamage
             // 
-            this.txtEquipDamage.Location = new System.Drawing.Point(647, 16);
-            this.txtEquipDamage.Name = "txtEquipDamage";
-            this.txtEquipDamage.Size = new System.Drawing.Size(34, 20);
-            this.txtEquipDamage.TabIndex = 69;
-            this.txtEquipDamage.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtItemDamage.Location = new System.Drawing.Point(561, 15);
+            this.txtItemDamage.Name = "txtItemDamage";
+            this.txtItemDamage.Size = new System.Drawing.Size(34, 20);
+            this.txtItemDamage.TabIndex = 71;
+            this.txtItemDamage.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtItemDamage.Leave += new System.EventHandler(this.txtEquipDamage_Leave);
+            this.txtItemDamage.MouseLeave += new System.EventHandler(this.txtItemDamage_MouseLeave);
             // 
             // label44
             // 
@@ -1232,12 +1279,14 @@ namespace TOAWXML
             this.label44.TabIndex = 68;
             this.label44.Text = "Commander:";
             // 
-            // txtEquipCdr
+            // txtItemCdr
             // 
-            this.txtEquipCdr.Location = new System.Drawing.Point(197, 16);
-            this.txtEquipCdr.Name = "txtEquipCdr";
-            this.txtEquipCdr.Size = new System.Drawing.Size(111, 20);
-            this.txtEquipCdr.TabIndex = 67;
+            this.txtItemCdr.Location = new System.Drawing.Point(197, 16);
+            this.txtItemCdr.Name = "txtItemCdr";
+            this.txtItemCdr.Size = new System.Drawing.Size(111, 20);
+            this.txtItemCdr.TabIndex = 67;
+            this.txtItemCdr.Leave += new System.EventHandler(this.txtItemCdr_Leave);
+            this.txtItemCdr.MouseLeave += new System.EventHandler(this.txtItemCdr_MouseLeave);
             // 
             // label43
             // 
@@ -1248,23 +1297,15 @@ namespace TOAWXML
             this.label43.TabIndex = 66;
             this.label43.Text = "Kills:";
             // 
-            // txtEquipKills
+            // txtItemKills
             // 
-            this.txtEquipKills.Location = new System.Drawing.Point(434, 15);
-            this.txtEquipKills.Name = "txtEquipKills";
-            this.txtEquipKills.Size = new System.Drawing.Size(34, 20);
-            this.txtEquipKills.TabIndex = 65;
-            this.txtEquipKills.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // chbCasualty
-            // 
-            this.chbCasualty.AutoSize = true;
-            this.chbCasualty.Location = new System.Drawing.Point(478, 13);
-            this.chbCasualty.Name = "chbCasualty";
-            this.chbCasualty.Size = new System.Drawing.Size(66, 17);
-            this.chbCasualty.TabIndex = 63;
-            this.chbCasualty.Text = "Casualty";
-            this.chbCasualty.UseVisualStyleBackColor = true;
+            this.txtItemKills.Location = new System.Drawing.Point(434, 15);
+            this.txtItemKills.Name = "txtItemKills";
+            this.txtItemKills.Size = new System.Drawing.Size(34, 20);
+            this.txtItemKills.TabIndex = 69;
+            this.txtItemKills.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtItemKills.Leave += new System.EventHandler(this.txtItemKills_Leave);
+            this.txtItemKills.MouseLeave += new System.EventHandler(this.txtItemKills_MouseLeave);
             // 
             // label42
             // 
@@ -1275,12 +1316,14 @@ namespace TOAWXML
             this.label42.TabIndex = 62;
             this.label42.Text = "Experience:";
             // 
-            // txtEquipExp
+            // txtItemExp
             // 
-            this.txtEquipExp.Location = new System.Drawing.Point(317, 16);
-            this.txtEquipExp.Name = "txtEquipExp";
-            this.txtEquipExp.Size = new System.Drawing.Size(111, 20);
-            this.txtEquipExp.TabIndex = 61;
+            this.txtItemExp.Location = new System.Drawing.Point(317, 16);
+            this.txtItemExp.Name = "txtItemExp";
+            this.txtItemExp.Size = new System.Drawing.Size(111, 20);
+            this.txtItemExp.TabIndex = 68;
+            this.txtItemExp.Leave += new System.EventHandler(this.txtItemExp_Leave);
+            this.txtItemExp.MouseLeave += new System.EventHandler(this.txtItemExp_MouseLeave);
             // 
             // label41
             // 
@@ -1291,13 +1334,13 @@ namespace TOAWXML
             this.label41.TabIndex = 60;
             this.label41.Text = "ID:";
             // 
-            // txtEquipID
+            // txtItemID
             // 
-            this.txtEquipID.Location = new System.Drawing.Point(7, 16);
-            this.txtEquipID.Name = "txtEquipID";
-            this.txtEquipID.ReadOnly = true;
-            this.txtEquipID.Size = new System.Drawing.Size(23, 20);
-            this.txtEquipID.TabIndex = 59;
+            this.txtItemID.Location = new System.Drawing.Point(7, 16);
+            this.txtItemID.Name = "txtItemID";
+            this.txtItemID.ReadOnly = true;
+            this.txtItemID.Size = new System.Drawing.Size(23, 20);
+            this.txtItemID.TabIndex = 59;
             // 
             // lblEquipName
             // 
@@ -1308,13 +1351,13 @@ namespace TOAWXML
             this.lblEquipName.TabIndex = 58;
             this.lblEquipName.Text = "Name:";
             // 
-            // txtEquipName
+            // txtItemName
             // 
-            this.txtEquipName.Location = new System.Drawing.Point(40, 16);
-            this.txtEquipName.Name = "txtEquipName";
-            this.txtEquipName.ReadOnly = true;
-            this.txtEquipName.Size = new System.Drawing.Size(152, 20);
-            this.txtEquipName.TabIndex = 55;
+            this.txtItemName.Location = new System.Drawing.Point(40, 16);
+            this.txtItemName.Name = "txtItemName";
+            this.txtItemName.ReadOnly = true;
+            this.txtItemName.Size = new System.Drawing.Size(152, 20);
+            this.txtItemName.TabIndex = 55;
             // 
             // label46
             // 
@@ -1347,16 +1390,6 @@ namespace TOAWXML
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(34, 20);
             this.textBox1.TabIndex = 65;
-            // 
-            // chbEquipCasualty
-            // 
-            this.chbEquipCasualty.AutoSize = true;
-            this.chbEquipCasualty.Location = new System.Drawing.Point(546, 23);
-            this.chbEquipCasualty.Name = "chbEquipCasualty";
-            this.chbEquipCasualty.Size = new System.Drawing.Size(96, 17);
-            this.chbEquipCasualty.TabIndex = 64;
-            this.chbEquipCasualty.Text = "Equip Casualty";
-            this.chbEquipCasualty.UseVisualStyleBackColor = true;
             // 
             // label47
             // 
@@ -1439,16 +1472,6 @@ namespace TOAWXML
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(34, 20);
             this.textBox6.TabIndex = 65;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(546, 22);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(96, 17);
-            this.checkBox3.TabIndex = 64;
-            this.checkBox3.Text = "Equip Casualty";
-            this.checkBox3.UseVisualStyleBackColor = true;
             // 
             // label52
             // 
@@ -2385,12 +2408,22 @@ namespace TOAWXML
             this.label13.TabIndex = 12;
             this.label13.Text = "Name:";
             // 
+            // btnSyncGamTac
+            // 
+            this.btnSyncGamTac.Location = new System.Drawing.Point(355, 635);
+            this.btnSyncGamTac.Name = "btnSyncGamTac";
+            this.btnSyncGamTac.Size = new System.Drawing.Size(79, 40);
+            this.btnSyncGamTac.TabIndex = 59;
+            this.btnSyncGamTac.Text = "Sync \r\ngam >>> tac";
+            this.btnSyncGamTac.UseVisualStyleBackColor = true;
+            // 
             // frmTacFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1329, 697);
             this.ControlBox = false;
+            this.Controls.Add(this.btnSyncGamTac);
             this.Controls.Add(this.drUnit);
             this.Controls.Add(this.pnlUnit);
             this.Controls.Add(this.pnlFormation);
@@ -2398,7 +2431,7 @@ namespace TOAWXML
             this.Controls.Add(this.drFormation);
             this.Controls.Add(this.drForce);
             this.Controls.Add(this.trvUnitTree);
-            this.Controls.Add(this.btnSync);
+            this.Controls.Add(this.btnSyncTacGam);
             this.Controls.Add(this.gbForce);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.DateTimePicker);
@@ -2452,7 +2485,7 @@ namespace TOAWXML
         private System.Windows.Forms.RadioButton rbForce1;
         private System.Windows.Forms.StatusStrip ssTac;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.Button btnSync;
+        private System.Windows.Forms.Button btnSyncTacGam;
         private System.Windows.Forms.TreeView trvUnitTree;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TextBox txtProf;
@@ -2490,7 +2523,7 @@ namespace TOAWXML
         private System.Windows.Forms.TextBox txtUnitReadiness;
         private DataRepeater drUnit;
         private System.Windows.Forms.Label lblEquipName;
-        private System.Windows.Forms.TextBox txtEquipName;
+        private System.Windows.Forms.TextBox txtItemName;
         private System.Windows.Forms.Panel pnlForce;
         private System.Windows.Forms.Label lblForceName;
         private System.Windows.Forms.Panel pnlFormation;
@@ -2575,21 +2608,19 @@ namespace TOAWXML
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.TextBox txtHdrForceRating;
         private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.TextBox txtEquipExp;
+        private System.Windows.Forms.TextBox txtItemExp;
         private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.TextBox txtEquipID;
-        private System.Windows.Forms.CheckBox chbCasualty;
+        private System.Windows.Forms.TextBox txtItemID;
         private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.TextBox txtEquipCdr;
+        private System.Windows.Forms.TextBox txtItemCdr;
         private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.TextBox txtEquipKills;
+        private System.Windows.Forms.TextBox txtItemKills;
         private System.Windows.Forms.Label lblDamage;
-        private System.Windows.Forms.TextBox txtEquipDamage;
+        private System.Windows.Forms.TextBox txtItemDamage;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.CheckBox chbEquipCasualty;
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label48;
@@ -2600,7 +2631,6 @@ namespace TOAWXML
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.Label label52;
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.Label label53;
@@ -2608,7 +2638,12 @@ namespace TOAWXML
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.Label lblEqpNote;
-        private System.Windows.Forms.TextBox txtEquipNote;
-        private System.Windows.Forms.CheckBox chbCrewCasualty;
+        private System.Windows.Forms.TextBox txtItemNote;
+        private System.Windows.Forms.Label lblEquipID;
+        private System.Windows.Forms.Label lblCasualty;
+        private System.Windows.Forms.ComboBox cboCasualty;
+        private System.Windows.Forms.Label lblItemFormDate;
+        private System.Windows.Forms.TextBox txtItemFormDate;
+        private System.Windows.Forms.Button btnSyncGamTac;
     }
 }

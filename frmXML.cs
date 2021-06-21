@@ -582,13 +582,17 @@ namespace TOAWXML
                     txtReinforceTrigger.Visible = false;
                     txtReinforceTrigger.Text = "--";
 
-                    if (cboOrders.Text == "Static")
+                    if (cboOrders.Text == "Static" || cboOrders.Text == "Garrison")
                     {
                         txtEntryTurn.Visible = true;
                         lblEntryTurn.Visible = true;
-                        txtEntryTurn.Text = unit.Attribute("ENTRYTURN").Value;
-                        string date = txtEntryTurn.Text;
-                        tssLabel1.Text = GameTime.getReleaseDate(date);
+
+                        if (cboOrders.Text == "Static")
+                        {
+                            txtEntryTurn.Text = unit.Attribute("ENTRYTURN").Value;
+                            string date = txtEntryTurn.Text;
+                            tssLabel1.Text = GameTime.getReleaseDate(date);
+                        }
 
                         trvUnitTree.SelectedNode.ForeColor = System.Drawing.Color.IndianRed;
                         Font font = new Font(trvUnitTree.Font, FontStyle.Bold);
@@ -2825,6 +2829,7 @@ namespace TOAWXML
                 string goodXML = Regex.Replace(xmlText, hex, "$", RegexOptions.Compiled);
                 XmlDocument goodXMLdoc = new XmlDocument();
                 goodXMLdoc.LoadXml(goodXML);
+                
                 goodXMLdoc.Save(TOAWXML.Properties.Settings.Default.FilePath);
 
                 MessageBox.Show("TOAWxml has detected invalid XML characters.  The invalid characters have been replaced with '$'.",
