@@ -59,5 +59,15 @@ namespace TOAWXML.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HCWhite_Search_TraySearchBox_Glyph_100 {
+            get {
+                object obj = ResourceManager.GetObject("HCWhite_Search_TraySearchBox_Glyph_100", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

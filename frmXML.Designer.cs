@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(xmlform));
             this.txtUnitName = new System.Windows.Forms.TextBox();
             this.txtProficiency = new System.Windows.Forms.TextBox();
             this.txtSupply = new System.Windows.Forms.TextBox();
@@ -226,6 +227,7 @@
             this.ssMainLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.ssMainProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.tssLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsbtnSearch = new System.Windows.Forms.ToolStripDropDownButton();
             this.contextMenuStrip1.SuspendLayout();
             this.gbForce.SuspendLayout();
             this.tabUnits.SuspendLayout();
@@ -1300,20 +1302,20 @@
             this.dgvObjectives.AllowUserToAddRows = false;
             this.dgvObjectives.AllowUserToDeleteRows = false;
             this.dgvObjectives.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this.dgvObjectives.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.dgvObjectives.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvObjectives.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvObjectives.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvObjectives.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvObjectives.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvObjectives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvObjectives.ContextMenuStrip = this.contextMenuStripObj;
             this.dgvObjectives.Location = new System.Drawing.Point(8, 48);
@@ -2369,7 +2371,8 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ssMainLabel,
             this.ssMainProgress,
-            this.tssLabel1});
+            this.tssLabel1,
+            this.tsbtnSearch});
             this.statusStrip1.Location = new System.Drawing.Point(0, 636);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(627, 22);
@@ -2379,7 +2382,7 @@
             // ssMainLabel
             // 
             this.ssMainLabel.Name = "ssMainLabel";
-            this.ssMainLabel.Size = new System.Drawing.Size(35, 17);
+            this.ssMainLabel.Size = new System.Drawing.Size(6, 17);
             this.ssMainLabel.Spring = true;
             // 
             // ssMainProgress
@@ -2393,6 +2396,18 @@
             // 
             this.tssLabel1.Name = "tssLabel1";
             this.tssLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // tsbtnSearch
+            // 
+            this.tsbtnSearch.BackgroundImage = global::TOAWXML.Properties.Resources.HCWhite_Search_TraySearchBox_Glyph_100;
+            this.tsbtnSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.tsbtnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnSearch.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnSearch.Image")));
+            this.tsbtnSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnSearch.Name = "tsbtnSearch";
+            this.tsbtnSearch.Size = new System.Drawing.Size(29, 20);
+            this.tsbtnSearch.Text = "Search";
+            this.tsbtnSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // xmlform
             // 
@@ -2671,6 +2686,7 @@
         private System.Windows.Forms.TextBox txtEntryTurn;
         private System.Windows.Forms.ToolStripStatusLabel tssLabel1;
         private System.Windows.Forms.Button btnEquipView;
+        private System.Windows.Forms.ToolStripDropDownButton tsbtnSearch;
     }
 }
 
