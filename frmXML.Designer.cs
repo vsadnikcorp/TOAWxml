@@ -2374,11 +2374,11 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbtnSearch,
+            this.tsbtnPrint,
             this.ssMainLabel,
             this.ssMainProgress,
-            this.tssLabel1,
-            this.tsbtnSearch,
-            this.tsbtnPrint});
+            this.tssLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 636);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(627, 22);
@@ -2387,8 +2387,9 @@
             // 
             // ssMainLabel
             // 
+            this.ssMainLabel.Margin = new System.Windows.Forms.Padding(25, 3, 0, 2);
             this.ssMainLabel.Name = "ssMainLabel";
-            this.ssMainLabel.Size = new System.Drawing.Size(56, 17);
+            this.ssMainLabel.Size = new System.Drawing.Size(1, 17);
             this.ssMainLabel.Spring = true;
             // 
             // ssMainProgress
@@ -2400,6 +2401,7 @@
             // 
             // tssLabel1
             // 
+            this.tssLabel1.Margin = new System.Windows.Forms.Padding(25, 3, 0, 2);
             this.tssLabel1.Name = "tssLabel1";
             this.tssLabel1.Size = new System.Drawing.Size(0, 17);
             // 
@@ -2450,7 +2452,7 @@
             // printSelectedOOBToolStripMenuItem
             // 
             this.printSelectedOOBToolStripMenuItem.Name = "printSelectedOOBToolStripMenuItem";
-            this.printSelectedOOBToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.printSelectedOOBToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.printSelectedOOBToolStripMenuItem.Text = "Print Selected OOB";
             this.printSelectedOOBToolStripMenuItem.Click += new System.EventHandler(this.printSelectedOOBToolStripMenuItem_Click);
             // 
