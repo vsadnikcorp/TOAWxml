@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(xmlform));
             this.txtUnitName = new System.Windows.Forms.TextBox();
             this.txtProficiency = new System.Windows.Forms.TextBox();
@@ -231,6 +231,8 @@
             this.searchFormationUnitNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchFormationUnitOrdersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchUnitTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsbtnPrint = new System.Windows.Forms.ToolStripDropDownButton();
+            this.printSelectedOOBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.gbForce.SuspendLayout();
             this.tabUnits.SuspendLayout();
@@ -1305,20 +1307,20 @@
             this.dgvObjectives.AllowUserToAddRows = false;
             this.dgvObjectives.AllowUserToDeleteRows = false;
             this.dgvObjectives.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this.dgvObjectives.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.dgvObjectives.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvObjectives.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvObjectives.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvObjectives.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvObjectives.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvObjectives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvObjectives.ContextMenuStrip = this.contextMenuStripObj;
             this.dgvObjectives.Location = new System.Drawing.Point(8, 48);
@@ -2375,7 +2377,8 @@
             this.ssMainLabel,
             this.ssMainProgress,
             this.tssLabel1,
-            this.tsbtnSearch});
+            this.tsbtnSearch,
+            this.tsbtnPrint});
             this.statusStrip1.Location = new System.Drawing.Point(0, 636);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(627, 22);
@@ -2385,14 +2388,14 @@
             // ssMainLabel
             // 
             this.ssMainLabel.Name = "ssMainLabel";
-            this.ssMainLabel.Size = new System.Drawing.Size(6, 17);
+            this.ssMainLabel.Size = new System.Drawing.Size(56, 17);
             this.ssMainLabel.Spring = true;
             // 
             // ssMainProgress
             // 
             this.ssMainProgress.MarqueeAnimationSpeed = 30;
             this.ssMainProgress.Name = "ssMainProgress";
-            this.ssMainProgress.Size = new System.Drawing.Size(575, 16);
+            this.ssMainProgress.Size = new System.Drawing.Size(525, 16);
             this.ssMainProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
             // tssLabel1
@@ -2432,6 +2435,24 @@
             this.searchUnitTypeToolStripMenuItem.Name = "searchUnitTypeToolStripMenuItem";
             this.searchUnitTypeToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.searchUnitTypeToolStripMenuItem.Text = "Search Unit Type";
+            // 
+            // tsbtnPrint
+            // 
+            this.tsbtnPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnPrint.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.printSelectedOOBToolStripMenuItem});
+            this.tsbtnPrint.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnPrint.Image")));
+            this.tsbtnPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnPrint.Name = "tsbtnPrint";
+            this.tsbtnPrint.Size = new System.Drawing.Size(29, 20);
+            this.tsbtnPrint.Text = "Print";
+            // 
+            // printSelectedOOBToolStripMenuItem
+            // 
+            this.printSelectedOOBToolStripMenuItem.Name = "printSelectedOOBToolStripMenuItem";
+            this.printSelectedOOBToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.printSelectedOOBToolStripMenuItem.Text = "Print Selected OOB";
+            this.printSelectedOOBToolStripMenuItem.Click += new System.EventHandler(this.printSelectedOOBToolStripMenuItem_Click);
             // 
             // xmlform
             // 
@@ -2714,6 +2735,8 @@
         private System.Windows.Forms.ToolStripMenuItem searchFormationUnitNameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchFormationUnitOrdersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchUnitTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton tsbtnPrint;
+        private System.Windows.Forms.ToolStripMenuItem printSelectedOOBToolStripMenuItem;
     }
 }
 

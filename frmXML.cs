@@ -4739,5 +4739,20 @@ namespace TOAWXML
             equipviewform.ShowDialog();
 
         }
+
+        private void printSelectedOOBToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //XElement xelem = XElement.Load(TOAWXML.Properties.Settings.Default.FilePath);
+            //string xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]";
+            //var unit = xelem.XPathSelectElement(xpath);
+            string oob = String.Concat(
+                XElement.Load(TOAWXML.Properties.Settings.Default.FilePath)
+                .Descendants("FORCE").Descendants("FORMATION").Descendants("UNIT").Attributes("NAME")
+                .Select(v => v.Value));
+
+            Console.WriteLine(oob);
+
+
+        }
     }
 }
