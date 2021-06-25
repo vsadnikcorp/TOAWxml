@@ -258,8 +258,6 @@ namespace TOAWXML
                                     .Where(u => u.Parent.Attribute("ID").Value == formID)
                                     .Where(u => u.Parent.Parent.Attribute("ID").Value == forceID))
                                 {  //UNIT
-                                    //rng = new Random();
-                                   // Console.WriteLine(rng.ToString());
                                     string unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
 
                                     //ADD UNITS TO TACFILE
@@ -282,7 +280,6 @@ namespace TOAWXML
                                         .Where(u => u.Parent.Parent.Parent.Attribute("ID").Value == forceID))
                                     {
                                         int qty = Int32.Parse(equip.Attribute("NUMBER").Value);
-                                        //equipcdrname = AssignCdrName(xdocCDR, forceID, rng);
 
                                         for (int i = 1; i <= qty; i++) //ITEM
                                         {
@@ -308,7 +305,6 @@ namespace TOAWXML
                                             unit.Attribute("ICON").Value == "Naval Task Force" ||
                                             unit.Attribute("ICON").Value == "Naval Attack")
                                             {
-                                                //rng = new Random();
                                                 equipcdrname = AssignCdrName(xdocCDR, forceID, rng);
                                             }
                                             else
@@ -322,7 +318,6 @@ namespace TOAWXML
                                              new XElement("ITEM",
                                              new XAttribute("ID", n),
                                              new XAttribute("NAME", equip.Attribute("NAME").Value),
-                                             //new XAttribute("EQUIPCDR", "--"),
                                              new XAttribute("ITEMCDR", equipcdrname),
                                              new XAttribute("ITEMEXP", "40"),
                                              new XAttribute("ITEMKILLS", "0"),
@@ -332,7 +327,6 @@ namespace TOAWXML
                                              new XAttribute("ITEMNOTE", "--")));
 
                                             isFirst = false;
-                                            //n = i;
                                         } //item
                                      } //equip
                                 }  //unit
