@@ -204,6 +204,8 @@ namespace TOAWXML
             this.label13 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnSyncGamTac = new System.Windows.Forms.Button();
+            this.txtGamFile = new System.Windows.Forms.TextBox();
+            this.label55 = new System.Windows.Forms.Label();
             this.gbForce.SuspendLayout();
             this.ssTac.SuspendLayout();
             this.drForce.ItemTemplate.SuspendLayout();
@@ -230,7 +232,7 @@ namespace TOAWXML
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(11, 635);
+            this.btnClose.Location = new System.Drawing.Point(11, 637);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(78, 38);
             this.btnClose.TabIndex = 1;
@@ -241,7 +243,7 @@ namespace TOAWXML
             // lblTacFile
             // 
             this.lblTacFile.AutoSize = true;
-            this.lblTacFile.Location = new System.Drawing.Point(16, 604);
+            this.lblTacFile.Location = new System.Drawing.Point(16, 609);
             this.lblTacFile.Name = "lblTacFile";
             this.lblTacFile.Size = new System.Drawing.Size(69, 13);
             this.lblTacFile.TabIndex = 5;
@@ -250,10 +252,10 @@ namespace TOAWXML
             // 
             // txtTacFile
             // 
-            this.txtTacFile.Location = new System.Drawing.Point(90, 601);
+            this.txtTacFile.Location = new System.Drawing.Point(90, 606);
             this.txtTacFile.Name = "txtTacFile";
             this.txtTacFile.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtTacFile.Size = new System.Drawing.Size(581, 20);
+            this.txtTacFile.Size = new System.Drawing.Size(550, 20);
             this.txtTacFile.TabIndex = 4;
             // 
             // btnLoadTacFile
@@ -279,7 +281,7 @@ namespace TOAWXML
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(1239, 627);
+            this.btnSave.Location = new System.Drawing.Point(1239, 637);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(78, 38);
             this.btnSave.TabIndex = 8;
@@ -1214,9 +1216,10 @@ namespace TOAWXML
             this.cboCasualty.FormattingEnabled = true;
             this.cboCasualty.Items.AddRange(new object[] {
             "None",
+            "Half",
+            "Full",
             "Crew",
-            "Equipment",
-            "Full"});
+            "Equipment"});
             this.cboCasualty.Location = new System.Drawing.Point(475, 15);
             this.cboCasualty.Name = "cboCasualty";
             this.cboCasualty.Size = new System.Drawing.Size(78, 21);
@@ -2416,6 +2419,23 @@ namespace TOAWXML
             this.btnSyncGamTac.TabIndex = 59;
             this.btnSyncGamTac.Text = "Sync \r\ngam >>> tac";
             this.btnSyncGamTac.UseVisualStyleBackColor = true;
+            this.btnSyncGamTac.Click += new System.EventHandler(this.btnSyncGamTac_Click);
+            // 
+            // txtGamFile
+            // 
+            this.txtGamFile.Location = new System.Drawing.Point(766, 605);
+            this.txtGamFile.Name = "txtGamFile";
+            this.txtGamFile.Size = new System.Drawing.Size(550, 20);
+            this.txtGamFile.TabIndex = 60;
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Location = new System.Drawing.Point(686, 608);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(74, 13);
+            this.label55.TabIndex = 61;
+            this.label55.Text = "Current *.gam:";
             // 
             // frmTacFile
             // 
@@ -2423,6 +2443,8 @@ namespace TOAWXML
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1329, 697);
             this.ControlBox = false;
+            this.Controls.Add(this.label55);
+            this.Controls.Add(this.txtGamFile);
             this.Controls.Add(this.btnSyncGamTac);
             this.Controls.Add(this.drUnit);
             this.Controls.Add(this.pnlUnit);
@@ -2645,5 +2667,7 @@ namespace TOAWXML
         private System.Windows.Forms.Label lblItemFormDate;
         private System.Windows.Forms.TextBox txtItemFormDate;
         private System.Windows.Forms.Button btnSyncGamTac;
+        private System.Windows.Forms.TextBox txtGamFile;
+        private System.Windows.Forms.Label label55;
     }
 }

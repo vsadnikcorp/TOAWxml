@@ -253,12 +253,24 @@ namespace TOAWXML
 
                                 string formID = formation.Attribute("ID").Value;
 
+                                bool isFirstUnit = true;
+
                                 //LIST UNITS
                                 foreach (XElement unit in formation.Descendants("UNIT")
                                     .Where(u => u.Parent.Attribute("ID").Value == formID)
                                     .Where(u => u.Parent.Parent.Attribute("ID").Value == forceID))
                                 {  //UNIT
-                                    string unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
+                                    string unitcdrname; 
+                                    if (isFirstUnit == true)
+                                    {
+                                        unitcdrname = formation.Attribute("CDR").Value;
+                                        isFirstUnit = false;
+                                    }
+                                    else
+                                    {
+                                        unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
+                                    }
+                                      
 
                                     //ADD UNITS TO TACFILE
                                     unit.Add(
@@ -271,7 +283,7 @@ namespace TOAWXML
 
                                     //ADD EQUIP FOR TAC FILE
                                     string equipcdrname;
-                                    bool isFirst = true;
+                                    bool isFirstEqp = true;
                                     int n = 0;
 
                                     foreach (XElement equip in unit.Descendants("EQUIPMENT")
@@ -283,11 +295,11 @@ namespace TOAWXML
 
                                         for (int i = 1; i <= qty; i++) //ITEM
                                         {
-                                            if (isFirst == true)
+                                            if (isFirstEqp == true)
                                             {
                                                 equipcdrname = unit.Attribute("CDR").Value;
                                             }
-                                            else if ((isFirst != true) &&
+                                            else if ((isFirstEqp != true) &&
                                             unit.Attribute("ICON").Value == "Air" ||
                                             unit.Attribute("ICON").Value == "Fighter Bomber" ||
                                             unit.Attribute("ICON").Value == "Light Bomber" ||
@@ -326,9 +338,9 @@ namespace TOAWXML
                                              new XAttribute("ITEMFORMDATE", date),
                                              new XAttribute("ITEMNOTE", "--")));
 
-                                            isFirst = false;
+                                            isFirstEqp = false;
                                         } //item
-                                     } //equip
+                                    } //equip
                                 }  //unit
                             } //formation
                         }
@@ -468,8 +480,6 @@ namespace TOAWXML
 
             foreach (XElement force in xelem.Descendants("FORCE").Where(f => f.Attribute("ID").Value == forceID))
             {
-
-
                 if (force.Attribute("NAME") != null)
                 {
                     forceNode = trvUnitTree.Nodes.Add(force.Attribute("NAME").Value);
@@ -559,8 +569,109 @@ namespace TOAWXML
 
         private void btnSync_Click(object sender, EventArgs e)
         {
+            ///WHAT FOR?
             var list = new List<TreeNode>();
             GetCheckedNodes(trvUnitTree.Nodes, list);
+            ///
+
+            string dateformat = "dd MMM yyyy";
+            string date = DateTimePicker.Value.ToString(dateformat);
+            string forceID;
+            string unitID;
+
+            List<string> toRemove = new System.Collections.Generic.List<string>();
+
+            string TacFileName = txtTacFile.Text;
+            XElement gamFile = XElement.Load(TacFileName);
+
+            foreach (XElement force in gamFile.Descendants("OOB").Descendants("FORCE"))
+            {
+                XAttribute attCdr = force.Attribute("CDR");
+                XAttribute attRank = force.Attribute("RANK");
+                XAttribute attRating = force.Attribute("RATING");
+
+                forceID = force.Attribute("ID").Value;
+                
+                attCdr.Remove();
+                attRank.Remove();
+                attRating.Remove();
+
+                foreach (XElement formation in force.Descendants("FORMATION"))
+                {
+                    XAttribute attFormCdr = formation.Attribute("CDR");
+                    XAttribute attFormRank = formation.Attribute("RANK");
+                    XAttribute attFormRating = formation.Attribute("RATING");
+                    XAttribute attFormDate = formation.Attribute("FORMDATE");
+
+                    attFormCdr.Remove();
+                    attFormRank.Remove();
+                    attFormRating.Remove();
+                    attFormDate.Remove();
+
+                    foreach (XElement unit in formation.Descendants("UNIT"))
+                    {
+                        int u = 0; //number of equipment items in unit
+
+                        unitID = unit.Attribute("ID").Value;
+
+                        XAttribute attUnitCdr = unit.Attribute("CDR");
+                        XAttribute attUnitRank = unit.Attribute("RANK");
+                        XAttribute attUnitRating = unit.Attribute("RATING");
+                        XAttribute attUnitDate = unit.Attribute("FORMDATE");
+
+                        attUnitCdr.Remove();
+                        attUnitRank.Remove();
+                        attUnitRating.Remove();
+                        attUnitDate.Remove();
+
+                        foreach (XElement equipment in unit.Descendants("EQUIPMENT"))
+                        {
+                            float f = 0;  ///number of items in equipment
+
+                            foreach (XElement item in equipment.Descendants("ITEM"))
+                            {
+                                if (item.Attribute("CASUALTY").Value == "None")
+                                {
+                                    f++;
+                                    u++;
+                                }
+                                if (item.Attribute("CASUALTY").Value == "Half")
+                                {
+                                    f = f + 0.5f;
+                                }
+                            }//item
+
+                            int i = (int)Math.Round(f, MidpointRounding.AwayFromZero); 
+
+                            equipment.Attribute("NUMBER").Value = i.ToString();
+                            equipment.Descendants("ITEM").Remove();
+                        }//equipment
+                        if (u == 0) toRemove.Add(unitID);
+                    }//unit-5.0
+                }//formation
+
+                if (toRemove.Count > 0) //IF AT LEAST ONE UNIT HAS NO EQP REMAINING
+                {
+                    //REMOVE UNITS WITH NO ITEMS
+                    foreach (string uid in toRemove)
+                    {
+                        DeleteUnit(gamFile, forceID, uid);
+                    }
+
+                    ////[RENUMBER UNIT IDs IF AT LEAST ONE UNIT IS DELETED]
+                    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT";
+                    var allunits = gamFile.XPathSelectElements(xpath);
+                    Renumbering.RenumberAll(allunits);
+
+                }
+                toRemove.Clear();
+
+            }//force
+
+            string tacFileName = txtTacFile.Text;
+            string gamFileName = tacFileName.Substring(0, tacFileName.Length - 4) + " " + date + ".gam";
+            txtGamFile.Text = gamFileName;
+            gamFile.Save(gamFileName);
         }
 
         public void GetCheckedNodes(TreeNodeCollection nodes, List<TreeNode> list)
@@ -5495,6 +5606,18 @@ namespace TOAWXML
                     if (itemnote.Text != null) eqp.Attribute("ITEMNOTE").Value = itemnote.Text;
                 }
             }
+        }
+
+        private void DeleteUnit(XElement gamfile, string forceid, string unitid)
+        {
+            string xpath = "OOB/FORCE[@ID=" + forceid + "]/FORMATION/UNIT[@ID =" + unitid + "]";
+            var unit = gamfile.XPathSelectElements(xpath);
+            unit.Remove();
+        }
+
+        private void btnSyncGamTac_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
