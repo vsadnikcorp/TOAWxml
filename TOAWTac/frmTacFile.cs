@@ -124,6 +124,9 @@ namespace TOAWXML
             rbForce1.Checked = false;
             rbForce2.Checked = false;
 
+            //DISABLE SYNC BUTTON
+            btnSyncTacGam.Enabled = false;
+
             //CREATE DATATABLE FOR FORMATIONS
             dtFormation.Columns.Add("Name", typeof(string));
             dtFormation.Columns.Add("Prof", typeof(string));
@@ -362,6 +365,8 @@ namespace TOAWXML
             {
                 TOAWTac.Properties.Settings.Default.FilePath = "";
             }
+
+            btnSyncTacGam.Enabled = true;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -406,6 +411,8 @@ namespace TOAWXML
             {
                 TOAWTac.Properties.Settings.Default.TacFilePath = "";
             }
+
+            btnSyncTacGam.Enabled = true;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -5617,7 +5624,8 @@ namespace TOAWXML
 
         private void btnSyncGamTac_Click(object sender, EventArgs e)
         {
-
+            frmSyncGamTac gamsync = new frmSyncGamTac();
+            gamsync.Show();
         }
     }
 }

@@ -2425,6 +2425,7 @@ namespace TOAWXML
             // 
             this.txtGamFile.Location = new System.Drawing.Point(766, 605);
             this.txtGamFile.Name = "txtGamFile";
+            this.txtGamFile.ReadOnly = true;
             this.txtGamFile.Size = new System.Drawing.Size(550, 20);
             this.txtGamFile.TabIndex = 60;
             // 
