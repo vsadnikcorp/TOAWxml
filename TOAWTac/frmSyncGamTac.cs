@@ -47,5 +47,10 @@ namespace TOAWTac
                 txtSelectedTac.Text = file.FileName;
             }
         }
+
+        private void btnSync_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

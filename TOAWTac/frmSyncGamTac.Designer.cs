@@ -91,6 +91,7 @@ namespace TOAWTac
             this.btnSync.TabIndex = 6;
             this.btnSync.Text = "Sync \r\ngam => tac";
             this.btnSync.UseVisualStyleBackColor = true;
+            this.btnSync.Click += new System.EventHandler(this.btnSync_Click);
             // 
             // frmSyncGamTac
             // 
