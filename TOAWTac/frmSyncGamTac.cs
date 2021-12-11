@@ -285,11 +285,11 @@ namespace TOAWTac
                                                 new XAttribute("ITEMNOTE", "--")));
 
                                                 isFirstEqp = false;
-                                                continue;
+                                                //continue;
                                         } //item
                             }  //^^END ADD OF MISSING UNIT TO TACFILE^^
 
-                            tacForm.Add(newunit); //RIGHT SPOT?
+                            tacForm.Add(newunit); 
                         }
                         else  //TRANSFER GAM UNIT VALUES TO TACFILE
                         {     
@@ -362,7 +362,7 @@ namespace TOAWTac
             ////string tacFileName = txtTacFile.Text;
             //string GamFileName = TacFileName.Substring(0, TacFileName.Length - 4) + " " + date + ".gam";
             //txtGamFile.Text = GamFileName;
-            gamFile.Save(GamFileName);
+            //gamFile.Save(GamFileName);
             tacFile.Save(TacFileName);
             this.Close();
         }
