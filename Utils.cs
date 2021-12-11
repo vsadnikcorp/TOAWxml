@@ -6,7 +6,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
-//using TOAWXML;
+using System.Xml.Linq;
+using TOAWXML;
 
 namespace TOAWXML
 {
@@ -24,6 +25,23 @@ namespace TOAWXML
         {
             //change regular expression as per your need
             return Regex.Replace(str, "[^a-zA-Z0-9_.]", "", RegexOptions.Compiled);
+        }
+
+        public static string AssignCdrName(string forceID)
+        {
+            Random rng = new Random();
+
+            string CdrNameDirectory = Path.GetDirectoryName(TOAWXML.Properties.Settings.Default.FilePath);
+            string CdrNameFilePath = CdrNameDirectory + "\\CDRNAMES.XML";
+            XDocument xdocCDR = XDocument.Load(CdrNameFilePath);
+
+            var commanders = xdocCDR.Descendants("CDRNAMES").Descendants("CDRNAME")
+                .Where(f => f.Attribute("forceid").Value == forceID);
+
+            int cdrnameCount = commanders.Count();
+            string cdrname = commanders.ElementAt(rng.Next(0, cdrnameCount)).Attribute("cdrname").Value;
+
+            return cdrname;
         }
 
         public static string RemoveOrdinals(string input)

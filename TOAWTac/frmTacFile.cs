@@ -236,7 +236,8 @@ namespace TOAWXML
                         foreach (XElement force in tacFile.Descendants("OOB").Descendants("FORCE"))
                         {
                             string forceID = force.Attribute("ID").Value;
-                            string forcecdrname = AssignCdrName(xdocCDR, forceID, rng);
+                            //string forcecdrname = AssignCdrName(xdocCDR, forceID, rng);
+                            string forcecdrname = Utils.AssignCdrName(forceID);
 
                             force.Add(new XAttribute("CDR", forcecdrname),
                             new XAttribute("RANK", "COL"),
@@ -246,7 +247,8 @@ namespace TOAWXML
                             foreach (XElement formation in force.Descendants("FORMATION").Where(f => f.Parent.Attribute("ID").Value == forceID))
                             {  //FORMATION
                                 //ADD FORMATIONS TO TACFILE
-                                string formcdrname = AssignCdrName(xdocCDR, forceID, rng);
+                                //string formcdrname = AssignCdrName(xdocCDR, forceID, rng);
+                                string formcdrname = Utils.AssignCdrName(forceID);
 
                                 formation.Add(
                                     new XAttribute("CDR", formcdrname),
@@ -271,7 +273,8 @@ namespace TOAWXML
                                     }
                                     else
                                     {
-                                        unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
+                                        //unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
+                                        unitcdrname = Utils.AssignCdrName(forceID);
                                     }
                                       
 
@@ -320,7 +323,8 @@ namespace TOAWXML
                                             unit.Attribute("ICON").Value == "Naval Task Force" ||
                                             unit.Attribute("ICON").Value == "Naval Attack")
                                             {
-                                                equipcdrname = AssignCdrName(xdocCDR, forceID, rng);
+                                                //equipcdrname = AssignCdrName(xdocCDR, forceID, rng);
+                                                equipcdrname = Utils.AssignCdrName(forceID);
                                             }
                                             else
                                             {
@@ -421,16 +425,17 @@ namespace TOAWXML
             trvUnitTree.Focus();
         }
 
-        private string AssignCdrName(XDocument xdoc, string forceID, Random rng)
-        {
-            var commanders = xdoc.Descendants("CDRNAMES").Descendants("CDRNAME")
-                .Where(f => f.Attribute("forceid").Value == forceID);
+       
+        //private string AssignCdrName(XDocument xdoc, string forceID, Random rng)
+        //{
+        //    var commanders = xdoc.Descendants("CDRNAMES").Descendants("CDRNAME")
+        //        .Where(f => f.Attribute("forceid").Value == forceID);
 
-            int cdrnameCount = commanders.Count();
-            string cdrname = commanders.ElementAt(rng.Next(0, cdrnameCount)).Attribute("cdrname").Value;
+        //    int cdrnameCount = commanders.Count();
+        //    string cdrname = commanders.ElementAt(rng.Next(0, cdrnameCount)).Attribute("cdrname").Value;
 
-            return cdrname;
-        }
+        //    return cdrname;
+        //}
 
         private void rbForce1_CheckedChanged(object sender, EventArgs e)
         {
@@ -589,7 +594,10 @@ namespace TOAWXML
             List<string> toRemove = new System.Collections.Generic.List<string>();
 
             string TacFileName = txtTacFile.Text;
+
             XElement gamFile = XElement.Load(TacFileName);
+
+            //[STEP THROUGH TACFILE TO MATCH NAMES??]
 
             foreach (XElement force in gamFile.Descendants("OOB").Descendants("FORCE"))
             {
@@ -675,10 +683,10 @@ namespace TOAWXML
 
             }//force
 
-            string tacFileName = txtTacFile.Text;
-            string gamFileName = tacFileName.Substring(0, tacFileName.Length - 4) + " " + date + ".gam";
-            txtGamFile.Text = gamFileName;
-            gamFile.Save(gamFileName);
+            //string tacFileName = txtTacFile.Text;
+            string GamFileName = TacFileName.Substring(0, TacFileName.Length - 4) + " " + date + ".gam";
+            txtGamFile.Text = GamFileName;
+            gamFile.Save(GamFileName);
         }
 
         public void GetCheckedNodes(TreeNodeCollection nodes, List<TreeNode> list)
@@ -5624,7 +5632,9 @@ namespace TOAWXML
 
         private void btnSyncGamTac_Click(object sender, EventArgs e)
         {
-            frmSyncGamTac gamsync = new frmSyncGamTac();
+            string dateformat = "dd MMM yyyy";
+            string datetime = DateTimePicker.Value.ToString(dateformat);
+            frmSyncGamTac gamsync = new frmSyncGamTac(datetime);
             gamsync.Show();
         }
     }

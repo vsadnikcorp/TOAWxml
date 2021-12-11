@@ -59,11 +59,12 @@ namespace TOAWTac
             // 
             // btnSelectTac
             // 
+            this.btnSelectTac.Enabled = false;
             this.btnSelectTac.Location = new System.Drawing.Point(12, 99);
             this.btnSelectTac.Name = "btnSelectTac";
             this.btnSelectTac.Size = new System.Drawing.Size(537, 35);
             this.btnSelectTac.TabIndex = 2;
-            this.btnSelectTac.Text = "Select .tac file to up updated with data from gam file";
+            this.btnSelectTac.Text = "Select .tac file to be updated with data from .gam file";
             this.btnSelectTac.UseVisualStyleBackColor = true;
             this.btnSelectTac.Click += new System.EventHandler(this.btnSelectTac_Click);
             // 
@@ -85,6 +86,7 @@ namespace TOAWTac
             // 
             // btnSync
             // 
+            this.btnSync.Enabled = false;
             this.btnSync.Location = new System.Drawing.Point(460, 176);
             this.btnSync.Name = "btnSync";
             this.btnSync.Size = new System.Drawing.Size(88, 38);
@@ -107,6 +109,7 @@ namespace TOAWTac
             this.Controls.Add(this.btnClose);
             this.Name = "frmSyncGamTac";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -533,6 +533,7 @@ namespace TOAWXML
                     tabUnits.SelectedIndex = 1;
                     xpath = "OOB/FORCE[@ID=" + Globals.GlobalVariables.FORCE + "]/FORMATION[@ID =" + formid + "]";
                     unit = xelem.XPathSelectElement(xpath);
+
                     lblUnitName.Visible = true;
                     txtUnitName.Visible = true;
                     txtUnitName.Enabled = true;
