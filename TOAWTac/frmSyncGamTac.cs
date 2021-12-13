@@ -137,165 +137,24 @@ namespace TOAWTac
                         string unitReplacePriority = unit.Attribute("REPLACEMENTPRIORITY").Value;
 
                         var tacUnit = tacFile.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION").Descendants("UNIT")
-                        .Where(f => f.Parent.Parent.Attribute("ID").Value == forceID)
-                        .Where(f => f.Attribute("NAME").Value == unitName)
-                        .FirstOrDefault();
+                            .Where(f => f.Parent.Parent.Attribute("ID").Value == forceID)
+                            .Where(f => f.Attribute("NAME").Value == unitName)
+                            .FirstOrDefault();
 
                         if (tacUnit == null)
                         {
                             //ADD UNIT TO TAC FILE IF PRESENT IN GAM BUT NOT TAC
-
-                            string unitcdrname;
-                            string iconid;
-                            string x;
-                            string y;
-                            string next;
-
-                            unitcdrname = Utils.AssignCdrName(forceID);
-
-                            if (unit.Attribute("ICONID")?.Value != null)
-                            {
-                                iconid = unit.Attribute("ICONID").Value;
-                            }
-                            else
-                            {
-                                iconid = "";
-                            }
-
-                            if (unit.Attribute("X")?.Value != null)
-                            {
-                                x = unit.Attribute("X").Value;
-                            }
-                            else
-                            {
-                                x = "";
-                            }
-
-                            if (unit.Attribute("Y")?.Value != null)
-                            {
-                                y = unit.Attribute("Y").Value;
-                            }
-                            else
-                            {
-                                y = "";
-                            }
-
-                            if (unit.Attribute("NEXT")?.Value != null)
-                            {
-                                next = unit.Attribute("NEXT").Value;
-                            }
-                            else
-                            {
-                                next = "";
-                            }
-                            //}
-
-                            //ADD MISSING UNIT TO TACFILE
-                            XElement newunit =
-                                new XElement("UNIT",
-                                new XAttribute("ID", unit.Attribute("ID").Value),
-                                new XAttribute("NAME", unit.Attribute("NAME").Value),
-                                new XAttribute("ICON", unit.Attribute("ICON").Value),
-                                new XAttribute("ICONID", iconid),
-                                new XAttribute("COLOR", unit.Attribute("COLOR").Value),
-                                new XAttribute("SIZE", unit.Attribute("SIZE").Value),
-                                new XAttribute("EXPERIENCE", unit.Attribute("EXPERIENCE").Value),
-                                new XAttribute("CHARACTERISTICS", unit.Attribute("CHARACTERISTICS").Value), 
-                                new XAttribute("PROFICIENCY", unit.Attribute("PROFICIENCY").Value), 
-                                new XAttribute("READINESS", unit.Attribute("READINESS").Value),
-                                new XAttribute("SUPPLY", unit.Attribute("SUPPLY").Value),
-                                new XAttribute("X", x), 
-                                new XAttribute("Y", y), 
-                                new XAttribute("EMPHASIS", unit.Attribute("EMPHASIS").Value),
-                                new XAttribute("NEXT", next),
-                                new XAttribute("STATUS", unit.Attribute("STATUS").Value),
-                                new XAttribute("REPLACEMENTPRIORITY", unit.Attribute("REPLACEMENTPRIORITY").Value), 
-                                new XAttribute("CDR", unitcdrname),
-                                new XAttribute("RANK", "LT"),
-                                new XAttribute("RATING", "--"),
-                                new XAttribute("FORMDATE", date));
-
-                                string equipcdrname;
-                                bool isFirstEqp = true;
-                                int n = 0;
-
-                            //EQUIPMENT
-                            foreach (XElement equip in unit.Descendants("EQUIPMENT")
-                                    .Where(z => z.Parent.Attribute("NAME").Value == unitName)
-                                    .Where(z => z.Parent.Parent.Attribute("ID").Value == formID)
-                                    .Where(z => z.Parent.Parent.Parent.Attribute("ID").Value == forceID))
-                            {
-                                    int qty = Int32.Parse(equip.Attribute("NUMBER").Value);
-                                    string eqpID = equip.Attribute("ID").Value;
-                                    string eqpName = equip.Attribute("NAME").Value;
-                                    string eqpNumber = equip.Attribute("NUMBER").Value;
-                                    string eqpMax = equip.Attribute("MAX").Value;
-                                    string eqpDamage = equip.Attribute("DAMAGE").Value;
-
-                                newunit.Add(
-                                       new XElement("EQUIPMENT",
-                                       new XAttribute("ID", eqpID),
-                                       new XAttribute("NAME", eqpName),
-                                       new XAttribute("NUMBER", eqpNumber),
-                                       new XAttribute("MAX", eqpMax),
-                                       new XAttribute("DAMAGE", eqpDamage)));
-
-                                        for (int i = 1; i <= qty; i++) //ITEM
-                                        {
-                                                if (isFirstEqp == true)
-                                                {
-                                                    equipcdrname = newunit.Attribute("CDR").Value;
-                                                }
-                                                else if ((isFirstEqp != true) &&
-                                                (newunit.Attribute("ICON").Value == "Air" ||
-                                                newunit.Attribute("ICON").Value == "Fighter Bomber" ||
-                                                newunit.Attribute("ICON").Value == "Light Bomber" ||
-                                                newunit.Attribute("ICON").Value == "Medium Bomber" ||
-                                                newunit.Attribute("ICON").Value == "Naval Bomber" ||
-                                                newunit.Attribute("ICON").Value == "Heavy Bomber" ||
-                                                newunit.Attribute("ICON").Value == "Jet Bomber" ||
-                                                newunit.Attribute("ICON").Value == "Heavy Jet Bomber" ||
-                                                newunit.Attribute("ICON").Value == "Fighter" ||
-                                                newunit.Attribute("ICON").Value == "Jet Fighter" ||
-                                                newunit.Attribute("ICON").Value == "Naval Fighter" ||
-                                                newunit.Attribute("ICON").Value == "Riverine" ||
-                                                newunit.Attribute("ICON").Value == "Light Naval" ||
-                                                newunit.Attribute("ICON").Value == "Medium Naval" ||
-                                                newunit.Attribute("ICON").Value == "Naval Task Force" ||
-                                                newunit.Attribute("ICON").Value == "Naval Attack"))
-                                                {
-                                                    equipcdrname = Utils.AssignCdrName(forceID);
-                                                }
-                                                else
-                                                {
-                                                    equipcdrname = "--";
-                                                }
-                                                n++;
-
-                                            newunit.Elements("EQUIPMENT").Last().Add(
-                                                new XElement("ITEM",
-                                                new XAttribute("ID", n),
-                                                new XAttribute("NAME", equip.Attribute("NAME").Value),
-                                                new XAttribute("ITEMCDR", equipcdrname),
-                                                new XAttribute("ITEMEXP", "40"),
-                                                new XAttribute("ITEMKILLS", "0"),
-                                                new XAttribute("CASUALTY", "None"),
-                                                new XAttribute("ITEMDAMAGE", "0"),
-                                                new XAttribute("ITEMFORMDATE", date),
-                                                new XAttribute("ITEMNOTE", "--")));
-
-                                                isFirstEqp = false;
-                                                //continue;
-                                        } //item
-                            }  //^^END ADD OF MISSING UNIT TO TACFILE^^
-
+                            XElement newunit = Utils.AddUnitToTac(unit, date, unitName, formID, forceID);
                             tacForm.Add(newunit); 
                         }
                         else  //TRANSFER GAM UNIT VALUES TO TACFILE
                         {     
                             tacUnit.Attribute("ID").Value = unitID;
                             tacUnit.Attribute("ICON").Value = unitIcon;
-                            if (unitIconID != null && tacUnit.Attribute("ICONID") !=null) tacUnit.Attribute("ICONID").Value = unitIconID;
+                            if (unitIconID != null && tacUnit.Attribute("ICONID") != null)
+                                { tacUnit.Attribute("ICONID").Value = unitIconID; }
+                                else if (unitIconID != null && tacUnit.Attribute("ICONID") == null)
+                                    { tacUnit.Add(new XAttribute("ICONID", unitIconID)); }
                             tacUnit.Attribute("COLOR").Value = unitColor;
                             tacUnit.Attribute("NAME").Value = unitName;
                             tacUnit.Attribute("SIZE").Value = unitSize;
@@ -304,37 +163,49 @@ namespace TOAWTac
                             tacUnit.Attribute("PROFICIENCY").Value = unitProf;
                             tacUnit.Attribute("READINESS").Value = unitReadiness;
                             tacUnit.Attribute("SUPPLY").Value = unitSupply;
-                            if (unitX != null && tacUnit.Attribute("X") != null) tacUnit.Attribute("X").Value = unitX;
-                            if (unitY != null && tacUnit.Attribute("Y") != null) tacUnit.Attribute("Y").Value = unitY;
+                            if (unitX != null && tacUnit.Attribute("X") != null)
+                                { tacUnit.Attribute("X").Value = unitX; }
+                                else if (unitX != null && tacUnit.Attribute("X") == null)
+                                    { tacUnit.Add(new XAttribute("X", unitX)); }
+                            if (unitY != null && tacUnit.Attribute("Y") != null)
+                                { tacUnit.Attribute("Y").Value = unitY; }
+                                else if (unitY != null && tacUnit.Attribute("Y") == null)
+                                { tacUnit.Add(new XAttribute("Y", unitY)); }
                             tacUnit.Attribute("EMPHASIS").Value = unitEmphasis;
-                            if (unitNext != null && tacUnit.Attribute("NEXT") != null) tacUnit.Attribute("NEXT").Value = unitNext;
+                            if (unitNext != null && tacUnit.Attribute("NEXT") != null)
+                                { tacUnit.Attribute("NEXT").Value = unitNext; }
+                                else if (unitNext != null && tacUnit.Attribute("NEXT") == null)
+                                    { tacUnit.Add(new XAttribute("NEXT", unitNext)); }
                             tacUnit.Attribute("STATUS").Value = unitStatus;
                             tacUnit.Attribute("REPLACEMENTPRIORITY").Value = unitReplacePriority;
                         }
 
                         int u = 0; //number of equipment items in unit
 
+                        /////>>>>>>>>>>>>>  MUST COUNT AND ADD ITEMS
+
                         foreach (XElement equipment in unit.Descendants("EQUIPMENT"))
                         {
-                            //float f = 0;  ///number of items in equipment
+                            float f = 0;  ///number of items in equipment
 
-                            //foreach (XElement item in equipment.Descendants("ITEM"))
-                            //{
-                            //    if (item.Attribute("CASUALTY").Value == "None")
-                            //    {
-                            //        f++;
-                            //        u++;
-                            //    }
-                            //    if (item.Attribute("CASUALTY").Value == "Half")
-                            //    {
-                            //        f = f + 0.5f;
-                            //    }
-                            //}//item
+                            foreach (XElement item in equipment.Descendants("ITEM"))
+                            {
+                                if (item.Attribute("CASUALTY").Value == "None")
+                                {
+                                    f++;
+                                    u++;
+                                }
+                                if (item.Attribute("CASUALTY").Value == "Half")
+                                {
+                                    f = f + 0.5f;
+                                }
+                            }//item
 
-                            //int i = (int)Math.Round(f, MidpointRounding.AwayFromZero);
+                            int i = (int)Math.Round(f, MidpointRounding.AwayFromZero);
 
-                            //equipment.Attribute("NUMBER").Value = i.ToString();
-                            //equipment.Descendants("ITEM").Remove();
+                            equipment.Attribute("NUMBER").Value = i.ToString();
+                            equipment.Descendants("ITEM").Remove();
+
                         }//equipment
 
                         //if (u == 0) toRemove.Add(unitID);
@@ -361,6 +232,7 @@ namespace TOAWTac
 
             ////string tacFileName = txtTacFile.Text;
             //string GamFileName = TacFileName.Substring(0, TacFileName.Length - 4) + " " + date + ".gam";
+
             //txtGamFile.Text = GamFileName;
             //gamFile.Save(GamFileName);
             tacFile.Save(TacFileName);
