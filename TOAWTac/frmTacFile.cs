@@ -277,7 +277,6 @@ namespace TOAWXML
                                         unitcdrname = Utils.AssignCdrName(forceID);
                                     }
                                       
-
                                     //ADD UNITS TO TACFILE
                                     unit.Add(
                                          new XAttribute("CDR", unitcdrname),

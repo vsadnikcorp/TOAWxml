@@ -125,7 +125,7 @@ namespace TOAWTac
                         string unitName = unit.Attribute("NAME").Value;
                         string unitSize = unit.Attribute("SIZE").Value;
                         string unitExperience = unit.Attribute("EXPERIENCE").Value;
-                        string unitChar = unit.Attribute("CHARACTERISTICS").Value;
+                        string unitChar = unit.Attribute("CHARACTERISTICS")?.Value;
                         string unitProf = unit.Attribute("PROFICIENCY").Value;
                         string unitReadiness = unit.Attribute("READINESS").Value;
                         string unitSupply = unit.Attribute("SUPPLY").Value;
@@ -135,6 +135,8 @@ namespace TOAWTac
                         string unitNext = unit.Attribute("NEXT")?.Value;
                         string unitStatus = unit.Attribute("STATUS").Value;
                         string unitReplacePriority = unit.Attribute("REPLACEMENTPRIORITY").Value;
+
+                        if (unitChar == null) unitChar = "--";
 
                         var tacUnit = tacFile.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION").Descendants("UNIT")
                             .Where(f => f.Parent.Parent.Attribute("ID").Value == forceID)
@@ -159,7 +161,7 @@ namespace TOAWTac
                             tacUnit.Attribute("NAME").Value = unitName;
                             tacUnit.Attribute("SIZE").Value = unitSize;
                             tacUnit.Attribute("EXPERIENCE").Value = unitExperience;
-                            tacUnit.Attribute("CHARACTERISTICS").Value = unitChar;
+                            if (tacUnit.Attribute("CHARACTERISTICS") != null) tacUnit.Attribute("CHARACTERISTICS").Value = unitChar;
                             tacUnit.Attribute("PROFICIENCY").Value = unitProf;
                             tacUnit.Attribute("READINESS").Value = unitReadiness;
                             tacUnit.Attribute("SUPPLY").Value = unitSupply;
@@ -180,35 +182,82 @@ namespace TOAWTac
                             tacUnit.Attribute("REPLACEMENTPRIORITY").Value = unitReplacePriority;
                         }
 
-                        int u = 0; //number of equipment items in unit
-
-                        /////>>>>>>>>>>>>>  MUST COUNT AND ADD ITEMS
+                        //int u = 0; //number of equipment items in unit
+                        //>>>>>>>>>>>>>  MUST COUNT AND ADD ITEMS
 
                         foreach (XElement equipment in unit.Descendants("EQUIPMENT"))
                         {
-                            float f = 0;  ///number of items in equipment
+                            //float f = 0;  ///number of items in equipment
 
-                            foreach (XElement item in equipment.Descendants("ITEM"))
+                            string eqpID = equipment.Attribute("ID").Value;
+                            string eqpName = equipment.Attribute("NAME").Value;
+                            string eqpNumber = equipment.Attribute("NUMBER").Value;
+                            string eqpMax = equipment.Attribute("MAX").Value;
+                            string eqpDamage = equipment.Attribute("DAMAGE").Value;
+
+                            var tacEquip = tacFile.Descendants("OOB").Descendants("FORCE").Descendants("FORMATION").Descendants("UNIT").Descendants("EQUIPMENT")
+                            .Where(E => E.Parent.Parent.Parent.Attribute("ID").Value == forceID)
+                            .Where(E => E.Parent.Attribute("NAME").Value == unitName)
+                            .Where(E => E.Attribute("NAME").Value == eqpName)
+                            .FirstOrDefault();
+
+                            if (tacEquip == null)  //GAM EQUIP NOT IN TAC
                             {
-                                if (item.Attribute("CASUALTY").Value == "None")
-                                {
-                                    f++;
-                                    u++;
-                                }
-                                if (item.Attribute("CASUALTY").Value == "Half")
-                                {
-                                    f = f + 0.5f;
-                                }
-                            }//item
+                                XElement newequip = Utils.AddEquipToTac(unit, date, unitName, formID, forceID);
+                                tacUnit.Add(newequip);
+                            }
+                            else //GAME EQUIP IN TAC
+                            {
+                                tacEquip.Attribute("ID").Value = eqpID;
+                                tacEquip.Attribute("NAME").Value = eqpName;
+                                tacEquip.Attribute("NUMBER").Value = eqpNumber;
+                                tacEquip.Attribute("MAX").Value = eqpMax;
+                                tacEquip.Attribute("DAMAGE").Value = eqpDamage;
+                            }
+                            
+                            int tacItemCount = tacEquip.Descendants("ITEM").Count();
+                            int gamQty = Int32.Parse(equipment.Attribute("NUMBER").Value);
 
-                            int i = (int)Math.Round(f, MidpointRounding.AwayFromZero);
+                            if(tacItemCount ==gamQty)  //TAC FILES ITEMS MATCH GAM NUMBER
+                            {
+                                continue;
+                            }
+                            else if (tacItemCount < gamQty)  //TAC FILE HAS FEWER ITEMS THAN GAM NUMBER
+                            {
+                                int addToTac = gamQty - tacItemCount;
 
-                            equipment.Attribute("NUMBER").Value = i.ToString();
-                            equipment.Descendants("ITEM").Remove();
+                                //ADD LOOP HERE
+                                for (int j = 1; j <= addToTac; j++)
+                                {
+                                    int tacItemID = tacItemCount + 1;
+
+                                    XElement copiedItem = tacEquip.Descendants("ITEM").FirstOrDefault();
+                                    copiedItem.Attribute("ID").Value = tacItemID.ToString();
+                                    copiedItem.Attribute("ITEMCDR").Value = "--";
+                                    copiedItem.Attribute("ITEMEXP").Value = "40";
+                                    copiedItem.Attribute("ITEMKILLS").Value = "0";
+                                    copiedItem.Attribute("CASUALTY").Value = "None";
+                                    copiedItem.Attribute("ITEMDAMAGE").Value = "0";
+                                    copiedItem.Attribute("ITEMFORMDATE").Value = date;
+                                    copiedItem.Attribute("ITEMNOTE").Value = "--";
+
+                                    tacEquip.Add(copiedItem);
+                                }
+                            }
+                            else if (tacItemCount > gamQty)  //TAC FILE HAS MORE ITEMS THAN GAM NUMBER
+                            {
+                                int removeFromTac = tacItemCount - gamQty;
+                                for (int t = tacItemCount; t > gamQty; t--)
+                                {
+                                    string itemID = t.ToString();  
+                                    tacEquip.Descendants("ITEM")
+                                        .Attributes("ID")
+                                        .Where(z => z.Value == itemID)
+                                        .Remove();
+                                }
+                            }
 
                         }//equipment
-
-                        //if (u == 0) toRemove.Add(unitID);
                     }//unit-5.0
                 }//formation
 

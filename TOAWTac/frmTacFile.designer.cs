@@ -353,7 +353,7 @@ namespace TOAWXML
             this.btnSyncTacGam.Name = "btnSyncTacGam";
             this.btnSyncTacGam.Size = new System.Drawing.Size(79, 40);
             this.btnSyncTacGam.TabIndex = 27;
-            this.btnSyncTacGam.Text = "Sync \r\ntac >>> gam";
+            this.btnSyncTacGam.Text = "Convert \r\ntac >>> gam";
             this.btnSyncTacGam.UseVisualStyleBackColor = true;
             this.btnSyncTacGam.Click += new System.EventHandler(this.btnSync_Click);
             // 

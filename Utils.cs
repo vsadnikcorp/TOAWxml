@@ -168,7 +168,9 @@ namespace TOAWXML
                 {
                     if (isFirstEqp == true)
                     {
-                        equipcdrname = unit.Attribute("CDR").Value;
+                        //equipcdrname = unit.Attribute("CDR").Value;
+                        equipcdrname = Utils.AssignCdrName(forceID);
+                       
                     }
                     else if ((isFirstEqp != true) &&
                     (unit.Attribute("ICON").Value == "Air" ||

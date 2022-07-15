@@ -1674,7 +1674,7 @@ namespace TOAWEditSave
             dgvEvents.DataSource = dt;
             dgvEvents.Refresh();
 
-            //xelem.Save(FilePath);
+            xelem.Save(FilePath);
         }
 
         private void dgvEvents_DataError(object sender, DataGridViewDataErrorEventArgs e)
