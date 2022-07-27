@@ -44,7 +44,7 @@ namespace TOAWXML
             this.rbForce1 = new System.Windows.Forms.RadioButton();
             this.ssTac = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.btnSyncTacGam = new System.Windows.Forms.Button();
+            this.btnSync = new System.Windows.Forms.Button();
             this.trvUnitTree = new System.Windows.Forms.TreeView();
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtProf = new System.Windows.Forms.TextBox();
@@ -347,15 +347,15 @@ namespace TOAWXML
             this.toolStripProgressBar1.Size = new System.Drawing.Size(300, 16);
             this.toolStripProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
-            // btnSyncTacGam
+            // btnSync
             // 
-            this.btnSyncTacGam.Location = new System.Drawing.Point(263, 635);
-            this.btnSyncTacGam.Name = "btnSyncTacGam";
-            this.btnSyncTacGam.Size = new System.Drawing.Size(79, 40);
-            this.btnSyncTacGam.TabIndex = 27;
-            this.btnSyncTacGam.Text = "Convert \r\ntac >>> gam";
-            this.btnSyncTacGam.UseVisualStyleBackColor = true;
-            this.btnSyncTacGam.Click += new System.EventHandler(this.btnSync_Click);
+            this.btnSync.Location = new System.Drawing.Point(263, 635);
+            this.btnSync.Name = "btnSync";
+            this.btnSync.Size = new System.Drawing.Size(79, 40);
+            this.btnSync.TabIndex = 27;
+            this.btnSync.Text = "Convert \r\ntac >>> gam";
+            this.btnSync.UseVisualStyleBackColor = true;
+            this.btnSync.Click += new System.EventHandler(this.btnSync_Click);
             // 
             // trvUnitTree
             // 
@@ -2454,7 +2454,7 @@ namespace TOAWXML
             this.Controls.Add(this.drFormation);
             this.Controls.Add(this.drForce);
             this.Controls.Add(this.trvUnitTree);
-            this.Controls.Add(this.btnSyncTacGam);
+            this.Controls.Add(this.btnSync);
             this.Controls.Add(this.gbForce);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.DateTimePicker);
@@ -2508,7 +2508,7 @@ namespace TOAWXML
         private System.Windows.Forms.RadioButton rbForce1;
         private System.Windows.Forms.StatusStrip ssTac;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.Button btnSyncTacGam;
+        private System.Windows.Forms.Button btnSync;
         private System.Windows.Forms.TreeView trvUnitTree;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TextBox txtProf;

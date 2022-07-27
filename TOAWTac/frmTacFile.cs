@@ -125,7 +125,7 @@ namespace TOAWXML
             rbForce2.Checked = false;
 
             //DISABLE SYNC BUTTON
-            btnSyncTacGam.Enabled = false;
+            btnSync.Enabled = false;
 
             //CREATE DATATABLE FOR FORMATIONS
             dtFormation.Columns.Add("Name", typeof(string));
@@ -224,20 +224,23 @@ namespace TOAWXML
                     TOAWTac.Properties.Settings.Default.TacFilePath = TacFilePath;
                     TOAWTac.Properties.Settings.Default.Save();
 
-                    //LOAD COMMANDER NAMES FILE
-                    string CdrNameDirectory = Path.GetDirectoryName(TacFilePath);
-                    string CdrNameFilePath = CdrNameDirectory + "\\CDRNAMES.XML";
-                    XDocument xdocCDR = XDocument.Load(CdrNameFilePath);
-                    Random rng = new Random();
+                    ////LOAD COMMANDER NAMES FILE
+                    //string CdrNameDirectory = Path.GetDirectoryName(TacFilePath);
+                    //string CdrNameFilePath = CdrNameDirectory + "\\CDRNAMES.XML";
+                    //XDocument xdocCDR = XDocument.Load(CdrNameFilePath);
+                    //Random rng = new Random();
 
                     //RUN ASYNC TO FILL TACFILE
                     await Task.Run(() =>
                     {
+                        Random rng = new Random();
+
                         foreach (XElement force in tacFile.Descendants("OOB").Descendants("FORCE"))
                         {
                             string forceID = force.Attribute("ID").Value;
                             //string forcecdrname = AssignCdrName(xdocCDR, forceID, rng);
-                            string forcecdrname = Utils.AssignCdrName(forceID);
+                            //Random rng = new Random();
+                            string forcecdrname = Utils.AssignCdrName(forceID, rng);
 
                             force.Add(new XAttribute("CDR", forcecdrname),
                             new XAttribute("RANK", "COL"),
@@ -248,7 +251,7 @@ namespace TOAWXML
                             {  //FORMATION
                                 //ADD FORMATIONS TO TACFILE
                                 //string formcdrname = AssignCdrName(xdocCDR, forceID, rng);
-                                string formcdrname = Utils.AssignCdrName(forceID);
+                                string formcdrname = Utils.AssignCdrName(forceID, rng);
 
                                 formation.Add(
                                     new XAttribute("CDR", formcdrname),
@@ -274,7 +277,7 @@ namespace TOAWXML
                                     else
                                     {
                                         //unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
-                                        unitcdrname = Utils.AssignCdrName(forceID);
+                                        unitcdrname = Utils.AssignCdrName(forceID, rng);
                                     }
                                       
                                     //ADD UNITS TO TACFILE
@@ -323,7 +326,7 @@ namespace TOAWXML
                                             unit.Attribute("ICON").Value == "Naval Attack")
                                             {
                                                 //equipcdrname = AssignCdrName(xdocCDR, forceID, rng);
-                                                equipcdrname = Utils.AssignCdrName(forceID);
+                                                equipcdrname = Utils.AssignCdrName(forceID,rng);
                                             }
                                             else
                                             {
@@ -369,7 +372,7 @@ namespace TOAWXML
                 TOAWTac.Properties.Settings.Default.FilePath = "";
             }
 
-            btnSyncTacGam.Enabled = true;
+            btnSync.Enabled = true;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -415,7 +418,7 @@ namespace TOAWXML
                 TOAWTac.Properties.Settings.Default.TacFilePath = "";
             }
 
-            btnSyncTacGam.Enabled = true;
+            btnSync.Enabled = true;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -5622,11 +5625,28 @@ namespace TOAWXML
             }
         }
 
-        private void DeleteUnit(XElement gamfile, string forceid, string unitid)
+        private void  DeleteUnit(XElement gamfile, string forceid, string unitid)
         {
             string xpath = "OOB/FORCE[@ID=" + forceid + "]/FORMATION/UNIT[@ID =" + unitid + "]";
             var unit = gamfile.XPathSelectElements(xpath);
+            //SHOULD REVISE ANY EVENTS WITH THIS UNIT TO NO EFFECT
             unit.Remove();
+            ////////////////////JULY 19
+            var unitevents = (from u in gamfile.Elements("EVENTS").Elements("EVENT")  //ALL EVENTS FEATURING UNITS
+                              where (string)u.Attribute("TRIGGER") == "Unit destroyed" ||
+                              (string)u.Attribute("EFFECT") == "Disband unit" ||
+                              (string)u.Attribute("EFFECT") == "Withdraw unit" ||
+                              (string)u.Attribute("EFFECT") == "Withdraw army" &&
+                              (string)u.Attribute("VALUE") == ((Convert.ToInt32(u.Attribute("VALUE").Value) + 1).ToString())
+                              select u).FirstOrDefault();
+
+            unitevents.Attribute("TRIGGER").Value = "No trigger";
+            unitevents.Attribute("EFFECT").Value = "No effect";
+            unitevents.Attribute("VALUE").Value = "0";
+            unitevents.Attribute("NEWS").Value = "";
+            Console.WriteLine(unitid);
+            //gamfile.Save(GamfileName);
+            ///////////////JULY 19
         }
 
         private void btnSyncGamTac_Click(object sender, EventArgs e)

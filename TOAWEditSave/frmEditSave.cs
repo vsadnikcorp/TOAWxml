@@ -1565,7 +1565,7 @@ namespace TOAWEditSave
                              new XAttribute("TRIGGER", "Turn"),
                              new XAttribute("EFFECT", "Air transport 2"),
                              new XAttribute("VALUE", aircap2),
-                             new XAttribute("TURN", "0"))
+                             new XAttribute("TURN", "1"))
                );
 
             eventy.AddFirst(new XElement("EVENT",
@@ -1573,7 +1573,7 @@ namespace TOAWEditSave
                              new XAttribute("TRIGGER", "Turn"),
                              new XAttribute("EFFECT", "Air transport 1"),
                              new XAttribute("VALUE", aircap1),
-                             new XAttribute("TURN", "0"))
+                             new XAttribute("TURN", "1"))
                 );
 
             eventy.AddFirst(new XElement("EVENT",
@@ -1581,7 +1581,7 @@ namespace TOAWEditSave
                              new XAttribute("TRIGGER", "Turn"),
                              new XAttribute("EFFECT", "Sea transport 2"),
                              new XAttribute("VALUE", seacap2),
-                             new XAttribute("TURN", "0"))
+                             new XAttribute("TURN", "1"))
                 );
 
             eventy.AddFirst(new XElement("EVENT",
@@ -1589,7 +1589,7 @@ namespace TOAWEditSave
                              new XAttribute("TRIGGER", "Turn"),
                              new XAttribute("EFFECT", "Sea transport 1"),
                              new XAttribute("VALUE", seacap1),
-                             new XAttribute("TURN", "0"))
+                             new XAttribute("TURN", "1"))
                 );
 
             eventy.AddFirst(new XElement("EVENT",
@@ -1597,7 +1597,7 @@ namespace TOAWEditSave
                              new XAttribute("TRIGGER", "Turn"),
                              new XAttribute("EFFECT", "Rail transport 2"),
                              new XAttribute("VALUE", railcap2),
-                             new XAttribute("TURN", "0"))
+                             new XAttribute("TURN", "1"))
                 );
 
             eventy.AddFirst(new XElement("EVENT",
@@ -1605,7 +1605,7 @@ namespace TOAWEditSave
                              new XAttribute("TRIGGER", "Turn"),
                              new XAttribute("EFFECT", "Rail transport 1"),
                              new XAttribute("VALUE", railcap1),
-                             new XAttribute("TURN", "0"))
+                             new XAttribute("TURN", "1"))
                 );
 
             //ADJUST EVENT IDs IN DATATABLE TO SEQUENTIAL IDs, ADJUST EVENT NUMBERS

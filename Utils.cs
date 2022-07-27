@@ -27,9 +27,9 @@ namespace TOAWXML
             return Regex.Replace(str, "[^a-zA-Z0-9_.]", "", RegexOptions.Compiled);
         }
 
-        public static string AssignCdrName(string forceID)
+        public static string AssignCdrName(string forceID, Random rng)
         {
-            Random rng = new Random();
+            //Random rng = new Random();
 
             string CdrNameDirectory = Path.GetDirectoryName(TOAWXML.Properties.Settings.Default.FilePath);
             string CdrNameFilePath = CdrNameDirectory + "\\CDRNAMES.XML";
@@ -39,8 +39,10 @@ namespace TOAWXML
                 .Where(f => f.Attribute("forceid").Value == forceID);
 
             int cdrnameCount = commanders.Count();
-            string cdrname = commanders.ElementAt(rng.Next(0, cdrnameCount)).Attribute("cdrname").Value;
-
+            int randomname = rng.Next(1, cdrnameCount);
+            string cdrname = commanders.ElementAt(randomname).Attribute("cdrname").Value;
+            Console.WriteLine(randomname);
+            Console.WriteLine(cdrname);
             return cdrname;
         }
 
@@ -69,8 +71,9 @@ namespace TOAWXML
             string x;
             string y;
             string next;
+            Random rng = new Random();
 
-            unitcdrname = Utils.AssignCdrName(forceID);
+            unitcdrname = Utils.AssignCdrName(forceID, rng);
 
             if (unit.Attribute("ICONID")?.Value != null)
             {
@@ -142,6 +145,7 @@ namespace TOAWXML
             string equipcdrname;
             bool isFirstEqp = true;
             int n = 0;
+            Random rng = new Random();  
 
             //EQUIPMENT
             foreach (XElement equip in unit.Descendants("EQUIPMENT")
@@ -169,7 +173,7 @@ namespace TOAWXML
                     if (isFirstEqp == true)
                     {
                         //equipcdrname = unit.Attribute("CDR").Value;
-                        equipcdrname = Utils.AssignCdrName(forceID);
+                        equipcdrname = Utils.AssignCdrName(forceID, rng);
                        
                     }
                     else if ((isFirstEqp != true) &&
@@ -190,7 +194,7 @@ namespace TOAWXML
                     unit.Attribute("ICON").Value == "Naval Task Force" ||
                     unit.Attribute("ICON").Value == "Naval Attack"))
                     {
-                        equipcdrname = Utils.AssignCdrName(forceID);
+                        equipcdrname = Utils.AssignCdrName(forceID, rng);
                     }
                     else
                     {
