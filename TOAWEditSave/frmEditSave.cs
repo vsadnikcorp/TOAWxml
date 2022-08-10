@@ -17,7 +17,7 @@ using TOAWXML;
 
 namespace TOAWEditSave
 {
-
+    
     public partial class frmEditSave : Form
     {
 
@@ -33,11 +33,11 @@ namespace TOAWEditSave
             //DISABLE CONTROLS
             btnSelectLogFile.Enabled = false;
             txtSelectedLogFile.Enabled = false;
-            btnCurrentTurn.Enabled = false;
             btnCalcRP.Enabled = false;
             btnEvents.Enabled = false;
             btnDeleteEvents.Enabled = false;
             progressSavedGame.Visible = false;
+            btnCurrentTurn.Enabled = false;
 
             //SET RP CATEGORY NAMES
             txtCity.Text = TOAWEditSave.Properties.Settings.Default.City;
@@ -98,7 +98,7 @@ namespace TOAWEditSave
             }
             else
             {
-                Application.Exit();
+                //Application.Exit();
                 this.Close();
                 return;
             }
@@ -129,30 +129,661 @@ namespace TOAWEditSave
             lblF2AdjustRP.Text = fn2 + "\nAdjust RP";
             lblF2TotalRP.Text = fn2 + "\nTotal RP";
 
+            //SET CALENDAR DATA
+            string xpathCalendar;
+            string turnlength;
 
-            //DETERMINE IF FILE NAME ENDS IN -1 or -2, ASSIGN TO FORCE RADIO BUTTON
-            //string forceturn = "";
-            string truncfilepath = FilePath.Substring(0, FilePath.IndexOf("."));
-            string forceturn = truncfilepath.Substring(truncfilepath.Length - 2, 2);
+            int startday = 0;
+            int startmonth = 0;
+            int startyear = 0;
+            int currentturn = 0;
 
-            if(forceturn == "-1")
+            xpathCalendar = "CALENDAR";
+            XElement calendardata = xelem.XPathSelectElement(xpathCalendar);
+
+            //SET DATETIMEPICKER TO INITIAL DATE FROM XML
+            startday = Int32.Parse(calendardata.Attribute("startDay").Value) +1;
+            startmonth = Int32.Parse(calendardata.Attribute("startMonth").Value) +1;
+            startyear = Int32.Parse(calendardata.Attribute("startYear").Value) +1;
+            currentturn = Int32.Parse(calendardata.Attribute("currentTurn").Value);
+                        
+            dteGameDate.Value = new DateTime(startyear, startmonth, startday);
+            numTurn.Value = currentturn;
+            turnlength = calendardata.Attribute("turnLength").Value;
+
+            ////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            //POPULATES START HOUR COMBOBOX
+            var starthour = new BindingList<KeyValuePair<string, string>>();
+
+            switch (turnlength)
             {
-                rbForce1.Select();
+                case "9":
+                    starthour = new BindingList<KeyValuePair<string, string>>();
+                    starthour.Add(new KeyValuePair<string, string>("23", "Midnight"));
+                    starthour.Add(new KeyValuePair<string, string>("1", "01:00"));
+                    starthour.Add(new KeyValuePair<string, string>("2", "02:00"));
+                    starthour.Add(new KeyValuePair<string, string>("3", "03:00"));
+                    starthour.Add(new KeyValuePair<string, string>("4", "04:00"));
+                    starthour.Add(new KeyValuePair<string, string>("5", "05:00"));
+                    starthour.Add(new KeyValuePair<string, string>("6", "06:00"));
+                    starthour.Add(new KeyValuePair<string, string>("7", "07:00"));
+                    starthour.Add(new KeyValuePair<string, string>("8", "08:00"));
+                    starthour.Add(new KeyValuePair<string, string>("9", "09:00"));
+                    starthour.Add(new KeyValuePair<string, string>("10", "10:00"));
+                    starthour.Add(new KeyValuePair<string, string>("11", "11:00"));
+                    starthour.Add(new KeyValuePair<string, string>("12", "12:00"));
+                    starthour.Add(new KeyValuePair<string, string>("13", "13:00"));
+                    starthour.Add(new KeyValuePair<string, string>("14", "14:00"));
+                    starthour.Add(new KeyValuePair<string, string>("15", "15:00"));
+                    starthour.Add(new KeyValuePair<string, string>("16", "16:00"));
+                    starthour.Add(new KeyValuePair<string, string>("17", "17:00"));
+                    starthour.Add(new KeyValuePair<string, string>("18", "18:00"));
+                    starthour.Add(new KeyValuePair<string, string>("19", "19:00"));
+                    starthour.Add(new KeyValuePair<string, string>("20", "20:00"));
+                    starthour.Add(new KeyValuePair<string, string>("21", "21:00"));
+                    starthour.Add(new KeyValuePair<string, string>("22", "23:00"));
+                    break;
+
+                case "10":
+                    starthour = new BindingList<KeyValuePair<string, string>>();
+                    starthour.Add(new KeyValuePair<string, string>("0", "Midnight"));
+                    starthour.Add(new KeyValuePair<string, string>("3", "03:00"));
+                    starthour.Add(new KeyValuePair<string, string>("6", "06:00"));
+                    starthour.Add(new KeyValuePair<string, string>("9", "09:00"));
+                    starthour.Add(new KeyValuePair<string, string>("12", "12:00"));
+                    starthour.Add(new KeyValuePair<string, string>("15", "15:00"));
+                    starthour.Add(new KeyValuePair<string, string>("18", "18:00"));
+                    starthour.Add(new KeyValuePair<string, string>("21", "21:00"));
+                    break;
+
+                case "0":
+                    starthour = new BindingList<KeyValuePair<string, string>>();
+                    starthour.Add(new KeyValuePair<string, string>("0", "Pre-Dawn"));
+                    starthour.Add(new KeyValuePair<string, string>("6", "Morning"));
+                    starthour.Add(new KeyValuePair<string, string>("12", "Afternoon"));
+                    starthour.Add(new KeyValuePair<string, string>("18", "Night"));
+                    break;
+
+                case "1":
+                    starthour = new BindingList<KeyValuePair<string, string>>();
+                    starthour.Add(new KeyValuePair<string, string>("12", "AM"));
+                    starthour.Add(new KeyValuePair<string, string>("0", "PM"));
+                    break;
+
+                default:
+                    starthour = new BindingList<KeyValuePair<string, string>>();
+                    starthour.Add(new KeyValuePair<string, string>("0", "--"));
+                    break;
             }
-            else if (forceturn == "-2")
+
+            cboStartHour.DataSource = starthour;
+            cboStartHour.ValueMember = "Key";
+            cboStartHour.DisplayMember = "Value";
+            cboStartHour.SelectedValue = calendardata.Attribute("startHour").Value.ToString();
+
+            ////////////////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+            ////GET DATA FROM UPDATED DATETIMEPICKER
+            //currentyear = dteGameDate.Value.Year.ToString();
+            //currentmonth = dteGameDate.Value.Month.ToString();
+            //currentday = dteGameDate.Value.Day.ToString();
+
+            ////INSERT REVISED CALENDAR DATA INTO XML
+            //calendardata.Attribute("startHour").Value = currenthour;
+            //calendardata.Attribute("startDay").Value = currentday;
+            //calendardata.Attribute("startMonth").Value = currentmonth;
+            //calendardata.Attribute("startYear").Value = currentyear;
+
+            //calendardata.Attribute("currentTurn").Value = "0"; //OR 1?  NEED TO SUBTRACT 1 WHEN ADDING TO XML?
+            //calendardata.Attribute("finalTurn").Value = (finalturn - currentturn).ToString();
+
+            ////DETERMINE IF FILE NAME ENDS IN -1 or -2, ASSIGN TO FORCE RADIO BUTTON
+            ////string forceturn = "";
+            //string truncfilepath = FilePath.Substring(0, FilePath.IndexOf("."));
+            //string forceturn = truncfilepath.Substring(truncfilepath.Length - 2, 2);
+
+            //if(forceturn == "-1")
+            //{
+            //    rbForce1.Select();
+            //}
+            //else if (forceturn == "-2")
+            //{
+            //    rbForce2.Select();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("gam filename does not end in '-1' or '-2' to indicate which force has turn." 
+            //        + Environment.NewLine + Environment.NewLine +
+            //        "Please select the correct force manually.",
+            //        "No Force Turn Indicator",
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Exclamation,
+            //        MessageBoxDefaultButton.Button1);
+            //}
+
+
+            ////FIX VARIOUS DATA GLITCHES IN THE EVENT XML (IE, EVENTS HAVING DATA IN FIELDS THAT DON'T MATTER FOR THAT EVENT, ETC.)
+            /////***MOVED TO TXTCURRENTTURN****////
+
+            //IEnumerable<XElement> zing = xelem.XPathSelectElements("EVENTS/EVENT");
+            //foreach (XElement z in zing)
+            //{
+            //    //TRIGGER GROUP 5 = NULL 
+            //    if (z.Attribute("TRIGGER").Value == "Turn" && z.Attribute("TURN") == null)
+            //    {
+            //        //DON'T NEED TO ADD ATTRIBUTE IF TURN VALUE = 1
+            //        //SHOULD NOT BE ANY CONTINGENCY VALUES FOR TURN TRIGGERS
+            //        if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
+
+            //        //REMOVE X, Y ATTRIBUTES FOR ANYTHING BUT EFFECT GROUPS 3-6
+            //        if (z.Attribute("EFFECT").Value != "Nuclear Attack" || z.Attribute("EFFECT").Value != "Form'n orders" ||
+            //            z.Attribute("EFFECT").Value != "Suppply Point 1" || z.Attribute("EFFECT").Value != "Supply Point 2" ||
+            //            z.Attribute("EFFECT").Value != "Set ownership 1" || z.Attribute("EFFECT").Value != "Set ownership 2" ||
+            //            z.Attribute("EFFECT").Value != "Refugee 1" || z.Attribute("EFFECT").Value != "Refugee 2")
+            //        {
+            //            if (z.Attribute("X") != null) z.Attribute("X").Remove();
+            //            if (z.Attribute("Y") != null) z.Attribute("Y").Remove();
+            //        }
+
+            //        //REMOVE VALUE ATTRIBUTE FOR EFFECTS GROUPS 2 & 4
+            //        if (z.Attribute("EFFECT").Value == "Set ownership 1" || z.Attribute("EFFECT").Value == "Set ownership 2" ||
+            //            z.Attribute("EFFECT").Value == "Cease Fire" || z.Attribute("EFFECT").Value == "Cool front" ||
+            //            z.Attribute("EFFECT").Value == "End normal" || z.Attribute("EFFECT").Value == "News only" ||
+            //            z.Attribute("EFFECT").Value == "Open fire" || z.Attribute("EFFECT").Value == "Storms" || z.Attribute("EFFECT").Value == "Warm front" ||
+            //            z.Attribute("EFFECT").Value == "End victory 1" || z.Attribute("EFFECT").Value == "End victory 2" ||
+            //            z.Attribute("EFFECT").Value == "Remove zone 1" || z.Attribute("EFFECT").Value == "Remove zone 2" ||
+            //            z.Attribute("EFFECT").Value == "Use chemicals 1" || z.Attribute("EFFECT").Value == "Use chemicals 2")
+            //        {
+            //            if (z.Attribute("VALUE") != null) z.Attribute("VALUE").Remove();
+            //        }
+            //    }
+            //    //TRIGGER GROUP 5 != NULL
+            //    else if (z.Attribute("TRIGGER").Value == "Turn" && z.Attribute("TURN").Value != null) //T5
+            //    {
+            //        if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
+
+            //        //REMOVE X, Y ATTRIBUTES FOR ANYTHING BUT EFFECT GROUPS 3-6
+            //        if (z.Attribute("EFFECT").Value != "Nuclear Attack" || z.Attribute("EFFECT").Value != "Form'n orders" ||
+            //            z.Attribute("EFFECT").Value != "Suppply Point 1" || z.Attribute("EFFECT").Value != "Supply Point 2" ||
+            //            z.Attribute("EFFECT").Value != "Set ownership 1" || z.Attribute("EFFECT").Value != "Set ownership 2" ||
+            //            z.Attribute("EFFECT").Value != "Refugee 1" || z.Attribute("EFFECT").Value != "Refugee 2")
+            //        {
+            //            if (z.Attribute("X") != null) z.Attribute("X").Remove();
+            //            if (z.Attribute("Y") != null) z.Attribute("Y").Remove();
+            //        }
+
+            //        //REMOVE VALUE ATTRIBUTE FOR EFFECTS GROUPS 2 & 4
+            //        if (z.Attribute("EFFECT").Value == "Set ownership 1" || z.Attribute("EFFECT").Value == "Set ownership 2" ||
+            //            z.Attribute("EFFECT").Value == "Cease Fire" || z.Attribute("EFFECT").Value == "Cool front" ||
+            //            z.Attribute("EFFECT").Value == "End normal" || z.Attribute("EFFECT").Value == "News only" ||
+            //            z.Attribute("EFFECT").Value == "Open fire" || z.Attribute("EFFECT").Value == "Storms" || z.Attribute("EFFECT").Value == "Warm front" ||
+            //            z.Attribute("EFFECT").Value == "End victory 1" || z.Attribute("EFFECT").Value == "End victory 2" ||
+            //            z.Attribute("EFFECT").Value == "Remove zone 1" || z.Attribute("EFFECT").Value == "Remove zone 2" ||
+            //            z.Attribute("EFFECT").Value == "Use chemicals 1" || z.Attribute("EFFECT").Value == "Use chemicals 2")
+            //        {
+            //            if (z.Attribute("VALUE") != null) z.Attribute("VALUE").Remove();
+            //        }
+            //    }
+
+            //    //TRIGGER GROUP 4
+            //    else if (z.Attribute("TRIGGER").Value == "1 uses chemical" || z.Attribute("TRIGGER").Value == "2 uses chemical" ||
+            //            z.Attribute("TRIGGER").Value == "1 uses nuclear" || z.Attribute("TRIGGER").Value == "2 uses nuclear")
+            //    {
+            //        if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
+
+            //        //REMOVE X, Y ATTRIBUTES FOR ANYTHING BUT EFFECT GROUPS 3-6
+            //        if (z.Attribute("EFFECT").Value != "Nuclear Attack" && z.Attribute("EFFECT").Value != "Form'n orders" &&
+            //            z.Attribute("EFFECT").Value != "Suppply Point 1" && z.Attribute("EFFECT").Value != "Supply Point 2" &&
+            //            z.Attribute("EFFECT").Value != "Set ownership 1" && z.Attribute("EFFECT").Value != "Set ownership 2" &&
+            //            z.Attribute("EFFECT").Value != "Refugee 1" && z.Attribute("EFFECT").Value != "Refugee 2")
+            //        {
+            //            if (z.Attribute("X") != null) z.Attribute("X").Remove();
+            //            if (z.Attribute("Y") != null) z.Attribute("Y").Remove();
+            //        }
+
+            //        //REMOVE VALUE ATTRIBUTE FOR EFFECTS GROUPS 2 & 4
+            //        if (z.Attribute("EFFECT").Value == "Set ownership 1" || z.Attribute("EFFECT").Value == "Set ownership 2" ||
+            //            z.Attribute("EFFECT").Value == "Cease Fire" || z.Attribute("EFFECT").Value == "Cool front" ||
+            //            z.Attribute("EFFECT").Value == "End normal" || z.Attribute("EFFECT").Value == "News only" ||
+            //            z.Attribute("EFFECT").Value == "Open fire" || z.Attribute("EFFECT").Value == "Storms" || z.Attribute("EFFECT").Value == "Warm front" ||
+            //            z.Attribute("EFFECT").Value == "End victory 1" || z.Attribute("EFFECT").Value == "End victory 2" ||
+            //            z.Attribute("EFFECT").Value == "Remove zone 1" || z.Attribute("EFFECT").Value == "Remove zone 2" ||
+            //            z.Attribute("EFFECT").Value == "Use chemicals 1" || z.Attribute("EFFECT").Value == "Use chemicals 2")
+            //        {
+            //            if (z.Attribute("VALUE") != null) z.Attribute("VALUE").Remove();
+            //        }
+            //    }
+            //    //TRIGGER GROUP 3
+            //    else if (z.Attribute("TRIGGER").Value == "Event activated" || z.Attribute("TRIGGER").Value == "Event cancelled")
+            //    {
+            //        //REMOVE X, Y ATTRIBUTES FOR ANYTHING BUT EFFECT GROUPS 3-6
+            //        if (z.Attribute("EFFECT").Value != "Nuclear Attack" && z.Attribute("EFFECT").Value != "Form'n orders" &&
+            //            z.Attribute("EFFECT").Value != "Suppply Point 1" && z.Attribute("EFFECT").Value != "Supply Point 2" &&
+            //            z.Attribute("EFFECT").Value != "Set ownership 1" && z.Attribute("EFFECT").Value != "Set ownership 2" &&
+            //            z.Attribute("EFFECT").Value != "Refugee 1" && z.Attribute("EFFECT").Value != "Refugee 2")
+            //        {
+            //            if (z.Attribute("X") != null) z.Attribute("X").Remove();
+            //            if (z.Attribute("Y") != null) z.Attribute("Y").Remove();
+            //        }
+
+            //        //REMOVE VALUE ATTRIBUTE FOR EFFECTS GROUPS 2 & 4
+            //        if (z.Attribute("EFFECT").Value == "Set ownership 1" || z.Attribute("EFFECT").Value == "Set ownership 2" ||
+            //            z.Attribute("EFFECT").Value == "Cease Fire" || z.Attribute("EFFECT").Value == "Cool front" ||
+            //            z.Attribute("EFFECT").Value == "End normal" || z.Attribute("EFFECT").Value == "News only" ||
+            //            z.Attribute("EFFECT").Value == "Open fire" || z.Attribute("EFFECT").Value == "Storms" || z.Attribute("EFFECT").Value == "Warm front" ||
+            //            z.Attribute("EFFECT").Value == "End victory 1" || z.Attribute("EFFECT").Value == "End victory 2" ||
+            //            z.Attribute("EFFECT").Value == "Remove zone 1" || z.Attribute("EFFECT").Value == "Remove zone 2" ||
+            //            z.Attribute("EFFECT").Value == "Use chemicals 1" || z.Attribute("EFFECT").Value == "Use chemicals 2")
+            //        {
+            //            if (z.Attribute("VALUE") != null) z.Attribute("VALUE").Remove();
+            //        }
+            //    }
+            //    //TRIGGER GROUP 2
+            //    else if (z.Attribute("TRIGGER").Value == "Force 1 winning" || z.Attribute("TRIGGER").Value == "Force 2 winning" ||
+            //            z.Attribute("TRIGGER").Value == "Variable value" || z.Attribute("TRIGGER").Value == "Unit destroyed")
+            //    {
+            //        if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
+            //        if (z.Attribute("X") != null) z.Attribute("X").Remove();
+            //        if (z.Attribute("Y") != null) z.Attribute("Y").Remove();
+            //    }
+
+            //    //TRIGGER GROUP 1
+            //    else if (z.Attribute("TRIGGER").Value == "1 occupies" || z.Attribute("TRIGGER").Value == "2 occupies" ||
+            //                z.Attribute("TRIGGER").Value == "1 attacks" || z.Attribute("TRIGGER").Value == "2 attacks")
+            //    {
+            //        if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
+            //    }
+            //}  //NEW FOREACH END
+            //xelem.Save(FilePath); //COMMENTED OUT JUL 29 2022
+
+            //}  OLD FOR EACH END
+
+            //CREATE EVENTS DATATABLE, LOAD DATAGRIDVIEW
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add("ID", typeof(int));
+            dt.Columns.Add("TRIGGER", typeof(string));
+            dt.Columns.Add("TURN", typeof(string));
+            dt.Columns.Add("EVT", typeof(string));
+            dt.Columns.Add("EFFECT", typeof(string));
+            dt.Columns.Add("VAL", typeof(string));
+            dt.Columns.Add("PROB", typeof(string));
+            dt.Columns.Add("RNG", typeof(string));
+            dt.Columns.Add("NEWS", typeof(string));
+
+            var events = (from v in xelem.Descendants("EVENTS").Descendants("EVENT")
+                          select new
+                          {
+                              ID = v.Attribute("ID").Value,
+                              TRIGGER = v.Attribute("TRIGGER").Value,
+                              EFFECT = v.Attribute("EFFECT").Value,
+                              EVT = (string)v.Attribute("CONTINGENCY") ?? "--",
+                              PROB = (string)v.Attribute("CHANCE") ?? "100",
+                              NEWS = (string)v.Attribute("NEWS") ?? "--",
+                              RNG = (string)(v.Attribute("VARIABLE") != null ? (Int32.Parse(v.Attribute("VARIABLE").Value) + 1).ToString() : "--") ?? "--",
+                              VAL = (string)v.Attribute("VALUE") ?? "--",
+                              TURN = (string)v.Attribute("TURN") ?? "--"
+                          });
+
+            //LOAD EVENT DATAGRIDVIEW
+            //MUST ADJUST DGV NUMBERS FROM XML NUMBERS, BASED ON CERTAIN TRIGGERS AND EFFECTS
+            foreach(var q in events.ToList())
             {
-                rbForce2.Select();
+                //FIX DGV VALUES FROM XML VALUES
+                if (q.TRIGGER == "Turn" || q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event")
+                {
+                    if(q.TRIGGER == "Turn" && (q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event"))
+                    {
+                        if (q.TURN == "--")
+                        {
+                            dt.Rows.Add(q.ID, q.TRIGGER, 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
+                        }
+                        else
+                        {
+                            dt.Rows.Add(q.ID, q.TRIGGER, Int32.Parse(q.TURN) + 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
+                        }
+                    }
+                    else if(q.TRIGGER == "Turn" && (q.EFFECT != "Activate event" || q.EFFECT != "Enable event" || q.EFFECT != "Cancel event"))
+                    {
+                        if (q.TURN == "--")
+                        {
+                            dt.Rows.Add(q.ID, q.TRIGGER, 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
+                        }
+                        else
+                        {
+                            dt.Rows.Add(q.ID, q.TRIGGER, Int32.Parse(q.TURN) + 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
+                        }
+                    }
+                    else if(q.TRIGGER != "Turn" && (q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event"))
+                    {
+                        dt.Rows.Add(q.ID, q.TRIGGER, q.TURN, q.EVT, q.EFFECT, Int32.Parse(q.VAL) + 1, q.PROB, q.RNG, q.NEWS);
+                    }
+                }
+                else
+                {
+                    dt.Rows.Add(q.ID, q.TRIGGER, q.TURN, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
+                }
             }
+
+            dgvEvents.DataSource = dt;
+
+            dgvEvents.Columns[1].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEvents.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEvents.Columns[1].ReadOnly = true;
+            dgvEvents.Columns[2].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvEvents.Columns[3].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEvents.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEvents.Columns[4].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEvents.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEvents.Columns[5].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvEvents.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgvEvents.Columns[6].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEvents.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEvents.Columns[7].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEvents.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEvents.Columns[8].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEvents.Columns[8].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgvEvents.Columns[0].Width = 40;
+            dgvEvents.Columns[1].Width = 40;
+            dgvEvents.Columns[2].Width = 100;
+            dgvEvents.Columns[3].Width = 40;
+            dgvEvents.Columns[4].Width = 40;
+            dgvEvents.Columns[5].Width = 100;
+            dgvEvents.Columns[6].Width = 40;
+            dgvEvents.Columns[7].Width = 40;
+            dgvEvents.Columns[8].Width = 40;
+            dgvEvents.Columns[9].Width = 120;
+
+            dgvEvents.Columns[1].ReadOnly = true;
+            dgvEvents.Columns[2].ReadOnly = true;
+            dgvEvents.Columns[3].ReadOnly = true;
+            dgvEvents.Columns[4].ReadOnly = true;
+            dgvEvents.Columns[5].ReadOnly = true;
+            dgvEvents.Columns[6].ReadOnly = true;
+            dgvEvents.Columns[7].ReadOnly = true;
+            dgvEvents.Columns[8].ReadOnly = true;
+            dgvEvents.Columns[9].ReadOnly = true;
+
+            await Task.Delay(500);
+            progressSavedGame.Visible = false;
+        }
+
+        private void btnSelectLogFile_Click(object sender, EventArgs e)
+        {
+            string LogFilePath;
+            string FilePath;
+            string xpathCalendar;
+            string turnlength;
+            //string finalturn;
+            string logdate;
+            string simplelogdate;
+            string prefixlogdate;
+            string hourslogdate = "";
+            string restatelogdate;
+            string daylogdate;
+            //string currentdate = "";
+            string currenttime = "";
+            DateTime logdatetime;
+            DateTime currentdatetime = new DateTime();
+            double periodsperturn = 0;
+            double deltaturns;
+            double deltaperiods;
+
+            OpenFileDialog file = new OpenFileDialog();
+            file.Multiselect = false;
+            file.Filter = "sitrepLog.txt files *.txt|*.txt";
+
+            if (file.ShowDialog() == DialogResult.OK)
+            {
+                LogFilePath = file.FileName;
+                txtSelectedLogFile.Text = LogFilePath;
+                FilePath = txtSelectedGamFile.Text;
+
+                //GET TURN NUMBER FROM LOG FILE NAME
+                string rightside = LogFilePath.Substring(LogFilePath.Length - 7, 7);
+                string number = rightside.Substring(0, 3);
+                int currentturn = 0;
+                Int32.TryParse(number, out currentturn);
+
+                //txtTurn.Text = currentturn.ToString();
+                numTurn.Value = currentturn; //AUG 1, 2022
+
+                //GET CALENDAR DATA FROM GAM FILE
+                XElement xelem = XElement.Load(FilePath);
+                xpathCalendar = "CALENDAR";
+                XElement calendardata = xelem.XPathSelectElement(xpathCalendar);
+                turnlength = calendardata.Attribute("turnLength").Value;
+                //finalturn = calendardata.Attribute("finalTurn").Value;
+                deltaturns = currentturn - 1;
+
+                //GET LOG DATE
+                using (var reader = new StreamReader(LogFilePath))
+                {
+                    reader.ReadLine(); // skip
+                    logdate = reader.ReadLine();
+                }
+
+                ////TEST LINES
+                //turnlength = "1";
+                //logdate = "AM, July 1st, 1940";
+                ////logdate = " AM, July 1st, 1940";
+                ////END TEST LINES
+
+                //REMOVE ORDINALS FROM LOG DATE
+                simplelogdate = TOAWXML.Utils.RemoveOrdinals(logdate);
+
+                switch (turnlength)
+                {
+                    case "9":   //1 hour
+                        periodsperturn = 1;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        //currentdate = currentdatetime.Date.ToShortDateString();
+                        //currenttime = currentdatetime.ToShortTimeString();
+                        //Console.WriteLine(currenttime);
+                        break;
+
+                    case "10":  //3 hours
+                        periodsperturn = 3;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        //currentdate = currentdatetime.Date.ToShortDateString();
+                        //currenttime = currentdatetime.ToShortTimeString();
+                        break;
+
+                    case "0":  //6 hours
+                        periodsperturn = 6;
+                        prefixlogdate = simplelogdate.Split(',')[0];
+                        daylogdate = simplelogdate.Split(new char[] { ',' }, 2)[1]; ;
+                        switch (prefixlogdate)
+                        {
+                            case "Pre-dawn":
+                                hourslogdate = "00:00,";
+                                break;
+                            case "Morning":
+                                hourslogdate = "06:00,";
+                                break;
+                            case "Afternoon":
+                                hourslogdate = "12:00,";
+                                break;
+                            case "Night":
+                                hourslogdate = "18:00,";
+                                break;
+                        }
+
+                        restatelogdate = hourslogdate + daylogdate;
+                        logdatetime = DateTime.Parse(restatelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        //currentdate = currentdatetime.Date.ToShortDateString();
+                        //currenttime = currentdatetime.ToShortTimeString();
+
+                        //switch (currenttime)
+                        //{
+                        //    case "00:00":
+                        //        currenttime = "Pre-dawn";
+                        //        break;
+                        //    case "06:00":
+                        //        currenttime = "Morning";
+                        //        break;
+                        //    case "12:00":
+                        //        currenttime = "Afternoon";
+                        //        break;
+                        //    case "18:00":
+                        //        currenttime = "Night";
+                        //        break;
+                        //}
+                        //currenttime = currentdatetime.Date.ToShortTimeString();
+                        break;
+
+                    case "1":  //12 hours
+                        periodsperturn = 12;
+                        prefixlogdate = simplelogdate.Split(',')[0];
+                        daylogdate = simplelogdate.Split(new char[] { ',' }, 2)[1]; ;
+                        switch (prefixlogdate)
+                        {
+                            case "AM":
+                                hourslogdate = "12:00,";
+                                break;
+                            case "PM":
+                                hourslogdate = "00:00,";
+                                break;
+                        }
+                        restatelogdate = hourslogdate + daylogdate;
+                        logdatetime = DateTime.Parse(restatelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        //currentdate = currentdatetime.Date.ToShortDateString();
+                        //currenttime = currentdatetime.Date.ToShortTimeString();
+                        switch (currenttime)
+                        {
+                            case "12:00":
+                                currenttime = "AM";
+                                break;
+                            case "00:00":
+                                currenttime = "PM";
+                                break;
+                        }
+                        break;
+
+                    case "2": //24 hours
+                        periodsperturn = 24;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                       //currentdate = currentdatetime.Date.ToShortDateString();
+                        //currenttime = "";
+                        break;
+
+                    case "3": //Half week
+                        periodsperturn = 84;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        //currentdate = currentdatetime.Date.ToShortDateString();
+                        //currenttime = "";
+                        break;
+
+                    case "4": //One week
+                        periodsperturn = 168;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                       //currentdate = currentdatetime.Date.ToShortDateString();
+                        //currenttime = "";
+                        break;
+
+                    case "5": //Two weeks
+                        periodsperturn = 336;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddHours(deltaperiods);
+                        //currentdate = currentdatetime.Date.ToShortDateString();
+                        //currenttime = "";
+                        break;
+
+                    case "6": //Month
+                        periodsperturn = 1;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddMonths((int)deltaperiods);
+                        //currentdate = currentdatetime.Date.ToShortDateString();
+                        currenttime = "";
+                        break;
+
+                    case "7": //SEASON
+                        //SEASONAL TURNS DON'T SEEM TO WORK--YOU CANNOT SET THE SEASON, ONLY THE MONTH, WHICH DOES NOT CHANGE.
+                        //periodsperturn = 3;
+                        //logdatetime = DateTime.Parse(simplelogdate);
+                        //deltaperiods = periodsperturn * deltaturns;
+                        //currentdatetime = logdatetime.AddMonths((int)deltaperiods);
+                        //currentdate = currentdatetime.Date.ToShortDateString();
+                        //currenttime = "";
+                        break;
+
+                    case "8": //Year
+                        periodsperturn = 1;
+                        logdatetime = DateTime.Parse(simplelogdate);
+                        deltaperiods = periodsperturn * deltaturns;
+                        currentdatetime = logdatetime.AddYears((int)deltaperiods);
+                        //currentdate = currentdatetime.Date.ToShortDateString();
+                        //currenttime = "";
+                        break;
+                }
+
+                //UPDATE UI
+                btnCurrentTurn.Enabled = true;
+                btnEvents.Enabled = true;
+
+                //SET UI DATE AND TIME
+                dteGameDate.Value = currentdatetime;//added AUG 2, 2022
+                cboStartHour.SelectedValue = currentdatetime.TimeOfDay.Hours.ToString();
+
+                ////INSERT REVISED CALENDAR DATA INTO XML
+                //calendardata.Attribute("startDay").Value = currentdate;
+                //calendardata.Attribute("startHour").Value = currenttime;
+                //calendardata.Attribute("finalTurn").Value = (Int32.Parse(finalturn) - currentturn).ToString();
+                //calendardata.Attribute("currentTurn").Value = "1";  //AUG 1, 2022
+
+                //xelem.Save(FilePath);
+            }
+
             else
             {
-                MessageBox.Show("gam filename does not end in '-1' or '-2' to indicate which force has turn." 
-                    + Environment.NewLine + Environment.NewLine +
-                    "Please select the correct force manually.",
-                    "No Force Turn Indicator",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation,
-                    MessageBoxDefaultButton.Button1);
+                //Application.Exit();
+                this.Close();
+                return;
             }
+        }
+
+        private void btnCurrentTurn_Click(object sender, EventArgs e)
+        {
+            string FilePath = txtSelectedGamFile.Text;
+            string xpathCalendar;
+            string currentturntxt = "";
+
+            int currentturn = 0;
+            int finalturn = 0;
+
+            XElement xelem = XElement.Load(FilePath);
+
+            Int32.TryParse(currentturntxt, out currentturn);
+            //txtTurn.Text = currentturn.ToString();
+            xpathCalendar = "CALENDAR";
+            XElement calendardata = xelem.XPathSelectElement(xpathCalendar);
+                        
+            //INSERT REVISED CALENDAR DATA INTO XML
+            //calendardata.Attribute("startHour").Value = cboStartHour.SelectedValue.ToString();
+            calendardata.Attribute("startHour").Value = cboStartHour.SelectedValue.ToString();
+            calendardata.Attribute("startDay").Value = (dteGameDate.Value.Day - 1).ToString();
+            calendardata.Attribute("startMonth").Value = (dteGameDate.Value.Month - 1).ToString();
+            calendardata.Attribute("startYear").Value = (dteGameDate.Value.Year -1).ToString();
+            calendardata.Attribute("finalTurn").Value = (Int32.Parse(calendardata.Attribute("finalTurn").Value) - numTurn.Value).ToString();
+            calendardata.Attribute("finalTurn").Value = (finalturn - currentturn).ToString();
+            calendardata.Attribute("currentTurn").Value = numTurn.Value.ToString();
 
             //FIX VARIOUS DATA GLITCHES IN THE EVENT XML (IE, EVENTS HAVING DATA IN FIELDS THAT DON'T MATTER FOR THAT EVENT, ETC.)
             IEnumerable<XElement> zing = xelem.XPathSelectElements("EVENTS/EVENT");
@@ -284,407 +915,9 @@ namespace TOAWEditSave
                     if (z.Attribute("CONTINGENCY") != null) z.Attribute("CONTINGENCY").Remove();
                 }
             }  //NEW FOREACH END
-                xelem.Save(FilePath);
-            //}  OLD FOR EACH END
 
-            //CREATE EVENTS DATATABLE, LOAD DATAGRIDVIEW
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add("ID", typeof(int));
-            dt.Columns.Add("TRIGGER", typeof(string));
-            dt.Columns.Add("TURN", typeof(string));
-            dt.Columns.Add("EVT", typeof(string));
-            dt.Columns.Add("EFFECT", typeof(string));
-            dt.Columns.Add("VAL", typeof(string));
-            dt.Columns.Add("PROB", typeof(string));
-            dt.Columns.Add("RNG", typeof(string));
-            dt.Columns.Add("NEWS", typeof(string));
-
-            var events = (from v in xelem.Descendants("EVENTS").Descendants("EVENT")
-                          select new
-                          {
-                              ID = v.Attribute("ID").Value,
-                              TRIGGER = v.Attribute("TRIGGER").Value,
-                              EFFECT = v.Attribute("EFFECT").Value,
-                              EVT = (string)v.Attribute("CONTINGENCY") ?? "--",
-                              PROB = (string)v.Attribute("CHANCE") ?? "100",
-                              NEWS = (string)v.Attribute("NEWS") ?? "--",
-                              RNG = (string)(v.Attribute("VARIABLE") != null ? (Int32.Parse(v.Attribute("VARIABLE").Value) + 1).ToString() : "--") ?? "--",
-                              VAL = (string)v.Attribute("VALUE") ?? "--",
-                              TURN = (string)v.Attribute("TURN") ?? "--"
-                          });
-
-            //LOAD EVENT DATAGRIDVIEW
-            //MUST ADJUST DGV NUMBERS FROM XML NUMBERS, BASED ON CERTAIN TRIGGERS AND EFFECTS
-            foreach(var q in events.ToList())
-            {
-                //FIX DGV VALUES FROM XML VALUES
-                if (q.TRIGGER == "Turn" || q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event")
-                {
-                    if(q.TRIGGER == "Turn" && (q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event"))
-                    {
-                        if (q.TURN == "--")
-                        {
-                            dt.Rows.Add(q.ID, q.TRIGGER, 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
-                        }
-                        else
-                        {
-                            dt.Rows.Add(q.ID, q.TRIGGER, Int32.Parse(q.TURN) + 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
-                        }
-                    }
-                    else if(q.TRIGGER == "Turn" && (q.EFFECT != "Activate event" || q.EFFECT != "Enable event" || q.EFFECT != "Cancel event"))
-                    {
-                        if (q.TURN == "--")
-                        {
-                            dt.Rows.Add(q.ID, q.TRIGGER, 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
-                        }
-                        else
-                        {
-                            dt.Rows.Add(q.ID, q.TRIGGER, Int32.Parse(q.TURN) + 1, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
-                        }
-                    }
-                    else if(q.TRIGGER != "Turn" && (q.EFFECT == "Activate event" || q.EFFECT == "Enable event" || q.EFFECT == "Cancel event"))
-                    {
-                        dt.Rows.Add(q.ID, q.TRIGGER, q.TURN, q.EVT, q.EFFECT, Int32.Parse(q.VAL) + 1, q.PROB, q.RNG, q.NEWS);
-                    }
-                }
-                else
-                {
-                    dt.Rows.Add(q.ID, q.TRIGGER, q.TURN, q.EVT, q.EFFECT, q.VAL, q.PROB, q.RNG, q.NEWS);
-                }
-            }
-
-            dgvEvents.DataSource = dt;
-
-            dgvEvents.Columns[1].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEvents.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEvents.Columns[1].ReadOnly = true;
-            dgvEvents.Columns[2].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dgvEvents.Columns[3].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEvents.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEvents.Columns[4].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEvents.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEvents.Columns[5].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dgvEvents.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dgvEvents.Columns[6].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEvents.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEvents.Columns[7].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEvents.Columns[7].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEvents.Columns[8].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvEvents.Columns[8].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-            dgvEvents.Columns[0].Width = 40;
-            dgvEvents.Columns[1].Width = 40;
-            dgvEvents.Columns[2].Width = 100;
-            dgvEvents.Columns[3].Width = 40;
-            dgvEvents.Columns[4].Width = 40;
-            dgvEvents.Columns[5].Width = 100;
-            dgvEvents.Columns[6].Width = 40;
-            dgvEvents.Columns[7].Width = 40;
-            dgvEvents.Columns[8].Width = 40;
-            dgvEvents.Columns[9].Width = 120;
-
-            dgvEvents.Columns[1].ReadOnly = true;
-            dgvEvents.Columns[2].ReadOnly = true;
-            dgvEvents.Columns[3].ReadOnly = true;
-            dgvEvents.Columns[4].ReadOnly = true;
-            dgvEvents.Columns[5].ReadOnly = true;
-            dgvEvents.Columns[6].ReadOnly = true;
-            dgvEvents.Columns[7].ReadOnly = true;
-            dgvEvents.Columns[8].ReadOnly = true;
-            dgvEvents.Columns[9].ReadOnly = true;
-
-            await Task.Delay(500);
-            progressSavedGame.Visible = false;
-        }
-
-        private void btnSelectLogFile_Click(object sender, EventArgs e)
-        {
-            string LogFilePath;
-            string FilePath;
-            string xpathCalendar;
-            string turnlength;
-            string finalturn;
-            string logdate;
-            string simplelogdate;
-            string prefixlogdate;
-            string hourslogdate = "";
-            string restatelogdate;
-            string daylogdate;
-            string currentdate = "";
-            string currenttime = "";
-            DateTime logdatetime;
-            DateTime currentdatetime = new DateTime();
-            double periodsperturn = 0;
-            double deltaturns;
-            double deltaperiods;
-
-            OpenFileDialog file = new OpenFileDialog();
-            file.Multiselect = false;
-            file.Filter = "sitrepLog.txt files *.txt|*.txt";
-
-            if (file.ShowDialog() == DialogResult.OK)
-            {
-                LogFilePath = file.FileName;
-                txtSelectedLogFile.Text = LogFilePath;
-                FilePath = txtSelectedGamFile.Text;
-
-                //GET TURN NUMBER FROM LOG FILE NAME
-                string rightside = LogFilePath.Substring(LogFilePath.Length - 7, 7);
-                string number = rightside.Substring(0, 3);
-                int currentturn = 0;
-                Int32.TryParse(number, out currentturn);
-                txtTurn.Text = currentturn.ToString();
-
-                //GET CALENDAR DATA FROM GAM FILE
-                XElement xelem = XElement.Load(FilePath);
-                xpathCalendar = "CALENDAR";
-                XElement calendardata = xelem.XPathSelectElement(xpathCalendar);
-                turnlength = calendardata.Attribute("turnLength").Value;
-                finalturn = calendardata.Attribute("finalTurn").Value;
-                deltaturns = currentturn - 1;
-
-                //GET LOG DATE
-                using (var reader = new StreamReader(LogFilePath))
-                {
-                    reader.ReadLine(); // skip
-                    logdate = reader.ReadLine();
-                }
-
-                ////TEST LINES
-                //turnlength = "1";
-                //logdate = "AM, July 1st, 1940";
-                ////logdate = " AM, July 1st, 1940";
-                ////END TEST LINES
-
-                //REMOVE ORDINALS FROM LOG DATE
-                simplelogdate = TOAWXML.Utils.RemoveOrdinals(logdate);
-
-                switch (turnlength)
-                {
-                    case "9":   //1 hour
-                        periodsperturn = 1;
-                        logdatetime = DateTime.Parse(simplelogdate);
-                        deltaperiods = periodsperturn * deltaturns;
-                        currentdatetime = logdatetime.AddHours(deltaperiods);
-                        currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = currentdatetime.ToShortTimeString();
-                        
-                        Console.WriteLine(currenttime);
-                        break;
-                    case "10":  //3 hours
-                        periodsperturn = 3;
-                        logdatetime = DateTime.Parse(simplelogdate);
-                        deltaperiods = periodsperturn * deltaturns;
-                        currentdatetime = logdatetime.AddHours(deltaperiods);
-                        currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = currentdatetime.ToShortTimeString();
-                        break;
-                    case "0":  //6 hours
-                        periodsperturn = 6;
-                        prefixlogdate = simplelogdate.Split(',')[0];
-                        daylogdate = simplelogdate.Split(new char[] { ',' }, 2)[1]; ;
-                        switch (prefixlogdate)
-                        {
-                            case "Pre-dawn":
-                                hourslogdate = "00:00,";
-                                break;
-                            case "Morning":
-                                hourslogdate = "06:00,";
-                                break;
-                            case "Afternoon":
-                                hourslogdate = "12:00,";
-                                break;
-                            case "Night":
-                                hourslogdate = "18:00,";
-                                break;
-                        }
-                        restatelogdate = hourslogdate + daylogdate;
-                        logdatetime = DateTime.Parse(restatelogdate);
-                        deltaperiods = periodsperturn * deltaturns;
-                        currentdatetime = logdatetime.AddHours(deltaperiods);
-                        currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = currentdatetime.ToShortTimeString();
-                        switch (currenttime)
-                        {
-                            case "00:00":
-                                currenttime = "Pre-dawn";
-                                break;
-                            case "06:00":
-                                currenttime = "Morning";
-                                break;
-                            case "12:00":
-                                currenttime = "Afternoon";
-                                break;
-                            case "18:00":
-                                currenttime = "Night";
-                                break;
-                        }
-                        //currenttime = currentdatetime.Date.ToShortTimeString();
-                        break;
-                    case "1":  //12 hours
-                        periodsperturn = 12;
-                        prefixlogdate = simplelogdate.Split(',')[0];
-                        daylogdate = simplelogdate.Split(new char[] { ',' }, 2)[1]; ;
-                        switch (prefixlogdate)
-                        {
-                            case "AM":
-                                hourslogdate = "12:00,";
-                                break;
-                            case "PM":
-                                hourslogdate = "00:00,";
-                                break;
-                        }
-                        restatelogdate = hourslogdate + daylogdate;
-                        logdatetime = DateTime.Parse(restatelogdate);
-                        deltaperiods = periodsperturn * deltaturns;
-                        currentdatetime = logdatetime.AddHours(deltaperiods);
-                        currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = currentdatetime.Date.ToShortTimeString();
-                        switch (currenttime)
-                        {
-                            case "12:00":
-                                currenttime = "AM";
-                                break;
-                            case "00:00":
-                                currenttime = "PM";
-                                break;
-                        }
-                        break;
-                    case "2": //24 hours
-                        periodsperturn = 24;
-                        logdatetime = DateTime.Parse(simplelogdate);
-                        deltaperiods = periodsperturn * deltaturns;
-                        currentdatetime = logdatetime.AddHours(deltaperiods);
-                        currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = "";
-                        break;
-                    case "3": //Half week
-                        periodsperturn = 84;
-                        logdatetime = DateTime.Parse(simplelogdate);
-                        deltaperiods = periodsperturn * deltaturns;
-                        currentdatetime = logdatetime.AddHours(deltaperiods);
-                        currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = "";
-                        break;
-                    case "4": //One week
-                        periodsperturn = 168;
-                        logdatetime = DateTime.Parse(simplelogdate);
-                        deltaperiods = periodsperturn * deltaturns;
-                        currentdatetime = logdatetime.AddHours(deltaperiods);
-                        currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = "";
-                        break;
-                    case "5": //Two weeks
-                        periodsperturn = 336;
-                        logdatetime = DateTime.Parse(simplelogdate);
-                        deltaperiods = periodsperturn * deltaturns;
-                        currentdatetime = logdatetime.AddHours(deltaperiods);
-                        currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = "";
-                        break;
-                    case "6": //Month
-                        periodsperturn = 1;
-                        logdatetime = DateTime.Parse(simplelogdate);
-                        deltaperiods = periodsperturn * deltaturns;
-                        currentdatetime = logdatetime.AddMonths((int)deltaperiods);
-                        currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = "";
-                        break;
-                    case "7": //SEASON
-                        //SEASONAL TURNS DON'T SEEM TO WORK--YOU CANNOT SET THE SEASON, ONLY THE MONTH, WHICH DOES NOT CHANGE.
-                        //periodsperturn = 3;
-                        //logdatetime = DateTime.Parse(simplelogdate);
-                        //deltaperiods = periodsperturn * deltaturns;
-                        //currentdatetime = logdatetime.AddMonths((int)deltaperiods);
-                        //currentdate = currentdatetime.Date.ToShortDateString();
-                        //currenttime = "";
-                        break;
-                    case "8": //Year
-                        periodsperturn = 1;
-                        logdatetime = DateTime.Parse(simplelogdate);
-                        deltaperiods = periodsperturn * deltaturns;
-                        currentdatetime = logdatetime.AddYears((int)deltaperiods);
-                        currentdate = currentdatetime.Date.ToShortDateString();
-                        currenttime = "";
-                        break;
-                }
-
-               //UPDATE UI
-                btnCurrentTurn.Enabled = true;
-                btnEvents.Enabled = true;
-                txtDate.Text = currentdate;
-                txtTime.Text = currenttime;
-            }
-            else
-            {
-                Application.Exit();
-                this.Close();
-                return;
-            }
-        }
-
-        private void btnCurrentTurn_Click(object sender, EventArgs e)
-        {
-            //string toawlogFile = txtSelectedLogFile.Text;
-            //string gamFile = txtSelectedGamFile.Text;
-
-            //List<string> turnList = new List<string>(File.ReadLines(toawlogFile).ToList());
-            //List<string> toawSaveLog = new List<string>();
-            //string turn="";
-            //string currentturn = "";
-
-            ////COPY RELEVANT LINES FROM TOAWLOG.TXT TO TOAWSAVELOG.TXT
-            //foreach (var line in turnList.Where(l => l.Contains("SetState") || l.Contains("event")))
-            //{
-            //    if (line.Contains("SetState"))
-            //    {
-            //        turn = line.Split('|', '|')[1];//BETTER TO USE SIDESTART?  TURNSTART ONLY USEFUL FOR FINDING EVENTS
-            //        currentturn = line.Substring(19);
-            //    }
-            //    else
-            //    {
-            //        currentturn = line.Substring(10);
-            //    }
-            //    toawSaveLog.Add(currentturn);
-            //}
-
-            //string path = (txtSelectedLogFile.Text).Remove(txtSelectedLogFile.Text.Length - 11);
-            //string logpath = path + "TOAWSaveLog.txt";
-            //System.IO.File.WriteAllLines(logpath, toawSaveLog);
-
-            ////ADJUST TURN, DATE, SIDE SETTINGS 
-            //string turnnumber = Regex.Match(turn, @"\d+").Value;
-            //string force = "";
-            //int index = 0;
-            //txtTurn.Text = turnnumber;
-
-            ////STRIP FORCE NAME OUT OF CURRENTTURN
-            //index = currentturn.IndexOf("|");
-            //if (currentturn.Contains("TurnStart") || currentturn.Contains("SideStart"))
-            //{
-            //    force = currentturn.Substring(10, index-10);
-
-            //}
-            //if (currentturn.Contains("TurnEnd") ||currentturn.Contains("SideEnd"))
-            //{
-            //    force = currentturn.Substring(8, index-8);
-            //}
-
-            ////SET FORCE RADIOBUTTON
-            //if (force == rbForce1.Text)
-            //{
-            //    rbForce1.Checked = true;
-            //}
-            //else
-            //{
-            //    rbForce2.Checked = true;
-            //}
-
-            ////SET CURRENT DATE
-            //var date = currentturn.Substring(currentturn.LastIndexOf('|') + 1);
-            //string dateonly = new string(date.Where(c => (Char.IsDigit(c) || c == '/')).ToArray());
-            //txtDate.Text = dateonly.ToString();
+            btnEvents.Enabled = true;
+            xelem.Save(FilePath);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -1130,7 +1363,7 @@ namespace TOAWEditSave
         {
             progressSavedGame.Visible = true;
             string logFile = txtSelectedLogFile.Text;
-            string turn = txtTurn.Text;
+            //string turn = txtTurn.Text;
 
             List<string> eventList = new List<string>(File.ReadLines(logFile).ToList());
             List<string> triggeredEvents = new List<string>();
@@ -1166,7 +1399,8 @@ namespace TOAWEditSave
                     //If EVENT WAS TRIGGERED ON TURN 1
                     if (r.Cells[2].Value.ToString() == "Turn")
                     {
-                        int currentturn = Int32.Parse(turn);
+                        //int currentturn = Int32.Parse(turn);
+                        int currentturn = Int32.Parse(numTurn.Value.ToString());
 
                         if (r.Cells[3].Value.ToString() != "--")
                         {
@@ -1284,8 +1518,8 @@ namespace TOAWEditSave
             {
                 dgvEvents.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 Color color = new Color();
-                Console.WriteLine("rowcolor: " + rowcolor);
-                Console.WriteLine("color: " + color);
+                //Console.WriteLine("rowcolor: " + rowcolor);
+                //Console.WriteLine("color: " + color);
                 color = dgvEvents.CurrentRow.DefaultCellStyle.BackColor;
                 //Check the value of cell
                 if (dgvEvents.CurrentCell.GetType() == typeof(DataGridViewCheckBoxCell))
@@ -1294,15 +1528,15 @@ namespace TOAWEditSave
                     {
                         //color = dgvEvents.CurrentRow.DefaultCellStyle.BackColor;
                         rowcolor = color;
-                        Console.WriteLine("color a: " + color);
-                        Console.WriteLine("rowcolor a: " + rowcolor);
+                        //Console.WriteLine("color a: " + color);
+                        //Console.WriteLine("rowcolor a: " + rowcolor);
                         dgvEvents.CurrentRow.DefaultCellStyle.BackColor = Color.Red;
                     }
                     else
                     {
                         //color = dgvEvents.CurrentRow.DefaultCellStyle.BackColor;
-                        Console.WriteLine("color b: " + color);
-                        Console.WriteLine("rowcolor b: " + rowcolor);
+                        //Console.WriteLine("color b: " + color);
+                        //Console.WriteLine("rowcolor b: " + rowcolor);
                         //if (rowcolor != null)
                         //{
                             dgvEvents.CurrentRow.DefaultCellStyle.BackColor = rowcolor;
@@ -1327,13 +1561,28 @@ namespace TOAWEditSave
             string xpathEvents = "";
             string xpathEvent = "";
             bool match = false;
-            int currentturn = Int32.Parse(txtTurn.Text);
+
+            //int currentturn = Int32.Parse(txtTurn.Text);
+            int currentturn = Int32.Parse(numTurn.Value.ToString());
+
             string aircap1 = "0";
             string aircap2 = "0";
             string railcap1 = "0"; ;
             string railcap2 = "0";
             string seacap1 = "0";
             string seacap2 = "0";
+            string recon1 = "0";
+            string recon2 = "0";
+
+            int n = 0;
+            int Iaircap1 = Int32.Parse(aircap1);
+            int Iaircap2 = Int32.Parse(aircap2);
+            int Irailcap1 = Int32.Parse(railcap1);
+            int Irailcap2 = Int32.Parse(railcap2);
+            int Iseacap1 = Int32.Parse(seacap1);
+            int Iseacap2 = Int32.Parse(seacap2);
+            int Irecon1 = Int32.Parse(recon1);  
+            int Irecon2 = Int32.Parse(recon2);
 
             XElement xelem = XElement.Load(FilePath);
             xpathEvents = "EVENTS/EVENT";
@@ -1345,77 +1594,226 @@ namespace TOAWEditSave
             //DELETE ALL CHECKED ROWS FROM DGV AND ADJUST TRIGGER TURNS FOR UPCOMING EVENTS
             for (int i = dgvEvents.Rows.Count - 1; i >= 0; i--)
             {
-                //REMOVE CHECKED EVENTS AND GET AIR, RAIL, SEA CAPS
+                //REMOVE CHECKED EVENTS AND GET AIR, RAIL, SEA CAPS & THEATER RECON
                 if ((bool)dgvEvents.Rows[i].Cells[0].FormattedValue)
                 {
-                    //GET AIR, RAIL, SEA CAP VALUES FROM ACTIVATED EVENTS
-                    if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Air transport 1")
-                    {
-                        if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
-                        {
-                            aircap1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
-                        }
-                        else
-                        {
-                            aircap1 = "0";
-                        }
-                    }
+                    //GET AIR, RAIL, SEA CAP & THEATER RECON VALUES FROM ACTIVATED EVENTS
+                    //if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Air transport 1")
+                    //{
+                    //    if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                    //    {
+                    //        aircap1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                    //    }
+                    //    else
+                    //    {
+                    //        aircap1 = "0";
+                    //    }
+                    //}
 
-                    if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Air transport 2")
+                    //if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Air transport 2")
+                    //{
+                    //    if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                    //    {
+                    //        aircap2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                    //    }
+                    //    else
+                    //    {
+                    //        aircap2 = "0";
+                    //    }
+                    //}
+                    //if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Rail transport 1")
+                    //{
+                    //    if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                    //    {
+                    //        railcap1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                    //    }
+                    //    else
+                    //    {
+                    //        railcap1 = "0";
+                    //    }
+                    //}
+                    //if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Rail transport 2")
+                    //{
+                    //    if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                    //    {
+                    //        railcap2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                    //    }
+                    //    else
+                    //    {
+                    //        railcap2 = "0";
+                    //    }
+                    //}
+                    //if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Sea transport 1")
+                    //{
+                    //    if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                    //    {
+                    //        seacap1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                    //    }
+                    //    else
+                    //    {
+                    //        seacap1 = "0";
+                    //    }
+                    //}
+                    //if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Sea transport 2")
+                    //{
+                    //    if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                    //    {
+                    //        seacap2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                    //    }
+                    //    else
+                    //    {
+                    //        seacap2 = "0";
+                    //    }
+                    //}
+
+                    //if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Theater recon 1")
+                    //{
+                    //    if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                    //    {
+                    //        recon1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                    //    }
+                    //    else
+                    //    {
+                    //        recon1 = "0";
+                    //    }
+                    //}
+                    //if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Theater recon 2")
+                    //{
+                    //    if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                    //    {
+                    //        recon2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                    //    }
+                    //    else
+                    //    {
+                    //        recon2 = "0";
+                    //    }
+                    //}
+
+
+                    ///////////JULY 27
+                    string eventeffect = dgvEvents.Rows[i].Cells[5].Value.ToString();
+
+                    switch (eventeffect)
                     {
-                        if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
-                        {
-                            aircap2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
-                        }
-                        else
-                        {
-                            aircap2 = "0";
-                        }
+                        case "Air transport 1":
+                            if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                            {
+                                aircap1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+
+                            }
+                            else
+                            {
+                                aircap1 = "0";
+                            }
+
+                            n = Int32.Parse(aircap1);
+                            Iaircap1 = Iaircap1 + n;
+                            aircap1 = Iaircap1.ToString();
+                            break;
+
+                        case "Air transport 2":
+                            if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                            {
+                                aircap2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                            }
+                            else
+                            {
+                                aircap2 = "0";
+                            }
+                            n = Int32.Parse(aircap2);
+                            Iaircap2 = Iaircap2 + n;
+                            aircap2 = Iaircap2.ToString();
+                            break;
+
+                        case "Rail transport 1":
+                            if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                            {
+                                railcap1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                            }
+                            else
+                            {
+                                railcap1 = "0";
+                            }
+                            n = Int32.Parse(railcap1);
+                            Irailcap1 = Irailcap1 + n;
+                            railcap1 = Irailcap1.ToString();
+                            break;
+
+                        case "Rail transport 2":
+                            if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                            {
+                                railcap2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                            }
+                            else
+                            {
+                                railcap2 = "0";
+                            }
+                            n = Int32.Parse(railcap2);
+                            Irailcap2 = Irailcap2 + n;
+                            railcap2 = Irailcap2.ToString();
+                            break;
+
+                        case "Sea transport 1":
+                            if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                            {
+                                seacap1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                            }
+                            else
+                            {
+                                seacap1 = "0";
+                            }
+                            n = Int32.Parse(seacap1);
+                            Iseacap1 = Iseacap1 + n;
+                            seacap1 = Iseacap1.ToString();
+                            break;
+
+                        case "Sea transport 2":
+                            if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                            {
+                                seacap2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                            }
+                            else
+                            {
+                                seacap2 = "0";
+                            }
+                            n = Int32.Parse(seacap2);
+                            Iseacap2 = Iseacap2 + n;
+                            seacap2 = Iseacap2.ToString();
+                            break;
+
+                        case "Theater recon 1":
+                            if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                            {
+                                recon1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                            }
+                            else
+                            {
+                                recon1 = "0";
+                            }
+                            n = Int32.Parse(recon1);
+                            Irecon1 = Irecon1 + n;
+                            recon1 = Irecon1.ToString();
+
+                            //Console.WriteLine ("recon1 = " + n);
+                            //Console.WriteLine("RECON1 = " + Irecon1);
+                            //Console.WriteLine("startHour = " + cboStartHour.SelectedValue.ToString());
+                            break;
+
+                        case "Theater recon 2":
+                            if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
+                            {
+                                recon2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
+                            }
+                            else
+                            {
+                                recon2 = "0";
+                            }
+                            n = Int32.Parse(recon2);
+                            Irecon2 = Irecon2 + n;
+                            recon2 = Irecon2.ToString();
+                            break;
                     }
-                    if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Rail transport 1")
-                    {
-                        if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
-                        {
-                            railcap1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
-                        }
-                        else
-                        {
-                            railcap1 = "0";
-                        }
-                    }
-                    if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Rail transport 2")
-                    {
-                        if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
-                        {
-                            railcap2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
-                        }
-                        else
-                        {
-                            railcap2 = "0";
-                        }
-                    }
-                    if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Sea transport 1")
-                    {
-                        if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
-                        {
-                            seacap1 = dgvEvents.Rows[i].Cells[6].Value.ToString();
-                        }
-                        else
-                        {
-                            seacap1 = "0";
-                        }
-                    }
-                    if (dgvEvents.Rows[i].Cells[5].Value.ToString() == "Sea transport 2")
-                    {
-                        if (dgvEvents.Rows[i].Cells[6].Value.ToString() != "--")
-                        {
-                            seacap2 = dgvEvents.Rows[i].Cells[6].Value.ToString();
-                        }
-                        else
-                        {
-                            seacap2 = "0";
-                        }
-                    }
+                    /////////////////////////july 27
 
                     //DELETE CHECKED EVENTS
                     dgvEvents.Rows.RemoveAt(i);
@@ -1441,7 +1839,7 @@ namespace TOAWEditSave
             dgvEvents.Refresh();
             DataTable dt = (DataTable)dgvEvents.DataSource;
 
-            //NOW LOOP THROUGH XML EVENTS, DELETING ACTIVATED EVENTS, ADJUST TURN TRIGGERS FOR UPCOMING EVENTS, ADD EVENTS FOR AIR/RAIL/SEA CAP
+            //NOW LOOP THROUGH XML EVENTS, DELETING ACTIVATED EVENTS, ADJUST TURN TRIGGERS FOR UPCOMING EVENTS, ADD EVENTS FOR AIR/RAIL/SEA CAP & RECON
             for (int i = checkEvents.Count - 1; i > -1; i--)  
             {
                 string id = "";
@@ -1451,7 +1849,7 @@ namespace TOAWEditSave
 
                 //MATCH ALL EVENTS IN XML VS CHECKED EVENTS IN DGV
                 foreach (DataRow row in dt.Rows)
-                {
+                { 
                     id = row["ID"].ToString();
                     adjustedturn = row["Turn"].ToString();
 
@@ -1481,10 +1879,35 @@ namespace TOAWEditSave
 
             xelem.Descendants("EVENT");
 
-            //ADD AIR,RAIL,SEA CAP EVENTS TO DATATABLE
+            //ADD AIR,RAIL,SEA CAP & THEATER RECON EVENTS TO DATATABLE
             int firstrow = 0;
 
             DataRow dtr = dt.NewRow();
+
+            dtr[0] = "8";
+            dtr[1] = "Turn";
+            dtr[2] = "1";
+            dtr[3] = "--";
+            dtr[4] = "Theater recon 1";
+            dtr[5] = recon1;
+            dtr[6] = 100;
+            dtr[7] = "--";
+            dtr[8] = "--";
+            dt.Rows.InsertAt(dtr, firstrow);
+
+            dtr = dt.NewRow();
+            dtr[0] = "7";
+            dtr[1] = "Turn";
+            dtr[2] = "1";
+            dtr[3] = "--";
+            dtr[4] = "Theater recon 2";
+            dtr[5] = recon2;
+            dtr[6] = 100;
+            dtr[7] = "--";
+            dtr[8] = "--";
+            dt.Rows.InsertAt(dtr, firstrow);
+
+            dtr = dt.NewRow();
             dtr[0] = "6";
             dtr[1] = "Turn";
             dtr[2] = "1";
@@ -1559,7 +1982,24 @@ namespace TOAWEditSave
             dgvEvents.DataSource = dt;
             dgvEvents.Refresh();
 
-            //ADD TRANSPORT EVENTS TO XML
+            //ADD TRANSPORT & RECON EVENTS TO XML
+
+            eventy.AddFirst(new XElement("EVENT",
+                            new XAttribute("ID", "8"),
+                            new XAttribute("TRIGGER", "Turn"),
+                            new XAttribute("EFFECT", "Theater recon 1"),
+                            new XAttribute("VALUE", recon1),
+                            new XAttribute("TURN", "1"))
+              );
+
+            eventy.AddFirst(new XElement("EVENT",
+                            new XAttribute("ID", "7"),
+                            new XAttribute("TRIGGER", "Turn"),
+                            new XAttribute("EFFECT", "Theater recon 2"),
+                            new XAttribute("VALUE", recon2),
+                            new XAttribute("TURN", "1"))
+              );
+
             eventy.AddFirst(new XElement("EVENT",
                              new XAttribute("ID", "6"),
                              new XAttribute("TRIGGER", "Turn"),
@@ -1684,6 +2124,16 @@ namespace TOAWEditSave
         }
 
         private void tpRP_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numTurn_ValueChanged(object sender, EventArgs e)
         {
 
         }

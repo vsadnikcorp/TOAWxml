@@ -271,13 +271,13 @@ namespace TOAWXML
             // 
             // DateTimePicker
             // 
-            this.DateTimePicker.CustomFormat = "dd MMM yyyy";
+            this.DateTimePicker.CustomFormat = "d MMM y";
             this.DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.DateTimePicker.Location = new System.Drawing.Point(222, 10);
             this.DateTimePicker.Name = "DateTimePicker";
             this.DateTimePicker.Size = new System.Drawing.Size(102, 20);
             this.DateTimePicker.TabIndex = 7;
-            this.DateTimePicker.Value = new System.DateTime(1941, 6, 22, 0, 0, 0, 0);
+            this.DateTimePicker.Value = new System.DateTime(1941, 6, 1, 0, 0, 0, 0);
             // 
             // btnSave
             // 

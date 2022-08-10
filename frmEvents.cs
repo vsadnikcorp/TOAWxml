@@ -228,10 +228,8 @@ namespace TOAWXML
             trvEvents.Focus();
             string strEventID = Globals.GlobalVariables.EVENTID;
             trvEvents.CollapseAll();
-            //trvEvents.TopNode.Expand();
             trvEvents.Nodes[0].Expand();
 
-            //foreach (TreeNode node in trvEvents.TopNode.Nodes)
             foreach (TreeNode node in trvEvents.Nodes[0].Nodes)
             {
                 node.Collapse();

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEditSave));
             this.lblSelectSavedGame = new System.Windows.Forms.Label();
             this.btnSelectSavedGame = new System.Windows.Forms.Button();
@@ -187,6 +187,12 @@
             this.ssSaveGame = new System.Windows.Forms.StatusStrip();
             this.ssLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressSavedGame = new System.Windows.Forms.ToolStripProgressBar();
+            this.numTurn = new System.Windows.Forms.NumericUpDown();
+            this.label14 = new System.Windows.Forms.Label();
+            this.dteGameDate = new System.Windows.Forms.DateTimePicker();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cboStartHour = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.gbForceTurn.SuspendLayout();
             this.tabSaveGame.SuspendLayout();
             this.tpRP.SuspendLayout();
@@ -198,6 +204,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvEvents)).BeginInit();
             this.tpStrategic.SuspendLayout();
             this.ssSaveGame.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTurn)).BeginInit();
             this.SuspendLayout();
             // 
             // lblSelectSavedGame
@@ -241,16 +248,18 @@
             // 
             // txtSelectedLogFile
             // 
-            this.txtSelectedLogFile.Location = new System.Drawing.Point(144, 55);
+            this.txtSelectedLogFile.Enabled = false;
+            this.txtSelectedLogFile.Location = new System.Drawing.Point(145, 53);
             this.txtSelectedLogFile.Name = "txtSelectedLogFile";
             this.txtSelectedLogFile.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.txtSelectedLogFile.Size = new System.Drawing.Size(436, 20);
+            this.txtSelectedLogFile.Size = new System.Drawing.Size(435, 20);
             this.txtSelectedLogFile.TabIndex = 6;
             this.txtSelectedLogFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnSelectLogFile
             // 
-            this.btnSelectLogFile.Location = new System.Drawing.Point(11, 54);
+            this.btnSelectLogFile.Enabled = false;
+            this.btnSelectLogFile.Location = new System.Drawing.Point(11, 51);
             this.btnSelectLogFile.Name = "btnSelectLogFile";
             this.btnSelectLogFile.Size = new System.Drawing.Size(123, 23);
             this.btnSelectLogFile.TabIndex = 8;
@@ -261,7 +270,7 @@
             // lblTurn
             // 
             this.lblTurn.AutoSize = true;
-            this.lblTurn.Location = new System.Drawing.Point(15, 87);
+            this.lblTurn.Location = new System.Drawing.Point(301, 374);
             this.lblTurn.Name = "lblTurn";
             this.lblTurn.Size = new System.Drawing.Size(32, 13);
             this.lblTurn.TabIndex = 9;
@@ -269,7 +278,7 @@
             // 
             // txtTurn
             // 
-            this.txtTurn.Location = new System.Drawing.Point(18, 103);
+            this.txtTurn.Location = new System.Drawing.Point(301, 390);
             this.txtTurn.Name = "txtTurn";
             this.txtTurn.ReadOnly = true;
             this.txtTurn.Size = new System.Drawing.Size(37, 20);
@@ -312,18 +321,18 @@
             // btnCurrentTurn
             // 
             this.btnCurrentTurn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCurrentTurn.Location = new System.Drawing.Point(492, 94);
+            this.btnCurrentTurn.Location = new System.Drawing.Point(496, 95);
             this.btnCurrentTurn.Name = "btnCurrentTurn";
             this.btnCurrentTurn.Size = new System.Drawing.Size(158, 30);
             this.btnCurrentTurn.TabIndex = 14;
-            this.btnCurrentTurn.Text = "Get Current Turn";
+            this.btnCurrentTurn.Text = "Save Turn Data";
             this.btnCurrentTurn.UseVisualStyleBackColor = true;
             this.btnCurrentTurn.Click += new System.EventHandler(this.btnCurrentTurn_Click);
             // 
             // lblDate
             // 
             this.lblDate.AutoSize = true;
-            this.lblDate.Location = new System.Drawing.Point(58, 86);
+            this.lblDate.Location = new System.Drawing.Point(357, 374);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(33, 13);
             this.lblDate.TabIndex = 15;
@@ -331,7 +340,7 @@
             // 
             // txtDate
             // 
-            this.txtDate.Location = new System.Drawing.Point(61, 103);
+            this.txtDate.Location = new System.Drawing.Point(340, 390);
             this.txtDate.Name = "txtDate";
             this.txtDate.ReadOnly = true;
             this.txtDate.Size = new System.Drawing.Size(71, 20);
@@ -1400,6 +1409,12 @@
             this.tpEvents.Controls.Add(this.btnDeleteEvents);
             this.tpEvents.Controls.Add(this.btnEvents);
             this.tpEvents.Controls.Add(this.dgvEvents);
+            this.tpEvents.Controls.Add(this.txtTurn);
+            this.tpEvents.Controls.Add(this.lblTime);
+            this.tpEvents.Controls.Add(this.lblDate);
+            this.tpEvents.Controls.Add(this.txtTime);
+            this.tpEvents.Controls.Add(this.txtDate);
+            this.tpEvents.Controls.Add(this.lblTurn);
             this.tpEvents.Location = new System.Drawing.Point(4, 22);
             this.tpEvents.Name = "tpEvents";
             this.tpEvents.Padding = new System.Windows.Forms.Padding(3);
@@ -1434,8 +1449,8 @@
             this.dgvEvents.AllowUserToAddRows = false;
             this.dgvEvents.AllowUserToDeleteRows = false;
             this.dgvEvents.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            this.dgvEvents.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            this.dgvEvents.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dgvEvents.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEvents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1772,7 +1787,7 @@
             // 
             // txtTime
             // 
-            this.txtTime.Location = new System.Drawing.Point(138, 103);
+            this.txtTime.Location = new System.Drawing.Point(410, 390);
             this.txtTime.Name = "txtTime";
             this.txtTime.ReadOnly = true;
             this.txtTime.Size = new System.Drawing.Size(57, 20);
@@ -1783,7 +1798,7 @@
             // lblTime
             // 
             this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(138, 87);
+            this.lblTime.Location = new System.Drawing.Point(423, 374);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(33, 13);
             this.lblTime.TabIndex = 90;
@@ -1803,7 +1818,7 @@
             // ssLabel1
             // 
             this.ssLabel1.Name = "ssLabel1";
-            this.ssLabel1.Size = new System.Drawing.Size(8, 17);
+            this.ssLabel1.Size = new System.Drawing.Size(39, 17);
             this.ssLabel1.Spring = true;
             // 
             // progressSavedGame
@@ -1813,25 +1828,86 @@
             this.progressSavedGame.Size = new System.Drawing.Size(610, 16);
             this.progressSavedGame.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
+            // numTurn
+            // 
+            this.numTurn.Location = new System.Drawing.Point(157, 106);
+            this.numTurn.Name = "numTurn";
+            this.numTurn.Size = new System.Drawing.Size(43, 20);
+            this.numTurn.TabIndex = 92;
+            this.numTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numTurn.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numTurn.ValueChanged += new System.EventHandler(this.numTurn_ValueChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(157, 76);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(44, 26);
+            this.label14.TabIndex = 93;
+            this.label14.Text = "Current \r\nTurn:";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label14.Click += new System.EventHandler(this.label14_Click);
+            // 
+            // dteGameDate
+            // 
+            this.dteGameDate.CustomFormat = "d MMM y";
+            this.dteGameDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dteGameDate.Location = new System.Drawing.Point(7, 106);
+            this.dteGameDate.Name = "dteGameDate";
+            this.dteGameDate.Size = new System.Drawing.Size(69, 20);
+            this.dteGameDate.TabIndex = 94;
+            this.dteGameDate.Value = new System.DateTime(1941, 6, 1, 0, 0, 0, 0);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(8, 88);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(70, 13);
+            this.label15.TabIndex = 95;
+            this.label15.Text = "Current Date:";
+            // 
+            // cboStartHour
+            // 
+            this.cboStartHour.FormattingEnabled = true;
+            this.cboStartHour.Location = new System.Drawing.Point(80, 105);
+            this.cboStartHour.Name = "cboStartHour";
+            this.cboStartHour.Size = new System.Drawing.Size(73, 21);
+            this.cboStartHour.TabIndex = 96;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(83, 89);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(70, 13);
+            this.label16.TabIndex = 91;
+            this.label16.Text = "Current Time:";
+            // 
             // frmEditSave
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(666, 670);
             this.ControlBox = false;
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.cboStartHour);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.txtSelectedLogFile);
+            this.Controls.Add(this.btnSelectLogFile);
+            this.Controls.Add(this.dteGameDate);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.numTurn);
             this.Controls.Add(this.ssSaveGame);
-            this.Controls.Add(this.lblTime);
-            this.Controls.Add(this.txtTime);
             this.Controls.Add(this.tabSaveGame);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.txtDate);
-            this.Controls.Add(this.lblDate);
             this.Controls.Add(this.btnCurrentTurn);
             this.Controls.Add(this.gbForceTurn);
-            this.Controls.Add(this.txtTurn);
-            this.Controls.Add(this.lblTurn);
-            this.Controls.Add(this.btnSelectLogFile);
-            this.Controls.Add(this.txtSelectedLogFile);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.txtSelectedGamFile);
             this.Controls.Add(this.btnSelectSavedGame);
@@ -1855,11 +1931,13 @@
             this.gbRP.PerformLayout();
             this.conRename.ResumeLayout(false);
             this.tpEvents.ResumeLayout(false);
+            this.tpEvents.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEvents)).EndInit();
             this.tpStrategic.ResumeLayout(false);
             this.tpStrategic.PerformLayout();
             this.ssSaveGame.ResumeLayout(false);
             this.ssSaveGame.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTurn)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2023,6 +2101,12 @@
         private System.Windows.Forms.StatusStrip ssSaveGame;
         private System.Windows.Forms.ToolStripStatusLabel ssLabel1;
         private System.Windows.Forms.ToolStripProgressBar progressSavedGame;
+        private System.Windows.Forms.NumericUpDown numTurn;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.DateTimePicker dteGameDate;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox cboStartHour;
+        private System.Windows.Forms.Label label16;
     }
 }
 

@@ -105,7 +105,7 @@ namespace TOAWXML
         {
             //SET GAME DATE
             DateTimePicker.Format = DateTimePickerFormat.Custom;
-            DateTimePicker.CustomFormat = "dd-MMM-yyyy";
+            DateTimePicker.CustomFormat = "d-MMM-y";
 
             //MAKE PANELS INVISIBLE
             pnlForce.Visible = false;
