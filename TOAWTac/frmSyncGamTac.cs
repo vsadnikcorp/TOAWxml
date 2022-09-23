@@ -33,6 +33,7 @@ namespace TOAWTac
 
             OpenFileDialog file = new OpenFileDialog();
             file.Multiselect = false;
+            file.Title = "Open gam file to sync";
             file.Filter = "*.gam files *.gam|*.gam";
 
             if (file.ShowDialog() == DialogResult.OK)
@@ -46,6 +47,8 @@ namespace TOAWTac
         {
             OpenFileDialog file = new OpenFileDialog();
             file.Multiselect = false;
+            file.Title = "Select tac file to modify";
+
             file.Filter = "*.tac files *.tac|*.tac";
 
             if (file.ShowDialog() == DialogResult.OK)
@@ -59,8 +62,6 @@ namespace TOAWTac
         {
             string date = dateTime;
 
-            //List<string> toRemove = new System.Collections.Generic.List<string>();
-                   
             string TacFileName = txtSelectedTac.Text;
             string GamFileName = txtSelectedGam.Text;
 
@@ -105,6 +106,7 @@ namespace TOAWTac
 
                     if (tacForm == null)
                     {
+                        //WHAT IF FORMATION MISSING FROM TAC FILE?  ADD?
                         continue;
                     }
                     else
@@ -182,13 +184,9 @@ namespace TOAWTac
                             tacUnit.Attribute("REPLACEMENTPRIORITY").Value = unitReplacePriority;
                         }
 
-                        //int u = 0; //number of equipment items in unit
                         //>>>>>>>>>>>>>  MUST COUNT AND ADD ITEMS
-
                         foreach (XElement equipment in unit.Descendants("EQUIPMENT"))
                         {
-                            //float f = 0;  ///number of items in equipment
-
                             string eqpID = equipment.Attribute("ID").Value;
                             string eqpName = equipment.Attribute("NAME").Value;
                             string eqpNumber = equipment.Attribute("NUMBER").Value;
@@ -260,30 +258,8 @@ namespace TOAWTac
                         }//equipment
                     }//unit-5.0
                 }//formation
-
-                //if (toRemove.Count > 0) //IF AT LEAST ONE UNIT HAS NO EQP REMAINING
-                //{
-                //    //REMOVE UNITS WITH NO ITEMS
-                //    foreach (string uid in toRemove)
-                //    {
-                //        DeleteUnit(gamFile, forceID, uid);
-                //    }
-
-                //    ////[RENUMBER UNIT IDs IF AT LEAST ONE UNIT IS DELETED]
-                //    string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT";
-                //    var allunits = gamFile.XPathSelectElements(xpath);
-                //    Renumbering.RenumberAll(allunits);
-
-                //}
-                //toRemove.Clear();
-
             }//force
 
-            ////string tacFileName = txtTacFile.Text;
-            //string GamFileName = TacFileName.Substring(0, TacFileName.Length - 4) + " " + date + ".gam";
-
-            //txtGamFile.Text = GamFileName;
-            //gamFile.Save(GamFileName);
             tacFile.Save(TacFileName);
             this.Close();
         }

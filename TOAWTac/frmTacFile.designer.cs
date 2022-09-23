@@ -206,6 +206,7 @@ namespace TOAWXML
             this.btnSyncGamTac = new System.Windows.Forms.Button();
             this.txtGamFile = new System.Windows.Forms.TextBox();
             this.label55 = new System.Windows.Forms.Label();
+            this.btnPostBattle = new System.Windows.Forms.Button();
             this.gbForce.SuspendLayout();
             this.ssTac.SuspendLayout();
             this.drForce.ItemTemplate.SuspendLayout();
@@ -2438,12 +2439,23 @@ namespace TOAWXML
             this.label55.TabIndex = 61;
             this.label55.Text = "Current *.gam:";
             // 
+            // btnPostBattle
+            // 
+            this.btnPostBattle.Location = new System.Drawing.Point(448, 637);
+            this.btnPostBattle.Name = "btnPostBattle";
+            this.btnPostBattle.Size = new System.Drawing.Size(95, 40);
+            this.btnPostBattle.TabIndex = 62;
+            this.btnPostBattle.Text = "Sync PostBattle >>> gam";
+            this.btnPostBattle.UseVisualStyleBackColor = true;
+            this.btnPostBattle.Click += new System.EventHandler(this.btnPostBattle_Click);
+            // 
             // frmTacFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1329, 697);
             this.ControlBox = false;
+            this.Controls.Add(this.btnPostBattle);
             this.Controls.Add(this.label55);
             this.Controls.Add(this.txtGamFile);
             this.Controls.Add(this.btnSyncGamTac);
@@ -2670,5 +2682,6 @@ namespace TOAWXML
         private System.Windows.Forms.Button btnSyncGamTac;
         private System.Windows.Forms.TextBox txtGamFile;
         private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.Button btnPostBattle;
     }
 }

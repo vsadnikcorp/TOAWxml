@@ -124,8 +124,9 @@ namespace TOAWXML
             rbForce1.Checked = false;
             rbForce2.Checked = false;
 
-            //DISABLE SYNC BUTTON
+            //DISABLE SYNC BUTTONS
             btnSync.Enabled = false;
+            btnPostBattle.Enabled = false;
 
             //CREATE DATATABLE FOR FORMATIONS
             dtFormation.Columns.Add("Name", typeof(string));
@@ -224,12 +225,6 @@ namespace TOAWXML
                     TOAWTac.Properties.Settings.Default.TacFilePath = TacFilePath;
                     TOAWTac.Properties.Settings.Default.Save();
 
-                    ////LOAD COMMANDER NAMES FILE
-                    //string CdrNameDirectory = Path.GetDirectoryName(TacFilePath);
-                    //string CdrNameFilePath = CdrNameDirectory + "\\CDRNAMES.XML";
-                    //XDocument xdocCDR = XDocument.Load(CdrNameFilePath);
-                    //Random rng = new Random();
-
                     //RUN ASYNC TO FILL TACFILE
                     await Task.Run(() =>
                     {
@@ -238,8 +233,6 @@ namespace TOAWXML
                         foreach (XElement force in tacFile.Descendants("OOB").Descendants("FORCE"))
                         {
                             string forceID = force.Attribute("ID").Value;
-                            //string forcecdrname = AssignCdrName(xdocCDR, forceID, rng);
-                            //Random rng = new Random();
                             string forcecdrname = Utils.AssignCdrName(forceID, rng);
 
                             force.Add(new XAttribute("CDR", forcecdrname),
@@ -250,7 +243,6 @@ namespace TOAWXML
                             foreach (XElement formation in force.Descendants("FORMATION").Where(f => f.Parent.Attribute("ID").Value == forceID))
                             {  //FORMATION
                                 //ADD FORMATIONS TO TACFILE
-                                //string formcdrname = AssignCdrName(xdocCDR, forceID, rng);
                                 string formcdrname = Utils.AssignCdrName(forceID, rng);
 
                                 formation.Add(
@@ -276,7 +268,6 @@ namespace TOAWXML
                                     }
                                     else
                                     {
-                                        //unitcdrname = AssignCdrName(xdocCDR, forceID, rng);
                                         unitcdrname = Utils.AssignCdrName(forceID, rng);
                                     }
                                       
@@ -325,7 +316,6 @@ namespace TOAWXML
                                             unit.Attribute("ICON").Value == "Naval Task Force" ||
                                             unit.Attribute("ICON").Value == "Naval Attack")
                                             {
-                                                //equipcdrname = AssignCdrName(xdocCDR, forceID, rng);
                                                 equipcdrname = Utils.AssignCdrName(forceID,rng);
                                             }
                                             else
@@ -412,13 +402,13 @@ namespace TOAWXML
                 }
                 rbForce1.Checked = false;
                 rbForce2.Checked = false;
+                btnPostBattle.Enabled = true;
+                btnSync.Enabled = true;
             }
             else
             {
                 TOAWTac.Properties.Settings.Default.TacFilePath = "";
             }
-
-            btnSync.Enabled = true;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -427,7 +417,6 @@ namespace TOAWXML
             trvUnitTree.Focus();
         }
 
-       
         //private string AssignCdrName(XDocument xdoc, string forceID, Random rng)
         //{
         //    var commanders = xdoc.Descendants("CDRNAMES").Descendants("CDRNAME")
@@ -584,8 +573,8 @@ namespace TOAWXML
         private void btnSync_Click(object sender, EventArgs e)
         {
             ///WHAT FOR?
-            var list = new List<TreeNode>();
-            GetCheckedNodes(trvUnitTree.Nodes, list);
+            var checkedlist = new List<TreeNode>();
+            GetCheckedNodes(trvUnitTree.Nodes, checkedlist);
             ///
 
             string dateformat = "dd MMM yyyy";
@@ -679,13 +668,11 @@ namespace TOAWXML
                     string xpath = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT";
                     var allunits = gamFile.XPathSelectElements(xpath);
                     Renumbering.RenumberAll(allunits);
-
                 }
                 toRemove.Clear();
 
             }//force
 
-            //string tacFileName = txtTacFile.Text;
             string GamFileName = TacFileName.Substring(0, TacFileName.Length - 4) + " " + date + ".gam";
             txtGamFile.Text = GamFileName;
             gamFile.Save(GamFileName);
@@ -5631,6 +5618,7 @@ namespace TOAWXML
             var unit = gamfile.XPathSelectElements(xpath);
             //SHOULD REVISE ANY EVENTS WITH THIS UNIT TO NO EFFECT
             unit.Remove();
+
             ////////////////////JULY 19
             var unitevents = (from u in gamfile.Elements("EVENTS").Elements("EVENT")  //ALL EVENTS FEATURING UNITS
                               where (string)u.Attribute("TRIGGER") == "Unit destroyed" ||
@@ -5644,8 +5632,6 @@ namespace TOAWXML
             unitevents.Attribute("EFFECT").Value = "No effect";
             unitevents.Attribute("VALUE").Value = "0";
             unitevents.Attribute("NEWS").Value = "";
-            Console.WriteLine(unitid);
-            //gamfile.Save(GamfileName);
             ///////////////JULY 19
         }
 
@@ -5656,6 +5642,108 @@ namespace TOAWXML
             frmSyncGamTac gamsync = new frmSyncGamTac(datetime);
             gamsync.Show();
         }
+
+        private void btnPostBattle_Click(object sender, EventArgs e)
+        {
+            //OPEN SELECTED TACFILE
+            string TacFileName = txtTacFile.Text;
+            string unitname;
+            string xpathTac;
+            string xpathGam;
+
+            XElement tacFile = XElement.Load(TacFileName);
+            XElement gamFile;
+
+            //SELECT GAM FILE TO BE MODIFIED WITH TAC FILE RESULTS
+            OpenFileDialog file = new OpenFileDialog();
+            file.Multiselect = false;
+            file.Filter = "*.gam files *.gam|*.gam";
+            file.Title = "Select gam file to be modified to reflect tac file results";
+
+            if (file.ShowDialog() == DialogResult.OK)
+            {
+                TOAWTac.Properties.Settings.Default.TacFilePath = file.FileName;
+                //TOAWTac.Properties.Settings.Default.GamFilePath = file.FileName;
+                TOAWTac.Properties.Settings.Default.Save();
+
+                TOAWTac.Properties.Settings.Default.FilePath = file.FileName;
+                TOAWTac.Properties.Settings.Default.Save();
+
+                txtGamFile.Text = file.FileName;
+            }
+            else
+            {
+                TOAWTac.Properties.Settings.Default.TacFilePath = "";
+                return;
+            }
+            ////
+            
+            //SET FORCE ID
+            if (rbForce1.Checked == true)
+            {
+                forceID = "1";
+            }
+            if (rbForce2.Checked == true)
+            {
+                forceID = "2";
+            }
+
+            //LOAD GAM FILE
+            gamFile = XElement.Load(file.FileName);
+
+            //GET SELECTED UNITS FROM TREE
+            var checkedlist = new List<TreeNode>();
+            GetCheckedNodes(trvUnitTree.Nodes, checkedlist);
+
+            if (checkedlist.Count == 0)
+            {
+                MessageBox.Show("No units have been selected.",
+                   "No Units Selected",
+                   MessageBoxButtons.OK,
+                   MessageBoxIcon.Exclamation,
+                   MessageBoxDefaultButton.Button1);
+                return;
+            }
+
+            foreach (var selectedunit in checkedlist)
+            {
+                int u = 0; //number of equipment items in unit
+                unitname = selectedunit.Text;
+                xpathTac = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@NAME ='" + unitname + "']";
+
+                XElement tacunit = tacFile.XPathSelectElement(xpathTac);
+
+                string unitid = tacunit.Attribute("ID").Value;
+                int eqpID = 1;
+
+                foreach (XElement equipment in tacunit.Descendants("EQUIPMENT"))
+                {
+                    float f = 0;  ///number of items in equipment
+                   
+                    foreach (XElement item in equipment.Descendants("ITEM"))
+                    {
+                        if (item.Attribute("CASUALTY").Value == "None")
+                        {
+                            f++;
+                            u++;
+                        }
+                        if (item.Attribute("CASUALTY").Value == "Half")
+                        {
+                            f = f + 0.5f;
+                        }
+                    }//item
+
+                    int i = (int)Math.Round(f, MidpointRounding.AwayFromZero);
+
+                    //INPUT REVISED EQP NUMBER INTO GAMFILE
+                    string equipID = eqpID.ToString();
+                    xpathGam = "OOB/FORCE[@ID=" + forceID + "]/FORMATION/UNIT[@NAME ='" + unitname + "']/EQUIPMENT[@ID =  " + equipID + "]";
+                    XElement gamEquip = gamFile.XPathSelectElement(xpathGam);
+                    gamEquip.Attribute("NUMBER").Value = i.ToString();
+                    eqpID++;
+                }//equipment
+            }
+            gamFile.Save(file.FileName);
+        }
     }
 }
-
